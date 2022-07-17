@@ -16,9 +16,9 @@ import HelpMainPage from './pages/HelpMainPage';
 
 function App() {
 
-  // const location = useLocation();
-  // const currentLocation: string = location.pathname.split('/')[1];
-  // console.log(currentLocation)
+  const location = useLocation();
+  const currentLocation: string = location.pathname.split('/')[1];
+  console.log(currentLocation)
 
   return (
     <Router>

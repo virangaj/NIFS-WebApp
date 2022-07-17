@@ -23,8 +23,8 @@ body {
 .main-navbar {
   background-color: var(--main-navbar-back) !important;
   width: 100% !important;
-  height: 80px !important;
-
+  height: 72px;
+  ;
 }
 
 /* secondary navbar */

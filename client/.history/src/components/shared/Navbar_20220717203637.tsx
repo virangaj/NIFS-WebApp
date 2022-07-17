@@ -62,11 +62,11 @@ const Navbar = () => {
             title: 'User Permission',
             link: '/user-permission',
         },
-        // {
-        //     id: 9,
-        //     title: 'Notification',
-        //     link: '/notification',
-        // },
+        {
+            id: 9,
+            title: 'Notification',
+            link: '/notification',
+        },
         {
             id: 10,
             title: 'Help',
@@ -100,7 +100,7 @@ const Navbar = () => {
     };
 
     return (
-        <AppBar position="fixed" className="main-navbar">
+        <AppBar position="static">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
                     {/*Responsive view start here  */}
@@ -162,22 +162,19 @@ const Navbar = () => {
 
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         {pages.map((page) => (
-                            <Link to={page.link} style={{ textDecoration: 'none' }}>
-                                <Button
-                                    key={page.id}
-                                    onClick={handleCloseNavMenu}
-                                    sx={{ my: 2, color: 'white', display: 'block' }}
-                                >
-                                    {page.title}
-                                </Button>
-                            </Link>
+                            <Button
+                                key={page.id}
+                                onClick={handleCloseNavMenu}
+                                sx={{ my: 2, color: 'white', display: 'block' }}
+                            >
+                                {page.title}
+                            </Button>
                         ))}
                     </Box>
                     <IconButton
                         size="large"
                         aria-label="show 17 new notifications"
                         color="inherit"
-                        sx={{ mr: 2 }}
                     >
                         <Badge badgeContent={17} color="error">
                             <HiOutlineBell />
@@ -205,7 +202,7 @@ const Navbar = () => {
                             open={Boolean(anchorElUser)}
                             onClose={handleCloseUserMenu}
                         >
-                            {settings && settings.map((setting) => (
+                            {settings.map((setting) => (
                                 <MenuItem key={setting.id} onClick={handleCloseUserMenu}>
                                     <Typography textAlign="center">{setting.title}</Typography>
                                 </MenuItem>

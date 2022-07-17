@@ -140,9 +140,9 @@ const Navbar = () => {
                         >
                             {pages && pages.map((page) => (
                                 <MenuItem key={page.id} onClick={handleCloseNavMenu}>
-                                    <Link to={page.link} style={{ textDecoration: 'none' }}>
-                                        <Typography textAlign="center">{page.title}</Typography>
-                                    </Link>
+                                    {/* <Link to={page.link} style={{ textDecoration: 'none' }}> */}
+                                    <Typography textAlign="center">{page.title}</Typography>
+                                    {/* </Link> */}
                                 </MenuItem>
                             ))}
                         </Menu>
@@ -162,15 +162,13 @@ const Navbar = () => {
 
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         {pages.map((page) => (
-                            <Link to={page.link} style={{ textDecoration: 'none' }}>
-                                <Button
-                                    key={page.id}
-                                    onClick={handleCloseNavMenu}
-                                    sx={{ my: 2, color: 'white', display: 'block' }}
-                                >
-                                    {page.title}
-                                </Button>
-                            </Link>
+                            <Button
+                                key={page.id}
+                                onClick={handleCloseNavMenu}
+                                sx={{ my: 2, color: 'white', display: 'block' }}
+                            >
+                                {page.title}
+                            </Button>
                         ))}
                     </Box>
                     <IconButton

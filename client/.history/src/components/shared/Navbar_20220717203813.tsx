@@ -62,11 +62,11 @@ const Navbar = () => {
             title: 'User Permission',
             link: '/user-permission',
         },
-        // {
-        //     id: 9,
-        //     title: 'Notification',
-        //     link: '/notification',
-        // },
+        {
+            id: 9,
+            title: 'Notification',
+            link: '/notification',
+        },
         {
             id: 10,
             title: 'Help',
@@ -101,7 +101,7 @@ const Navbar = () => {
 
     return (
         <AppBar position="fixed" className="main-navbar">
-            <Container maxWidth="xl">
+            <Container maxWidth="xxl">
                 <Toolbar disableGutters>
                     {/*Responsive view start here  */}
                     <Box sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }}>
@@ -140,9 +140,9 @@ const Navbar = () => {
                         >
                             {pages && pages.map((page) => (
                                 <MenuItem key={page.id} onClick={handleCloseNavMenu}>
-                                    <Link to={page.link} style={{ textDecoration: 'none' }}>
-                                        <Typography textAlign="center">{page.title}</Typography>
-                                    </Link>
+                                    {/* <Link to={page.link} style={{ textDecoration: 'none' }}> */}
+                                    <Typography textAlign="center">{page.title}</Typography>
+                                    {/* </Link> */}
                                 </MenuItem>
                             ))}
                         </Menu>
@@ -162,22 +162,19 @@ const Navbar = () => {
 
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         {pages.map((page) => (
-                            <Link to={page.link} style={{ textDecoration: 'none' }}>
-                                <Button
-                                    key={page.id}
-                                    onClick={handleCloseNavMenu}
-                                    sx={{ my: 2, color: 'white', display: 'block' }}
-                                >
-                                    {page.title}
-                                </Button>
-                            </Link>
+                            <Button
+                                key={page.id}
+                                onClick={handleCloseNavMenu}
+                                sx={{ my: 2, color: 'white', display: 'block' }}
+                            >
+                                {page.title}
+                            </Button>
                         ))}
                     </Box>
                     <IconButton
                         size="large"
                         aria-label="show 17 new notifications"
                         color="inherit"
-                        sx={{ mr: 2 }}
                     >
                         <Badge badgeContent={17} color="error">
                             <HiOutlineBell />

@@ -1,0 +1,14 @@
+* {
+  margin: 0;
+}
+
+body {
+  font-family: 'Poppins';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+:root {
+  --main-navbar-back: #00003c;
+
+}
