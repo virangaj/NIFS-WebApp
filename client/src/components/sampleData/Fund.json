@@ -1,0 +1,22 @@
+[
+    {
+        "id": 0,
+        "value": "Stock market"
+    },
+    {
+        "id": 1,
+        "value": "BOC bank"
+    },
+    {
+        "id": 2,
+        "value": "Savings"
+    },
+    {
+        "id": 3,
+        "value": "Ticketing"
+    },
+    {
+        "id": 4,
+        "value": "Car wash"
+    }
+]

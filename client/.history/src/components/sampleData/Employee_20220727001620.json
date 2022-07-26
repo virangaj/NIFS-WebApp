@@ -1,0 +1,27 @@
+[
+    {
+        "id": 0,
+        "value": "Mr. Kamal",
+        "admin": false
+    },
+    {
+        "id": 1,
+        "value": "Mr. Sunil",
+        "admin": false
+    },
+    {
+        "id": 2,
+        "value": "Mr. Kusal",
+        "admin": false
+    },
+    {
+        "id": 3,
+        "value": "Mrs. Nayana",
+        "admin": false
+    },
+    {
+        "id": 4,
+        "value": "Miss Rashmi",
+        "admin": false
+    }
+]

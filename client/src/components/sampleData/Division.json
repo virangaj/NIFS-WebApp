@@ -1,0 +1,22 @@
+[
+    {
+        "id": 0,
+        "value": "Transport"
+    },
+    {
+        "id": 1,
+        "value": "Financial"
+    },
+    {
+        "id": 2,
+        "value": "Computer"
+    },
+    {
+        "id": 3,
+        "value": "Admin"
+    },
+    {
+        "id": 4,
+        "value": "Director"
+    }
+]
