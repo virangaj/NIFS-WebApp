@@ -1,0 +1,80 @@
+[
+    {
+        "section": "Master",
+        "only_admin": false,
+        "routes": [
+            {
+                "title": "Venue Master",
+                "link": "/sedu/venue-master",
+                "img": "https://img.icons8.com/fluency/40/000000/home.png",
+                "only_admin": false
+            },
+            {
+                "title": "Participant Master",
+                "link": "/sedu/participant-master",
+                "img": "https://img.icons8.com/fluency/40/000000/conference-foreground-selected.png",
+                "only_admin": false
+            }
+        ]
+    },
+    {
+        "section": "Transaction",
+        "only_admin": false,
+        "routes": [
+            {
+                "title": "Booking",
+                "link": "/sedu/booking",
+                "img": "https://img.icons8.com/fluency/40/000000/calendar-plus.png",
+                "only_admin": false
+            },
+            {
+                "title": "Event Request",
+                "link": "/sedu/event-request",
+                "img": "https://img.icons8.com/fluency/40/000000/invite.png",
+                "only_admin": false
+            },
+            {
+                "title": "Attendance Feedback",
+                "link": "/sedu/attendance-feedback",
+                "img": "https://img.icons8.com/fluency/40/000000/feedback-hub.png",
+                "only_admin": false
+            },
+            {
+                "title": " Update Event Material",
+                "link": "/sedu/update-material",
+                "img": "https://img.icons8.com/fluency/40/000000/available-updates.png",
+                "only_admin": false
+            },
+            {
+                "title": "Quick Response Code",
+                "link": "/sedu/quick-response",
+                "img": "https://img.icons8.com/fluency/40/000000/barcode-scanner.png",
+                "only_admin": false
+            },
+            {
+                "title": "Project Proposal",
+                "link": "/sedu/project-proposal",
+                "img": "https://img.icons8.com/fluency/40/000000/documents.png",
+                "only_admin": false
+            },
+            {
+                "title": "Material Search",
+                "link": "/sedu/material-search",
+                "img": "https://img.icons8.com/fluency/40/000000/search.png",
+                "only_admin": false
+            }
+        ]
+    },
+    {
+        "section": "Reports",
+        "only_admin": true,
+        "routes": [
+            {
+                "title": "SEDU Report Generator",
+                "link": "/sedu/report-generator",
+                "img": "https://img.icons8.com/cute-clipart/40/000000/load-from-file.png",
+                "only_admin": true
+            }
+        ]
+    }
+]
