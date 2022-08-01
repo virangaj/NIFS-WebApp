@@ -23,12 +23,12 @@ function VerticalSecondaryNavbar(props: any) {
                         </div>
                         {content.routes.map((page: any, i: number) => (
                             isAdmin ? <Link to={page.link} key={i}>
-                                <div className='flex items-center'>
+                                <div className={location.pathname === page.link ? 'flex items-center border-2 border-transparent border-l-sky-600 pl-2 hover:border-l-gray-300' : 'flex items-center border-2 pl-2 border-transparent hover:border-l-gray-300'}>
                                     <img src={page.img} alt={page.title} className={location.pathname === page.link ? 'w-10 bg-sky-300/30 rounded-xl p-1' : 'w-10'} />
                                     <button className={location.pathname === page.link ? 'px-4 py-2 rounded-2xl text-black font-semibold text-left hover:text-blue-500 hover:font-semibold' : 'text-gray-500 px-4 py-2 text-left hover:text-blue-500 hover:font-semibold'}>{page.title}</button>
                                 </div>
                             </Link> : (!page.only_admin ? <Link to={page.link} key={i}>
-                                <div className='flex items-center'>
+                                <div className={location.pathname === page.link ? 'flex items-center border-2 border-transparent border-l-sky-600 pl-2 hover:border-l-gray-300' : 'flex items-center border-2 pl-2 border-transparent hover:border-l-gray-300'}>
                                     <img src={page.img} alt={page.title} className='w-8' />
                                     <button className={location.pathname === page.link ? 'px-4 py-2 rounded-2xl text-black font-semibold text-left hover:text-blue-500 hover:font-semibold' : 'text-gray-500 px-4 py-2 text-left hover:text-blue-500 hover:font-semibold'}>{page.title}</button>
                                 </div>

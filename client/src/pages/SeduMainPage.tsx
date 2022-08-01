@@ -41,7 +41,7 @@ function SeduMainPage() {
 				<img src={Dots} alt="Dots" />
 			</div>
 
-			<div className='fixed left-[425px] top-[2vh] bg-body-content-bg rounded-3xl  pl-10 pt-4 pr-4 pb-4 custom-scroll scroll-smooth'>
+			<div className='fixed left-[425px] top-[2vh] bg-body-content-bg rounded-3xl pl-10 pt-4 pr-4 pb-4'>
 				{location.split('/')[2] !== undefined ?
 					// <div className='fixed right-20'>
 					<div className='fixed right-20'>
@@ -50,20 +50,22 @@ function SeduMainPage() {
 						</Link>
 					</div> : ""}
 
-				<Routes>
-					<Route path="/venue-master" element={<VenueMaster />} />
-					<Route path="/participant-master" element={<ParticipantMaster />} />
-					<Route path="/booking" element={<SeduBooking />} />
-					<Route path="/event-request" element={<EventRequest />} />
-					<Route path="/attendance-feedback" element={<AttendanceFeedback />} />
-					<Route path="/update-material" element={<UpdateEventMaterial />} />
-					<Route path="/quick-response" element={<QuickResponseCode />} />
-					<Route path="/project-proposal" element={<ProjectProposal />} />
-					<Route path="/material-search" element={<MaterialSearch />} />
-					<Route path="/report-generator" element={<SeduReportGenerator />} />
+				<div className='custom-scroll'>
+					<Routes>
+						<Route path="/venue-master" element={<VenueMaster />} />
+						<Route path="/participant-master" element={<ParticipantMaster />} />
+						<Route path="/booking" element={<SeduBooking />} />
+						<Route path="/event-request" element={<EventRequest />} />
+						<Route path="/attendance-feedback" element={<AttendanceFeedback />} />
+						<Route path="/update-material" element={<UpdateEventMaterial />} />
+						<Route path="/quick-response" element={<QuickResponseCode />} />
+						<Route path="/project-proposal" element={<ProjectProposal />} />
+						<Route path="/material-search" element={<MaterialSearch />} />
+						<Route path="/report-generator" element={<SeduReportGenerator />} />
 
-				</Routes>
+					</Routes>
 
+				</div>
 
 
 			</div>

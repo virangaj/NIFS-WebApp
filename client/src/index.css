@@ -15,10 +15,17 @@ body {
 
 }
 
-html {
-  scrollbar-width: none;
+html::-webkit-scrollbar {
+  display: none;
 }
 
+html::-webkit-scrollbar-thumb {
+  display: none;
+}
+
+html::-webkit-scrollbar-track {
+  display: none;
+}
 
 :root {
   --main-navbar-back: #030347;
@@ -152,29 +159,33 @@ a {
   border-bottom: 2px solid var(--warning);
 }
 
+/* secondary navbar ends here */
+
+
 /* body content*/
+
+
 .custom-scroll {
-  width: 75vw;
-  height: 96vh;
+  width: 73vw;
+  height: 92.5vh;
   overflow-y: scroll;
 }
 
 .custom-scroll::-webkit-scrollbar {
-  width: 10px;
-  background-color: var(--scroll-back);
+  width: 0.7vw;
   border-radius: 50px;
 }
 
-/* .custom-scroll::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+.custom-scroll::-webkit-scrollbar-track {
+  background-color: var(--scroll-back);
   border-radius: 5px;
-} */
+}
 
 .custom-scroll::-webkit-scrollbar-thumb {
   border-radius: 5px;
-  -webkit-box-shadow: inset 0 0 6px red;
-
+  background-color: #226dcfa2;
 }
+
 
 .body-content {
   margin: auto;
