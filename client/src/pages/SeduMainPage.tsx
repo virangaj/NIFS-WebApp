@@ -32,11 +32,11 @@ function SeduMainPage() {
 
 		<div >
 			{/* <SeduSecondaryNavbar /> */}
-			{/* <SecondaryNavbar pages={Pages} /> */}
+			<SecondaryNavbar pages={Pages} />
 			{/* <div className="main-content"> */}
-			<div className='secondary-nav-position'>
+			{/* <div className='secondary-nav-position'>
 				<VerticalSecondaryNavbar pages={Pages} />
-			</div>
+			</div> */}
 			<div className='fixed w-[400px] top-[-100px] right-[-100px]'>
 				<img src={Dots} alt="Dots" />
 			</div>

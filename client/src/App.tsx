@@ -23,10 +23,10 @@ function App() {
   return (
     <div className='w-[98%] flex mx-auto flex-col h-[100vh]'>
       <Router>
-        {/* <Navbar /> */}
-        <div>
+        <Navbar />
+        {/* <div>
           <VerticalMainNavbar />
-        </div>
+        </div> */}
         <div className='overflow-y-scroll ml-4 scroll-bar'>
           <Routes>
             <Route path="/login" element={<Login />} />
