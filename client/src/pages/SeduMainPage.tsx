@@ -8,12 +8,11 @@ import ProjectProposal from '../components/sedu/ProjectProposal';
 import QuickResponseCode from '../components/sedu/QuickResponseCode';
 import SeduBooking from '../components/sedu/SeduBooking';
 import SeduReportGenerator from '../components/sedu/SeduReportGenerator';
-import SeduSecondaryNavbar from '../components/sedu/shared/SeduSecondaryNavbar';
 import UpdateEventMaterial from '../components/sedu/UpdateEventMaterial';
 import VenueMaster from '../components/sedu/VenueMaster';
 import SecondaryNavbar from '../components/shared/SecondaryNavbar';
 import Pages from '../components/data/SeduNavData.json'
-import VerticalSecondaryNavbar from '../components/shared/VerticalSecondaryNavbar';
+
 
 
 // icon
@@ -30,45 +29,29 @@ function SeduMainPage() {
 	const [onClose, setOnClose] = useState(location.split('/')[0]);
 	return (
 
-		<div >
+		<div className='body-content'>
 			{/* <SeduSecondaryNavbar /> */}
-			{/* <SecondaryNavbar pages={Pages} /> */}
-			{/* <div className="main-content"> */}
-			<div className='secondary-nav-position'>
-				<VerticalSecondaryNavbar pages={Pages} />
-			</div>
+			<SecondaryNavbar pages={Pages} />
+
 			<div className='fixed w-[400px] top-[-100px] right-[-100px]'>
 				<img src={Dots} alt="Dots" />
 			</div>
 
-			<div className='fixed left-[425px] top-[2vh] bg-body-content-bg rounded-3xl pl-10 pt-4 pr-4 pb-4'>
-				{location.split('/')[2] !== undefined ?
-					// <div className='fixed right-20'>
-					<div className='fixed right-20'>
-						<Link to={onClose}>
-							<HiX className='w-6 h-6 bg-red-500 text-white rounded-full cursor-pointer p-1 hover:bg-red-700' />
-						</Link>
-					</div> : ""}
+			<Routes>
+				<Route path="/venue-master" element={<VenueMaster />} />
+				<Route path="/participant-master" element={<ParticipantMaster />} />
+				<Route path="/booking" element={<SeduBooking />} />
+				<Route path="/event-request" element={<EventRequest />} />
+				<Route path="/attendance-feedback" element={<AttendanceFeedback />} />
+				<Route path="/update-material" element={<UpdateEventMaterial />} />
+				<Route path="/quick-response" element={<QuickResponseCode />} />
+				<Route path="/project-proposal" element={<ProjectProposal />} />
+				<Route path="/material-search" element={<MaterialSearch />} />
+				<Route path="/report-generator" element={<SeduReportGenerator />} />
 
-				<div className='custom-scroll'>
-					<Routes>
-						<Route path="/venue-master" element={<VenueMaster />} />
-						<Route path="/participant-master" element={<ParticipantMaster />} />
-						<Route path="/booking" element={<SeduBooking />} />
-						<Route path="/event-request" element={<EventRequest />} />
-						<Route path="/attendance-feedback" element={<AttendanceFeedback />} />
-						<Route path="/update-material" element={<UpdateEventMaterial />} />
-						<Route path="/quick-response" element={<QuickResponseCode />} />
-						<Route path="/project-proposal" element={<ProjectProposal />} />
-						<Route path="/material-search" element={<MaterialSearch />} />
-						<Route path="/report-generator" element={<SeduReportGenerator />} />
-
-					</Routes>
-
-				</div>
+			</Routes>
 
 
-			</div>
 		</div >);
 }
 

@@ -23,33 +23,33 @@ function App() {
   return (
     <div className='w-[98%] flex mx-auto flex-col h-[100vh]'>
       <Router>
-        {/* <Navbar /> */}
-        <div>
+        <Navbar />
+        {/* <div>
           <VerticalMainNavbar />
-        </div>
-        <div className='overflow-y-scroll ml-4 scroll-bar'>
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/" element={<Home />} />
-            <Route path="/common/*" element={<CommonMainPage />} />
-            <Route path="/account/*" element={<AccountMainPage />} />
-            <Route path="/admin/*" element={<AdminMainPage />} />
-            <Route path="/library/*" element={<LibraryMainPage />} />
-            <Route path="/procument/*" element={<ProcumentMainPage />} />
-            <Route path="/sedu/*" element={<SeduMainPage />} />
-            <Route path="/transport/*" element={<TransportMainPage />} />
-            <Route
-              path="/user-permission/*"
-              element={<UserPermissionMainPage />}
-            />
-            <Route
-              path="/notification/*"
-              element={<NotificationMainPage />}
-            />
-            <Route path="/help/*" element={<HelpMainPage />} />
-            <Route path="/error-404" element={<ErrorPage />} />
-          </Routes>
-        </div>
+        </div> */}
+        {/* <div className='overflow-y-scroll ml-4 scroll-bar'> */}
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/common/*" element={<CommonMainPage />} />
+          <Route path="/account/*" element={<AccountMainPage />} />
+          <Route path="/admin/*" element={<AdminMainPage />} />
+          <Route path="/library/*" element={<LibraryMainPage />} />
+          <Route path="/procument/*" element={<ProcumentMainPage />} />
+          <Route path="/sedu/*" element={<SeduMainPage />} />
+          <Route path="/transport/*" element={<TransportMainPage />} />
+          <Route
+            path="/user-permission/*"
+            element={<UserPermissionMainPage />}
+          />
+          <Route
+            path="/notification/*"
+            element={<NotificationMainPage />}
+          />
+          <Route path="/help/*" element={<HelpMainPage />} />
+          <Route path="/error-404" element={<ErrorPage />} />
+        </Routes>
+
 
 
       </Router>

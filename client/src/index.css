@@ -15,18 +15,6 @@ body {
 
 }
 
-html::-webkit-scrollbar {
-  display: none;
-}
-
-html::-webkit-scrollbar-thumb {
-  display: none;
-}
-
-html::-webkit-scrollbar-track {
-  display: none;
-}
-
 :root {
   --main-navbar-back: #030347;
   --nav-title-section-back: rgba(47, 163, 72, 0.589);
@@ -100,12 +88,12 @@ a {
 }
 
 .nav-title-section {
-  /* border-radius: var(--border-radius);
+  border-radius: var(--border-radius);
   background-color: var(--nav-title-section-back);
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   pointer-events: none;
   margin-left: 10px;
-  margin-left: 10px; */
+  margin-left: 10px;
   background-color: var(--main-navbar-back);
 }
 
@@ -164,7 +152,7 @@ a {
 
 /* body content*/
 
-
+/* 
 .custom-scroll {
   width: 73vw;
   height: 92.5vh;
@@ -184,7 +172,7 @@ a {
 .custom-scroll::-webkit-scrollbar-thumb {
   border-radius: 5px;
   background-color: #226dcfa2;
-}
+} */
 
 
 .body-content {
