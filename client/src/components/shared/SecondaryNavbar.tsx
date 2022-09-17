@@ -3,6 +3,8 @@ import React from 'react'
 import Box from '@mui/material/Box';
 import { Link, useLocation } from 'react-router-dom';
 import Employees from '../data/Employee.json';
+import './navbar.css'
+
 function SecondaryNavbar(props: any) {
     const location = useLocation();
     const user = Employees[0];

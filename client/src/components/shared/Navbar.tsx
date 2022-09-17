@@ -15,7 +15,7 @@ import Badge from '@mui/material/Badge';
 import Logo from '../../images/nifs_logo.png'
 import { Link, useLocation } from 'react-router-dom';
 import Pages from '../data/MainNavPages.json';
-
+import './navbar.css'
 const settings = [
     {
         id: 0,

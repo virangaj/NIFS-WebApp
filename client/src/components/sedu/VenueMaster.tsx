@@ -5,8 +5,8 @@ function VenueMaster() {
 
 
     return (
-        <div className='sub-body-content'>
-            <h1 className='sub-body-title bg-black'>Venue Details</h1>
+        <div className='sub-body-conten'>
+            <h1 className=''>Venue Details</h1>
 
         </div>
     )

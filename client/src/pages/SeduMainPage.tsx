@@ -25,15 +25,15 @@ import { Link } from 'react-router-dom';
 function SeduMainPage() {
 	// console.log(Pages);
 
-	const location: String = useLocation().pathname;
-	const [onClose, setOnClose] = useState(location.split('/')[0]);
+
+
 	return (
 
 		<div className='body-content'>
 
 			<SecondaryNavbar pages={Pages} />
 
-			<div className='fixed w-[400px] top-[-100px] right-[-100px]'>
+			<div className='fixed w-[400px] top-[-100px] right-[-100px] -z-10'>
 				<img src={Dots} alt="Dots" />
 			</div>
 
