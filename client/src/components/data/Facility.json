@@ -1,0 +1,22 @@
+[
+    {
+        "id": 5,
+        "value": "Microphone"
+    },
+    {
+        "id": 1,
+        "value": "Chair"
+    },
+    {
+        "id": 2,
+        "value": "Sound System"
+    },
+    {
+        "id": 3,
+        "value": "Computer"
+    },
+    {
+        "id": 4,
+        "value": "Lights"
+    }
+]

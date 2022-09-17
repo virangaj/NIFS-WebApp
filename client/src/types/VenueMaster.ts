@@ -1,6 +1,6 @@
 export default interface IVenueMaster {
     venue_id: string,
-    name: string,
+    venue_name: string,
     type: string,
     availability: any,
     location: string,
