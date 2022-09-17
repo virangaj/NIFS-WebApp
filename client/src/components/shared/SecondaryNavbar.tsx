@@ -14,7 +14,7 @@ function SecondaryNavbar(props: any) {
     console.log(isAdmin)
     const pages: any = props.pages;
     return (
-        <Box sx={{ width: '90%' }} className="secondary-navbar nav-flex-section">
+        <Box className="secondary-navbar nav-flex-section">
             {pages.map((content: any, index: number) => (
                 isAdmin ? <div className='nav-flex-inside' key={index}>
                     <div className='nav-flex-section'>

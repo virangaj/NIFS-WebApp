@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import Navbar from './components/shared/Navbar';
-import Login from './pages/Login'
+
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+
 import Home from './pages/Home';
 import TransportMainPage from './pages/TransportMainPage';
 import CommonMainPage from './pages/CommonMainPage';
@@ -16,6 +16,13 @@ import HelpMainPage from './pages/HelpMainPage';
 import ErrorPage from './pages/ErrorPage';
 import VerticalMainNavbar from './components/shared/VerticalMainNavbar';
 
+import Navbar from './components/shared/Navbar';
+import Login from './pages/Login'
+
+
+import { RouteName } from "./constant/routeNames";
+
+
 
 function App() {
 
@@ -27,25 +34,25 @@ function App() {
 
 
         <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/" element={<Home />} />
-          <Route path="/common/*" element={<CommonMainPage />} />
-          <Route path="/account/*" element={<AccountMainPage />} />
-          <Route path="/admin/*" element={<AdminMainPage />} />
-          <Route path="/library/*" element={<LibraryMainPage />} />
-          <Route path="/procument/*" element={<ProcumentMainPage />} />
-          <Route path="/sedu/*" element={<SeduMainPage />} />
-          <Route path="/transport/*" element={<TransportMainPage />} />
+          <Route path={RouteName.Login} element={<Login />} />
+          <Route path={RouteName.Home} element={<Home />} />
+          <Route path={RouteName.Common} element={<CommonMainPage />} />
+          <Route path={RouteName.Account} element={<AccountMainPage />} />
+          <Route path={RouteName.Admin} element={<AdminMainPage />} />
+          <Route path={RouteName.Library} element={<LibraryMainPage />} />
+          <Route path={RouteName.Procument} element={<ProcumentMainPage />} />
+          <Route path={RouteName.Sedu} element={<SeduMainPage />} />
+          <Route path={RouteName.Transport} element={<TransportMainPage />} />
           <Route
-            path="/user-permission/*"
+            path={RouteName.UserPermission}
             element={<UserPermissionMainPage />}
           />
           <Route
-            path="/notification/*"
+            path={RouteName.Notification}
             element={<NotificationMainPage />}
           />
-          <Route path="/help/*" element={<HelpMainPage />} />
-          <Route path="/error-404" element={<ErrorPage />} />
+          <Route path={RouteName.Help} element={<HelpMainPage />} />
+          <Route path={RouteName.ErrorPage} element={<ErrorPage />} />
         </Routes>
 
 

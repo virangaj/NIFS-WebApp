@@ -1,6 +1,6 @@
 import React from 'react'
 import { Navigate, useLocation } from 'react-router-dom'
-import Employees from '../data/Employee.json'
+import Employees from '../../components/data/Employee.json'
 function SeduReportGenerator() {
 
     const location = useLocation().pathname.split('/')[1];

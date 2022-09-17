@@ -1,0 +1,36 @@
+.sub-body-content {
+    width: 90%;
+    height: auto;
+    margin: auto;
+    margin-top: 20px;
+    padding: 20px;
+
+    border-radius: var(--border-radius);
+    background-color: var(--white);
+
+}
+
+
+.page-title {
+    margin-top: 10px;
+    margin-bottom: 20px;
+
+    font-size: 25px;
+    font-weight: 700;
+}
+
+/* page form */
+
+.form-flex {
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+.form-left-section {
+    width: 100%;
+}
+
+.form-right-section {
+    width: 100%;
+}

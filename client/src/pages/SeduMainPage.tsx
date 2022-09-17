@@ -1,24 +1,29 @@
 import React, { useState } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
-import AttendanceFeedback from '../components/sedu/AttendanceFeedback';
-import EventRequest from '../components/sedu/EventRequest';
-import MaterialSearch from '../components/sedu/MaterialSearch';
-import ParticipantMaster from '../components/sedu/ParticipantMaster';
-import ProjectProposal from '../components/sedu/ProjectProposal';
-import QuickResponseCode from '../components/sedu/QuickResponseCode';
-import SeduBooking from '../components/sedu/SeduBooking';
-import SeduReportGenerator from '../components/sedu/SeduReportGenerator';
-import UpdateEventMaterial from '../components/sedu/UpdateEventMaterial';
-import VenueMaster from '../components/sedu/VenueMaster';
-import SecondaryNavbar from '../components/shared/SecondaryNavbar';
-import Pages from '../components/data/SeduNavData.json'
-
-
 
 // icon
 import { HiX } from "react-icons/hi";
-import Dots from '../images/dots_circle_b.png'
 import { Link } from 'react-router-dom';
+
+
+import AttendanceFeedback from './sedu/AttendanceFeedback';
+import EventRequest from './sedu/EventRequest';
+import MaterialSearch from './sedu/MaterialSearch';
+import ParticipantMaster from './sedu/ParticipantMaster';
+import ProjectProposal from './sedu/ProjectProposal';
+import QuickResponseCode from './sedu/QuickResponseCode';
+import SeduBooking from './sedu/SeduBooking';
+import SeduReportGenerator from './sedu/SeduReportGenerator';
+import UpdateEventMaterial from './sedu/UpdateEventMaterial';
+import VenueMaster from './sedu/VenueMaster';
+import SecondaryNavbar from '../components/shared/SecondaryNavbar';
+
+//pages data set
+import Pages from '../components/data/SeduNavData.json'
+import { RouteName } from '../constant/routeNames'
+
+import Dots from '../images/dots_circle_b.png';
+
 
 
 // sedu main page where all other section of sedu department can be access from here
@@ -38,16 +43,16 @@ function SeduMainPage() {
 			</div>
 
 			<Routes>
-				<Route path="/venue-master" element={<VenueMaster />} />
-				<Route path="/participant-master" element={<ParticipantMaster />} />
-				<Route path="/booking" element={<SeduBooking />} />
-				<Route path="/event-request" element={<EventRequest />} />
-				<Route path="/attendance-feedback" element={<AttendanceFeedback />} />
-				<Route path="/update-material" element={<UpdateEventMaterial />} />
-				<Route path="/quick-response" element={<QuickResponseCode />} />
-				<Route path="/project-proposal" element={<ProjectProposal />} />
-				<Route path="/material-search" element={<MaterialSearch />} />
-				<Route path="/report-generator" element={<SeduReportGenerator />} />
+				<Route path={RouteName.SeduVenueMaster} element={<VenueMaster />} />
+				<Route path={RouteName.SeduParticipantMaster} element={<ParticipantMaster />} />
+				<Route path={RouteName.SeduBooking} element={<SeduBooking />} />
+				<Route path={RouteName.SeduEventRequest} element={<EventRequest />} />
+				<Route path={RouteName.SeduAttendanceFeedback} element={<AttendanceFeedback />} />
+				<Route path={RouteName.SeduUpdateMaterial} element={<UpdateEventMaterial />} />
+				<Route path={RouteName.SeduQuickResponse} element={<QuickResponseCode />} />
+				<Route path={RouteName.SeduProjectProposal} element={<ProjectProposal />} />
+				<Route path={RouteName.SeduMaterialSearch} element={<MaterialSearch />} />
+				<Route path={RouteName.SeduReportGenerator} element={<SeduReportGenerator />} />
 
 			</Routes>
 
