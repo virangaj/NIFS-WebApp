@@ -14,18 +14,22 @@ import Autocomplete from '@mui/material/Autocomplete';
 
 import '../pages.css'
 import SelectFacility from './shared/SelectFacility';
-import FacilityData from '../../components/data/Facility.json'
+
+import SetChargers from './shared/SetChargers';
 
 function VenueMaster() {
 
     const venue_unique_id = "VM"
     const [facilities, setFacilities] = useState<any[]>([]);
+    const [chargers, setChargers] = useState<any[]>([]);
+    const [locationName, setLocationName] = useState('')
+
     const [values, setValues] = useState<IVenueMaster>({
         venue_id: venue_unique_id,
         venue_name: "",
         type: "",
         availability: "",
-        location: "",
+        location: locationName ? locationName : "",
         remarks: "",
         capacity: 0,
     });
@@ -48,14 +52,25 @@ function VenueMaster() {
             capacity: 0,
         })
         setFacilities([])
+        setChargers([])
+        setLocationName('')
+
     }
 
     const onSubmit = async (e: any) => {
         e.preventDefault();
+        setValues({
+            venue_id: values?.venue_id,
+            venue_name: values?.venue_name,
+            type: values?.type,
+            availability: values?.availability,
+            location: locationName ? locationName : "",
+            remarks: values?.remarks,
+            capacity: values?.capacity,
+        });
         console.log(values)
     }
 
-    console.log(facilities)
 
     const top100Films = [
         { label: 'The Shawshank Redemption', year: 1994 },
@@ -108,7 +123,7 @@ function VenueMaster() {
                         </Box>
 
                         <Box className='input-field'>
-                            <InputLabel id="demo-simple-select-label">Venue Type</InputLabel>
+                            <InputLabel id="demo-simple-select-label" className='input-label'>Venue Type</InputLabel>
                             <Select
                                 fullWidth
                                 labelId="demo-simple-select-label"
@@ -116,10 +131,10 @@ function VenueMaster() {
                                 value={values.type}
                                 name='type'
                                 size='small'
-                                label="Venue Name"
+                                label="Venue Type"
                                 onChange={onChange}
                             >
-                                <MenuItem value='' disabled>Select a Type</MenuItem>
+                                {/* <MenuItem value='' disabled>Select a Type</MenuItem> */}
                                 <MenuItem value={10}>Ten</MenuItem>
                                 <MenuItem value={20}>Twenty</MenuItem>
                                 <MenuItem value={30}>Thirty</MenuItem>
@@ -128,8 +143,24 @@ function VenueMaster() {
 
                         <SelectFacility setFacilities={setFacilities} facilities={facilities} />
 
+                        <Box className='input-field'>
+
+                            <TextField
+                                fullWidth required id="outlined-basic"
+                                label="Availability"
+                                variant="outlined"
+                                type="search"
+                                name='availability'
+                                size="small"
+                                onChange={onChange}
+                                defaultValue={values.availability}
+
+                            />
+                        </Box>
 
                     </div>
+
+                    {/* form right section */}
                     <div className="form-right-section">
 
                         <Box className='input-field'>
@@ -138,15 +169,17 @@ function VenueMaster() {
                                 size='small'
                                 id="combo-box-demo"
                                 options={top100Films}
-                                onChange={onChange}
+                                getOptionLabel={(option: any) => option.label}
+                                onChange={(event, value: any) => { setLocationName(value.label) }}
                                 renderInput={(params) =>
-                                    <TextField {...params} fullWidth label="Location" name='location' value={values.location}
+                                    <TextField {...params} fullWidth required label="Location" name='locationName' value={locationName}
                                     />}
                             />
                         </Box>
 
 
                         <Box className='input-field'>
+
                             <TextField
                                 fullWidth required id="outlined-basic"
                                 label="Remarks"
@@ -161,7 +194,7 @@ function VenueMaster() {
                         </Box>
 
                         <Box className='input-field'>
-                            <InputLabel id="demo-simple-select-label">Capacity</InputLabel>
+                            <InputLabel id="demo-simple-select-label" className='input-label'>Capacity</InputLabel>
                             <Select
                                 fullWidth
                                 labelId="demo-simple-select-label"
@@ -172,13 +205,14 @@ function VenueMaster() {
                                 label="Venue Name"
                                 onChange={onChange}
                             >
-                                <MenuItem value='' disabled>Select Capacity</MenuItem>
+                                {/* <MenuItem value='' disabled>Select Capacity</MenuItem> */}
                                 <MenuItem value={10}>Ten</MenuItem>
                                 <MenuItem value={20}>Twenty</MenuItem>
                                 <MenuItem value={30}>Thirty</MenuItem>
                             </Select>
                         </Box>
 
+                        <SetChargers chargers={chargers} setChargers={setChargers} />
                     </div>
                 </div>
                 {/* button stack */}

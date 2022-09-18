@@ -128,7 +128,7 @@ const Navbar = () => {
                         </Link>
                     </Box>
 
-                    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+                    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: 'center' }}>
                         {Pages.map((page, index) => (
                             location.pathname.split('/')[1] === page.link.split('/')[1] ?
                                 <Link to={page.link} style={{ textDecoration: 'none' }} key={index}>

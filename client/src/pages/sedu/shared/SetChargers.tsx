@@ -4,56 +4,55 @@ import Box from '@mui/material/Box';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
+import TextField from '@mui/material/TextField';
 
 
 import { HiPlusCircle, HiOutlineTrash } from "react-icons/hi";
 
-import FacilityData from '../../../components/data/Facility.json'
+import ChargersData from '../../../components/data/Chargers.json'
 
 
-function SelectFacility({ setFacilities, facilities }: any) {
+function SetChargers({ setChargers, chargers }: any) {
 
-    // console.log(FacilityData);
     const [items, setItems] = useState<any[]>([]);
     const [newItem, setNewItem] = useState(0);
-
+    const [cost, setCost] = useState('')
 
     const handleDelete = (id: any) => {
-        setFacilities((prev: any) => prev.filter((i: any) => i.id !== id))
+        setChargers((prev: any) => prev.filter((i: any) => i.id !== id))
     }
 
     const handleAdd = () => {
 
         if (newItem) {
             let place = 0;
-            FacilityData.map((data, index) => {
+            ChargersData.map((data, index) => {
                 if (data.id === newItem) {
                     place = index;
                 }
             })
 
             const item = {
-                id: newItem ? FacilityData[place].id : null,
-                value: newItem ? FacilityData[place].value : null,
+                id: newItem ? ChargersData[place].id : null,
+                value: newItem ? ChargersData[place].value : null,
+                cost: cost ? cost : null
             }
 
-            setFacilities((prev: any) => [...prev, item])
+            setChargers((prev: any) => [...prev, item])
         }
         else {
-            alert('Select a Facility to add!')
+            alert('Select Charges to add!')
         }
 
     }
-    // console.log(items)
 
 
     return (
         <>
-
             <Box className='input-field'>
                 <div className='flex-section'>
                     <div className='input-field'>
-                        <InputLabel id="demo-simple-select-label" className='input-label'>Facility</InputLabel>
+                        <InputLabel id="demo-simple-select-label">Charges</InputLabel>
                         <Select
                             fullWidth
                             required
@@ -61,16 +60,32 @@ function SelectFacility({ setFacilities, facilities }: any) {
                             id="demo-simple-select"
                             name='newItem'
                             size='small'
-                            label="Venue Name"
+                            label="Charge"
                             value={newItem}
                             onChange={(e: any) => setNewItem(e.target.value)}
                         >
-                            <MenuItem value='' disabled>Select a Facility</MenuItem>
-                            {FacilityData.map((data, index) =>
+                            <MenuItem value='' disabled>Select a Charge</MenuItem>
+                            {ChargersData.map((data, index) =>
                                 <MenuItem key={index} value={data.id}>{data.value}</MenuItem>
                             )}
                         </Select>
                     </div>
+
+                    <TextField
+                        sx={{ marginLeft: '10px', marginRight: '10px', width: '60%' }}
+                        required id="outlined-basic"
+                        label="Cost"
+                        variant="outlined"
+                        type="number"
+                        name='cost'
+                        size="small"
+                        onChange={(e: any) => setCost(e.target.value)}
+                        value={cost}
+
+                    />
+
+
+
                     <div>
                         <HiPlusCircle className='form-icon' onClick={handleAdd} />
                     </div>
@@ -78,18 +93,18 @@ function SelectFacility({ setFacilities, facilities }: any) {
             </Box>
 
             <div className='items-container'>
-                {facilities.length !== 0 ? facilities.map((i: any, index: number) => (
+                {chargers.length !== 0 ? chargers.map((i: any, index: number) => (
                     <div className='flex-section '>
                         <p key={index}>{i.value}</p>
+                        <p key={index}>{i.cost}</p>
                         <HiOutlineTrash className='text-xl hover:text-red-500 cursor-pointer' onClick={() => handleDelete(i.id)} />
 
                     </div>
                 ))
                     : <p>No Items to display</p>}
             </div>
-
         </>
     )
 }
 
-export default SelectFacility
+export default SetChargers

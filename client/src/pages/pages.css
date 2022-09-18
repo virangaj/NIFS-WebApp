@@ -43,6 +43,10 @@
     margin-bottom: 20px;
 }
 
+.input-label {
+    margin-bottom: 5px;
+}
+
 .flex-section {
     display: flex;
     align-items: center;

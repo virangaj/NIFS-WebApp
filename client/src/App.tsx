@@ -21,6 +21,7 @@ import Login from './pages/Login'
 
 
 import { RouteName } from "./constant/routeNames";
+import Footer from './components/shared/Footer';
 
 
 
@@ -28,7 +29,7 @@ function App() {
 
 
   return (
-    <div className='w-[98%] flex mx-auto flex-col h-[100vh]'>
+    <div className='flex mx-auto flex-col'>
       <Router>
         <Navbar />
 
@@ -57,6 +58,8 @@ function App() {
 
 
       </Router>
+
+      <Footer />
     </div>
   );
 }
