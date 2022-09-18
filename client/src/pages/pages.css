@@ -22,6 +22,7 @@
 
 /* page form */
 
+
 .form-flex {
     display: -webkit-flex;
     display: -ms-flexbox;
@@ -73,7 +74,7 @@
 
 }
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 1024px) {
     body .form-flex {
         flex-direction: column;
     }

@@ -123,7 +123,7 @@ function VenueMaster() {
                                 name='venue_name'
                                 size="small"
                                 onChange={onChange}
-                                defaultValue={values.venue_name}
+                                value={values.venue_name}
 
                             />
                         </Box>
@@ -159,7 +159,7 @@ function VenueMaster() {
                                 name='availability'
                                 size="small"
                                 onChange={onChange}
-                                defaultValue={values.availability}
+                                value={values.availability}
 
                             />
                         </Box>
@@ -175,7 +175,7 @@ function VenueMaster() {
                                 size='small'
                                 id="combo-box-demo"
                                 options={top100Films}
-                                getOptionLabel={(option: any) => option.label}
+                                isOptionEqualToValue={(option: any) => option.label}
                                 onChange={(event, value: any) => { setLocationName(value.label) }}
                                 renderInput={(params) =>
                                     <TextField {...params} fullWidth required label="Location" name='locationName' value={locationName}
@@ -187,7 +187,7 @@ function VenueMaster() {
                         <Box className='input-field'>
 
                             <TextField
-                                fullWidth required id="outlined-basic"
+                                fullWidth required multiline id="outlined-basic"
                                 label="Remarks"
                                 variant="outlined"
                                 type="search"

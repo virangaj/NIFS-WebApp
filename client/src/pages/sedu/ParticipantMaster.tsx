@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
@@ -9,15 +9,14 @@ import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import IVenueMaster from '../../types/VenueMaster';
 import Autocomplete from '@mui/material/Autocomplete';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+
 
 import IParticipantMaster from '../../types/ParticipantMaster';
+import CustomeDataPicker from '../../components/shared/DataPicker';
 
 function ParticipantMaster() {
 
-    const [participant, setParticipants] = useState('')
+    const [participantCode, setParticipantsCode] = useState('')
     const [date, setDate] = React.useState<string | null>(null);
     const [values, setValues] = useState<IParticipantMaster>({
         p_code: '',
@@ -38,6 +37,20 @@ function ParticipantMaster() {
         }))
     }
 
+    useEffect(() => {
+        setValues({
+            p_code: participantCode ? participantCode : '',
+            date: date ? date : '',
+            p_name: values?.p_name,
+            nic: values?.nic,
+            gender: values?.gender,
+            address: values?.address,
+            contactNo: values?.contactNo,
+            email: values?.email,
+            instituteName: values?.instituteName,
+        });
+    }, [participantCode, date])
+
     const resetForm = () => {
         setValues({
             p_code: '',
@@ -54,17 +67,6 @@ function ParticipantMaster() {
     }
     const onSubmit = async (e: any) => {
         e.preventDefault();
-        setValues({
-            p_code: participant ? participant : '',
-            date: date ? date : '',
-            p_name: values?.p_name,
-            nic: values?.nic,
-            gender: values?.gender,
-            address: values?.address,
-            contactNo: values?.contactNo,
-            email: values?.email,
-            instituteName: values?.instituteName,
-        })
         console.log(values)
     }
     console.log(date)
@@ -83,32 +85,135 @@ function ParticipantMaster() {
 
             <form onSubmit={onSubmit}>
 
-                <div className='flex-srction'>
-                    <Box className='input-field'>
+                <div className='flex-section w-[90%]'>
+                    <Box className='input-field lg:mr-10 mx-0 lg:mt-5 mt-0 !w-[60%]'>
                         <Autocomplete
                             disablePortal
-                            size='small'
                             id="combo-box-demo"
                             options={participants}
-                            getOptionLabel={(option: any) => option.label}
-                            onChange={(event, value: any) => { setParticipants(value.label) }}
+                            isOptionEqualToValue={(option: any) => option.label}
+                            onChange={(event, value: any) => { setParticipantsCode(value.label) }}
                             renderInput={(params) =>
-                                <TextField {...params} fullWidth required label="Location" name='locationName' value={participant}
+                                <TextField {...params} fullWidth required label="Participant Code" name='participant' value={participantCode}
                                 />}
                         />
                     </Box>
-                    <LocalizationProvider dateAdapter={AdapterDateFns}>
-                        <DatePicker
-                            mask="__/__/____"
-                            label="Date"
-                            value={date}
-                            onChange={(newValue) => {
-                                setDate(newValue);
-                            }}
-                            renderInput={(params) => <TextField {...params} />}
-                        />
-                    </LocalizationProvider>
+
+                    <CustomeDataPicker date={date} setDate={setDate} className='lg:ml-10 mx-0' />
                 </div>
+                <Box className='input-field'>
+
+                    <TextField fullWidth required
+                        id="outlined-basic"
+                        label="Participant Name"
+                        variant="outlined"
+                        type="text"
+                        name='p_name'
+                        size="small"
+                        onChange={onChange}
+                        value={values.p_name}
+                        autoComplete='name'
+
+                    />
+                </Box>
+                <div className='flex-section w-[90%]'>
+
+                    <Box className='input-field lg:mt-7 mt-0 lg:mr-4 mx-0'>
+
+                        <TextField fullWidth required
+                            id="outlined-basic"
+                            label="NIC"
+                            variant="outlined"
+                            type="text"
+                            name='nic'
+                            size="small"
+                            onChange={onChange}
+                            value={values.nic}
+                        />
+                    </Box>
+
+
+                    <Box className='input-field lg:ml-4 mx-0'>
+                        <InputLabel id="demo-simple-select-label" className='input-label'>Gender</InputLabel>
+                        <Select
+                            fullWidth
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={values.gender}
+                            name='gender'
+                            size='small'
+                            label="Venue Name"
+                            onChange={onChange}
+                            autoComplete='sex'
+                        >
+                            <MenuItem value='' disabled>Select Gender</MenuItem>
+                            <MenuItem value='male'>Male</MenuItem>
+                            <MenuItem value='female'>Female</MenuItem>
+
+                        </Select>
+                    </Box>
+                </div>
+
+                <Box className='input-field'>
+                    <TextField
+                        fullWidth required multiline id="outlined-basic"
+                        label="Address"
+                        variant="outlined"
+                        type="search"
+                        name='address'
+                        size="small"
+                        onChange={onChange}
+                        value={values.address}
+
+                    />
+                </Box>
+
+                <Box className='input-field'>
+                    <TextField
+                        fullWidth required id="outlined-basic"
+                        label="Contact Number"
+                        variant="outlined"
+                        type="search"
+                        name='contactNo'
+                        size="small"
+                        onChange={onChange}
+                        value={values.contactNo}
+                        autoComplete='tel'
+
+
+                    />
+                </Box>
+
+                <Box className='input-field'>
+                    <TextField
+                        fullWidth required id="outlined-basic"
+                        label="email"
+                        variant="outlined"
+                        type="email"
+                        name='email'
+                        size="small"
+                        onChange={onChange}
+                        value={values.email}
+                        autoComplete='email'
+
+
+                    />
+                </Box>
+
+                <Box className='input-field'>
+                    <TextField
+                        fullWidth required id="outlined-basic"
+                        label="Institute Name"
+                        variant="outlined"
+                        type="search"
+                        name='instituteName'
+                        size="small"
+                        onChange={onChange}
+                        value={values.instituteName}
+
+                    />
+                </Box>
+
 
                 <Stack
                     direction="row"
