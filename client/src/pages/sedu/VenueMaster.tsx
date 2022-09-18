@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
@@ -29,7 +29,7 @@ function VenueMaster() {
         venue_name: "",
         type: "",
         availability: "",
-        location: locationName ? locationName : "",
+        location: '',
         remarks: "",
         capacity: 0,
     });
@@ -57,8 +57,8 @@ function VenueMaster() {
 
     }
 
-    const onSubmit = async (e: any) => {
-        e.preventDefault();
+
+    useEffect(() => {
         setValues({
             venue_id: values?.venue_id,
             venue_name: values?.venue_name,
@@ -68,6 +68,12 @@ function VenueMaster() {
             remarks: values?.remarks,
             capacity: values?.capacity,
         });
+    }, [locationName])
+
+
+    const onSubmit = async (e: any) => {
+        e.preventDefault();
+
         console.log(values)
     }
 

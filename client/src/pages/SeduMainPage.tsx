@@ -34,7 +34,7 @@ function SeduMainPage() {
 
 	return (
 
-		<div className='body-content'>
+		<div className='body-content min-h-[80vh]'>
 
 			<SecondaryNavbar pages={Pages} />
 
