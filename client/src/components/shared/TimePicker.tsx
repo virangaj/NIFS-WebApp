@@ -28,6 +28,7 @@ function CustomeTimePicker({ time, setTime, title }: any) {
                 value={value}
                 onChange={setValue}
                 label={title}
+                className='w-[70%]'
                 renderInput={(params) => <TextField {...params} />}
             />
 

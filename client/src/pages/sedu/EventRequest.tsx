@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
@@ -49,6 +49,30 @@ function EventRequest() {
         venue_type: '',
         fund_type: '',
     })
+
+
+
+    useEffect(() => {
+        setValues({
+            event_id: values?.event_id,
+            event_type: values?.event_type,
+            type: values?.type,
+            title: values?.title,
+            remarks: values?.remarks,
+            start_date: startDate ? startDate : '',
+            end_date: endDate ? endDate : '',
+            start_time: startTime ? startTime : '',
+            end_time: endTime ? endTime : '',
+            no_participants: values?.no_participants,
+            budget: values?.budget,
+            project: values?.project,
+            vote: values?.vote,
+            location: values?.location,
+            venue_name: values?.venue_name,
+            venue_type: values?.venue_type,
+            fund_type: values?.fund_type,
+        });
+    }, [startDate, endDate, startTime, endTime])
 
 
     const generateEventId = () => {
@@ -112,7 +136,7 @@ function EventRequest() {
                     <div className="form-left-section !w-[70%]">
                         <div className="grid grid-cols-3">
                             <Box className='input-field flex justify-between items-center'>
-                                <TextField fullWidth required
+                                <TextField required
                                     id="outlined-basic"
                                     className='mr-10'
                                     label="Event ID"
@@ -126,7 +150,7 @@ function EventRequest() {
                                     }}
                                 />
 
-                                <Button variant="contained" className='ml-10' onClick={generateEventId} size="large">New</Button>
+                                <Button variant="contained" className='ml-10' onClick={generateEventId} size="large" color='success'>New</Button>
                             </Box>
                             <CustomeDataPicker date={startDate} setDate={setStartDate} title='Start Date' className='lg:ml-10 mx-0' />
                             <CustomeDataPicker date={endDate} setDate={setEndDate} title='End Date' className='lg:ml-10 mx-0' />
@@ -158,7 +182,7 @@ function EventRequest() {
                             <InputLabel id="demo-simple-select-label" className='input-label'>Project *</InputLabel>
                             <Select
                                 fullWidth
-                                required
+
                                 labelId="demo-simple-select-label"
                                 id="demo-simple-select"
                                 value={values.project}
