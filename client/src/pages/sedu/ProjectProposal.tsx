@@ -2,7 +2,9 @@ import React from 'react'
 
 function ProjectProposal() {
     return (
-        <div>ProjectProposal</div>
+        <div className='sub-body-content'>
+            <h1 className='page-title'>Project Proposal</h1>
+            <hr className='horizontal-line' /></div>
     )
 }
 

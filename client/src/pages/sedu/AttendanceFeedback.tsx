@@ -2,7 +2,9 @@ import React from 'react'
 
 function AttendanceFeedback() {
     return (
-        <div>AttendanceFeedback</div>
+        <div className='sub-body-content'>
+            <h1 className='page-title'>Attendance Feedback</h1>
+            <hr className='horizontal-line' /></div>
     )
 }
 

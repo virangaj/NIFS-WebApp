@@ -80,13 +80,15 @@ function ParticipantMaster() {
         { label: 'Pulp Fiction', year: 1994 }
     ]
     return (
-        <div className='sub-body-content'>
+        <div className='sub-body-content lg:!w-[60%]'>
             <h1 className='page-title'>Participant Master</h1>
+            <hr className='horizontal-line' />
+
 
             <form onSubmit={onSubmit}>
 
-                <div className='flex-section w-[90%]'>
-                    <Box className='input-field lg:mr-10 mx-0 lg:mt-5 mt-0 !w-[60%]'>
+                <div className='form-flex lg:w-[90%]'>
+                    <Box className='input-field lg:mr-10 mx-0 !lg:w-[60%] w-[100%]'>
                         <Autocomplete
                             disablePortal
                             id="combo-box-demo"
@@ -99,7 +101,7 @@ function ParticipantMaster() {
                         />
                     </Box>
 
-                    <CustomeDataPicker date={date} setDate={setDate} className='lg:ml-10 mx-0' />
+                    <CustomeDataPicker date={date} setDate={setDate} title='Date' className='lg:ml-10 mx-0' />
                 </div>
                 <Box className='input-field'>
 
@@ -116,7 +118,7 @@ function ParticipantMaster() {
 
                     />
                 </Box>
-                <div className='flex-section w-[90%]'>
+                <div className='form-flex lg:w-[90%]'>
 
                     <Box className='input-field lg:mt-7 mt-0 lg:mr-4 mx-0'>
 

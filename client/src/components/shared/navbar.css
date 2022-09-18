@@ -130,6 +130,43 @@
 }
 
 
+/* back to top */
+.top-to-btm {
+    position: relative;
+}
+
+.icon-position {
+    position: fixed;
+    bottom: 80px;
+    right: 25px;
+    z-index: 20;
+}
+
+.icon-style {
+    background-color: var(--primary);
+    border: 2px solid #fff;
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+    color: #fff;
+    cursor: pointer;
+    transition: all .5s ease-in-out;
+    outline: none;
+}
+
+.icon-style:hover {
+    animation: none;
+    background: #fff;
+    color: var(--primary);
+    border: 2px solid var(--primary);
+}
+
+
+
+
+
+
+
 
 @media screen and (max-width: 1366px) {
 

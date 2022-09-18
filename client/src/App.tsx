@@ -22,6 +22,7 @@ import Login from './pages/Login'
 
 import { RouteName } from "./constant/routeNames";
 import Footer from './components/shared/Footer';
+import BackToTop from './components/shared/BackToTop';
 
 
 
@@ -32,7 +33,7 @@ function App() {
     <div className='flex mx-auto flex-col'>
       <Router>
         <Navbar />
-
+        <BackToTop />
 
         <Routes>
           <Route path={RouteName.Login} element={<Login />} />

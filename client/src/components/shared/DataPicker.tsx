@@ -6,7 +6,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import TextField from '@mui/material/TextField';
 
 
-function CustomeDataPicker({ date, setDate }: any) {
+function CustomeDataPicker({ date, setDate, title }: any) {
     const [value, setValue] = useState<Date | null>(null);
 
     const months: any = {
@@ -26,9 +26,9 @@ function CustomeDataPicker({ date, setDate }: any) {
 
     useEffect(() => {
         let dateValue: any = value?.toString().split(' ');
-        let month: number = months[dateValue[1].toUpperCase()]
-        let chooseDate: number = parseInt(dateValue[2])
-        let year: number = parseInt(dateValue[3])
+        let month: number = months[dateValue ? dateValue[1].toUpperCase() : '']
+        let chooseDate: number = parseInt(dateValue ? dateValue[2] : '')
+        let year: number = parseInt(dateValue ? dateValue[3] : '')
 
         let actualDate: string = chooseDate + '/' + month + '/' + year
 
@@ -40,7 +40,7 @@ function CustomeDataPicker({ date, setDate }: any) {
         <div>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <DatePicker
-                    label="Basic example"
+                    label={title}
                     value={value}
                     onChange={(newValue) => {
                         setValue(newValue);

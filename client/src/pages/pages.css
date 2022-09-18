@@ -14,7 +14,7 @@
 
 .page-title {
     margin-top: 10px;
-    margin-bottom: 20px;
+
 
     font-size: 25px;
     font-weight: 700;
@@ -67,16 +67,29 @@
     width: 60%;
     margin-bottom: 20px;
     padding: 20px;
-    padding-right: 10%;
     margin-left: 20px;
     background-color: var(--body-content-bg);
     border-radius: var(--border-radius);
 
 }
 
+.items-container-text {
+    font-size: 18px;
+}
+
+.new-item-title {
+
+    font-weight: 600;
+    font-size: 20px;
+}
+
 @media screen and (max-width: 1024px) {
     body .form-flex {
         flex-direction: column;
+    }
+
+    body .items-container-text {
+        font-size: 14px;
     }
 
     body .form-left-section, body .form-right-section {
@@ -87,4 +100,11 @@
         width: 100%;
 
     }
+
+    body .items-container {
+        width: 100%;
+        margin-left: 0;
+
+    }
+
 }

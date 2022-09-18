@@ -22,7 +22,7 @@ body {
   --black: #000;
   --gray: rgba(68, 68, 68, 0.432);
   --border-radius: 10px;
-  --pimary: rgb(10, 94, 133);
+  --primary: rgb(10, 94, 133);
   --warning: #ed3d63;
   --secondary-nav-color: rgb(255, 255, 255);
   --body-content-bg: #f2f5f8;
@@ -115,4 +115,13 @@ a {
 
   font-size: 20px;
   pointer-events: none;
+}
+
+
+.horizontal-line {
+  margin-bottom: 30px;
+
+  background-color: var(--scroll-back);
+  border: 1px solid var(--scroll-back);
+
 }

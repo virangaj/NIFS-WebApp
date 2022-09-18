@@ -78,14 +78,16 @@ function SelectFacility({ setFacilities, facilities }: any) {
             </Box>
 
             <div className='items-container'>
+                <h1 className='new-item-title'>Facilities</h1>
+                <hr className='horizontal-line' />
                 {facilities.length !== 0 ? facilities.map((i: any, index: number) => (
-                    <div className='flex-section '>
-                        <p key={index}>{i.value}</p>
+                    <div className='flex-section mb-4 lg:mb-0'>
+                        <p className='items-container-text' key={index}>{i.value}</p>
                         <HiOutlineTrash className='text-xl hover:text-red-500 cursor-pointer' onClick={() => handleDelete(i.id)} />
 
                     </div>
                 ))
-                    : <p>No Items to display</p>}
+                    : <p className='items-container-text'>No Items to display</p>}
             </div>
 
         </>

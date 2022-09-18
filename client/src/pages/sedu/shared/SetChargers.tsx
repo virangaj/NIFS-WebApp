@@ -93,15 +93,17 @@ function SetChargers({ setChargers, chargers }: any) {
             </Box>
 
             <div className='items-container'>
+                <h1 className='new-item-title'>Chargers</h1>
+                <hr className='horizontal-line' />
                 {chargers.length !== 0 ? chargers.map((i: any, index: number) => (
-                    <div className='flex-section '>
+                    <div className='items-container-text grid grid-cols-3 w-[100%] mb-4 lg:mb-0'>
                         <p key={index}>{i.value}</p>
                         <p key={index}>{i.cost}</p>
                         <HiOutlineTrash className='text-xl hover:text-red-500 cursor-pointer' onClick={() => handleDelete(i.id)} />
 
                     </div>
                 ))
-                    : <p>No Items to display</p>}
+                    : <p className='items-container-text'>No Items to display</p>}
             </div>
         </>
     )

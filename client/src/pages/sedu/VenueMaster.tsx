@@ -89,8 +89,10 @@ function VenueMaster() {
     ]
 
     return (
-        <div className='sub-body-content'>
+        <div className='sub-body-content xl:!w-[60%]'>
             <h1 className='page-title'>Venue Master</h1>
+            <hr className='horizontal-line' />
+
 
             <form onSubmit={onSubmit}>
 

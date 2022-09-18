@@ -4,7 +4,7 @@ import Employees from '../../components/data/Employee.json'
 function SeduReportGenerator() {
 
     const location = useLocation().pathname.split('/')[1];
-    const user = Employees[0]
+    const user = Employees[1]
 
     if (location.toUpperCase() === user.deparment.toUpperCase() && user.admin === true) {
         console.log('consluosion : ', location.toUpperCase() === user.deparment.toUpperCase() && user.admin === true);
@@ -17,7 +17,9 @@ function SeduReportGenerator() {
     }
 
     return (
-        <div>SeduReportGenerator</div>
+        <div className='sub-body-content'>
+            <h1 className='page-title'>Sedu Report Generator</h1>
+            <hr className='horizontal-line' /></div>
     )
 }
 
