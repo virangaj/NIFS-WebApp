@@ -27,7 +27,8 @@ body {
   --secondary-nav-color: rgb(255, 255, 255);
   --body-content-bg: #f2f5f8;
   --scroll-back: rgba(10, 94, 133, 0.342);
-  --border-color: #fff
+  --border-color: #fff;
+  --table-border: rgba(209, 209, 209, 0.377);
 }
 
 

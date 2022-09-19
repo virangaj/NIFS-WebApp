@@ -128,7 +128,7 @@ function EventRequest() {
     }
 
     return (
-        <div className='sub-body-content xl:!w-[90%]'>
+        <div className='sub-body-content xl:!w-[90%] overflow-hidden'>
             <h1 className='page-title'>Event Request</h1>
             <hr className='horizontal-line' />
 
@@ -265,7 +265,7 @@ function EventRequest() {
 
                 </div>
                 {/* event title */}
-                <Box className='input-field ml-4'>
+                <Box className='input-field lg:ml-4 mx-0'>
 
                     <TextField
                         fullWidth required multiline id="outlined-basic"
@@ -282,7 +282,7 @@ function EventRequest() {
                 </Box>
 
                 {/*remarks  */}
-                <Box className='input-field ml-4'>
+                <Box className='input-field lg:ml-4 mx-0'>
 
                     <TextField
                         fullWidth required multiline id="outlined-multiline-flexible"

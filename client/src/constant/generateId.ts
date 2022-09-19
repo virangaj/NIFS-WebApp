@@ -8,6 +8,6 @@ export function generateID (key:any) {
     var time = today.getHours() + '' + today.getMinutes() + '' + today.getSeconds();
    
 
-    return(x.toString().substring(0, 3) + key + time)
+    return(x.toString().substring(0, 3) + key.toUpperCase() + time)
        
 }
