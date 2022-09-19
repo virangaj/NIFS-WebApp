@@ -14,6 +14,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import IParticipantMaster from '../../types/ParticipantMaster';
 import CustomeDataPicker from '../../components/shared/DataPicker';
 
+
 function ParticipantMaster() {
 
     const [participantCode, setParticipantsCode] = useState('')
@@ -64,6 +65,8 @@ function ParticipantMaster() {
             instituteName: '',
         })
 
+
+
     }
     const onSubmit = async (e: any) => {
         e.preventDefault();
@@ -83,6 +86,7 @@ function ParticipantMaster() {
         <div className='sub-body-content lg:!w-[60%]'>
             <h1 className='page-title'>Participant Master</h1>
             <hr className='horizontal-line' />
+
 
 
             <form onSubmit={onSubmit}>
