@@ -15,10 +15,10 @@ import Autocomplete from '@mui/material/Autocomplete';
 
 import IEventRequest from '../../types/EventRequest'
 import { generateID } from '../../constant/generateId';
-import CustomeDataPicker from '../../components/shared/DataPicker';
+import CustomeDataPicker from '../../components/DataPicker';
 
 import Projects from '../../components/data/Project.json'
-import CustomeTimePicker from '../../components/shared/TimePicker';
+import CustomeTimePicker from '../../components/TimePicker';
 
 function EventRequest() {
 

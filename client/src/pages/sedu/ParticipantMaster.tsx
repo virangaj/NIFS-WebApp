@@ -12,13 +12,19 @@ import Autocomplete from '@mui/material/Autocomplete';
 
 
 import IParticipantMaster from '../../types/ParticipantMaster';
-import CustomeDataPicker from '../../components/shared/DataPicker';
+import CustomeDataPicker from '../../components/DataPicker';
+import ParticipantMasterService from '../../services/ParticipantMasterService';
+import Ripple from '../../components/Ripple';
 
 
 function ParticipantMaster() {
 
     const [participantCode, setParticipantsCode] = useState('')
     const [date, setDate] = React.useState<string | null>(null);
+
+    const [loading, setLoading] = useState(false)
+
+
     const [values, setValues] = useState<IParticipantMaster>({
         p_code: '',
         date: '',
@@ -70,6 +76,18 @@ function ParticipantMaster() {
     }
     const onSubmit = async (e: any) => {
         e.preventDefault();
+
+        try {
+            setLoading(true)
+            const result = await ParticipantMasterService.saveParticipant(values)
+            alert('done')
+        } catch (e: any) {
+            setLoading(true)
+            alert(e)
+        }
+        setLoading(false)
+
+
         console.log(values)
     }
     console.log(date)
@@ -89,7 +107,7 @@ function ParticipantMaster() {
 
 
 
-            <form onSubmit={onSubmit}>
+            {!loading ? <form onSubmit={onSubmit}>
 
                 <div className='form-flex lg:w-[90%]'>
                     <Box className='input-field lg:mr-10 mx-0 !lg:w-[60%] w-[100%]'>
@@ -232,7 +250,9 @@ function ParticipantMaster() {
 
                 </Stack>
             </form>
-
+                :
+                <Ripple />
+            }
 
         </div>
     )

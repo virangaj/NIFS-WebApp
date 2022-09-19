@@ -16,13 +16,21 @@ import '../pages.css'
 import SelectFacility from './shared/SelectFacility';
 
 import SetChargers from './shared/SetChargers';
+import VenueMasterService from '../../services/VenueMasterService';
+import Ripple from '../../components/Ripple';
 
 function VenueMaster() {
 
-    const venue_unique_id = "VM"
+    const venue_unique_id = "VM110040"
     const [facilities, setFacilities] = useState<any[]>([]);
     const [chargers, setChargers] = useState<any[]>([]);
     const [locationName, setLocationName] = useState('')
+
+    const [loading, setLoading] = useState(false)
+
+    const [venue, setVenue] = useState([])
+
+
 
     const [values, setValues] = useState<IVenueMaster>({
         venue_id: venue_unique_id,
@@ -57,6 +65,19 @@ function VenueMaster() {
 
     }
 
+    useEffect(() => {
+
+        retrieveVenue()
+
+    }, []);
+
+    const retrieveVenue = () => {
+        VenueMasterService.getAllVenues().then((res: any) => {
+            setVenue(res.data.data)
+        }).catch((e: any) => {
+            console.log(e)
+        })
+    }
 
     useEffect(() => {
         setValues({
@@ -73,11 +94,17 @@ function VenueMaster() {
 
     const onSubmit = async (e: any) => {
         e.preventDefault();
-
+        try {
+            setLoading(true)
+            const result = await VenueMasterService.saveVenue(values)
+            alert('done')
+        } catch (e: any) {
+            setLoading(true)
+            alert(e)
+        }
+        setLoading(false)
         console.log(values)
     }
-
-
     const top100Films = [
         { label: 'The Shawshank Redemption', year: 1994 },
         { label: 'The Godfather', year: 1972 },
@@ -94,7 +121,7 @@ function VenueMaster() {
             <hr className='horizontal-line' />
 
 
-            <form onSubmit={onSubmit}>
+            {!loading ? <form onSubmit={onSubmit}>
 
 
                 <div className="form-flex">
@@ -235,7 +262,9 @@ function VenueMaster() {
 
                 </Stack>
             </form>
-
+                :
+                <Ripple />
+            }
         </div>
     )
 }
