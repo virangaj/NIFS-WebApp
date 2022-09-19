@@ -24,7 +24,7 @@ function SetChargers({ setChargers, chargers }: any) {
 
     const handleAdd = () => {
 
-        if (newItem) {
+        if (newItem && cost) {
             let place = 0;
             ChargersData.map((data, index) => {
                 if (data.id === newItem) {
@@ -96,7 +96,7 @@ function SetChargers({ setChargers, chargers }: any) {
                 <h1 className='new-item-title'>Chargers</h1>
                 <hr className='horizontal-line' />
                 {chargers.length !== 0 ? chargers.map((i: any, index: number) => (
-                    <div className='items-container-text grid grid-cols-3 w-[100%] mb-4 lg:mb-0'>
+                    <div className='items-container-text grid grid-cols-3 w-[100%] mb-4 lg:mb-0 items-center'>
                         <p key={index}>{i.value}</p>
                         <p key={index}>{i.cost}</p>
                         <HiOutlineTrash className='text-xl hover:text-red-500 cursor-pointer' onClick={() => handleDelete(i.id)} />

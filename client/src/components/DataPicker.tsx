@@ -40,6 +40,7 @@ function CustomeDataPicker({ date, setDate, title }: any) {
         <div>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <DatePicker
+
                     label={title}
                     value={value}
                     onChange={(newValue) => {

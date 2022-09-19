@@ -216,7 +216,7 @@ function VenueMaster() {
                         <Box className='input-field'>
 
                             <TextField
-                                fullWidth required multiline id="outlined-basic"
+                                fullWidth required multiline id="outlined-multiline-flexible"
                                 label="Remarks"
                                 variant="outlined"
                                 type="search"
