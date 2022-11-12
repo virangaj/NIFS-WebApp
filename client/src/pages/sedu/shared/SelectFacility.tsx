@@ -56,7 +56,7 @@ function SelectFacility({ setFacilities, facilities }: any) {
                         <InputLabel id="demo-simple-select-label" className='input-label'>Facility</InputLabel>
                         <Select
                             fullWidth
-                            required
+
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
                             name='newItem'

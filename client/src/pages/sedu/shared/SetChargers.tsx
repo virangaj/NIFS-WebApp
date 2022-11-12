@@ -55,7 +55,7 @@ function SetChargers({ setChargers, chargers }: any) {
                         <InputLabel id="demo-simple-select-label">Charges</InputLabel>
                         <Select
                             fullWidth
-                            required
+
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
                             name='newItem'
@@ -73,7 +73,7 @@ function SetChargers({ setChargers, chargers }: any) {
 
                     <TextField
                         sx={{ marginLeft: '10px', marginRight: '10px', width: '60%' }}
-                        required id="outlined-basic"
+                        id="outlined-basic"
                         label="Cost"
                         variant="outlined"
                         type="number"
