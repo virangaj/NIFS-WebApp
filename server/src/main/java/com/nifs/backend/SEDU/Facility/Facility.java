@@ -3,7 +3,7 @@ package com.nifs.backend.SEDU.Facility;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="facility")
+@Table(name="venue_facility")
 public class Facility {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 public interface FacilityRepository extends JpaRepository<Facility, Integer> {
 
 
-    @Query(value="SELECT * FROM facility WHERE facility_id =?1",nativeQuery = true)
+    @Query(value="SELECT * FROM venue_facility WHERE facility_id =?1",nativeQuery = true)
     Facility returnFacility(String id);
 
 }

@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface VenueMasterRepository extends JpaRepository<VenueMaster, Integer> {
 
-    @Query(value="SELECT * FROM venuemaster", nativeQuery = true)
+    @Query(value="SELECT * FROM venue_master", nativeQuery = true)
     List<VenueMaster> returnAll();
 }
