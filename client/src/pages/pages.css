@@ -97,7 +97,7 @@ table {
     min-width: 700px;
     margin-top: 30px;
 
-    border: 2px solid var(--table-border);
+    /* border: 2px solid var(--table-border); */
     border-collapse: collapse;
     border-radius: var(--border-radius);
     overflow-x: scroll;
@@ -112,11 +112,25 @@ td, th {
 
     text-align: left;
     padding: 8px;
-    border: 1px solid var(--table-border);
-
+    /* border: 1px solid var(--table-border); */
+    /* overflow: hidden; */
 }
 
+th:first-of-type {
+    border-top-left-radius: 10px;
+}
 
+th:last-of-type {
+    border-top-right-radius: 10px;
+}
+
+tr:last-of-type td:first-of-type {
+    border-bottom-left-radius: 10px;
+}
+
+tr:last-of-type td:last-of-type {
+    border-bottom-right-radius: 10px;
+}
 
 
 

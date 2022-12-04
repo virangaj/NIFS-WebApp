@@ -73,6 +73,13 @@ a {
 
 }
 
+.default-flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
 /* main page content */
 .main-content {
   width: 90%;

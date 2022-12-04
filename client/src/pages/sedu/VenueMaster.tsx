@@ -7,21 +7,20 @@ import Box from '@mui/material/Box';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
-import IVenueMaster from '../../types/VenueMaster';
 import Autocomplete from '@mui/material/Autocomplete';
 
+import SelectFacility from './shared/SelectFacility'
+import SetChargers from './shared/SetChargers';
+import VenueMasterService from '../../services/VenueMasterService';
+import IVenueMaster from '../../types/VenueMaster';
+import Ripple from '../../components/Ripple';
+import { generateID } from '../../constant/generateId';
 
 
 import '../pages.css'
-import SelectFacility from './shared/SelectFacility';
-
-import SetChargers from './shared/SetChargers';
-import VenueMasterService from '../../services/VenueMasterService';
-import Ripple from '../../components/Ripple';
 
 function VenueMaster() {
 
-    const venue_unique_id = "VM110040"
     const [facilities, setFacilities] = useState<any[]>([]);
     const [chargers, setChargers] = useState<any[]>([]);
     const [locationName, setLocationName] = useState('')
@@ -30,10 +29,12 @@ function VenueMaster() {
 
     const [venue, setVenue] = useState([])
 
+    const [v_id, setV_Id] = useState('');
+    const [success, setSuccess] = useState(false)
 
 
     const [values, setValues] = useState<IVenueMaster>({
-        venue_id: venue_unique_id,
+        venue_id: '',
         venue_name: "",
         type: "",
         availability: "",
@@ -42,6 +43,9 @@ function VenueMaster() {
         capacity: 0,
     });
 
+
+
+
     const onChange = (e: any) => {
         setValues((preState) => ({
             ...preState,
@@ -49,9 +53,17 @@ function VenueMaster() {
         }))
     }
 
+    // generate id on button click
+    const generateVenueID = () => {
+        let id = generateID('VM')
+        setV_Id(id)
+        console.log(v_id)
+
+    }
+
     const resetForm = () => {
         setValues({
-            venue_id: venue_unique_id,
+            venue_id: '',
             venue_name: "",
             type: "",
             availability: "",
@@ -64,10 +76,28 @@ function VenueMaster() {
         setLocationName('')
 
     }
+    const generateFirstId = () => {
+        let x = Math.floor(Math.random() * 10000);
 
+        const today = new Date();
+        var time = today.getHours() + '' + today.getMinutes() + '' + today.getSeconds();
+        const key = "VM"
+        let firstId = x.toString().substring(0, 3) + key.toUpperCase() + time
+        console.log(firstId)
+        setValues({
+            venue_id: firstId,
+            venue_name: '',
+            type: '',
+            availability: '',
+            location: "",
+            remarks: '',
+            capacity: 0,
+        });
+    }
     useEffect(() => {
 
         retrieveVenue()
+        generateFirstId()
 
     }, []);
 
@@ -98,9 +128,16 @@ function VenueMaster() {
             setLoading(true)
             const result = await VenueMasterService.saveVenue(values)
             alert('done')
+            setSuccess(true)
         } catch (e: any) {
             setLoading(true)
+            setSuccess(false)
             alert(e)
+        }
+
+
+        if (success) {
+            resetForm()
         }
         setLoading(false)
         console.log(values)
@@ -126,7 +163,7 @@ function VenueMaster() {
 
                 <div className="form-flex">
                     <div className="form-left-section">
-                        <Box className='input-field'>
+                        <Box className='input-field default-flex'>
 
                             <TextField fullWidth required
                                 id="outlined-basic"
@@ -140,7 +177,10 @@ function VenueMaster() {
                                 InputProps={{
                                     readOnly: true,
                                 }}
+
                             />
+                            <Button variant="outlined" onClick={generateVenueID} style={{ marginLeft: '20px' }}>New</Button>
+
                         </Box>
 
                         <Box className='input-field'>
@@ -248,6 +288,7 @@ function VenueMaster() {
                         </Box>
 
                         <SetChargers chargers={chargers} setChargers={setChargers} />
+
                     </div>
                 </div>
                 {/* button stack */}

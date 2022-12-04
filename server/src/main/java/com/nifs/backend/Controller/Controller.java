@@ -1,20 +1,17 @@
-package com.NIFS.server.controller;
-
-import java.security.NoSuchAlgorithmException;
+package com.nifs.backend.Controller;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping
+@RequestMapping("/test")
 @CrossOrigin
 public class Controller {
 
-    @GetMapping("/getuser")
-    public String getUser() throws NoSuchAlgorithmException {
-        return "Hello";
+    @GetMapping
+    private String returnName(){
+        return "hello";
     }
 }

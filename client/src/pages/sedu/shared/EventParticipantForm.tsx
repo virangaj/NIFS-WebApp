@@ -5,8 +5,11 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { HiPlus, HiX } from "react-icons/hi";
 
-import '../../pages.css'
 import { generateID } from '../../../constant/generateId';
+
+
+
+import '../../pages.css'
 
 function EventParticipantForm({ type, total, setTotal }: any) {
 
@@ -30,7 +33,11 @@ function EventParticipantForm({ type, total, setTotal }: any) {
         }
         setId(generateID(type.substring(0, 3)))
 
-    }, [type, value])
+    }, [value])
+
+
+
+
 
     const onChange = (e: any) => {
         setValue((preState: any) => ({
@@ -41,18 +48,13 @@ function EventParticipantForm({ type, total, setTotal }: any) {
 
 
     const handleAdd = () => {
+
+        console.log(generateID(type.substring(0, 3)))
         if (value.name !== '') {
 
+
             setTotal((prev: any) => [...prev, value]);
-            setValue({
-                id: getId,
-                p_type: type,
-                name: '',
-                nic: '',
-                contactNo: '',
-                address: '',
-                email: ''
-            });
+            reset()
         }
         else {
             alert('Please Enter value to Add!')
@@ -64,7 +66,7 @@ function EventParticipantForm({ type, total, setTotal }: any) {
 
     const reset = () => {
         setValue({
-            id: '',
+            id: generateID(type.substring(0, 3)),
             p_type: type,
             name: '',
             nic: '',
@@ -85,7 +87,7 @@ function EventParticipantForm({ type, total, setTotal }: any) {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 justify-between w-[100%]">
                     <Box className='w-[250px] mb-4'>
                         <TextField
-                            fullWidth required id="outlined-basic"
+                            fullWidth id="outlined-basic"
                             label="Name"
                             variant="outlined"
                             type="search"
@@ -100,7 +102,7 @@ function EventParticipantForm({ type, total, setTotal }: any) {
                     {/* nic number */}
                     <Box className='w-[250px] mb-4'>
                         <TextField
-                            fullWidth required id="outlined-basic"
+                            fullWidth id="outlined-basic"
                             label="NIC"
                             variant="outlined"
                             type="search"
@@ -115,7 +117,7 @@ function EventParticipantForm({ type, total, setTotal }: any) {
                     {/* contact number */}
                     <Box className='w-[250px] mb-4'>
                         <TextField
-                            fullWidth required id="outlined-basic"
+                            fullWidth id="outlined-basic"
                             label="Contact No"
                             variant="outlined"
                             type="search"
@@ -130,7 +132,7 @@ function EventParticipantForm({ type, total, setTotal }: any) {
                     {/* address */}
                     <Box className='w-[250px] mb-4'>
                         <TextField
-                            fullWidth required id="outlined-basic"
+                            fullWidth id="outlined-basic"
                             label="Address"
                             variant="outlined"
                             type="search"
@@ -145,7 +147,7 @@ function EventParticipantForm({ type, total, setTotal }: any) {
                     {/* email */}
                     <Box className='w-[250px] mb-4'>
                         <TextField
-                            fullWidth required id="outlined-basic"
+                            fullWidth id="outlined-basic"
                             label="Email"
                             variant="outlined"
                             type="search"
