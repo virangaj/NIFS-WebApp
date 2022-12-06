@@ -103,7 +103,7 @@ function SelectFacility({ setFacilities, facilities }: any) {
 				<hr className="horizontal-line" />
 				{facilities.length !== 0 ? (
 					facilities.map((i: any, index: number) => (
-						<div className="flex-section mb-4 lg:mb-0">
+						<div className="flex-section mb-4 lg:mb-2">
 							<p className="items-container-text" key={index}>
 								{i.name}
 							</p>

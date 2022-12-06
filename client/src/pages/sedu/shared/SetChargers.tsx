@@ -43,6 +43,20 @@ function SetChargers({ setChargers, chargers }: any) {
         setChargers((prev: any) => prev.filter((i: any) => i.chargeId !== id))
     }
 
+    useEffect(()=>{
+        if(newItem){
+            let place = 0;
+            chargesData && chargesData.map((data, index) => {
+                if (data.chargeId === newItem) {
+                    place = index;
+                }
+            })
+
+            setCost(newItem ? chargesData && chargesData[place].charge : null);
+        }
+
+    },[newItem])
+
     // add charge
     const handleAdd = () => {
 
@@ -76,8 +90,7 @@ function SetChargers({ setChargers, chargers }: any) {
                     <div className='input-field'>
                         <InputLabel id="demo-simple-select-label">Charges</InputLabel>
                         <Select
-                            fullWidth
-
+                            sx={{width: '60%'}}
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
                             name='newItem'
@@ -105,13 +118,9 @@ function SetChargers({ setChargers, chargers }: any) {
                         value={cost}
 
                     /> */}
-                    {/* <p>
-                       {chargesData?.filter((charge:any)=>{
-                        charge.chargeId = newItem;
-                       }).map((charge:any)=>{
-                            return charge.charge;
-                       })}
-                    </p> */}
+                    <p className="mr-20">
+                        {cost && cost}
+                    </p>
 
 
 
@@ -125,7 +134,7 @@ function SetChargers({ setChargers, chargers }: any) {
                 <h1 className='new-item-title'>Chargers</h1>
                 <hr className='horizontal-line' />
                 {chargers.length !== 0 ? chargers.map((i: any, index: number) => (
-                    <div className='items-container-text grid grid-cols-3 w-[100%] mb-4 lg:mb-0 items-center'>
+                    <div className='items-container-text grid grid-cols-3 w-[100%] mb-4 lg:mb-2 items-center'>
                         <p key={index}>{i.name}</p>
                         <p key={index}>{i.charge}</p>
                         <HiOutlineTrash className='text-xl hover:text-red-500 cursor-pointer' onClick={() => handleDelete(i.chargeId)} />
