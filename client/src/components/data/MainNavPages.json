@@ -1,0 +1,52 @@
+[
+    {
+        "id": 0,
+        "title": "Home",
+        "link": "/"
+    },
+    {
+        "id": 1,
+        "title": "Common",
+        "link": "/common"
+    },
+    {
+        "id": 2,
+        "title": "Account",
+        "link": "/account"
+    },
+    {
+        "id": 3,
+        "title": "Admin",
+        "link": "/admin"
+    },
+    {
+        "id": 4,
+        "title": "Library",
+        "link": "/library"
+    },
+    {
+        "id": 5,
+        "title": "Procument",
+        "link": "/procument"
+    },
+    {
+        "id": 6,
+        "title": "SEDU",
+        "link": "/sedu"
+    },
+    {
+        "id": 7,
+        "title": "Transport",
+        "link": "/transport"
+    },
+    {
+        "id": 8,
+        "title": "User Permission",
+        "link": "/user-permission"
+    },
+    {
+        "id": 10,
+        "title": "Help",
+        "link": "/help"
+    }
+]
