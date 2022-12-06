@@ -29,6 +29,7 @@ function VenueMaster() {
     const [loading, setLoading] = useState(false)
 
     const [venue, setVenue] = useState([])
+    const [allFacilities, setAllFacilities] = useState([]);
 
     const [v_id, setV_Id] = useState('');
     const [success, setSuccess] = useState(false)
