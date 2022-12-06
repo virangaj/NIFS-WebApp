@@ -18,6 +18,7 @@ import { generateID } from '../../constant/generateId';
 
 
 import '../pages.css'
+import { setTimeout } from 'timers/promises';
 
 function VenueMaster() {
 
@@ -34,13 +35,14 @@ function VenueMaster() {
 
 
     const [values, setValues] = useState<IVenueMaster>({
-        venue_id: '',
-        venue_name: "",
+        venueId: "",
+        venueName: "",
         type: "",
         availability: "",
         location: '',
         remarks: "",
         capacity: 0,
+        dateCreated: new Date(0),
     });
 
 
@@ -52,24 +54,46 @@ function VenueMaster() {
             [e.target.name]: e.target.value
         }))
     }
+    useEffect(()=>{
+        console.log(v_id)
+        setValues({
+            venueId: v_id,
+            venueName: "",
+            type: "",
+            availability: "",
+            location: "",
+            remarks: "",
+            capacity: 0,
+            dateCreated: new Date(0),
 
+        })
+
+    },[v_id])
     // generate id on button click
     const generateVenueID = () => {
+        VenueMasterService.getNewVenueId().then((res: any) => {
+            setV_Id(res.data);
+        }).catch((e: any) => {
+            console.log(e)
+        })
+
         let id = generateID('VM')
-        setV_Id(id)
+        // setV_Id(id)
         console.log(v_id)
 
     }
 
     const resetForm = () => {
         setValues({
-            venue_id: '',
-            venue_name: "",
+            venueId: '',
+            venueName: "",
             type: "",
             availability: "",
             location: "",
             remarks: "",
             capacity: 0,
+            dateCreated: new Date(0),
+
         })
         setFacilities([])
         setChargers([])
@@ -85,25 +109,30 @@ function VenueMaster() {
         let firstId = x.toString().substring(0, 3) + key.toUpperCase() + time
         console.log(firstId)
         setValues({
-            venue_id: firstId,
-            venue_name: '',
+            venueId: firstId,
+            venueName: '',
             type: '',
             availability: '',
             location: "",
             remarks: '',
             capacity: 0,
+            dateCreated: new Date(0),
         });
     }
     useEffect(() => {
 
-        retrieveVenue()
+       
+        retrieveVenue();
+        // console.log(venue)
         generateFirstId()
 
     }, []);
 
     const retrieveVenue = () => {
         VenueMasterService.getAllVenues().then((res: any) => {
-            setVenue(res.data.data)
+            setVenue(res.data)
+            console.log(venue)
+
         }).catch((e: any) => {
             console.log(e)
         })
@@ -111,13 +140,15 @@ function VenueMaster() {
 
     useEffect(() => {
         setValues({
-            venue_id: values?.venue_id,
-            venue_name: values?.venue_name,
+            venueId: values?.venueId,
+            venueName: values?.venueName,
             type: values?.type,
             availability: values?.availability,
             location: locationName ? locationName : "",
             remarks: values?.remarks,
             capacity: values?.capacity,
+            dateCreated: new Date(),
+
         });
     }, [locationName])
 
@@ -142,6 +173,8 @@ function VenueMaster() {
         setLoading(false)
         console.log(values)
     }
+
+    
     const top100Films = [
         { label: 'The Shawshank Redemption', year: 1994 },
         { label: 'The Godfather', year: 1972 },
@@ -170,10 +203,10 @@ function VenueMaster() {
                                 label="Venue ID"
                                 variant="outlined"
                                 type="text"
-                                name='venue_id'
+                                name='venueId'
                                 size="small"
                                 onChange={onChange}
-                                defaultValue={values.venue_id}
+                                defaultValue={values.venueId}
                                 InputProps={{
                                     readOnly: true,
                                 }}
@@ -189,10 +222,10 @@ function VenueMaster() {
                                 label="Venue Name"
                                 variant="outlined"
                                 type="search"
-                                name='venue_name'
+                                name='venueName'
                                 size="small"
                                 onChange={onChange}
-                                value={values.venue_name}
+                                value={values.venueName}
 
                             />
                         </Box>
