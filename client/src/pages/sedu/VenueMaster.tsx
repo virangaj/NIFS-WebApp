@@ -18,7 +18,6 @@ import { generateID } from '../../constant/generateId';
 
 
 import '../pages.css'
-import { setTimeout } from 'timers/promises';
 
 function VenueMaster() {
 
@@ -29,6 +28,7 @@ function VenueMaster() {
     const [loading, setLoading] = useState(false)
 
     const [venue, setVenue] = useState([])
+   
 
     const [v_id, setV_Id] = useState('');
     const [success, setSuccess] = useState(false)
@@ -127,6 +127,9 @@ function VenueMaster() {
         generateFirstId()
 
     }, []);
+
+
+   
 
     const retrieveVenue = () => {
         VenueMasterService.getAllVenues().then((res: any) => {

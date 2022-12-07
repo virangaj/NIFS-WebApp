@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="JpaPluginProjectSettings" repositoryEqualityConditionTypes="0, 2">
-    <option name="entityNameTemplate" value="${className.underscore()}" />
-    <option name="generateJpaOnGetter" value="true" />
-    <option name="useLazyOnToOneAssociations" value="true" />
-    <option name="scaffoldingLanguage" />
+  <component venueName="JpaPluginProjectSettings" repositoryEqualityConditionTypes="0, 2">
+    <option venueName="entityNameTemplate" value="${className.underscore()}" />
+    <option venueName="generateJpaOnGetter" value="true" />
+    <option venueName="useLazyOnToOneAssociations" value="true" />
+    <option venueName="scaffoldingLanguage" />
   </component>
 </project>
