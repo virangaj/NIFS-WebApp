@@ -1,9 +1,25 @@
 package com.nifs.backend.SEDU.Charges;
 
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.nifs.backend.SEDU.VenueMaster.VenueMaster;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.util.Date;
+import java.util.Set;
 
 @Entity
-@Table(name="venue_charges")
+@Table(name="venue_charges_master")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Charges {
 
 
@@ -13,13 +29,27 @@ public class Charges {
     private int id;
 
 
-    @Column(name="chargeId")
+    @Column(name="charge_id")
     private String chargeId;
 
     @Column(name="name")
     private String name;
 
+    @Column(name="charge")
+    private double charge;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name="date_created")
+    private Date dateCreated;
+
+//    relationships
+    @ManyToMany(mappedBy = "charges", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private Set<VenueMaster> venues;
+
+
+
+//    getter and setter
     public int getId() {
         return id;
     }
@@ -42,6 +72,22 @@ public class Charges {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public double getCharge() {
+        return charge;
+    }
+
+    public void setCharge(double charge) {
+        this.charge = charge;
+    }
+
+    public Date getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
     }
 }
 
