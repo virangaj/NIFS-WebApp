@@ -82,7 +82,7 @@ function SelectFacility({ setFacilities, facilities }: any) {
 							value={newItem}
 							onChange={(e: any) => setNewItem(e.target.value)}
 						>
-							<MenuItem value="" disabled>
+							<MenuItem value={0} disabled>
 								Select a Facility
 							</MenuItem>
 							{facilityData && facilityData.map((data, index) => (
@@ -103,8 +103,8 @@ function SelectFacility({ setFacilities, facilities }: any) {
 				<hr className="horizontal-line" />
 				{facilities.length !== 0 ? (
 					facilities.map((i: any, index: number) => (
-						<div className="flex-section mb-4 lg:mb-2">
-							<p className="items-container-text" key={index}>
+						<div className="flex-section mb-4 lg:mb-2" key={index}>
+							<p className="items-container-text">
 								{i.name}
 							</p>
 							<HiOutlineTrash

@@ -18,6 +18,7 @@ import { generateID } from '../../constant/generateId';
 
 
 import '../pages.css'
+import VenueOtherService from '../../services/VenueOtherService';
 
 function VenueMaster() {
 
@@ -40,9 +41,9 @@ function VenueMaster() {
         type: "",
         availability: "",
         location: '',
-        remarks: "",
+        remark: "",
         capacity: 0,
-        dateCreated: new Date(0),
+        dateCreated: "",
     });
 
 
@@ -58,19 +59,22 @@ function VenueMaster() {
         console.log(v_id)
         setValues({
             venueId: v_id,
-            venueName: "",
-            type: "",
-            availability: "",
-            location: "",
-            remarks: "",
-            capacity: 0,
-            dateCreated: new Date(0),
+            venueName: values?.venueName,
+            type: values?.type,
+            availability: values?.availability,
+            location: locationName ? locationName : "",
+            remark: values?.remark,
+            capacity: values?.capacity,
+            dateCreated:"",
 
         })
+        console.log(values)
 
     },[v_id])
     // generate id on button click
     const generateVenueID = () => {
+        // window.location.reload;
+        resetForm()
         VenueMasterService.getNewVenueId().then((res: any) => {
             setV_Id(res.data);
         }).catch((e: any) => {
@@ -79,7 +83,7 @@ function VenueMaster() {
 
         let id = generateID('VM')
         // setV_Id(id)
-        console.log(v_id)
+        // console.log(v_id)
 
     }
 
@@ -90,11 +94,12 @@ function VenueMaster() {
             type: "",
             availability: "",
             location: "",
-            remarks: "",
+            remark: "",
             capacity: 0,
-            dateCreated: new Date(0),
+            dateCreated: "",
 
         })
+        setV_Id("")
         setFacilities([])
         setChargers([])
         setLocationName('')
@@ -114,9 +119,9 @@ function VenueMaster() {
             type: '',
             availability: '',
             location: "",
-            remarks: '',
+            remark: '',
             capacity: 0,
-            dateCreated: new Date(0),
+            dateCreated: "",
         });
     }
     useEffect(() => {
@@ -148,9 +153,9 @@ function VenueMaster() {
             type: values?.type,
             availability: values?.availability,
             location: locationName ? locationName : "",
-            remarks: values?.remarks,
+            remark: values?.remark,
             capacity: values?.capacity,
-            dateCreated: new Date(),
+            dateCreated:"",
 
         });
     }, [locationName])
@@ -160,7 +165,9 @@ function VenueMaster() {
         e.preventDefault();
         try {
             setLoading(true)
-            const result = await VenueMasterService.saveVenue(values)
+            const venuResult = await VenueMasterService.saveVenue(values);
+            const facCharge = await VenueOtherService.setCharges(chargers, values.venueId);
+            const facResult = await VenueOtherService.setFacilities(facilities, values.venueId);
             alert('done')
             setSuccess(true)
         } catch (e: any) {
@@ -199,9 +206,9 @@ function VenueMaster() {
 
                 <div className="form-flex">
                     <div className="form-left-section">
-                        <Box className='input-field default-flex'>
-
-                            <TextField fullWidth required
+                        <Box className='input-field flex items-center justify-between'>
+                            <p>Venue Id - {v_id ? v_id : ""}</p>
+                            {/* <TextField fullWidth required
                                 id="outlined-basic"
                                 label="Venue ID"
                                 variant="outlined"
@@ -214,7 +221,7 @@ function VenueMaster() {
                                     readOnly: true,
                                 }}
 
-                            />
+                            /> */}
                             <Button variant="outlined" onClick={generateVenueID} style={{ marginLeft: '20px' }}>New</Button>
 
                         </Box>
@@ -246,9 +253,11 @@ function VenueMaster() {
                                 onChange={onChange}
                             >
                                 {/* <MenuItem value='' disabled>Select a Type</MenuItem> */}
-                                <MenuItem value={10}>Ten</MenuItem>
-                                <MenuItem value={20}>Twenty</MenuItem>
-                                <MenuItem value={30}>Thirty</MenuItem>
+                                <MenuItem value="Room">Room</MenuItem>
+                                <MenuItem value="Lab">Lab</MenuItem>
+                                <MenuItem value="Auditorium">Auditorium</MenuItem>
+
+                               
                             </Select>
                         </Box>
 
@@ -293,13 +302,13 @@ function VenueMaster() {
 
                             <TextField
                                 fullWidth required multiline id="outlined-multiline-flexible"
-                                label="Remarks"
+                                label="Remark"
                                 variant="outlined"
                                 type="search"
-                                name='remarks'
+                                name='remark'
                                 size="small"
                                 onChange={onChange}
-                                value={values.remarks}
+                                value={values.remark}
 
                             />
                         </Box>
@@ -316,10 +325,13 @@ function VenueMaster() {
                                 label="Venue Name"
                                 onChange={onChange}
                             >
-                                {/* <MenuItem value='' disabled>Select Capacity</MenuItem> */}
-                                <MenuItem value={10}>Ten</MenuItem>
-                                <MenuItem value={20}>Twenty</MenuItem>
-                                <MenuItem value={30}>Thirty</MenuItem>
+                                <MenuItem value={0} disabled>Select Capacity</MenuItem>
+                                <MenuItem value={10}>10</MenuItem>
+                                <MenuItem value={20}>20</MenuItem>
+                                <MenuItem value={30}>30</MenuItem>
+                                <MenuItem value={50}>50</MenuItem>
+                                <MenuItem value={100}>100</MenuItem>
+
                             </Select>
                         </Box>
 

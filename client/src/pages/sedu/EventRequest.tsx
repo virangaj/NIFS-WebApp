@@ -37,45 +37,45 @@ function EventRequest() {
     const [eventAttachment, setEventAttachment] = useState<File | any>()
 
     const [values, setValues] = useState<IEventRequest>({
-        event_id: '',
-        event_type: '',
+        eventId: '',
+        eventType: '',
         type: '',
         title: '',
         remarks: '',
-        start_date: '',
-        end_date: '',
-        start_time: '',
-        end_time: '',
-        no_participants: 0,
+        startDate: '',
+        endDate: '',
+        startTime: '',
+        endTime: '',
+        noParticipants: 0,
         budget: 0,
         project: '',
         vote: '',
         location: '',
-        venue_name: '',
-        venue_type: '',
-        fund_type: '',
+        venueName: '',
+        venueType: '',
+        fundType: '',
     })
 
 
     useEffect(() => {
         setValues({
-            event_id: values?.event_id,
-            event_type: values?.event_type,
+            eventId: values?.eventId,
+            eventType: values?.eventType,
             type: values?.type,
             title: values?.title,
             remarks: values?.remarks,
-            start_date: startDate ? startDate : '',
-            end_date: endDate ? endDate : '',
-            start_time: startTime ? startTime : '',
-            end_time: endTime ? endTime : '',
-            no_participants: values?.no_participants,
+            startDate: startDate ? startDate : '',
+            endDate: endDate ? endDate : '',
+            startTime: startTime ? startTime : '',
+            endTime: endTime ? endTime : '',
+            noParticipants: values?.noParticipants,
             budget: values?.budget,
             project: values?.project,
             vote: values?.vote,
             location: values?.location,
-            venue_name: values?.venue_name,
-            venue_type: values?.venue_type,
-            fund_type: values?.fund_type,
+            venueName: values?.venueName,
+            venueType: values?.venueType,
+            fundType: values?.fundType,
         });
     }, [startDate, endDate, startTime, endTime])
 
@@ -97,23 +97,23 @@ function EventRequest() {
 
     const resetForm = () => {
         setValues({
-            event_id: '',
-            event_type: '',
+            eventId: '',
+            eventType: '',
             type: '',
             title: '',
             remarks: '',
-            start_date: '',
-            end_date: '',
-            start_time: '',
-            end_time: '',
-            no_participants: 0,
+            startDate: '',
+            endDate: '',
+            startTime: '',
+            endTime: '',
+            noParticipants: 0,
             budget: 0,
             project: '',
             vote: '',
             location: '',
-            venue_name: '',
-            venue_type: '',
-            fund_type: '',
+            venueName: '',
+            venueType: '',
+            fundType: '',
         })
         setStartDate('')
         setStartTime('')
@@ -150,7 +150,7 @@ function EventRequest() {
                             label="Event ID"
                             variant="outlined"
                             type="text"
-                            name='event_id'
+                            name='eventId'
                             onChange={onChange}
                             defaultValue={getEventId}
                             InputProps={{
@@ -177,8 +177,8 @@ function EventRequest() {
 
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
-                            value={values.event_type}
-                            name='event_type'
+                            value={values.eventType}
+                            name='eventType'
                             size='small'
                             label="Event Type"
                             onChange={onChange}
@@ -240,10 +240,10 @@ function EventRequest() {
                             label="No of Participants"
                             variant="outlined"
                             type="number"
-                            name='no_participants'
+                            name='noParticipants'
                             size="small"
                             onChange={onChange}
-                            value={values.no_participants}
+                            value={values.noParticipants}
 
                         />
                     </Box>
@@ -370,8 +370,8 @@ function EventRequest() {
 
                                 labelId="demo-simple-select-label"
                                 id="demo-simple-select"
-                                value={values.fund_type}
-                                name='fund_type'
+                                value={values.fundType}
+                                name='fundType'
                                 size='small'
                                 label="Fund"
                                 onChange={onChange}
@@ -428,10 +428,10 @@ function EventRequest() {
                                 label="Venue Name"
                                 variant="outlined"
                                 type="search"
-                                name='venue_name'
+                                name='venueName'
                                 size="small"
                                 onChange={onChange}
-                                value={values.venue_name}
+                                value={values.venueName}
 
 
                             />
@@ -444,8 +444,8 @@ function EventRequest() {
                             <Select
                                 fullWidth labelId="demo-simple-select-label"
                                 id="demo-simple-select"
-                                value={values.venue_type}
-                                name='venue_type'
+                                value={values.venueType}
+                                name='venueType'
                                 size='small'
                                 label="Fund"
                                 onChange={onChange}
