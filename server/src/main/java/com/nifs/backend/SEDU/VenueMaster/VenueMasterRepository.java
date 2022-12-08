@@ -13,6 +13,6 @@ public interface VenueMasterRepository extends JpaRepository<VenueMaster, Intege
     @Query(value = "SELECT * FROM venue_master WHERE venue_id =?1", nativeQuery = true)
     VenueMaster getVenue(String id);
 
-    @Query(value="SELECT * FROM venue_master", nativeQuery = true)
+    @Query(value = "SELECT * FROM venue_master", nativeQuery = true)
     List<VenueMaster> returnAll();
 }

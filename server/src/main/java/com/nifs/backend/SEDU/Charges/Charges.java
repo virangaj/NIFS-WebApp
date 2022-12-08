@@ -25,14 +25,14 @@ public class Charges {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     private int id;
 
 
-    @Column(name="charge_id")
+    @Column(name="charge_id", length = 10, nullable = false)
     private String chargeId;
 
-    @Column(name="name")
+    @Column(name="name", length = 50, nullable = false)
     private String name;
 
     @Column(name="charge")

@@ -16,34 +16,34 @@ public class VenueMasterController {
     private VenueMasterService venueService;
 
     @GetMapping("/newid")
-    private String returnVenueId(){
-        return venueService.returnVenueId();
+    private String returnNewVenueId() {
+        return venueService.returnNewVenueId();
     }
 
-//    put facilities
+    //    put facilities
     @PutMapping("/{venue_id}/addfacility")
-    private VenueMaster addFacility(
-            @PathVariable String venue_id,
-            @RequestBody Facility[] facData)
-            {
+    private VenueMaster addFacility(@PathVariable String venue_id, @RequestBody Facility[] facData) {
         return venueService.addFacility(venue_id, facData);
     }
 
-//    put charges
+    //    put charges
     @PutMapping("/{venue_id}/addcharge")
-    private VenueMaster addCharge(
-            @PathVariable String venue_id,
-            @RequestBody Charges[] chargeData
-            ){
+    private VenueMaster addCharge(@PathVariable String venue_id, @RequestBody Charges[] chargeData) {
         return venueService.addCharge(venue_id, chargeData);
     }
+
     @PostMapping
-    private Boolean createVenue(@RequestBody VenueMaster venueData){
+    private Boolean createVenue(@RequestBody VenueMaster venueData) {
         return venueService.createVenue(venueData);
     }
 
+    @DeleteMapping("/delete/{venue_id}")
+    private Boolean deleteVenue(@PathVariable String venue_id) {
+        return venueService.deleteVenue(venue_id);
+    }
+
     @GetMapping()
-    private List<VenueMaster> getAll(){
+    private List<VenueMaster> getAll() {
         return venueService.getAll();
     }
 }

@@ -19,7 +19,10 @@ public class ChargeController {
     String createCharge(@RequestBody Charges chargeData){
         return chargeService.createCharge(chargeData);
     }
-
+    @GetMapping("/newid")
+    String returnNewChargeId(){
+        return chargeService.returnNewChargeId();
+    }
     @GetMapping
     List<Charges> returnData(){
         return chargeService.getAll();

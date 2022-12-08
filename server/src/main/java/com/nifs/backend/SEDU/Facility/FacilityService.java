@@ -19,14 +19,22 @@ public class FacilityService {
             facRepo.save(facData);
             return "Facility Added";
 
-        }
-        else{
+        } else {
             return "Facility cannot Added";
         }
     }
-    public List<Facility> getAll(){
+
+    public List<Facility> getAll() {
         return facRepo.findAll();
     }
 
 
+    public String returnNewFacilityId() {
+        String lastId = facRepo.returnLastId();
+        String idText = lastId.replaceAll("[^A-Za-z]", "");
+        int idNum = Integer.parseInt(lastId.replaceAll("[^0-9]", ""));
+        idNum = idNum + 1;
+
+        return idText + idNum;
+    }
 }

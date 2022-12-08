@@ -25,10 +25,10 @@ public class Facility {
     private Integer id;
 
 
-    @Column(name="facility_id")
+    @Column(name="facility_id", nullable = false, length = 10)
     private String facilityId;
 
-    @Column(name = "facility_name")
+    @Column(name = "facility_name",  nullable = false, length = 50)
     private String name;
 
     @Temporal(TemporalType.TIMESTAMP)

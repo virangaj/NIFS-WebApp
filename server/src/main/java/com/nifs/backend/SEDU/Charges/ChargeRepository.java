@@ -9,6 +9,6 @@ public interface ChargeRepository extends JpaRepository<Charges, Integer> {
     @Query(value="SELECT * FROM venue_charges_master WHERE charge_id =?1", nativeQuery = true)
     Charges returnCharge(String id);
 
-
-
+    @Query(value = "SELECT charge_id FROM venue_charges_master ORDER BY charge_id DESC LIMIT 1", nativeQuery = true)
+    String returnLastId();
 }

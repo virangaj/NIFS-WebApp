@@ -13,12 +13,19 @@ public class FacilityController {
     @Autowired
     private FacilityService facService;
 
+
     @PostMapping
-    String createFacility(@RequestBody Facility facData){
+    String createFacility(@RequestBody Facility facData) {
         return facService.createFacility(facData);
     }
+
+    @GetMapping("/newid")
+    String returnFacilityId() {
+        return facService.returnNewFacilityId();
+    }
+
     @GetMapping
-    List<Facility> getAll(){
+    List<Facility> getAll() {
         return facService.getAll();
     }
 }

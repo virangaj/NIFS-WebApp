@@ -64,10 +64,10 @@ public class VenueMasterService {
         return venueRepo.findAll();
     }
 
-    public String returnVenueId() {
+    public String returnNewVenueId() {
         String lastId = venueRepo.returnLastId();
-        String idText =lastId.replaceAll("[^A-Za-z]", "");
-        int idNum =Integer.parseInt(lastId.replaceAll("[^0-9]", ""));
+        String idText = lastId.replaceAll("[^A-Za-z]", "");
+        int idNum = Integer.parseInt(lastId.replaceAll("[^0-9]", ""));
 
         idNum = idNum + 1;
 
@@ -76,4 +76,12 @@ public class VenueMasterService {
     }
 
 
+    public Boolean deleteVenue(String venueId) {
+        VenueMaster venueMaster = venueRepo.getVenue(venueId);
+        if (venueMaster != null) {
+            venueRepo.deleteById(venueMaster.getId());
+            return true;
+        }
+        return false;
+    }
 }

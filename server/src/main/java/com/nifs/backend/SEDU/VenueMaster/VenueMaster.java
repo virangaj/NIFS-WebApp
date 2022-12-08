@@ -26,23 +26,22 @@ public class VenueMaster {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private int id;
-    @Column(name = "venue_id")
+    @Column(name = "venue_id", nullable = false, length = 10)
     private String venueId;
-    @Column(name = "name")
+    @Column(name = "name", nullable = false, length = 255)
     private String venueName;
-    @Column(name = "type")
-
+    @Column(name = "type", nullable = false, length = 50)
     private String type;
-    @Column(name="Capacity")
+    @Column(name="Capacity", nullable = false)
     private int capacity;
 
-    @Column(name="remark")
+    @Column(name="remark", nullable = false, length = 255)
     private String remark;
 
-    @Column(name="location")
+    @Column(name="location", nullable = false, length = 50)
     private String location;
 
-    @Column(name="availability")
+    @Column(name="availability", nullable = false, length = 255)
     private String availability;
 
     @Temporal(TemporalType.TIMESTAMP)
