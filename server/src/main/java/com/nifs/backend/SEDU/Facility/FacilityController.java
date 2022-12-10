@@ -1,5 +1,6 @@
 package com.nifs.backend.SEDU.Facility;
 
+import com.nifs.backend.SEDU.Charges.Charges;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,10 +16,7 @@ public class FacilityController {
     private FacilityService facService;
 
 
-    @PostMapping
-    String createFacility(@RequestBody Facility facData) {
-        return facService.createFacility(facData);
-    }
+
 
     @GetMapping("/newid")
     String returnFacilityId() {
@@ -33,5 +31,17 @@ public class FacilityController {
     @GetMapping
     List<Facility> getAll() {
         return facService.getAll();
+    }
+
+//    create new facility
+    @PostMapping
+    String createFacility(@RequestBody Facility facData) {
+        return facService.createFacility(facData);
+    }
+
+//    update facility
+    @PutMapping("/update/{facilityId}")
+    Boolean updateFacility(@PathVariable String facilityId, @RequestBody Facility facData) {
+        return facService.updateFacility(facilityId, facData);
     }
 }

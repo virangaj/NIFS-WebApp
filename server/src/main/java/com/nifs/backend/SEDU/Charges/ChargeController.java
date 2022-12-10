@@ -35,19 +35,27 @@ public class ChargeController {
     }
 
     @GetMapping
-    List<Charges> returnData(){
+    List<Charges> returnData() {
         return chargeService.getAll();
     }
 
-//create new charge
+    //create new charge
     @PostMapping
-    String createCharge(@RequestBody Charges chargeData){
+    String createCharge(@RequestBody Charges chargeData) {
         return chargeService.createCharge(chargeData);
     }
 
-//    delete charge
+
+    //    update charge
+    @PutMapping("/update/{chargeId}")
+    Boolean updateCharge(@PathVariable String chargeId, @RequestBody Charges chargeData) {
+        return chargeService.updateCharge(chargeId, chargeData);
+    }
+
+
+    //    delete charge
     @DeleteMapping("/delete/{chargeId}")
-    private Boolean deleteCharge(@PathVariable String chargeId){
+    private Boolean deleteCharge(@PathVariable String chargeId) {
         return chargeService.deleteCharge(chargeId);
     }
 

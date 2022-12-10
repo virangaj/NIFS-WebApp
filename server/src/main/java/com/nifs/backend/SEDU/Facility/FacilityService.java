@@ -43,4 +43,14 @@ public class FacilityService {
     public Optional<Facility> returnFacility(String facilityId) {
         return facRepo.findById(facilityId);
     }
+
+    public Boolean updateFacility(String facilityId, Facility facData) {
+        if(facRepo.returnFacility(facilityId) != null){
+            facRepo.update(facData.getName(), facilityId);
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 }

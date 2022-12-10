@@ -3,6 +3,7 @@ package com.nifs.backend.SEDU.Charges;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -28,7 +29,7 @@ public class ChargeService {
 
 //    return all charges
     public List<Charges> getAll(){
-        return chargeRepo.findAll();
+        return (List<Charges>) chargeRepo.findAll();
     }
 
 
@@ -53,12 +54,23 @@ public class ChargeService {
 
 //    delete charge by id
     public Boolean deleteCharge(String chargeId) {
+
         Charges charge = chargeRepo.returnCharge(chargeId);
         if(charge != null){
             chargeRepo.deleteById(charge.getChargeId());
             return true;
         }
         return false;
+    }
+
+    public Boolean updateCharge(String chargeId, Charges chargeData) {
+       if(chargeRepo.returnCharge(chargeId) != null){
+           chargeRepo.Update(chargeData.getName(), chargeData.getCharge(), chargeId);
+           return true;
+       }
+       else{
+           return false;
+       }
     }
 
 //    public Charges editCharge(String chargeId, Charges chargeData) {

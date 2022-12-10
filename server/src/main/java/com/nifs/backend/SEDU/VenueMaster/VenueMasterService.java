@@ -22,12 +22,24 @@ public class VenueMasterService {
     @Autowired
     private ChargeRepository chargeRepo;
 
-//    add facility
+
+    public Boolean createVenue(VenueMaster venueData) {
+        if (venueRepo.getVenue(venueData.getVenueId()) == null) {
+            Date d = new Date();
+            venueData.setDateCreated(d);
+            venueRepo.save(venueData);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    //    add facility
     public VenueMaster addFacility(String venueId, Facility[] facData) {
         Set<Facility> facilitySet = null;
         VenueMaster venueMaster = venueRepo.getVenue(venueId);
         facilitySet = venueMaster.getFacilities();
-        for(Facility f: facData){
+        for (Facility f : facData) {
             Facility facility = facRepo.returnFacility(f.getFacilityId());
             facilitySet.add(facility);
         }
@@ -36,17 +48,7 @@ public class VenueMasterService {
 
     }
 
-//    remove facility
-    public VenueMaster removeFacility(String venueId, Facility facData){
-        Set<Facility> facilitySet = null;
-        VenueMaster venueMaster = venueRepo.getVenue(venueId);
-        facilitySet = venueMaster.getFacilities();
-        Facility facility = facRepo.returnFacility(facData.getFacilityId());
-        facilitySet.remove(facility);
 
-        venueMaster.setFacilities(facilitySet);
-        return venueRepo.save(venueMaster);
-    }
 //    add charge
     public VenueMaster addCharge(String venueId, Charges[] chargeData) {
         Set<Charges> chargeSet = null;
@@ -61,17 +63,7 @@ public class VenueMasterService {
 
     }
 
-    public Boolean createVenue(VenueMaster venueData){
-        if(venueRepo.getVenue(venueData.getVenueId()) == null){
-            Date d = new Date();
-            venueData.setDateCreated(d);
-            venueRepo.save(venueData);
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
+
 
     public List<VenueMaster> getAll(){
         return venueRepo.findAll();
@@ -79,16 +71,20 @@ public class VenueMasterService {
 
     public String returnNewVenueId() {
         String lastId = venueRepo.returnLastId();
-        String idText = lastId.replaceAll("[^A-Za-z]", "");
-        int idNum = Integer.parseInt(lastId.replaceAll("[^0-9]", ""));
+        if (lastId != null) {
+            String idText = lastId.replaceAll("[^A-Za-z]", "");
+            int idNum = Integer.parseInt(lastId.replaceAll("[^0-9]", ""));
 
-        idNum = idNum + 1;
+            idNum = idNum + 1;
 
-        return idText + idNum;
+            return idText + idNum;
+        } else {
+            return "VM1001";
+        }
 
     }
 
-
+    //delete venue
     public Boolean deleteVenue(String venueId) {
         VenueMaster venueMaster = venueRepo.getVenue(venueId);
         if (venueMaster != null) {
@@ -98,8 +94,18 @@ public class VenueMasterService {
         return false;
     }
 
-//   get venue bu id
+    //   get venue bu id
     public Optional<VenueMaster> returnVenue(String venueId) {
         return venueRepo.findById(venueId);
+    }
+
+    //    update venue
+    public Boolean updateVenue(String venueId, VenueMaster venueData) {
+        if (venueRepo.getVenue(venueId) != null) {
+            venueRepo.updateVenueMaster(venueData.getVenueName(), venueData.getType(), venueData.getCapacity(), venueData.getRemark(), venueData.getLocation(), venueData.getAvailability(), venueId);
+            return true;
+        } else {
+            return false;
+        }
     }
 }
