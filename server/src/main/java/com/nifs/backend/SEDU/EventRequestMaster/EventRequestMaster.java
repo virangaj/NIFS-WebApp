@@ -13,11 +13,12 @@ import java.sql.Blob;
 @Table(name = "event_request_master")
 public class EventRequestMaster {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Long id;
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name = "id", nullable = false)
+//    private Long id;
 
+    @Id
     @Column(name = "event_id", nullable = false, length = 100)
     private String eventId;
 

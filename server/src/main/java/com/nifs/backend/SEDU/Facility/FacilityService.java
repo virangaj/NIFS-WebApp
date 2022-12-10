@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class FacilityService {
@@ -36,5 +37,10 @@ public class FacilityService {
         idNum = idNum + 1;
 
         return idText + idNum;
+    }
+//    get facility by id
+
+    public Optional<Facility> returnFacility(String facilityId) {
+        return facRepo.findById(facilityId);
     }
 }

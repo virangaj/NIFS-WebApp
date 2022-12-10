@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -33,6 +34,18 @@ public class VenueMasterService {
         venueMaster.setFacilities(facilitySet);
         return venueRepo.save(venueMaster);
 
+    }
+
+//    remove facility
+    public VenueMaster removeFacility(String venueId, Facility facData){
+        Set<Facility> facilitySet = null;
+        VenueMaster venueMaster = venueRepo.getVenue(venueId);
+        facilitySet = venueMaster.getFacilities();
+        Facility facility = facRepo.returnFacility(facData.getFacilityId());
+        facilitySet.remove(facility);
+
+        venueMaster.setFacilities(facilitySet);
+        return venueRepo.save(venueMaster);
     }
 //    add charge
     public VenueMaster addCharge(String venueId, Charges[] chargeData) {
@@ -79,9 +92,14 @@ public class VenueMasterService {
     public Boolean deleteVenue(String venueId) {
         VenueMaster venueMaster = venueRepo.getVenue(venueId);
         if (venueMaster != null) {
-            venueRepo.deleteById(venueMaster.getId());
+            venueRepo.deleteById(venueMaster.getVenueId());
             return true;
         }
         return false;
+    }
+
+//   get venue bu id
+    public Optional<VenueMaster> returnVenue(String venueId) {
+        return venueRepo.findById(venueId);
     }
 }

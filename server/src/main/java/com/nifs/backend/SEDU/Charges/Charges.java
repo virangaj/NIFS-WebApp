@@ -23,12 +23,12 @@ import java.util.Set;
 public class Charges {
 
 
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name = "id", nullable = false)
+//    private int id;
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private int id;
-
-
     @Column(name="charge_id", length = 10, nullable = false)
     private String chargeId;
 
@@ -50,44 +50,6 @@ public class Charges {
 
 
 //    getter and setter
-    public int getId() {
-        return id;
-    }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getChargeId() {
-        return chargeId;
-    }
-
-    public void setChargeId(String chargeId) {
-        this.chargeId = chargeId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public double getCharge() {
-        return charge;
-    }
-
-    public void setCharge(double charge) {
-        this.charge = charge;
-    }
-
-    public Date getDateCreated() {
-        return dateCreated;
-    }
-
-    public void setDateCreated(Date dateCreated) {
-        this.dateCreated = dateCreated;
-    }
 }
 

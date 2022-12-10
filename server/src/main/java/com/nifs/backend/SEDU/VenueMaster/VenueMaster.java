@@ -22,10 +22,11 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 public class VenueMaster {
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name = "id", nullable = false)
+//    private int id;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private int id;
     @Column(name = "venue_id", nullable = false, length = 10)
     private String venueId;
     @Column(name = "name", nullable = false, length = 255)
@@ -77,78 +78,9 @@ public class VenueMaster {
     private Set<Facility> facilities;
 
 
-//getter and setter
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-
-    }
 
 
-    public String getVenueId() {
-        return venueId;
-    }
 
-    public void setVenueId(String venueId) {
-        this.venueId = venueId;
-    }
 
-    public String getVenueName() {
-        return venueName;
-    }
 
-    public void setVenueName(String venueName) {
-        this.venueName = venueName;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public int getCapacity() {
-        return capacity;
-    }
-
-    public void setCapacity(int capacity) {
-        this.capacity = capacity;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public String getAvailability() {
-        return availability;
-    }
-
-    public void setAvailability(String availability) {
-        this.availability = availability;
-    }
-
-    public Date getDateCreated() {
-        return dateCreated;
-    }
-
-    public void setDateCreated(Date dateCreated) {
-        this.dateCreated = dateCreated;
-    }
 }

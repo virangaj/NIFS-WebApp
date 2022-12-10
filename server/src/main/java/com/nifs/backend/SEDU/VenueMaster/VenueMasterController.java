@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequestMapping("/sedu/venuemaster")
 @RestController
@@ -20,10 +21,20 @@ public class VenueMasterController {
         return venueService.returnNewVenueId();
     }
 
+//    get venue by id
+    @GetMapping("/{venueId}")
+    Optional<VenueMaster> returnVenue(@PathVariable String venueId){
+        return venueService.returnVenue(venueId);
+    }
+
     //    put facilities
     @PutMapping("/{venue_id}/addfacility")
     private VenueMaster addFacility(@PathVariable String venue_id, @RequestBody Facility[] facData) {
         return venueService.addFacility(venue_id, facData);
+    }
+    @PutMapping("/{venue_id}/deletefacility")
+    private VenueMaster removeFacility(@PathVariable String venue_id, @RequestBody Facility facData) {
+        return venueService.removeFacility(venue_id, facData);
     }
 
     //    put charges

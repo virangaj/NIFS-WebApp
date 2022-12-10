@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DivisionMasterService {
@@ -32,8 +33,9 @@ public class DivisionMasterService {
     public Boolean deleteDivision(String divisionId) {
         DivisionMaster divisionMaster = diviMasterRepo.getDivisionById(divisionId);
 
+
         if (divisionMaster != null) {
-            diviMasterRepo.deleteById(divisionMaster.getId());
+            diviMasterRepo.deleteById(divisionMaster.getDivisionId());
             return true;
         } else {
             return false;
@@ -42,11 +44,21 @@ public class DivisionMasterService {
 
     public String returnNewDivisionId() {
         String lastId = diviMasterRepo.returnLastId();
-        String idText = lastId.replaceAll("[^A-Za-z]", "");
-        int idNum = Integer.parseInt(lastId.replaceAll("[^0-9]", ""));
+       if(lastId == null){
+           return "DM1001";
+       }
+       else{
+           String idText = lastId.replaceAll("[^A-Za-z]", "");
+           int idNum = Integer.parseInt(lastId.replaceAll("[^0-9]", ""));
 
-        idNum = idNum + 1;
+           idNum = idNum + 1;
 
-        return idText + idNum;
+           return idText + idNum;
+       }
+    }
+
+//    return division by id
+    public Optional<DivisionMaster> returnDivision(String divisionId) {
+        return diviMasterRepo.findById(divisionId);
     }
 }

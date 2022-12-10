@@ -14,11 +14,11 @@ import java.util.Date;
 @Table(name="division_master")
 public class DivisionMaster {
 
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name = "id", nullable = false)
+//    private int id;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private int id;
-
     @Column(name = "division_id", nullable = false, length = 50)
     private String divisionId;
 
