@@ -102,10 +102,27 @@ public class VenueMasterService {
     //    update venue
     public Boolean updateVenue(String venueId, VenueMaster venueData) {
         if (venueRepo.getVenue(venueId) != null) {
-            venueRepo.updateVenueMaster(venueData.getVenueName(), venueData.getType(), venueData.getCapacity(), venueData.getRemark(), venueData.getLocation(), venueData.getAvailability(), venueId);
+            Date d = new Date();
+            venueRepo.updateVenueMaster(venueData.getVenueName(), venueData.getType(), venueData.getCapacity(), venueData.getRemark(), venueData.getLocation(), venueData.getAvailability(),d, venueId);
+
             return true;
         } else {
             return false;
+        }
+    }
+
+
+    public VenueMaster removeFacility(String venueId, Facility facData) {
+        VenueMaster venueMaster = venueRepo.getVenue(venueId);
+        Facility facility = facRepo.returnFacility(facData.getFacilityId());
+        if(venueMaster != null && facility != null) {
+            Set<Facility> facilitySet = venueMaster.getFacilities();
+            facilitySet.remove(facility);
+            venueMaster.setFacilities(facilitySet);
+            return venueRepo.save(venueMaster);
+        }
+        else {
+            return null;
         }
     }
 }

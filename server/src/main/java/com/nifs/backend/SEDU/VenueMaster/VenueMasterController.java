@@ -60,5 +60,10 @@ public class VenueMasterController {
         return venueService.deleteVenue(venue_id);
     }
 
+    @PutMapping("/remove/facility/{venueId}")
+    private VenueMaster removeFacility(@PathVariable String venueId, @RequestBody Facility facData){
+        return venueService.removeFacility(venueId, facData);
+    }
+
 
 }

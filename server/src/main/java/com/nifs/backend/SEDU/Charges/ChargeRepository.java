@@ -13,7 +13,11 @@ import org.springframework.transaction.annotation.Transactional;
 public interface ChargeRepository extends CrudRepository<Charges, String> {
     @Transactional
     @Modifying
-    @Query("update Charges c set c.name = :name, c.charge = :charge where c.chargeId like :chargeId")
+    @Query("DELETE FROM Charges c WHERE c.chargeId LIKE :chargeId")
+    void deleteByChargeIdLike(String chargeId);
+    @Transactional
+    @Modifying
+    @Query("UPDATE Charges c set c.name = :name, c.charge = :charge WHERE c.chargeId LIKE :chargeId")
     void Update(@Param("name") String name, @Param("charge") double charge,
                 @Param("chargeId") String chargeId);
 

@@ -57,10 +57,12 @@ public class ChargeService {
 
         Charges charge = chargeRepo.returnCharge(chargeId);
         if(charge != null){
-            chargeRepo.deleteById(charge.getChargeId());
+            chargeRepo.deleteByChargeIdLike(chargeId);
             return true;
         }
-        return false;
+        else{
+            return false;
+        }
     }
 
     public Boolean updateCharge(String chargeId, Charges chargeData) {

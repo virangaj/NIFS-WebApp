@@ -29,9 +29,9 @@ public class EmployeeCategoryController {
         return empCatService.returnNewEmpCatId();
     }
 //    get employee cat by id
-    @GetMapping("/{empcatId}")
-    Optional<EmployeeCategory> returnEmpCat(@PathVariable String empcatId){
-        return empCatService.returnEmpCat(empcatId);
+    @GetMapping("/{empCatData}")
+    Optional<EmployeeCategory> returnEmpCat(@PathVariable String empCatData){
+        return empCatService.returnEmpCat(empCatData);
     }
     //    create new employee category
     @PostMapping
@@ -39,7 +39,9 @@ public class EmployeeCategoryController {
         return empCatService.createNewCategory(empCatData);
     }
 
-//    delete employee category
-
-
+//    update employee category
+    @PutMapping("/update/{empCatId}")
+    Boolean updateEmployeeCategory(@RequestBody EmployeeCategory empCatData, @PathVariable String empCatId){
+        return empCatService.updateEmployeeCategory(empCatData, empCatId);
+    }
 }

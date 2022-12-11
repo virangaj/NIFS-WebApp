@@ -3,6 +3,7 @@ package com.nifs.backend.Admin.EmployeeCategory;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -11,7 +12,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "employee_category")
+@Table(name = "employee_category_master")
 public class EmployeeCategory {
 
 //    @Id
@@ -29,5 +30,11 @@ public class EmployeeCategory {
     @Column(name = "ot_rate", nullable = false)
     private float otRate;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "date_created")
+    private Date dateCreated;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name="date_updated")
+    private Date dateUpdated;
 }

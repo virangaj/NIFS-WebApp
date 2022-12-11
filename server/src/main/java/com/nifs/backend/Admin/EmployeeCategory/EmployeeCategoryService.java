@@ -3,6 +3,7 @@ package com.nifs.backend.Admin.EmployeeCategory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +22,8 @@ public class EmployeeCategoryService {
     //    add new employee category
     public Boolean createNewCategory(EmployeeCategory empCatData) {
         if(empCatRepo.returnEmployeeCategory(empCatData.getEmployeeCategoryId()) == null){
+            Date d = new Date();
+            empCatData.setDateCreated(d);
             empCatRepo.save(empCatData);
             return true;
         }
@@ -44,8 +47,17 @@ public class EmployeeCategoryService {
         }
     }
 
-//    return empcat by id
-    public Optional<EmployeeCategory> returnEmpCat(String empcatId) {
-        return empCatRepo.findById(empcatId);
+//    return empCat by id
+    public Optional<EmployeeCategory> returnEmpCat(String empCatId) {
+        return empCatRepo.findById(empCatId);
+    }
+
+    public Boolean updateEmployeeCategory(EmployeeCategory empCatData, String empCatId) {
+        if(empCatRepo.returnEmployeeCategory(empCatId) != null){
+            Date d = new Date();
+            empCatRepo.UpdateEmployeeCategory(empCatData.getDescription(), empCatData.getOtRate(), d, empCatId);
+            return true;
+        }
+        return false;
     }
 }

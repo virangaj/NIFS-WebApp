@@ -49,6 +49,9 @@ public class VenueMaster {
     @Column(name="date_created")
     private Date dateCreated;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name="date_updated")
+    private Date dateUpdated;
 
 
 
