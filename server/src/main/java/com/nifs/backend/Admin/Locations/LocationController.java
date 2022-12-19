@@ -1,4 +1,4 @@
-package com.nifs.backend.SEDU.VenueLocation;
+package com.nifs.backend.Admin.Locations;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -6,15 +6,16 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("sedu/venuelocation")
+@RequestMapping("admin/locations")
 @CrossOrigin
-public class VenueLocationController {
+public class LocationController {
 
-    @Autowired VenueLocationService venLocService;
+    @Autowired
+    LocationService venLocService;
 
 //    get all locations
     @GetMapping
-    private List<VenueLocation> returnAllLocations(){
+    private List<Locations> returnAllLocations(){
         return venLocService.returnAllLocations();
     }
 
@@ -26,14 +27,14 @@ public class VenueLocationController {
 
     //    add locations
     @PostMapping
-    private Boolean createLocation(@RequestBody VenueLocation venLocData){
+    private Boolean createLocation(@RequestBody Locations venLocData){
         return venLocService.createLocation(venLocData);
     }
 
 
 //    update location
     @PutMapping("/update/{locationid}")
-    private Boolean updateLocationData(@PathVariable String locationid, @RequestBody VenueLocation venlocData){
-        return venLocService.updateLocationData(locationid, venlocData);
+    private Boolean updateLocationData(@PathVariable String locationid, @RequestBody Locations locData){
+        return venLocService.updateLocationData(locationid, locData);
     }
 }

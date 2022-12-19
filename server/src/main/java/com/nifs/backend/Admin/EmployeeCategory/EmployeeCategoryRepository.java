@@ -11,6 +11,10 @@ import java.util.Date;
 public interface EmployeeCategoryRepository extends JpaRepository<EmployeeCategory, String> {
     @Transactional
     @Modifying
+    @Query("delete from EmployeeCategory e where e.employeeCategoryId like :employeeCategoryId")
+    void deleteEmployeeCategory(String employeeCategoryId);
+    @Transactional
+    @Modifying
     @Query("""
             UPDATE EmployeeCategory e set e.description = :description, e.otRate = :otRate, e.dateUpdated =:dateUpdated
             WHERE e.employeeCategoryId LIKE :employeeCategoryId""")

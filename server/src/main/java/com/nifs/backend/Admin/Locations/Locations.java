@@ -1,4 +1,4 @@
-package com.nifs.backend.SEDU.VenueLocation;
+package com.nifs.backend.Admin.Locations;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -13,8 +13,8 @@ import java.util.Date;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "venue_locations_master")
-public class VenueLocation {
+@Table(name = "locations_master")
+public class Locations {
 
     @Id
     @Column(name = "location_id", nullable = false, length = 10)
@@ -23,7 +23,22 @@ public class VenueLocation {
     @Column(name = "location_name", nullable = false, length = 100)
     private String locationName;
 
+    @Column(name = "address", nullable = false, length = 255)
+    private String address;
+
+    @Column(name = "tel_no", nullable = false, length = 15)
+    private String telNo;
+
+    @Column(name = "fax_no", nullable = false, length = 15)
+    private String faxNo;
+
+
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="date_created")
     private Date dateCreated;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name="date_updated")
+    private Date dateUpdated;
 }

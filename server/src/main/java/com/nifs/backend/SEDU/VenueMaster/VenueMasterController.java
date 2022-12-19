@@ -26,7 +26,18 @@ public class VenueMasterController {
     Optional<VenueMaster> returnVenue(@PathVariable String venueId){
         return venueService.returnVenue(venueId);
     }
-    @GetMapping()
+
+    @GetMapping("/allcharges")
+    private List<VenueCharge> returnAllCharges(){
+        return venueService.returnAllCharges();
+    }
+    @GetMapping("/allcharges/{id}")
+    private Optional<VenueCharge> returnAllChargesById(@PathVariable int id){
+        return venueService.returnAllChargesById(id);
+    }
+
+
+    @GetMapping
     private List<VenueMaster> getAll() {
         return venueService.getAll();
     }
@@ -48,8 +59,8 @@ public class VenueMasterController {
     }
 
     //    put charges
-    @PutMapping("/{venue_id}/addcharge")
-    private VenueMaster addCharge(@PathVariable String venue_id, @RequestBody Charges[] chargeData) {
+    @PostMapping("/{venue_id}/addcharge")
+    private Boolean addCharge(@PathVariable String venue_id, @RequestBody Charges[] chargeData) {
         return venueService.addCharge(venue_id, chargeData);
     }
 
@@ -64,6 +75,8 @@ public class VenueMasterController {
     private VenueMaster removeFacility(@PathVariable String venueId, @RequestBody Facility facData){
         return venueService.removeFacility(venueId, facData);
     }
+
+
 
 
 }

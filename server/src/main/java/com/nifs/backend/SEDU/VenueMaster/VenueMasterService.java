@@ -22,6 +22,8 @@ public class VenueMasterService {
     @Autowired
     private ChargeRepository chargeRepo;
 
+    @Autowired
+    private VenueChargeRepository venChargeRepo;
 
     public Boolean createVenue(VenueMaster venueData) {
         if (venueRepo.getVenue(venueData.getVenueId()) == null) {
@@ -50,17 +52,29 @@ public class VenueMasterService {
 
 
 //    add charge
-    public VenueMaster addCharge(String venueId, Charges[] chargeData) {
-        Set<Charges> chargeSet = null;
-        VenueMaster venueMaster = venueRepo.getVenue(venueId);
-        chargeSet = venueMaster.getCharges();
-        for(Charges c: chargeData){
-            Charges charge = chargeRepo.returnCharge(c.getChargeId());
-            chargeSet.add(charge);
-        }
-        venueMaster.setCharges(chargeSet);
-        return venueRepo.save(venueMaster);
+    public Boolean addCharge(String venueId, Charges[] chargeData) {
 
+        VenueMaster venueMaster = venueRepo.getVenue(venueId);
+        if(venueMaster != null){
+            for(Charges c: chargeData){
+                Date d = new Date();
+                Charges charge = chargeRepo.returnCharge(c.getChargeId());
+                if(charge != null){
+                    VenueCharge venCharge = new VenueCharge(venueMaster, charge, d);
+//                    venCharge.setVenueMaster(venueMaster);
+//                    venCharge.setCharge(charge);
+                    System.out.println("b");
+                    venChargeRepo.save(venCharge);
+                }
+            }
+            System.out.println("a");
+            return true;
+        }
+
+//        venueMaster.setCharges(chargeSet);
+//        return venueRepo.save(venueMaster);
+
+        return false;
     }
 
 
@@ -94,7 +108,7 @@ public class VenueMasterService {
         return false;
     }
 
-    //   get venue bu id
+    //   get venue by id
     public Optional<VenueMaster> returnVenue(String venueId) {
         return venueRepo.findById(venueId);
     }
@@ -124,5 +138,15 @@ public class VenueMasterService {
         else {
             return null;
         }
+    }
+
+//    return all charges in a venue
+    public List<VenueCharge> returnAllCharges() {
+        return venChargeRepo.findAll();
+    }
+
+    public Optional<VenueCharge> returnAllChargesById(int id) {
+        return venChargeRepo.returnVenueCharges(id);
+
     }
 }

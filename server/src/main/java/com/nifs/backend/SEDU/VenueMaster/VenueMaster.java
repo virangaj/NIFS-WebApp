@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -56,16 +57,19 @@ public class VenueMaster {
 
 
 //    relationships
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
-    @JoinTable(name = "venue_charges",
-        joinColumns = {
-                @JoinColumn(name = "venue_id", referencedColumnName = "venue_id")
-        },
-        inverseJoinColumns = {
-                @JoinColumn(name="charge_id", referencedColumnName = "charge_id")
-        }
-    )
-    private Set<Charges> charges;
+//    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
+//    @JoinTable(name = "venue_charges",
+//        joinColumns = {
+//                @JoinColumn(name = "venue_id", referencedColumnName = "venue_id")
+//        },
+//        inverseJoinColumns = {
+//                @JoinColumn(name="charge_id", referencedColumnName = "charge_id")
+//        }
+//    )
+//    private Set<Charges> charges;
+
+    @OneToMany(mappedBy = "venueMaster", cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
+    private List<VenueCharge> venueCharge;
 
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
@@ -79,11 +83,6 @@ public class VenueMaster {
     )
 //    @JsonManagedReference
     private Set<Facility> facilities;
-
-
-
-
-
 
 
 }

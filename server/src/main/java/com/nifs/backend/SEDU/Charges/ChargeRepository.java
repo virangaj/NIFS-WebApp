@@ -9,6 +9,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.lang.Nullable;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
+
 
 public interface ChargeRepository extends CrudRepository<Charges, String> {
     @Transactional
@@ -17,8 +19,8 @@ public interface ChargeRepository extends CrudRepository<Charges, String> {
     void deleteByChargeIdLike(String chargeId);
     @Transactional
     @Modifying
-    @Query("UPDATE Charges c set c.name = :name, c.charge = :charge WHERE c.chargeId LIKE :chargeId")
-    void Update(@Param("name") String name, @Param("charge") double charge,
+    @Query("UPDATE Charges c set c.name = :name, c.charge = :charge, c.dateUpdated = :update WHERE c.chargeId LIKE :chargeId")
+    void Update(@Param("name") String name, @Param("charge") double charge, @Param("update") Date d,
                 @Param("chargeId") String chargeId);
 
     @Query(value="SELECT * FROM venue_charges_master WHERE charge_id =?1", nativeQuery = true)

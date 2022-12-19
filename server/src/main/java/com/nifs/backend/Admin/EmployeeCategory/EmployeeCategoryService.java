@@ -60,4 +60,13 @@ public class EmployeeCategoryService {
         }
         return false;
     }
+
+    public Boolean deleteEmployeeCategory(String empCatId) {
+        if(empCatRepo.returnEmployeeCategory(empCatId) != null){
+            empCatRepo.deleteEmployeeCategory(empCatId);
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

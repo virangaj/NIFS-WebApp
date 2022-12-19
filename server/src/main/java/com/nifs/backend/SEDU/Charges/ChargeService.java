@@ -65,9 +65,12 @@ public class ChargeService {
         }
     }
 
+//    update charge data
     public Boolean updateCharge(String chargeId, Charges chargeData) {
        if(chargeRepo.returnCharge(chargeId) != null){
-           chargeRepo.Update(chargeData.getName(), chargeData.getCharge(), chargeId);
+           Date d = new Date();
+
+           chargeRepo.Update(chargeData.getName(), chargeData.getCharge(), d, chargeId);
            return true;
        }
        else{

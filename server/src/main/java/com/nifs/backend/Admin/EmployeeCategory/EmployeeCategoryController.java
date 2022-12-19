@@ -44,4 +44,10 @@ public class EmployeeCategoryController {
     Boolean updateEmployeeCategory(@RequestBody EmployeeCategory empCatData, @PathVariable String empCatId){
         return empCatService.updateEmployeeCategory(empCatData, empCatId);
     }
+
+//    delete employee category
+    @DeleteMapping("/delete/{empCatId}")
+    Boolean deleteEmployeeCategory(@PathVariable String empCatId){
+        return empCatService.deleteEmployeeCategory(empCatId);
+    }
 }

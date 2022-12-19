@@ -18,7 +18,7 @@ public class DivisionMasterService {
     }
 
     public Boolean createDivision(DivisionMaster diviMasterData) {
-        if (diviMasterRepo.getDivisionById(diviMasterData.getDivisionId()) == null) {
+        if (diviMasterRepo.returnDivision(diviMasterData.getDivisionId()) == null) {
             Date d = new Date();
             diviMasterData.setCreatedDate(d);
             diviMasterRepo.save(diviMasterData);
@@ -31,7 +31,7 @@ public class DivisionMasterService {
 
 
     public Boolean deleteDivision(String divisionId) {
-        DivisionMaster divisionMaster = diviMasterRepo.getDivisionById(divisionId);
+        DivisionMaster divisionMaster = diviMasterRepo.returnDivision(divisionId);
 
 
         if (divisionMaster != null) {
@@ -61,4 +61,15 @@ public class DivisionMasterService {
     public Optional<DivisionMaster> returnDivision(String divisionId) {
         return diviMasterRepo.findById(divisionId);
     }
+
+//    update division master
+    public Boolean updateDivisionMaster(DivisionMaster dmData, String dvId) {
+        if(diviMasterRepo.returnDivision(dvId) != null){
+            Date d = new Date();
+            diviMasterRepo.updateDivisionMaster(dmData.getName(), d, dvId);
+            return true;
+        }else {
+            return false;
+        }
+     }
 }

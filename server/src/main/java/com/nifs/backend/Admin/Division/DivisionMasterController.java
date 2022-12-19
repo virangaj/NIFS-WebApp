@@ -37,6 +37,11 @@ public class DivisionMasterController {
         return diviMasterService.createDivision(diviMasterData);
     }
 
+//    update division master
+    @PostMapping("/update/{dvId}")
+   private Boolean updateDivisionMaster(@RequestBody DivisionMaster dmData, @PathVariable String dvId){
+        return diviMasterService.updateDivisionMaster(dmData, dvId);
+    }
 //    delete division
     @DeleteMapping("/delete/{divisionId}")
     private Boolean deleteDivision(@PathVariable String divisionId){

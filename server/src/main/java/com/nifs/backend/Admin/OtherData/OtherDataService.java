@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OtherDataService {
@@ -24,13 +25,41 @@ public class OtherDataService {
     }
 
 //    add new province
-    public Province addProvince(Province pData) {
-        return provinceRepo.save(pData);
+    public Boolean addProvince(Province pData) {
+
+        if(provinceRepo.returnProvince(pData.getProvinceName()) == null){
+            provinceRepo.save(pData);
+            return true;
+        }
+        else{
+            return false;
+        }
+
     }
 
 
     //    add new district
-    public District addDistrict(District dData) {
-        return districtRepo.save(dData);
+    public Boolean addDistrict(District dData, int provinceId) {
+        Province province = provinceRepo.findProvinceById(provinceId);
+        if(districtRepo.returnDistrict(dData.getDistrictName()) == null){
+            dData.setProvince(province);
+            districtRepo.save(dData);
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+//    edit district
+    public Boolean editDistrict(int dId, District dData) {
+
+        if(districtRepo.returnDistrictById(dId) != null){
+            districtRepo.updateDistrictNameByDistrictIdEquals(dData.getDistrictName(), dId);
+            return true;
+        }
+        else {
+            return null;
+        }
     }
 }

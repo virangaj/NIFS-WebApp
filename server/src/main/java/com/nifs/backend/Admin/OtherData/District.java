@@ -1,7 +1,6 @@
 package com.nifs.backend.Admin.OtherData;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,12 +17,14 @@ public class District {
     @Column(name = "district_id", nullable = false)
     private int districtId;
 
-    @Column(name="district_name")
+    @Column(name="district_name", length = 30)
     private String districtName;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
-    @JoinColumn(name = "province_id", referencedColumnName = "province_id", nullable = false)
+    //Relationship
+
     @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+    @JoinColumn(name = "province_id", referencedColumnName = "province_id", nullable = false)
     private Province province;
 
 }

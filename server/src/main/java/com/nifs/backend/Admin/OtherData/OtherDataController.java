@@ -7,6 +7,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/admin/otherdata")
+@CrossOrigin
 public class OtherDataController {
 
     @Autowired
@@ -19,20 +20,30 @@ public class OtherDataController {
     }
 
     //    add new district
-    @PostMapping("/district")
-    District addNewDistrict(@RequestBody District dData){
-        return dataService.addDistrict(dData);
+    @PostMapping("/district/{provinceId}")
+    Boolean addNewDistrict(@RequestBody District dData, @PathVariable int provinceId) {
+        return dataService.addDistrict(dData, provinceId);
     }
-//    return all provinces
+//    /edit district
+
+    @PutMapping("/district/edit/{dId}")
+    Boolean editDistrict(@PathVariable int dId, @RequestBody District dData){
+        return dataService.editDistrict(dId, dData);
+    }
+
+    //    return all provinces
     @GetMapping("/province")
-    List<Province> returnAllProvinces(){
+    List<Province> returnAllProvinces() {
         return dataService.returnAllProvinces();
     }
 
 
-//    add new province
+    //    add new province
     @PostMapping("/province")
-    Province addNewProvince(@RequestBody Province pData){
+    Boolean addNewProvince(@RequestBody Province pData) {
         return dataService.addProvince(pData);
     }
+
+
+
 }

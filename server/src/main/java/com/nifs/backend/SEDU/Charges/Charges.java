@@ -4,6 +4,7 @@ package com.nifs.backend.SEDU.Charges;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.nifs.backend.SEDU.VenueMaster.VenueCharge;
 import com.nifs.backend.SEDU.VenueMaster.VenueMaster;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -12,6 +13,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -42,11 +44,17 @@ public class Charges {
     @Column(name="date_created")
     private Date dateCreated;
 
-//    relationships
-    @ManyToMany(mappedBy = "charges", fetch = FetchType.LAZY)
-    @JsonIgnore
-    private Set<VenueMaster> venues;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name="date_updated")
+    private Date dateUpdated;
 
+//    relationships
+//    @ManyToMany(mappedBy = "charges", fetch = FetchType.LAZY)
+//    @JsonIgnore
+//    private Set<VenueMaster> venues;
+
+    @OneToMany(mappedBy = "charge", cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
+    private List<VenueCharge> venueCharges;
 
 
 //    getter and setter

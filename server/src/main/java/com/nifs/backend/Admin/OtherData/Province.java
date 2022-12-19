@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
+import org.aspectj.asm.IRelationship;
 
 import java.util.List;
 import java.util.Set;
@@ -21,11 +22,12 @@ public class Province {
     @Column(name = "province_id", nullable = false)
     private int provinceId;
 
-    @Column(name="province_name")
+    @Column(name="province_name", length = 30)
     private String provinceName;
 
-    @OneToMany(targetEntity = District.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "d_id", referencedColumnName = "province_id")
-    @JsonIgnore
+   //Relationship
+    @OneToMany(mappedBy = "province", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<District> districts;
+
+
 }
