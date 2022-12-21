@@ -1,8 +1,13 @@
 package com.nifs.backend.Admin.EmployeeCategory;
 
+import com.nifs.backend.Admin.Division.DivisionMaster;
+import com.nifs.backend.Admin.Division.DivisionMasterDTO;
+import com.nifs.backend.Admin.Locations.LocationRepository;
+import com.nifs.backend.Admin.Locations.Locations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -11,9 +16,10 @@ import java.util.Optional;
 public class EmployeeCategoryService {
 
     @Autowired
-
     private EmployeeCategoryRepository empCatRepo;
 
+    @Autowired
+    private LocationRepository locRepo;
     //return all category
     public List<EmployeeCategory> getAll() {
         return empCatRepo.findAll();
@@ -24,6 +30,9 @@ public class EmployeeCategoryService {
         if(empCatRepo.returnEmployeeCategory(empCatData.getEmployeeCategoryId()) == null){
             Date d = new Date();
             empCatData.setDateCreated(d);
+            Locations l = locRepo.getLocation(empCatData.getLocation().getLocationId());
+            empCatData.setLocation(l);
+            System.out.println(empCatData.getLocation().getLocationName());
             empCatRepo.save(empCatData);
             return true;
         }
@@ -69,4 +78,19 @@ public class EmployeeCategoryService {
             return false;
         }
     }
+
+
+    public List<EmpCatDTO> getCategoryByLocationId(String locId) {
+        if(locRepo.getLocation(locId) != null){
+            List<EmployeeCategory> empCatData = empCatRepo.findCategoryByLocationId(locId);
+            List<EmpCatDTO> empDTO = new ArrayList<EmpCatDTO>();
+            for(EmployeeCategory emp : empCatData){
+                EmpCatDTO dtoSingle = new EmpCatDTO(emp.getEmployeeCategoryId(), emp.getDescription(), emp.getOtRate(), emp.getLocation().getLocationId());
+                empDTO.add(dtoSingle);
+            }
+            return empDTO;
+
+        }
+        return null;
+     }
 }

@@ -1,4 +1,6 @@
 package com.nifs.backend.Admin.EmployeeMaster;
 
-public class EmployeeMasterRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface EmployeeMasterRepository extends JpaRepository<EmployeeMaster, Integer> {
 }

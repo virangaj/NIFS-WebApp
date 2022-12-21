@@ -7,8 +7,15 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 
 public interface EmployeeCategoryRepository extends JpaRepository<EmployeeCategory, String> {
+    @Query("""
+            select e from EmployeeCategory e
+            where e.location.locationId = ?1
+            order by e.employeeCategoryId, e.description, e.otRate, e.location.locationId""")
+    List<EmployeeCategory> findCategoryByLocationId(
+            String locationId);
     @Transactional
     @Modifying
     @Query("delete from EmployeeCategory e where e.employeeCategoryId like :employeeCategoryId")

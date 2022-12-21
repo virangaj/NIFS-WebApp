@@ -2,7 +2,9 @@ package com.nifs.backend.Admin.Locations;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.nifs.backend.Admin.Division.DivisionMaster;
+import com.nifs.backend.Admin.EmployeeCategory.EmployeeCategory;
 import com.nifs.backend.Admin.EmployeeDesignation.DesignationMaster;
+import com.nifs.backend.Admin.EmployeeType.EmployeeTypeMaster;
 import com.nifs.backend.Admin.OtherData.District;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -57,5 +59,13 @@ public class Locations {
     @OneToMany(mappedBy = "location", cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JsonIgnoreProperties("location")
     private List<DivisionMaster> divisions;
+
+    @OneToMany(mappedBy = "location", cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("location")
+    private List<EmployeeCategory> empCategory;
+
+    @OneToMany(mappedBy = "location", cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("location")
+    private List<EmployeeTypeMaster> empType;
 
 }

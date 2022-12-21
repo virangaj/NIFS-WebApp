@@ -20,6 +20,18 @@ public class EmployeeTypeController {
         return empTypeService.getAllTypes();
     }
 
+    //get new id
+    @GetMapping("/newid")
+    private String returnNewId(){
+        return empTypeService.returnNewId();
+    }
+
+//    get emp type by location id
+    @GetMapping("/location/{locId}")
+    private List<EmployeeTypeDTO> GetEmpTypeByLocationId(@PathVariable String locId){
+        return empTypeService.GetEmpTypeByLocationId(locId);
+    }
+
 //    create new employee type
     @PostMapping
     private Boolean createEmpType(@RequestBody EmployeeTypeMaster empTypeData){
@@ -34,5 +46,11 @@ public class EmployeeTypeController {
         return empTypeService.updateEmployeeType(empTypeData);
     }
 
+
+//    delete employee type
+    @DeleteMapping("delete/{id}")
+    private Boolean deleteEmployeeType(@PathVariable String id){
+        return empTypeService.deleteEmployeeType(id);
+    }
 }
 

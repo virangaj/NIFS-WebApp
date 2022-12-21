@@ -33,6 +33,14 @@ public class EmployeeCategoryController {
     Optional<EmployeeCategory> returnEmpCat(@PathVariable String empCatData){
         return empCatService.returnEmpCat(empCatData);
     }
+
+    //get emp category by location id
+    @GetMapping("/location/{locId}")
+    private List<EmpCatDTO> getCategoryByLocationId(@PathVariable String locId){
+        return empCatService.getCategoryByLocationId(locId);
+    }
+
+
     //    create new employee category
     @PostMapping
     Boolean createNewEmployeeCategory(@RequestBody EmployeeCategory empCatData){

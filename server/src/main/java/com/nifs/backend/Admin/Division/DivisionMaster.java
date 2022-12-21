@@ -39,4 +39,5 @@ public class DivisionMaster {
     @JsonIgnoreProperties("divisions")
     private Locations location;
 
+
 }

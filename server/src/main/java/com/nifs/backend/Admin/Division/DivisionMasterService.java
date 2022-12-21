@@ -27,13 +27,13 @@ public class DivisionMasterService {
 
 
     //create new divisions
-    public Boolean createDivision(DivisionMaster diviMasterData) {
-        if (diviMasterRepo.returnDivision(diviMasterData.getDivisionId()) == null) {
+    public Boolean createDivision(DivisionMaster divMasterData) {
+        if (diviMasterRepo.returnDivision(divMasterData.getDivisionId()) == null) {
             Date d = new Date();
-            diviMasterData.setCreatedDate(d);
-            Locations l = locRepo.getLocation(diviMasterData.getLocation().getLocationId());
-            diviMasterData.setLocation(l);
-            diviMasterRepo.save(diviMasterData);
+            divMasterData.setCreatedDate(d);
+            Locations l = locRepo.getLocation(divMasterData.getLocation().getLocationId());
+            divMasterData.setLocation(l);
+            diviMasterRepo.save(divMasterData);
             return true;
         } else {
             return false;
@@ -54,7 +54,7 @@ public class DivisionMasterService {
         }
     }
 
-
+// return new id
     public String returnNewDivisionId() {
         String lastId = diviMasterRepo.returnLastId();
        if(lastId == null){

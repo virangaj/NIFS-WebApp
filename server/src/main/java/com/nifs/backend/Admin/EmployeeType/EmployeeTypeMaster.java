@@ -1,5 +1,7 @@
 package com.nifs.backend.Admin.EmployeeType;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.nifs.backend.Admin.Locations.Locations;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
@@ -31,5 +33,11 @@ public class EmployeeTypeMaster {
     @Column(name="date_updated")
     private Date dateUpdated;
 
+
+//    relations
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
+    @JoinColumn(name = "location_id", referencedColumnName = "location_id", nullable = false)
+    @JsonIgnoreProperties("empType")
+    private Locations location;
 
 }
