@@ -60,6 +60,7 @@ public class VenueMasterService {
                 Date d = new Date();
                 Charges charge = chargeRepo.returnCharge(c.getChargeId());
                 if(charge != null){
+
                     VenueCharge venCharge = new VenueCharge(venueMaster, charge, d);
 //                    venCharge.setVenueMaster(venueMaster);
 //                    venCharge.setCharge(charge);

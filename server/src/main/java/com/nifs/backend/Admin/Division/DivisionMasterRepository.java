@@ -7,8 +7,12 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 
 public interface DivisionMasterRepository extends JpaRepository<DivisionMaster, String> {
+    @Query("select d from DivisionMaster d where d.location.locationId = ?1 order by d.divisionId, d.name")
+    List<DivisionMaster> findDivisionByLocationId(String locationId);
+
     @Transactional
     @Modifying
     @Query("update DivisionMaster d set d.name = :name, d.updatedDate = :updatedDate where d.divisionId like :divisionId")
@@ -22,4 +26,6 @@ public interface DivisionMasterRepository extends JpaRepository<DivisionMaster, 
 
     @Query(value = "SELECT * FROM division_master WHERE division_id =?1",nativeQuery = true)
     DivisionMaster returnDivision(String id);
+
+
 }

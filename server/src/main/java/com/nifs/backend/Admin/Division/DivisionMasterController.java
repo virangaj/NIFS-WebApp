@@ -30,6 +30,11 @@ public class DivisionMasterController {
         return diviMasterService.returnNewDivisionId();
     }
 
+    // det division by location id
+    @GetMapping("/location/{locID}")
+    private List<DivisionMasterDTO> GetDivisionByLocationId(@PathVariable String locID){
+        return diviMasterService.GetDivisionByLocationId(locID);
+    }
 
     //create division
     @PostMapping

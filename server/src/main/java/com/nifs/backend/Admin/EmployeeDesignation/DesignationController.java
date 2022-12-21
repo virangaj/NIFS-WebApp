@@ -18,10 +18,18 @@ public class DesignationController {
         return desService.getAllDesignations();
     }
 
+    //return new id
     @GetMapping("/newid")
     private String returnNewId(){
         return desService.returnNewId();
     }
+
+    //get designation by location id
+    @GetMapping("/location/{locId}")
+    private List<DesignationMasterDTO> getDesignationByLocationId(@PathVariable String locId){
+        return desService.getDesignationByLocationId(locId);
+    }
+
 //    create designation
     @PostMapping
     private Boolean createDesignation(@RequestBody DesignationMaster desData){

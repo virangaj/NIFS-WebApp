@@ -25,12 +25,6 @@ public class DesignationMaster {
     @Column(name = "designation_name", length = 255)
     private String designationName;
 
-
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
-    @JoinColumn(name = "location_id", referencedColumnName = "location_id", nullable = false)
-    @JsonIgnoreProperties("designations")
-    private Locations location;
-
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="date_created")
     private Date dateCreated;
@@ -38,5 +32,13 @@ public class DesignationMaster {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="date_updated")
     private Date dateUpdated;
+
+
+    //relationships
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
+    @JoinColumn(name = "location_id", referencedColumnName = "location_id", nullable = false)
+    @JsonIgnoreProperties("designations")
+    private Locations location;
+
 
 }

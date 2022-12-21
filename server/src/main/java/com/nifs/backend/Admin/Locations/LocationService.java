@@ -55,4 +55,13 @@ public class LocationService {
             return false;
         }
     }
+
+    //delete locations
+    public Boolean deleteLocation(String id) {
+        if(locRepo.getLocation(id) != null){
+            locRepo.deleteLocation(id);
+            return true;
+        }
+        return false;
+    }
 }

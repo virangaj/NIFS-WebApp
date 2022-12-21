@@ -1,6 +1,8 @@
 package com.nifs.backend.Admin.Division;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.nifs.backend.Admin.Locations.Locations;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -30,5 +32,11 @@ public class DivisionMaster {
 
     @Column(name = "updated_date")
     private Date updatedDate;
+
+    //relationship
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
+    @JoinColumn(name = "location_id", referencedColumnName = "location_id", nullable = false)
+    @JsonIgnoreProperties("divisions")
+    private Locations location;
 
 }

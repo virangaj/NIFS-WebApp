@@ -1,10 +1,13 @@
 package com.nifs.backend.Admin.EmployeeDesignation;
 
+import com.nifs.backend.Admin.Division.DivisionMaster;
+import com.nifs.backend.Admin.Division.DivisionMasterDTO;
 import com.nifs.backend.Admin.Locations.LocationRepository;
 import com.nifs.backend.Admin.Locations.Locations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -25,6 +28,10 @@ public class DesignationService {
     public Boolean createDesignation(DesignationMaster desData) {
         if(desRepo.returnDesignation(desData.getId()) == null){
             Date d = new Date();
+            Locations l = locRepo.getLocation(desData.getLocation().getLocationId());
+            desData.setLocation(l);
+            //System.out.println(desData.getLocation().getLocationName());
+
             desData.setDateCreated(d);
 //            System.out.println(desData.getLocation().getLocationId());
             desRepo.save(desData);
@@ -43,6 +50,21 @@ public class DesignationService {
         return false;
     }
 
+    // get designation by location id
+    public List<DesignationMasterDTO> getDesignationByLocationId(String locId){
+        if(locRepo.getLocation(locId) != null){
+            List<DesignationMaster> dm = desRepo.findDesignatonByLocationId(locId);
+            List<DesignationMasterDTO> dDTO = new ArrayList<DesignationMasterDTO>();
+            for(DesignationMaster d : dm){
+                DesignationMasterDTO dDTOSingle = new DesignationMasterDTO(d.getId(), d.getDesignationName(), d.getLocation().getLocationId());
+                dDTO.add(dDTOSingle);
+            }
+            return dDTO;
+        }
+        return null;
+    }
+
+//    get new id
     public String returnNewId() {
         String lastId = desRepo.returnLastId();
         if (lastId != null) {
@@ -53,7 +75,7 @@ public class DesignationService {
 
             return idText + idNum;
         } else {
-            return "DM1001";
+            return "ED1001";
         }
     }
 }

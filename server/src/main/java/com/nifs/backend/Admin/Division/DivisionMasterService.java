@@ -1,8 +1,11 @@
 package com.nifs.backend.Admin.Division;
 
+import com.nifs.backend.Admin.Locations.LocationRepository;
+import com.nifs.backend.Admin.Locations.Locations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -13,14 +16,23 @@ public class DivisionMasterService {
     @Autowired
     private DivisionMasterRepository diviMasterRepo;
 
+    @Autowired
+    private LocationRepository locRepo;
+
+
+//    get all divisions
     public List<DivisionMaster> getAll() {
         return diviMasterRepo.findAll();
     }
 
+
+    //create new divisions
     public Boolean createDivision(DivisionMaster diviMasterData) {
         if (diviMasterRepo.returnDivision(diviMasterData.getDivisionId()) == null) {
             Date d = new Date();
             diviMasterData.setCreatedDate(d);
+            Locations l = locRepo.getLocation(diviMasterData.getLocation().getLocationId());
+            diviMasterData.setLocation(l);
             diviMasterRepo.save(diviMasterData);
             return true;
         } else {
@@ -29,7 +41,7 @@ public class DivisionMasterService {
 
     }
 
-
+//delete division
     public Boolean deleteDivision(String divisionId) {
         DivisionMaster divisionMaster = diviMasterRepo.returnDivision(divisionId);
 
@@ -42,10 +54,11 @@ public class DivisionMasterService {
         }
     }
 
+
     public String returnNewDivisionId() {
         String lastId = diviMasterRepo.returnLastId();
        if(lastId == null){
-           return "DM1001";
+           return "DI1001";
        }
        else{
            String idText = lastId.replaceAll("[^A-Za-z]", "");
@@ -72,4 +85,18 @@ public class DivisionMasterService {
             return false;
         }
      }
+
+     // get divisions by location id
+    public List<DivisionMasterDTO> GetDivisionByLocationId(String locID) {
+        if(locRepo.getLocation(locID) != null){
+            List<DivisionMaster> dm =  diviMasterRepo.findDivisionByLocationId(locID);
+            List<DivisionMasterDTO> dDTO = new ArrayList<DivisionMasterDTO>();
+            for(DivisionMaster d : dm){
+                DivisionMasterDTO dDTOSingle = new DivisionMasterDTO(d.getDivisionId(), d.getName(), d.getLocation().getLocationId());
+                dDTO.add(dDTOSingle);
+            }
+            return dDTO;
+        }
+        return null;
+    }
 }

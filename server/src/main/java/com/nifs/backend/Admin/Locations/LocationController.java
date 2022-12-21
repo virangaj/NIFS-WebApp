@@ -11,30 +11,37 @@ import java.util.List;
 public class LocationController {
 
     @Autowired
-    LocationService venLocService;
+    LocationService locService;
 
 //    get all locations
     @GetMapping
     private List<Locations> returnAllLocations(){
-        return venLocService.returnAllLocations();
+        return locService.returnAllLocations();
     }
 
 //    get new id
     @GetMapping("/newid")
     private String returnNewLocationId(){
-        return venLocService.returnNewLocationId();
+        return locService.returnNewLocationId();
     }
 
     //    add locations
     @PostMapping
     private Boolean createLocation(@RequestBody Locations venLocData){
-        return venLocService.createLocation(venLocData);
+        return locService.createLocation(venLocData);
     }
 
 
 //    update location
     @PutMapping("/update/{locationid}")
     private Boolean updateLocationData(@PathVariable String locationid, @RequestBody Locations locData){
-        return venLocService.updateLocationData(locationid, locData);
+        return locService.updateLocationData(locationid, locData);
+    }
+
+
+//delete location
+    @DeleteMapping("/delete/{id}")
+    private Boolean deleteLocation(@PathVariable String id){
+        return locService.deleteLocation(id);
     }
 }
