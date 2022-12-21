@@ -27,6 +27,7 @@ public class Province {
 
    //Relationship
     @OneToMany(mappedBy = "province", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("province")
     private Set<District> districts;
 
 

@@ -34,7 +34,7 @@ public class Charges {
     @Column(name="charge_id", length = 10, nullable = false)
     private String chargeId;
 
-    @Column(name="name", length = 50, nullable = false)
+    @Column(name="name", length = 50)
     private String name;
 
     @Column(name="charge")

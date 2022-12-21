@@ -13,10 +13,12 @@ public interface LocationRepository extends JpaRepository<Locations, String> {
     @Transactional
     @Modifying
     @Query("""
-            update Locations l set l.locationName = :locationName, l.dateUpdated = :dateUpdated
+            update Locations l set l.locationName = :locationName, l.address = :address, l.telNo = :telNo, l.faxNo = :faxNo, l.dateUpdated = :dateUpdated
             where l.locationId = :locationId""")
-    void updateLocation(@Param("locationName") String locationName, @Param("dateUpdated") Date dateUpdated,
-                        @Param("locationId") String locationId);
+    void updateLocation(@Param("locationName") String locationName, @Param("address") String address,
+                        @Param("telNo") String telNo, @Param("faxNo") String faxNo,
+                        @Param("dateUpdated") Date dateUpdated, @Param("locationId") String locationId);
+
 
     @Query(value = "SELECT * FROM venue_locations_master WHERE location_id =?1", nativeQuery = true)
     Locations getLocation(String id);

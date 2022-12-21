@@ -29,4 +29,9 @@ public class EmployeeTypeService {
         }
         return false;
     }
+
+//    update employee type
+    public Boolean updateEmployeeType(EmployeeTypeMaster empTypeData) {
+        return true;
+    }
 }

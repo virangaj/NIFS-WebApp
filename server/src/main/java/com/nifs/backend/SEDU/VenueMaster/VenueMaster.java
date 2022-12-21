@@ -30,20 +30,20 @@ public class VenueMaster {
     @Id
     @Column(name = "venue_id", nullable = false, length = 10)
     private String venueId;
-    @Column(name = "name", nullable = false, length = 255)
+    @Column(name = "name", length = 255)
     private String venueName;
-    @Column(name = "type", nullable = false, length = 50)
+    @Column(name = "type", length = 50)
     private String type;
-    @Column(name="Capacity", nullable = false)
+    @Column(name="Capacity")
     private int capacity;
 
-    @Column(name="remark", nullable = false, length = 255)
+    @Column(name="remark", length = 255)
     private String remark;
 
-    @Column(name="location", nullable = false, length = 50)
+    @Column(name="location", length = 50)
     private String location;
 
-    @Column(name="availability", nullable = false, length = 255)
+    @Column(name="availability", length = 255)
     private String availability;
 
     @Temporal(TemporalType.TIMESTAMP)

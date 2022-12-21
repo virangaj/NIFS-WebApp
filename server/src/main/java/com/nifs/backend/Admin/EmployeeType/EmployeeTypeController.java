@@ -26,5 +26,13 @@ public class EmployeeTypeController {
         return empTypeService.createEmpType(empTypeData);
     }
 
+
+//    update employee Type
+
+    @PutMapping("update/{type_id}")
+    private Boolean updateEmployeeType(@PathVariable String type_id, @RequestBody EmployeeTypeMaster empTypeData){
+        return empTypeService.updateEmployeeType(empTypeData);
+    }
+
 }
 

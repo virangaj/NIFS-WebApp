@@ -1,5 +1,8 @@
 package com.nifs.backend.Admin.Locations;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.nifs.backend.Admin.EmployeeDesignation.DesignationMaster;
+import com.nifs.backend.Admin.OtherData.District;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,6 +10,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Setter
@@ -20,16 +25,16 @@ public class Locations {
     @Column(name = "location_id", nullable = false, length = 10)
     private String locationId;
 
-    @Column(name = "location_name", nullable = false, length = 100)
+    @Column(name = "location_name", length = 100)
     private String locationName;
 
-    @Column(name = "address", nullable = false, length = 255)
+    @Column(name = "address", length = 255)
     private String address;
 
-    @Column(name = "tel_no", nullable = false, length = 15)
+    @Column(name = "tel_no", length = 15)
     private String telNo;
 
-    @Column(name = "fax_no", nullable = false, length = 15)
+    @Column(name = "fax_no", length = 15)
     private String faxNo;
 
 
@@ -41,4 +46,12 @@ public class Locations {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="date_updated")
     private Date dateUpdated;
+
+//    relationships
+
+    @OneToMany(mappedBy = "location", cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("location")
+    private List<DesignationMaster> designations;
+
+
 }

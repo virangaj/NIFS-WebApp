@@ -49,7 +49,7 @@ public class LocationService {
     public Boolean updateLocationData(String locationid, Locations locData) {
         if(locRepo.findById(locationid).isPresent()){
             Date d = new Date();
-           locRepo.updateLocation(locData.getLocationName(), d, locationid);
+           locRepo.updateLocation(locData.getLocationName(), locData.getAddress(), locData.getTelNo(), locData.getFaxNo(), d, locationid);
             return true;
         }else{
             return false;
