@@ -51,7 +51,7 @@ public class DesignationService {
     }
 
     // get designation by location id
-    public List<DesignationMasterDTO> getDesignationByLocationId(String locId){
+public List<DesignationMasterDTO> getDesignationByLocationId(String locId){
         if(locRepo.getLocation(locId) != null){
             List<DesignationMaster> dm = desRepo.findDesignatonByLocationId(locId);
             List<DesignationMasterDTO> dDTO = new ArrayList<DesignationMasterDTO>();

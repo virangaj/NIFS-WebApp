@@ -1,6 +1,7 @@
 package com.nifs.backend.Admin.EmployeeCategory;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.nifs.backend.Admin.EmployeeMaster.EmployeeMaster;
 import com.nifs.backend.Admin.Locations.Locations;
 import jakarta.persistence.*;
 import lombok.*;
@@ -41,10 +42,15 @@ public class EmployeeCategory {
     private Date dateUpdated;
 
     //relationship
+
+    //location
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
     @JoinColumn(name = "location_id", referencedColumnName = "location_id", nullable = false)
     @JsonIgnoreProperties("empCategory")
     private Locations location;
 
-
+    //employee
+    @OneToMany(mappedBy = "empCategory", cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("empCategory")
+    private List<EmployeeMaster> employee;
 }

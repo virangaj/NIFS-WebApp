@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.nifs.backend.Admin.Division.DivisionMaster;
 import com.nifs.backend.Admin.EmployeeCategory.EmployeeCategory;
 import com.nifs.backend.Admin.EmployeeDesignation.DesignationMaster;
+import com.nifs.backend.Admin.EmployeeMaster.EmployeeMaster;
 import com.nifs.backend.Admin.EmployeeType.EmployeeTypeMaster;
 import com.nifs.backend.Admin.OtherData.District;
 import jakarta.persistence.*;
@@ -51,21 +52,30 @@ public class Locations {
     private Date dateUpdated;
 
 //    relationships
-
+    //designation
     @OneToMany(mappedBy = "location", cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JsonIgnoreProperties("location")
     private List<DesignationMaster> designations;
 
+    //division
     @OneToMany(mappedBy = "location", cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JsonIgnoreProperties("location")
     private List<DivisionMaster> divisions;
 
+
+    //employee category
     @OneToMany(mappedBy = "location", cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JsonIgnoreProperties("location")
     private List<EmployeeCategory> empCategory;
 
+    //employee type
     @OneToMany(mappedBy = "location", cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JsonIgnoreProperties("location")
     private List<EmployeeTypeMaster> empType;
+
+    //employee
+    @OneToMany(mappedBy = "location", cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("location")
+    private List<EmployeeMaster> employee;
 
 }

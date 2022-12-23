@@ -1,7 +1,15 @@
 package com.nifs.backend.Admin.EmployeeMaster;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.nifs.backend.Admin.Division.DivisionMaster;
+import com.nifs.backend.Admin.EmployeeCategory.EmployeeCategory;
+import com.nifs.backend.Admin.EmployeeDesignation.DesignationMaster;
+import com.nifs.backend.Admin.EmployeeType.EmployeeTypeMaster;
+import com.nifs.backend.Admin.Locations.Locations;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -51,6 +59,8 @@ public class EmployeeMaster {
     private String nicNo;
 
     @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Column(name = "nic_issued_date")
     private String NicIssuedDate;
 
@@ -59,6 +69,8 @@ public class EmployeeMaster {
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="passport_expire_date")
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private String PassExpireDate;
 
     @Column(name = "license_no", length = 50)
@@ -66,10 +78,14 @@ public class EmployeeMaster {
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="license_issued_date")
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private String licenseIssuedDate;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="license_expire_date")
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private String licenseExpireDate;
 
 //    emergency contract person details
@@ -100,19 +116,59 @@ public class EmployeeMaster {
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "appointment_date")
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private String appointmentDate;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "contract_start_on")
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private String contractStart;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "contract_end_on")
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private String contractEnd;
 
 
+    @Column(name = "is_delete")
+    private Boolean isDelete;
     //relationships
 
+    //district
 
+
+    //employee type
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
+    @JoinColumn(name = "emp_type_id", referencedColumnName = "type_id", nullable = false)
+    @JsonIgnoreProperties("employee")
+    private EmployeeTypeMaster empType;
+
+    //category
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
+    @JoinColumn(name = "emp_category_id", referencedColumnName = "employee_category_code", nullable = false)
+    @JsonIgnoreProperties("employee")
+    private EmployeeCategory empCategory;
+
+
+    //designation
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
+    @JoinColumn(name = "designation_id", referencedColumnName = "id", nullable = false)
+    @JsonIgnoreProperties("employee")
+    private DesignationMaster designation;
+
+    //division
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
+    @JoinColumn(name = "division_id", referencedColumnName = "division_id", nullable = false)
+    @JsonIgnoreProperties("employee")
+    private DivisionMaster division;
+
+    //locations
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
+    @JoinColumn(name = "location_id", referencedColumnName = "location_id", nullable = false)
+    @JsonIgnoreProperties("employee")
+    private Locations location;
 
 }

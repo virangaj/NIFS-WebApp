@@ -1,6 +1,7 @@
 package com.nifs.backend.Admin.EmployeeType;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.nifs.backend.Admin.EmployeeMaster.EmployeeMaster;
 import com.nifs.backend.Admin.Locations.Locations;
 import jakarta.persistence.*;
 import lombok.*;
@@ -8,6 +9,7 @@ import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Getter
@@ -35,9 +37,17 @@ public class EmployeeTypeMaster {
 
 
 //    relations
+
+    //locations
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
     @JoinColumn(name = "location_id", referencedColumnName = "location_id", nullable = false)
     @JsonIgnoreProperties("empType")
     private Locations location;
+
+    //employee
+    @OneToMany(mappedBy = "empType", cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("empType")
+    private List<EmployeeMaster> employee;
+
 
 }

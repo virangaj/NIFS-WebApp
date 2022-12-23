@@ -61,7 +61,7 @@ public class EmployeeTypeService {
             List<EmployeeTypeMaster> em =  empTypeRepo.findEmpTypeByLocationId(locID);
             List<EmployeeTypeDTO> dto = new ArrayList<EmployeeTypeDTO>();
             for(EmployeeTypeMaster d : em){
-                EmployeeTypeDTO DTOSingle = new EmployeeTypeDTO(d.getTypeId(), d.getTypeName(), d.getLocation().getLocationId());
+                EmployeeTypeDTO DTOSingle = new EmployeeTypeDTO(d.getTypeId(), d.getTypeName(),d.getLocation().getLocationId());
                 dto.add(DTOSingle);
             }
             return dto;

@@ -3,6 +3,7 @@ package com.nifs.backend.Admin.Locations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -13,8 +14,16 @@ public class LocationService {
     private LocationRepository locRepo;
 
 //    return all locations
-    public List<Locations> returnAllLocations() {
-        return locRepo.findAll();
+    public List<LocationDTO> returnAllLocations() {
+        List<Locations> locData = locRepo.findAll();
+        List<LocationDTO> dto = new ArrayList<>();
+        for(Locations l: locData){
+            LocationDTO single = new LocationDTO(l.getLocationId(), l.getLocationName(), l.getAddress(), l.getTelNo(), l.getFaxNo());
+            dto.add(single);
+        }
+        return dto;
+
+
     }
 
 //    add new locations
