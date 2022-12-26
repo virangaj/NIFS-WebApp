@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom'
 
 function ErrorPage() {
     return (
-        <div className="body-content">
+        <>
+        <div className="mb-20 body-content">
             <div className='error-page'>
 
                 <div className='error-page-content'>
@@ -20,6 +21,10 @@ function ErrorPage() {
 
             </div>
         </div>
+            <div className='mb-52'>
+
+            </div>
+        </>
     )
 }
 

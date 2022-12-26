@@ -1,7 +1,7 @@
 import axios from "axios";
 
-import http from "../http-common";
-import IVenueMaster from '../types/VenueMaster'
+import http from "../../http-common";
+import IVenueMaster from '../../types/VenueMaster'
 
 
 axios.defaults.baseURL = process.env.REACT_APP_BACKEND_SERVER;

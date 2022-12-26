@@ -73,4 +73,13 @@ public class LocationService {
         }
         return false;
     }
+
+//    return location by id
+    public LocationDTO returnLocationById(String id) {
+        Locations l = locRepo.getLocation(id);
+        if(l != null){
+            return new LocationDTO(l.getLocationId(), l.getLocationName());
+        }
+        return null;
+    }
 }

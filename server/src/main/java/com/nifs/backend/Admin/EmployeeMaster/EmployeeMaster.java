@@ -7,6 +7,7 @@ import com.nifs.backend.Admin.EmployeeCategory.EmployeeCategory;
 import com.nifs.backend.Admin.EmployeeDesignation.DesignationMaster;
 import com.nifs.backend.Admin.EmployeeType.EmployeeTypeMaster;
 import com.nifs.backend.Admin.Locations.Locations;
+import com.nifs.backend.Login.EmployeeLogin;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -52,8 +53,11 @@ public class EmployeeMaster {
     @Column(name = "contact_no", length = 15)
     private  String contactNo;
 
-    @Column(name = "email", length = 50)
-    private String email;
+    @Column(name = "personal_email", length = 50)
+    private String PersonalEmail;
+
+    @Column(name = "gsuit_email", length = 50)
+    private String GsuitEmail;
 
     @Column(name = "nic_no", length = 15)
     private String nicNo;
@@ -170,5 +174,10 @@ public class EmployeeMaster {
     @JoinColumn(name = "location_id", referencedColumnName = "location_id", nullable = false)
     @JsonIgnoreProperties("employee")
     private Locations location;
+
+
+    //login
+    @OneToOne(mappedBy = "employee")
+    private EmployeeLogin empLogin;
 
 }

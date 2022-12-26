@@ -53,4 +53,14 @@ public class EmployeeCategory {
     @OneToMany(mappedBy = "empCategory", cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JsonIgnoreProperties("empCategory")
     private List<EmployeeMaster> employee;
+
+    //constructor for create instance
+
+    public EmployeeCategory(String employeeCategoryId, String description, float otRate, Date dateCreated, Locations location) {
+        this.employeeCategoryId = employeeCategoryId;
+        this.description = description;
+        this.otRate = otRate;
+        this.dateCreated = dateCreated;
+        this.location = location;
+    }
 }

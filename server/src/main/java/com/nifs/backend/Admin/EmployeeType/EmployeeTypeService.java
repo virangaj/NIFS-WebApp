@@ -21,20 +21,25 @@ public class EmployeeTypeService {
     private LocationRepository locRepo;
 
 //    get all types
-    public List<EmployeeTypeMaster> getAllTypes() {
-        return empTypeRepo.findAll();
+    public List<EmployeeTypeDTO> getAllTypes() {
+        List<EmployeeTypeMaster> em =  empTypeRepo.findAll();
+        List<EmployeeTypeDTO> dto = new ArrayList<EmployeeTypeDTO>();
+        for(EmployeeTypeMaster d : em){
+            EmployeeTypeDTO DTOSingle = new EmployeeTypeDTO(d.getTypeId(), d.getTypeName(),d.getLocation().getLocationName());
+            dto.add(DTOSingle);
+        }
+        return dto;
     }
 
 
 //    create new employee type
-    public Boolean createEmpType(EmployeeTypeMaster empTypeData) {
-        if(empTypeRepo.returnType(empTypeData.getTypeId()) == null ){
+    public Boolean createEmpType(EmployeeTypeDTO e) {
+        if(empTypeRepo.returnType(e.getTypeId()) == null ){
             Date d = new Date();
-            Locations l = locRepo.getLocation(empTypeData.getLocation().getLocationId());
-            empTypeData.setLocation(l);
-            empTypeData.setDateCreated(d);
+            Locations l = locRepo.getLocation(e.getLocation());
+            EmployeeTypeMaster etMaster = new EmployeeTypeMaster(e.getTypeId(), e.getTypeName(), d, l);
 //            System.out.println(empTypeData.getLocation().getLocationName());
-            empTypeRepo.save(empTypeData);
+            empTypeRepo.save(etMaster);
             return true;
         }
         return false;
@@ -72,8 +77,18 @@ public class EmployeeTypeService {
 
 
 //    update employee type
-    public Boolean updateEmployeeType(EmployeeTypeMaster empTypeData) {
-        return true;
+    public Boolean updateEmployeeType(EmployeeTypeDTO data, String type_id) {
+
+        if(empTypeRepo.returnType(type_id) != null){
+
+            Date d = new Date();
+            empTypeRepo.updateEmployeeType(data.getTypeName(), d, type_id);
+            return true;
+        }
+
+        return false;
+
+
     }
 
 //    delete employee type

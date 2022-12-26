@@ -38,8 +38,8 @@ public class DivisionMasterController {
 
     //create division
     @PostMapping
-    private Boolean createDivision(@RequestBody DivisionMaster diviMasterData){
-        return diviMasterService.createDivision(diviMasterData);
+    private Boolean createDivision(@RequestBody DivisionMasterDTO divMasterData){
+        return diviMasterService.createDivision(divMasterData);
     }
 
 //    update division master

@@ -48,4 +48,11 @@ public class DivisionMaster {
     @JsonIgnoreProperties("division")
     private List<EmployeeMaster> employee;
 
+//    constructor for create new instance
+    public DivisionMaster(String divisionId, String name, Date createdDate, Locations location) {
+        this.divisionId = divisionId;
+        this.name = name;
+        this.createdDate = createdDate;
+        this.location = location;
+    }
 }

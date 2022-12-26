@@ -13,8 +13,8 @@ import lombok.Setter;
 public class EmpCatDTO {
     private String employeeCategoryId;
     private String description;
-    private float otRate;
-    private String locationId;
+    private String otRate;
+    private String location;
 
 
 }

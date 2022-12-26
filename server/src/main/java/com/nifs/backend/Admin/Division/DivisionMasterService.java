@@ -27,13 +27,13 @@ public class DivisionMasterService {
 
 
     //create new divisions
-    public Boolean createDivision(DivisionMaster divMasterData) {
-        if (diviMasterRepo.returnDivision(divMasterData.getDivisionId()) == null) {
-            Date d = new Date();
-            divMasterData.setCreatedDate(d);
-            Locations l = locRepo.getLocation(divMasterData.getLocation().getLocationId());
-            divMasterData.setLocation(l);
-            diviMasterRepo.save(divMasterData);
+    public Boolean createDivision(DivisionMasterDTO d) {
+        if (diviMasterRepo.returnDivision(d.getDivisionId()) == null) {
+
+            Date date = new Date();
+            Locations l = locRepo.getLocation(d.getLocationId());
+            DivisionMaster dm = new DivisionMaster(d.getDivisionId(), d.getName(), date, l);
+            diviMasterRepo.save(dm);
             return true;
         } else {
             return false;

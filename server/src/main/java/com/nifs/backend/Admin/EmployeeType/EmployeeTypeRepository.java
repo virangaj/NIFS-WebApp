@@ -6,9 +6,14 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 public interface EmployeeTypeRepository extends JpaRepository<EmployeeTypeMaster, String> {
+    @Transactional
+    @Modifying
+    @Query("update EmployeeTypeMaster e set e.typeName = ?1, e.dateUpdated = ?2 where e.typeId = ?3")
+    void updateEmployeeType(String typeName, Date dateUpdated, String typeId);
     @Query("""
             select e from EmployeeTypeMaster e
             where e.location.locationId = ?1

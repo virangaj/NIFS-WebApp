@@ -17,4 +17,9 @@ public class LocationDTO {
     private String address;
     private String telNo;
     private String faxNo;
+
+    public LocationDTO(String locationId, String locationName) {
+        this.locationId = locationId;
+        this.locationName = locationName;
+    }
 }

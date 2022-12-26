@@ -23,6 +23,7 @@ import Login from './pages/Login'
 import { RouteName } from "./constant/routeNames";
 import Footer from './components/shared/Footer';
 import BackToTop from './components/shared/BackToTop';
+import AdminAdmin from './pages/adminDashboards/AdminAdmin';
 
 
 
@@ -30,7 +31,7 @@ function App() {
 
 
   return (
-    <div className='flex mx-auto flex-col'>
+    <div className='flex flex-col mx-auto'>
       <Router>
         <Navbar />
         <BackToTop />
@@ -55,6 +56,7 @@ function App() {
           />
           <Route path={RouteName.Help} element={<HelpMainPage />} />
           <Route path={RouteName.ErrorPage} element={<ErrorPage />} />
+          <Route path={RouteName.AdminAdmin} element={<AdminAdmin />} />
         </Routes>
 
 

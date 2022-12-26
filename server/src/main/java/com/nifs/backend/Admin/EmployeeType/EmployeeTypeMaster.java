@@ -49,5 +49,10 @@ public class EmployeeTypeMaster {
     @JsonIgnoreProperties("empType")
     private List<EmployeeMaster> employee;
 
-
+    public EmployeeTypeMaster(String typeId, String typeName, Date dateCreated, Locations location) {
+        this.typeId = typeId;
+        this.typeName = typeName;
+        this.dateCreated = dateCreated;
+        this.location = location;
+    }
 }

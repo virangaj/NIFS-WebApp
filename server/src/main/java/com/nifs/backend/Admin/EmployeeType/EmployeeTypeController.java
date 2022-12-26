@@ -8,6 +8,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("admin/employeetype")
+@CrossOrigin
 public class EmployeeTypeController {
 
     @Autowired
@@ -16,7 +17,7 @@ public class EmployeeTypeController {
 
 //    get all employee types
     @GetMapping
-    private List<EmployeeTypeMaster> getAllTypes(){
+    private List<EmployeeTypeDTO> getAllTypes(){
         return empTypeService.getAllTypes();
     }
 
@@ -34,16 +35,16 @@ public class EmployeeTypeController {
 
 //    create new employee type
     @PostMapping
-    private Boolean createEmpType(@RequestBody EmployeeTypeMaster empTypeData){
+    private Boolean createEmpType(@RequestBody EmployeeTypeDTO empTypeData){
         return empTypeService.createEmpType(empTypeData);
     }
 
 
 //    update employee Type
 
-    @PutMapping("update/{type_id}")
-    private Boolean updateEmployeeType(@PathVariable String type_id, @RequestBody EmployeeTypeMaster empTypeData){
-        return empTypeService.updateEmployeeType(empTypeData);
+    @PatchMapping("update/{type_id}")
+    private Boolean updateEmployeeType(@PathVariable String type_id, @RequestBody EmployeeTypeDTO empTypeData){
+        return empTypeService.updateEmployeeType(empTypeData, type_id);
     }
 
 

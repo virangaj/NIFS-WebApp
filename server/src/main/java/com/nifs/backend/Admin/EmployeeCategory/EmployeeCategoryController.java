@@ -18,7 +18,7 @@ public class EmployeeCategoryController {
 
 //    get all employee categories
     @GetMapping
-    List<EmployeeCategory> getAll(){
+    List<EmpCatDTO> getAll(){
         return empCatService.getAll();
     }
 
@@ -43,12 +43,12 @@ public class EmployeeCategoryController {
 
     //    create new employee category
     @PostMapping
-    Boolean createNewEmployeeCategory(@RequestBody EmployeeCategory empCatData){
+    Boolean createNewEmployeeCategory(@RequestBody EmpCatDTO empCatData){
         return empCatService.createNewCategory(empCatData);
     }
 
 //    update employee category
-    @PutMapping("/update/{empCatId}")
+    @PatchMapping("/update/{empCatId}")
     Boolean updateEmployeeCategory(@RequestBody EmployeeCategory empCatData, @PathVariable String empCatId){
         return empCatService.updateEmployeeCategory(empCatData, empCatId);
     }

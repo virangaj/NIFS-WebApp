@@ -21,20 +21,23 @@ public class DesignationService {
     private LocationRepository locRepo;
 
 //    get all designations
-    public List<DesignationMaster> getAllDesignations() {
-        return desRepo.findAll();
+    public List<DesignationMasterDTO> getAllDesignations() {
+        List<DesignationMaster> dm = desRepo.findAll();
+        List<DesignationMasterDTO> dDTO = new ArrayList<DesignationMasterDTO>();
+        for(DesignationMaster d : dm){
+            DesignationMasterDTO dDTOSingle = new DesignationMasterDTO(d.getId(), d.getDesignationName(), d.getLocation().getLocationName());
+            dDTO.add(dDTOSingle);
+        }
+        return dDTO;
     }
 
-    public Boolean createDesignation(DesignationMaster desData) {
-        if(desRepo.returnDesignation(desData.getId()) == null){
-            Date d = new Date();
-            Locations l = locRepo.getLocation(desData.getLocation().getLocationId());
-            desData.setLocation(l);
-            //System.out.println(desData.getLocation().getLocationName());
-
-            desData.setDateCreated(d);
-//            System.out.println(desData.getLocation().getLocationId());
-            desRepo.save(desData);
+    // create designation
+    public Boolean createDesignation(DesignationMasterDTO d) {
+        if(desRepo.returnDesignation(d.getId()) == null){
+            Date date = new Date();
+            Locations l = locRepo.getLocation(d.getLocation());
+            DesignationMaster dm = new DesignationMaster(d.getId(), d.getDesignationName(), date, l);
+            desRepo.save(dm);
             return true;
         }
         return false;

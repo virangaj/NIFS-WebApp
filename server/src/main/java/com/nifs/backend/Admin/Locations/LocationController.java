@@ -25,6 +25,13 @@ public class LocationController {
         return locService.returnNewLocationId();
     }
 
+    //get location by id
+    @GetMapping("/{id}")
+    private LocationDTO returnLocationById(@PathVariable String id){
+        return locService.returnLocationById(id);
+    }
+
+
     //    add locations
     @PostMapping
     private Boolean createLocation(@RequestBody Locations venLocData){

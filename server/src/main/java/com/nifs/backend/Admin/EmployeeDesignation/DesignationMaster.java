@@ -55,4 +55,10 @@ public class DesignationMaster {
     @JsonIgnoreProperties("designation")
     private List<EmployeeMaster> employee;
 
+    public DesignationMaster(String id, String designationName, Date dateCreated, Locations location) {
+        this.id = id;
+        this.designationName = designationName;
+        this.dateCreated = dateCreated;
+        this.location = location;
+    }
 }

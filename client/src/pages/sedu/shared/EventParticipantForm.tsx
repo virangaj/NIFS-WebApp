@@ -25,19 +25,26 @@ function EventParticipantForm({ type, total, setTotal }: any) {
 
     })
 
-    const [getId, setId] = useState('');
+    const [p_id, setP_id] = useState<String | any>('');
 
-    useEffect(() => {
-        if (!getId) {
-            setId(generateID(type.substring(0, 3)))
-        }
-        setId(generateID(type.substring(0, 3)))
+    useEffect(()=>{
+        generateEventId();
+        console.log("trigger "+ p_id)
+        setValue({
+            id: p_id,
+            p_type: type,
+            name: value?.name,
+            nic: value?.nic,
+            contactNo: value?.contactNo,
+            address: value?.address,
+            email: value?.email
+        })
+    }, [value.name])
 
-    }, [value])
-
-
-
-
+    const generateEventId = () => {
+        setP_id(generateID('PM'))
+        
+    }
 
     const onChange = (e: any) => {
         setValue((preState: any) => ({
@@ -48,11 +55,18 @@ function EventParticipantForm({ type, total, setTotal }: any) {
 
 
     const handleAdd = () => {
-
-        console.log(generateID(type.substring(0, 3)))
+        setValue({
+            id: p_id,
+            p_type: type,
+            name: value?.name,
+            nic: value?.nic,
+            contactNo: value?.contactNo,
+            address: value?.address,
+            email: value?.email
+        })
+        
+        console.log(value)
         if (value.name !== '') {
-
-
             setTotal((prev: any) => [...prev, value]);
             reset()
         }
@@ -66,7 +80,7 @@ function EventParticipantForm({ type, total, setTotal }: any) {
 
     const reset = () => {
         setValue({
-            id: generateID(type.substring(0, 3)),
+            id: '',
             p_type: type,
             name: '',
             nic: '',
@@ -82,7 +96,7 @@ function EventParticipantForm({ type, total, setTotal }: any) {
 
     return (
         <>
-            <div className="flex flex-col sm:flex-row items-center justify-between">
+            <div className="flex flex-col items-center justify-between sm:flex-row">
                 {/* name */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 justify-between w-[100%]">
                     <Box className='w-[250px] mb-4'>

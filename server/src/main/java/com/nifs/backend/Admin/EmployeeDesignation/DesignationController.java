@@ -14,7 +14,7 @@ public class DesignationController {
 
 //    get all designations
     @GetMapping
-    private List<DesignationMaster> getAllDesignations(){
+    private List<DesignationMasterDTO> getAllDesignations(){
         return desService.getAllDesignations();
     }
 
@@ -32,7 +32,7 @@ public class DesignationController {
 
 //    create designation
     @PostMapping
-    private Boolean createDesignation(@RequestBody DesignationMaster desData){
+    private Boolean createDesignation(@RequestBody DesignationMasterDTO desData){
         return desService.createDesignation(desData);
     }
 

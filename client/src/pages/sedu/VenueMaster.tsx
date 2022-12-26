@@ -11,28 +11,30 @@ import Autocomplete from '@mui/material/Autocomplete';
 
 import SelectFacility from './shared/SelectFacility'
 import SetChargers from './shared/SetChargers';
-import VenueMasterService from '../../services/VenueMasterService';
+import VenueMasterService from '../../services/sedu/VenueMasterService';
 import IVenueMaster from '../../types/VenueMaster';
 import Ripple from '../../components/Ripple';
 import { generateID } from '../../constant/generateId';
 
+import VenueOtherService from '../../services/sedu/VenueOtherService';
+import LocationMasterService from '../../services/admin/LocationMasterService';
+import ILocationData from '../../types/LocationData';
 
 import '../pages.css'
-import VenueOtherService from '../../services/VenueOtherService';
-
 function VenueMaster() {
 
     const [facilities, setFacilities] = useState<any[]>([]);
     const [chargers, setChargers] = useState<any[]>([]);
-    const [locationName, setLocationName] = useState('')
+    const [locationData, setLocationData] = useState<ILocationData[]>();
+    
 
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(false);
 
-    const [venue, setVenue] = useState([])
+    const [venue, setVenue] = useState([]);
    
 
     const [v_id, setV_Id] = useState('');
-    const [success, setSuccess] = useState(false)
+    const [success, setSuccess] = useState(false);
 
 
     const [values, setValues] = useState<IVenueMaster>({
@@ -48,7 +50,7 @@ function VenueMaster() {
 
 
 
-
+// onchange function
     const onChange = (e: any) => {
         setValues((preState) => ({
             ...preState,
@@ -56,19 +58,19 @@ function VenueMaster() {
         }))
     }
     useEffect(()=>{
-        console.log(v_id)
+        // console.log(v_id)
         setValues({
             venueId: v_id,
             venueName: values?.venueName,
             type: values?.type,
             availability: values?.availability,
-            location: locationName ? locationName : "",
+            location: values?.location,
             remark: values?.remark,
             capacity: values?.capacity,
             dateCreated:"",
 
         })
-        console.log(values)
+        // console.log(values)
 
     },[v_id])
     // generate id on button click
@@ -102,98 +104,71 @@ function VenueMaster() {
         setV_Id("")
         setFacilities([])
         setChargers([])
-        setLocationName('')
+      
 
     }
-    const generateFirstId = () => {
-        let x = Math.floor(Math.random() * 10000);
-
-        const today = new Date();
-        var time = today.getHours() + '' + today.getMinutes() + '' + today.getSeconds();
-        const key = "VM"
-        let firstId = x.toString().substring(0, 3) + key.toUpperCase() + time
-        console.log(firstId)
-        setValues({
-            venueId: firstId,
-            venueName: '',
-            type: '',
-            availability: '',
-            location: "",
-            remark: '',
-            capacity: 0,
-            dateCreated: "",
-        });
-    }
+    
     useEffect(() => {
-
-       
+        retreiveLocations();
         retrieveVenue();
-        // console.log(venue)
-        generateFirstId()
+        // console.log(venue);
 
     }, []);
 
-
+    const retreiveLocations = () => {
+		LocationMasterService.getAllLocations()
+			.then((res: any) => {
+				setLocationData(res.data);
+                console.log(locationData);
+			})
+			.catch((e: any) => {
+				console.log(e);
+			});
+	};
    
 
     const retrieveVenue = () => {
         VenueMasterService.getAllVenues().then((res: any) => {
             setVenue(res.data)
-            console.log(venue)
+            // console.log(venue)
 
         }).catch((e: any) => {
             console.log(e)
         })
     }
 
-    useEffect(() => {
-        setValues({
-            venueId: values?.venueId,
-            venueName: values?.venueName,
-            type: values?.type,
-            availability: values?.availability,
-            location: locationName ? locationName : "",
-            remark: values?.remark,
-            capacity: values?.capacity,
-            dateCreated:"",
-
-        });
-    }, [locationName])
-
-
     const onSubmit = async (e: any) => {
         e.preventDefault();
-        try {
-            setLoading(true)
-            const venuResult = await VenueMasterService.saveVenue(values);
-            const facCharge = await VenueOtherService.setCharges(chargers, values.venueId);
-            const facResult = await VenueOtherService.setFacilities(facilities, values.venueId);
-            alert('done')
-            setSuccess(true)
-        } catch (e: any) {
-            setLoading(true)
-            setSuccess(false)
-            alert(e)
+        if(values.venueId !== null){
+            try {
+                setLoading(true)
+                console.log(values)
+                const venuResult = await VenueMasterService.saveVenue(values);
+                const facCharge = await VenueOtherService.setCharges(chargers, values.venueId);
+                const facResult = await VenueOtherService.setFacilities(facilities, values.venueId);
+                alert('done')
+                setSuccess(true)
+                resetForm();
+            } catch (e: any) {
+                setLoading(true)
+                setSuccess(false)
+                alert(e)
+            }
+    
+    
+            if (success) {
+                resetForm()
+            }
+            setLoading(false)
         }
-
-
-        if (success) {
-            resetForm()
+        else{
+            alert("Please add a ID");
         }
-        setLoading(false)
-        console.log(values)
+        // console.log(values)
     }
 
     
-    const top100Films = [
-        { label: 'The Shawshank Redemption', year: 1994 },
-        { label: 'The Godfather', year: 1972 },
-        { label: 'The Godfather: Part II', year: 1974 },
-        { label: 'The Dark Knight', year: 2008 },
-        { label: '12 Angry Men', year: 1957 },
-        { label: "Schindler's List", year: 1993 },
-        { label: 'Pulp Fiction', year: 1994 }
-    ]
+    
 
     return (
         <div className='sub-body-content xl:!w-[60%]'>
@@ -206,7 +181,7 @@ function VenueMaster() {
 
                 <div className="form-flex">
                     <div className="form-left-section">
-                        <Box className='input-field flex items-center justify-between'>
+                        <Box className='flex items-center justify-between input-field'>
                             <p>Venue Id - {v_id ? v_id : ""}</p>
                             {/* <TextField fullWidth required
                                 id="outlined-basic"
@@ -284,19 +259,26 @@ function VenueMaster() {
                     <div className="form-right-section">
 
                         <Box className='input-field'>
-                            <Autocomplete
-                                disablePortal
+                            <InputLabel id="demo-simple-select-label" className='input-label'>Location</InputLabel>
+                            <Select
+                                fullWidth
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={values.location}
+                                name='location'
                                 size='small'
-                                id="combo-box-demo"
-                                options={top100Films}
-                                isOptionEqualToValue={(option: any) => option.label}
-                                onChange={(event, value: any) => { setLocationName(value.label) }}
-                                renderInput={(params) =>
-                                    <TextField {...params} fullWidth required label="Location" name='locationName' value={locationName}
-                                    />}
-                            />
-                        </Box>
+                                label="Venue Name"
+                                onChange={onChange}
+                            >
+                                <MenuItem value="" disabled>Select Location</MenuItem>
+                                {locationData?.map((l:ILocationData, i:number)=>{
+                                    return(
+                                        <MenuItem value={l.locationId}>{l.locationName}</MenuItem>
+                                    )
+                                })}
 
+                            </Select>
+                        </Box>
 
                         <Box className='input-field'>
 
