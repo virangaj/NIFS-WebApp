@@ -29,8 +29,19 @@ export enum RouteName {
   SeduReportGenerator = "/report-generator",
 
 
+  //admin pages
+  AdminAdmin = "/dashboard/admin/admin/*",
+  SeduAdmin = "/dashboard/sedu/admin/*",
+  TransportAdmin = "/dashboard/transport/admin/*",
+  ProcumentAdmin = "/dashboard/procument/admin/*",
+  LibraryAdmin = "/dashboard/library/admin/*",
+  CommonAdmin = "/dashboard/common/admin/*",
+  Director = "/dashboard/director/admin/*",
 
-
-
-  
+  //sub routes of administrator admin
+  Employee = "/employee",
+  EmployeeType= "/employee-type",
+  EmployeeCategory = '/employee-category',
+  Designation = '/designations',
+  Divisions='/divisions' 
 }

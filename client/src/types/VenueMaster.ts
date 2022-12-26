@@ -4,7 +4,7 @@ export default interface IVenueMaster {
     type: String,
     availability: any,
     location: String,
-    remarks: String,
+    remark: String,
     capacity: Number,
-    dateCreated: Date
+    dateCreated: String
   }

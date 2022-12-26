@@ -8,7 +8,7 @@ import InputLabel from "@mui/material/InputLabel";
 import { HiPlusCircle, HiOutlineTrash } from "react-icons/hi";
 
 // import FacilityData from "../../../components/data/Facility.json";
-import VenueOtherService from "../../../services/VenueOtherService";
+import VenueOtherService from "../../../services/sedu/VenueOtherService";
 
 
 function SelectFacility({ setFacilities, facilities }: any) {
@@ -19,7 +19,7 @@ function SelectFacility({ setFacilities, facilities }: any) {
 
 	useEffect(() => {
 		retreiveFacility();
-        console.log(facilityData);
+        // console.log(facilityData);
 	}, []);
 
 	// load all facility data
@@ -82,7 +82,7 @@ function SelectFacility({ setFacilities, facilities }: any) {
 							value={newItem}
 							onChange={(e: any) => setNewItem(e.target.value)}
 						>
-							<MenuItem value="" disabled>
+							<MenuItem value={0} disabled>
 								Select a Facility
 							</MenuItem>
 							{facilityData && facilityData.map((data, index) => (
@@ -103,12 +103,12 @@ function SelectFacility({ setFacilities, facilities }: any) {
 				<hr className="horizontal-line" />
 				{facilities.length !== 0 ? (
 					facilities.map((i: any, index: number) => (
-						<div className="flex-section mb-4 lg:mb-2">
-							<p className="items-container-text" key={index}>
+						<div className="mb-4 flex-section lg:mb-2" key={index}>
+							<p className="items-container-text">
 								{i.name}
 							</p>
 							<HiOutlineTrash
-								className="text-xl hover:text-red-500 cursor-pointer"
+								className="text-xl cursor-pointer hover:text-red-500"
 								onClick={() => handleDelete(i.facilityId)}
 							/>
 						</div>

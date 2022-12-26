@@ -3,8 +3,10 @@ package com.nifs.backend.SEDU.Charges;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ChargeService {
@@ -12,6 +14,7 @@ public class ChargeService {
     @Autowired
     ChargeRepository chargeRepo;
 
+//    create new charge
     public String createCharge(Charges chargeData){
         if(chargeRepo.returnCharge(chargeData.getChargeId()) == null){
             Date d = new Date();
@@ -24,9 +27,58 @@ public class ChargeService {
         }
     }
 
+//    return all charges
     public List<Charges> getAll(){
-        return chargeRepo.findAll();
+        return (List<Charges>) chargeRepo.findAll();
     }
 
 
+//    return new charge id
+    public String returnNewChargeId() {
+        String lastId = chargeRepo.returnLastId();
+
+        if(lastId == null){
+            return "VMC001";
+        }else{
+            String idText = lastId.replaceAll("[^A-Za-z]", "");
+            int idNum = Integer.parseInt(lastId.replaceAll("[^0-9]", ""));
+            idNum = idNum + 1;
+            return idText + idNum;
+
+        }
+    }
+//    get charge by id
+    public Optional<Charges> returnCharge(String chargeId) {
+        return chargeRepo.findById(chargeId);
+    }
+
+//    delete charge by id
+    public Boolean deleteCharge(String chargeId) {
+
+        Charges charge = chargeRepo.returnCharge(chargeId);
+        if(charge != null){
+            chargeRepo.deleteByChargeIdLike(chargeId);
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+//    update charge data
+    public Boolean updateCharge(String chargeId, Charges chargeData) {
+       if(chargeRepo.returnCharge(chargeId) != null){
+           Date d = new Date();
+
+           chargeRepo.Update(chargeData.getName(), chargeData.getCharge(), d, chargeId);
+           return true;
+       }
+       else{
+           return false;
+       }
+    }
+
+//    public Charges editCharge(String chargeId, Charges chargeData) {
+//        return chargeRepo.
+//    }
 }

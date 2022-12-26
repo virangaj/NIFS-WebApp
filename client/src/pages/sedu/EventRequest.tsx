@@ -37,52 +37,53 @@ function EventRequest() {
     const [eventAttachment, setEventAttachment] = useState<File | any>()
 
     const [values, setValues] = useState<IEventRequest>({
-        event_id: '',
-        event_type: '',
+        eventId: '',
+        eventType: '',
         type: '',
         title: '',
         remarks: '',
-        start_date: '',
-        end_date: '',
-        start_time: '',
-        end_time: '',
-        no_participants: 0,
+        startDate: '',
+        endDate: '',
+        startTime: '',
+        endTime: '',
+        noParticipants: 0,
         budget: 0,
         project: '',
         vote: '',
         location: '',
-        venue_name: '',
-        venue_type: '',
-        fund_type: '',
+        venueName: '',
+        venueType: '',
+        fundType: '',
     })
 
 
     useEffect(() => {
         setValues({
-            event_id: values?.event_id,
-            event_type: values?.event_type,
+            eventId: getEventId,
+            eventType: values?.eventType,
             type: values?.type,
             title: values?.title,
             remarks: values?.remarks,
-            start_date: startDate ? startDate : '',
-            end_date: endDate ? endDate : '',
-            start_time: startTime ? startTime : '',
-            end_time: endTime ? endTime : '',
-            no_participants: values?.no_participants,
+            startDate: startDate ? startDate : '',
+            endDate: endDate ? endDate : '',
+            startTime: startTime ? startTime : '',
+            endTime: endTime ? endTime : '',
+            noParticipants: values?.noParticipants,
             budget: values?.budget,
             project: values?.project,
             vote: values?.vote,
             location: values?.location,
-            venue_name: values?.venue_name,
-            venue_type: values?.venue_type,
-            fund_type: values?.fund_type,
+            venueName: values?.venueName,
+            venueType: values?.venueType,
+            fundType: values?.fundType,
         });
-    }, [startDate, endDate, startTime, endTime])
+    }, [startDate, endDate, startTime, endTime, getEventId])
+
 
 
     const generateEventId = () => {
-        setEventId(generateID('SER'))
-        console.log(getEventId)
+        setEventId(generateID('ER'))
+        
     }
 
 
@@ -97,34 +98,54 @@ function EventRequest() {
 
     const resetForm = () => {
         setValues({
-            event_id: '',
-            event_type: '',
+            eventId: '',
+            eventType: '',
             type: '',
             title: '',
             remarks: '',
-            start_date: '',
-            end_date: '',
-            start_time: '',
-            end_time: '',
-            no_participants: 0,
+            startDate: '',
+            endDate: '',
+            startTime: '',
+            endTime: '',
+            noParticipants: 0,
             budget: 0,
             project: '',
             vote: '',
             location: '',
-            venue_name: '',
-            venue_type: '',
-            fund_type: '',
+            venueName: '',
+            venueType: '',
+            fundType: '',
         })
         setStartDate('')
         setStartTime('')
         setEndDate('')
         setEndTime('')
+        setEventId('')
     }
 
     const onSubmit = async (e: any) => {
         e.preventDefault();
-
+        setValues({
+            eventId: getEventId,
+            eventType: values?.eventType,
+            type: values?.type,
+            title: values?.title,
+            remarks: values?.remarks,
+            startDate: values?.startDate,
+            endDate: values?.endDate,
+            startTime: values?.startTime,
+            endTime: values?.endTime,
+            noParticipants: values?.noParticipants,
+            budget: values?.budget,
+            project: values?.project,
+            vote: values?.vote,
+            location: values?.location,
+            venueName: values?.venueName,
+            venueType: values?.venueType,
+            fundType: values?.fundType,
+        });
         console.log(values)
+        console.log(getEventId)
     }
 
     return (
@@ -133,7 +154,7 @@ function EventRequest() {
             <hr className='horizontal-line' />
 
             <form onSubmit={onSubmit}>
-                <div className="form-flex items-center">
+                <div className="items-center form-flex">
                     <div className="form-left-section">
                     </div>
                 </div>
@@ -144,29 +165,29 @@ function EventRequest() {
 
                     {/* event id */}
 
-                    <Box className='input-field flex items-center'>
-                        <TextField required
+                    <Box className='flex items-center justify-between input-field'>
+                        {/* <TextField required
                             id="outlined-basic"
                             label="Event ID"
                             variant="outlined"
                             type="text"
-                            name='event_id'
+                            name='eventId'
                             onChange={onChange}
                             defaultValue={getEventId}
                             InputProps={{
                                 readOnly: true,
                             }}
-                        />
-
+                        /> */}
+                        Request ID - {getEventId && getEventId}
                         <Button variant="outlined" className='!ml-4' onClick={generateEventId} size="large" color='info'>New</Button>
                     </Box>
 
                     {/* start date */}
-                    <div className='lg:ml-10 mx-0 mb-4 md:my-0' >
+                    <div className='mx-0 mb-4 lg:ml-10 md:my-0' >
                         <CustomeDataPicker date={startDate} setDate={setStartDate} title='Start Date' />
                     </div>
                     {/* end date */}
-                    <div className='lg:ml-10 mx-0 mb-4 md:my-0' >
+                    <div className='mx-0 mb-4 lg:ml-10 md:my-0' >
                         <CustomeDataPicker date={endDate} setDate={setEndDate} title='End Date' />
                     </div>
                     {/* event type */}
@@ -177,8 +198,8 @@ function EventRequest() {
 
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
-                            value={values.event_type}
-                            name='event_type'
+                            value={values.eventType}
+                            name='eventType'
                             size='small'
                             label="Event Type"
                             onChange={onChange}
@@ -197,12 +218,12 @@ function EventRequest() {
                     </Box>
 
                     {/* start time */}
-                    <div className='lg:ml-10 mx-0 mb-4 md:my-0' >
+                    <div className='mx-0 mb-4 lg:ml-10 md:my-0' >
                         <CustomeTimePicker time={startTime} setTime={setStartTime} title='Start Time' />
                     </div>
 
                     {/* end time */}
-                    <div className='lg:ml-10 mx-0 mb-4 md:my-0' >
+                    <div className='mx-0 mb-4 lg:ml-10 md:my-0' >
                         <CustomeTimePicker time={endTime} setTime={setEndTime} title='End Time' />
                     </div>
 
@@ -234,21 +255,21 @@ function EventRequest() {
                     </Box>
 
                     {/* no of participants */}
-                    <Box className='input-field lg:ml-10 mx-0'>
+                    <Box className='mx-0 input-field lg:ml-10'>
                         <TextField
                             fullWidth required id="outlined-basic"
                             label="No of Participants"
                             variant="outlined"
                             type="number"
-                            name='no_participants'
+                            name='noParticipants'
                             size="small"
                             onChange={onChange}
-                            value={values.no_participants}
+                            value={values.noParticipants}
 
                         />
                     </Box>
 
-                    <Box className='input-field lg:ml-10 mx-0'>
+                    <Box className='mx-0 input-field lg:ml-10'>
                         <TextField
                             fullWidth required id="outlined-basic"
                             label="Expect Budget"
@@ -265,7 +286,7 @@ function EventRequest() {
 
                 </div>
                 {/* event title */}
-                <Box className='input-field lg:ml-4 mx-0'>
+                <Box className='mx-0 input-field lg:ml-4'>
 
                     <TextField
                         fullWidth required multiline id="outlined-basic"
@@ -282,7 +303,7 @@ function EventRequest() {
                 </Box>
 
                 {/*remarks  */}
-                <Box className='input-field lg:ml-4 mx-0'>
+                <Box className='mx-0 input-field lg:ml-4'>
 
                     <TextField
                         fullWidth required multiline id="outlined-multiline-flexible"
@@ -298,10 +319,10 @@ function EventRequest() {
                     />
                 </Box>
 
-                <div className="form-flex items-center">
+                <div className="items-center form-flex">
                     <div className="form-left-section">
                         {/* project */}
-                        <Box className='input-field lg:ml-4 mx-0'>
+                        <Box className='mx-0 input-field lg:ml-4'>
                             <InputLabel id="demo-simple-select-label" className='input-label'>Project *</InputLabel>
                             <Select
                                 fullWidth
@@ -330,7 +351,7 @@ function EventRequest() {
                     </div>
                     <div className="form-right-section">
                         {/* vote */}
-                        <Box className='input-field lg:ml-4 mx-0'>
+                        <Box className='mx-0 input-field lg:ml-4'>
                             <InputLabel id="demo-simple-select-label" className='input-label'>Vote *</InputLabel>
                             <Select
                                 fullWidth
@@ -359,19 +380,19 @@ function EventRequest() {
 
                     </div>
                 </div>
-                <div className="form-flex items-center">
+                <div className="items-center form-flex">
                     <div className="form-left-section">
 
                         {/* Budget */}
-                        <Box className='input-field lg:ml-4 mx-0'>
+                        <Box className='mx-0 input-field lg:ml-4'>
                             <InputLabel id="demo-simple-select-label" className='input-label'>External /Fund Internal / Budget*</InputLabel>
                             <Select
                                 fullWidth
 
                                 labelId="demo-simple-select-label"
                                 id="demo-simple-select"
-                                value={values.fund_type}
-                                name='fund_type'
+                                value={values.fundType}
+                                name='fundType'
                                 size='small'
                                 label="Fund"
                                 onChange={onChange}
@@ -392,7 +413,7 @@ function EventRequest() {
                     <div className="form-right-section">
 
                         {/* location */}
-                        <Box className='input-field lg:ml-4 mx-0'>
+                        <Box className='mx-0 input-field lg:ml-4'>
                             <InputLabel id="demo-simple-select-label" className='input-label'>Location *</InputLabel>
                             <Select
                                 fullWidth
@@ -416,22 +437,22 @@ function EventRequest() {
                         </Box>
                     </div>
                 </div>
-                <div className="form-flex items-center">
+                <div className="items-center form-flex">
                     <div className="form-right-section">
 
 
                         {/* venue name */}
-                        <Box className='input-field lg:ml-4 mx-0'>
+                        <Box className='mx-0 input-field lg:ml-4'>
 
                             <TextField
                                 fullWidth required multiline id="outlined-multiline-flexible"
                                 label="Venue Name"
                                 variant="outlined"
                                 type="search"
-                                name='venue_name'
+                                name='venueName'
                                 size="small"
                                 onChange={onChange}
-                                value={values.venue_name}
+                                value={values.venueName}
 
 
                             />
@@ -439,13 +460,13 @@ function EventRequest() {
                     </div>
                     <div className="form-right-section">
                         {/* Venue type */}
-                        <Box className='input-field lg:ml-4 mx-0'>
+                        <Box className='mx-0 input-field lg:ml-4'>
                             <InputLabel id="demo-simple-select-label" className='input-label'>Venue Type *</InputLabel>
                             <Select
                                 fullWidth labelId="demo-simple-select-label"
                                 id="demo-simple-select"
-                                value={values.venue_type}
-                                name='venue_type'
+                                value={values.venueType}
+                                name='venueType'
                                 size='small'
                                 label="Fund"
                                 onChange={onChange}

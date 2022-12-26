@@ -19,7 +19,7 @@ function NifsRepresentatives({ total, setTotal }: any) {
     }
 
 
-    console.log(total)
+    // console.log(total)
 
     return (
         <>
@@ -45,7 +45,7 @@ function NifsRepresentatives({ total, setTotal }: any) {
                             <td>{t.contactNo}</td>
                             <td>{t.address}</td>
                             <td>{t.email}</td>
-                            <td><HiOutlineTrash className='text-xl hover:text-red-500 cursor-pointer' onClick={() => handleDelete(t.id)} /></td>
+                            <td><HiOutlineTrash className='text-xl cursor-pointer hover:text-red-500' onClick={() => handleDelete(t.id)} /></td>
 
                         </tr>
 

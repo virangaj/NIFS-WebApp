@@ -13,7 +13,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 
 import IParticipantMaster from '../../types/ParticipantMaster';
 import CustomeDataPicker from '../../components/DataPicker';
-import ParticipantMasterService from '../../services/ParticipantMasterService';
+import ParticipantMasterService from '../../services/sedu/ParticipantMasterService';
 import Ripple from '../../components/Ripple';
 
 

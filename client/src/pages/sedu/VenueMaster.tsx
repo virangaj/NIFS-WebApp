@@ -11,27 +11,30 @@ import Autocomplete from '@mui/material/Autocomplete';
 
 import SelectFacility from './shared/SelectFacility'
 import SetChargers from './shared/SetChargers';
-import VenueMasterService from '../../services/VenueMasterService';
+import VenueMasterService from '../../services/sedu/VenueMasterService';
 import IVenueMaster from '../../types/VenueMaster';
 import Ripple from '../../components/Ripple';
 import { generateID } from '../../constant/generateId';
 
+import VenueOtherService from '../../services/sedu/VenueOtherService';
+import LocationMasterService from '../../services/admin/LocationMasterService';
+import ILocationData from '../../types/LocationData';
 
 import '../pages.css'
-
 function VenueMaster() {
 
     const [facilities, setFacilities] = useState<any[]>([]);
     const [chargers, setChargers] = useState<any[]>([]);
-    const [locationName, setLocationName] = useState('')
+    const [locationData, setLocationData] = useState<ILocationData[]>();
+    
 
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(false);
 
-    const [venue, setVenue] = useState([])
+    const [venue, setVenue] = useState([]);
    
 
     const [v_id, setV_Id] = useState('');
-    const [success, setSuccess] = useState(false)
+    const [success, setSuccess] = useState(false);
 
 
     const [values, setValues] = useState<IVenueMaster>({
@@ -40,14 +43,14 @@ function VenueMaster() {
         type: "",
         availability: "",
         location: '',
-        remarks: "",
+        remark: "",
         capacity: 0,
-        dateCreated: new Date(0),
+        dateCreated: "",
     });
 
 
 
-
+// onchange function
     const onChange = (e: any) => {
         setValues((preState) => ({
             ...preState,
@@ -55,22 +58,25 @@ function VenueMaster() {
         }))
     }
     useEffect(()=>{
-        console.log(v_id)
+        // console.log(v_id)
         setValues({
             venueId: v_id,
-            venueName: "",
-            type: "",
-            availability: "",
-            location: "",
-            remarks: "",
-            capacity: 0,
-            dateCreated: new Date(0),
+            venueName: values?.venueName,
+            type: values?.type,
+            availability: values?.availability,
+            location: values?.location,
+            remark: values?.remark,
+            capacity: values?.capacity,
+            dateCreated:"",
 
         })
+        // console.log(values)
 
     },[v_id])
     // generate id on button click
     const generateVenueID = () => {
+        // window.location.reload;
+        resetForm()
         VenueMasterService.getNewVenueId().then((res: any) => {
             setV_Id(res.data);
         }).catch((e: any) => {
@@ -79,7 +85,7 @@ function VenueMaster() {
 
         let id = generateID('VM')
         // setV_Id(id)
-        console.log(v_id)
+        // console.log(v_id)
 
     }
 
@@ -90,103 +96,79 @@ function VenueMaster() {
             type: "",
             availability: "",
             location: "",
-            remarks: "",
+            remark: "",
             capacity: 0,
-            dateCreated: new Date(0),
+            dateCreated: "",
 
         })
+        setV_Id("")
         setFacilities([])
         setChargers([])
-        setLocationName('')
+      
 
     }
-    const generateFirstId = () => {
-        let x = Math.floor(Math.random() * 10000);
-
-        const today = new Date();
-        var time = today.getHours() + '' + today.getMinutes() + '' + today.getSeconds();
-        const key = "VM"
-        let firstId = x.toString().substring(0, 3) + key.toUpperCase() + time
-        console.log(firstId)
-        setValues({
-            venueId: firstId,
-            venueName: '',
-            type: '',
-            availability: '',
-            location: "",
-            remarks: '',
-            capacity: 0,
-            dateCreated: new Date(0),
-        });
-    }
+    
     useEffect(() => {
-
-       
+        retreiveLocations();
         retrieveVenue();
-        // console.log(venue)
-        generateFirstId()
+        // console.log(venue);
 
     }, []);
 
-
+    const retreiveLocations = () => {
+		LocationMasterService.getAllLocations()
+			.then((res: any) => {
+				setLocationData(res.data);
+                console.log(locationData);
+			})
+			.catch((e: any) => {
+				console.log(e);
+			});
+	};
    
 
     const retrieveVenue = () => {
         VenueMasterService.getAllVenues().then((res: any) => {
             setVenue(res.data)
-            console.log(venue)
+            // console.log(venue)
 
         }).catch((e: any) => {
             console.log(e)
         })
     }
 
-    useEffect(() => {
-        setValues({
-            venueId: values?.venueId,
-            venueName: values?.venueName,
-            type: values?.type,
-            availability: values?.availability,
-            location: locationName ? locationName : "",
-            remarks: values?.remarks,
-            capacity: values?.capacity,
-            dateCreated: new Date(),
-
-        });
-    }, [locationName])
-
-
     const onSubmit = async (e: any) => {
         e.preventDefault();
-        try {
-            setLoading(true)
-            const result = await VenueMasterService.saveVenue(values)
-            alert('done')
-            setSuccess(true)
-        } catch (e: any) {
-            setLoading(true)
-            setSuccess(false)
-            alert(e)
+        if(values.venueId !== null){
+            try {
+                setLoading(true)
+                console.log(values)
+                const venuResult = await VenueMasterService.saveVenue(values);
+                const facCharge = await VenueOtherService.setCharges(chargers, values.venueId);
+                const facResult = await VenueOtherService.setFacilities(facilities, values.venueId);
+                alert('done')
+                setSuccess(true)
+                resetForm();
+            } catch (e: any) {
+                setLoading(true)
+                setSuccess(false)
+                alert(e)
+            }
+    
+    
+            if (success) {
+                resetForm()
+            }
+            setLoading(false)
         }
-
-
-        if (success) {
-            resetForm()
+        else{
+            alert("Please add a ID");
         }
-        setLoading(false)
-        console.log(values)
+        // console.log(values)
     }
 
     
-    const top100Films = [
-        { label: 'The Shawshank Redemption', year: 1994 },
-        { label: 'The Godfather', year: 1972 },
-        { label: 'The Godfather: Part II', year: 1974 },
-        { label: 'The Dark Knight', year: 2008 },
-        { label: '12 Angry Men', year: 1957 },
-        { label: "Schindler's List", year: 1993 },
-        { label: 'Pulp Fiction', year: 1994 }
-    ]
+    
 
     return (
         <div className='sub-body-content xl:!w-[60%]'>
@@ -199,9 +181,9 @@ function VenueMaster() {
 
                 <div className="form-flex">
                     <div className="form-left-section">
-                        <Box className='input-field default-flex'>
-
-                            <TextField fullWidth required
+                        <Box className='flex items-center justify-between input-field'>
+                            <p>Venue Id - {v_id ? v_id : ""}</p>
+                            {/* <TextField fullWidth required
                                 id="outlined-basic"
                                 label="Venue ID"
                                 variant="outlined"
@@ -214,7 +196,7 @@ function VenueMaster() {
                                     readOnly: true,
                                 }}
 
-                            />
+                            /> */}
                             <Button variant="outlined" onClick={generateVenueID} style={{ marginLeft: '20px' }}>New</Button>
 
                         </Box>
@@ -246,9 +228,11 @@ function VenueMaster() {
                                 onChange={onChange}
                             >
                                 {/* <MenuItem value='' disabled>Select a Type</MenuItem> */}
-                                <MenuItem value={10}>Ten</MenuItem>
-                                <MenuItem value={20}>Twenty</MenuItem>
-                                <MenuItem value={30}>Thirty</MenuItem>
+                                <MenuItem value="Room">Room</MenuItem>
+                                <MenuItem value="Lab">Lab</MenuItem>
+                                <MenuItem value="Auditorium">Auditorium</MenuItem>
+
+                               
                             </Select>
                         </Box>
 
@@ -275,31 +259,38 @@ function VenueMaster() {
                     <div className="form-right-section">
 
                         <Box className='input-field'>
-                            <Autocomplete
-                                disablePortal
+                            <InputLabel id="demo-simple-select-label" className='input-label'>Location</InputLabel>
+                            <Select
+                                fullWidth
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={values.location}
+                                name='location'
                                 size='small'
-                                id="combo-box-demo"
-                                options={top100Films}
-                                isOptionEqualToValue={(option: any) => option.label}
-                                onChange={(event, value: any) => { setLocationName(value.label) }}
-                                renderInput={(params) =>
-                                    <TextField {...params} fullWidth required label="Location" name='locationName' value={locationName}
-                                    />}
-                            />
-                        </Box>
+                                label="Venue Name"
+                                onChange={onChange}
+                            >
+                                <MenuItem value="" disabled>Select Location</MenuItem>
+                                {locationData?.map((l:ILocationData, i:number)=>{
+                                    return(
+                                        <MenuItem value={l.locationId}>{l.locationName}</MenuItem>
+                                    )
+                                })}
 
+                            </Select>
+                        </Box>
 
                         <Box className='input-field'>
 
                             <TextField
                                 fullWidth required multiline id="outlined-multiline-flexible"
-                                label="Remarks"
+                                label="Remark"
                                 variant="outlined"
                                 type="search"
-                                name='remarks'
+                                name='remark'
                                 size="small"
                                 onChange={onChange}
-                                value={values.remarks}
+                                value={values.remark}
 
                             />
                         </Box>
@@ -316,10 +307,13 @@ function VenueMaster() {
                                 label="Venue Name"
                                 onChange={onChange}
                             >
-                                {/* <MenuItem value='' disabled>Select Capacity</MenuItem> */}
-                                <MenuItem value={10}>Ten</MenuItem>
-                                <MenuItem value={20}>Twenty</MenuItem>
-                                <MenuItem value={30}>Thirty</MenuItem>
+                                <MenuItem value={0} disabled>Select Capacity</MenuItem>
+                                <MenuItem value={10}>10</MenuItem>
+                                <MenuItem value={20}>20</MenuItem>
+                                <MenuItem value={30}>30</MenuItem>
+                                <MenuItem value={50}>50</MenuItem>
+                                <MenuItem value={100}>100</MenuItem>
+
                             </Select>
                         </Box>
 

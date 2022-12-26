@@ -4,6 +4,7 @@ package com.nifs.backend.SEDU.Charges;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.nifs.backend.SEDU.VenueMaster.VenueCharge;
 import com.nifs.backend.SEDU.VenueMaster.VenueMaster;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -12,6 +13,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -23,16 +25,16 @@ import java.util.Set;
 public class Charges {
 
 
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name = "id", nullable = false)
+//    private int id;
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
-
-
-    @Column(name="charge_id")
+    @Column(name="charge_id", length = 10, nullable = false)
     private String chargeId;
 
-    @Column(name="name")
+    @Column(name="name", length = 50)
     private String name;
 
     @Column(name="charge")
@@ -42,52 +44,20 @@ public class Charges {
     @Column(name="date_created")
     private Date dateCreated;
 
-//    relationships
-    @ManyToMany(mappedBy = "charges", fetch = FetchType.LAZY)
-    @JsonIgnore
-    private Set<VenueMaster> venues;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name="date_updated")
+    private Date dateUpdated;
 
+//    relationships
+//    @ManyToMany(mappedBy = "charges", fetch = FetchType.LAZY)
+//    @JsonIgnore
+//    private Set<VenueMaster> venues;
+
+    @OneToMany(mappedBy = "charge", cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
+    private List<VenueCharge> venueCharges;
 
 
 //    getter and setter
-    public int getId() {
-        return id;
-    }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getChargeId() {
-        return chargeId;
-    }
-
-    public void setChargeId(String chargeId) {
-        this.chargeId = chargeId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public double getCharge() {
-        return charge;
-    }
-
-    public void setCharge(double charge) {
-        this.charge = charge;
-    }
-
-    public Date getDateCreated() {
-        return dateCreated;
-    }
-
-    public void setDateCreated(Date dateCreated) {
-        this.dateCreated = dateCreated;
-    }
 }
 

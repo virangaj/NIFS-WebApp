@@ -17,18 +17,16 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Facility {
-    @Getter(AccessLevel.NONE)
-    @Setter(AccessLevel.NONE)
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name = "id", nullable = false)
+//    private Integer id;
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Integer id;
-
-
-    @Column(name="facility_id")
+    @Column(name="facility_id", nullable = false, length = 10)
     private String facilityId;
 
-    @Column(name = "facility_name")
+    @Column(name = "facility_name",  nullable = false, length = 50)
     private String name;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -45,34 +43,4 @@ public class Facility {
     private Set<VenueMaster> venues;
 
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-    public String getFacilityId() {
-        return facilityId;
-    }
-
-    public void setFacilityId(String facilityId) {
-        this.facilityId = facilityId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Date getDateCreated() {
-        return dateCreated;
-    }
-
-    public void setDateCreated(Date dateCreated) {
-        this.dateCreated = dateCreated;
-    }
 }

@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -22,47 +23,53 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 public class VenueMaster {
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name = "id", nullable = false)
+//    private int id;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private int id;
-    @Column(name = "venue_id")
+    @Column(name = "venue_id", nullable = false, length = 10)
     private String venueId;
-    @Column(name = "name")
+    @Column(name = "name", length = 255)
     private String venueName;
-    @Column(name = "type")
-
+    @Column(name = "type", length = 50)
     private String type;
     @Column(name="Capacity")
     private int capacity;
 
-    @Column(name="remark")
+    @Column(name="remark", length = 255)
     private String remark;
 
-    @Column(name="location")
+    @Column(name="location", length = 50)
     private String location;
 
-    @Column(name="availability")
+    @Column(name="availability", length = 255)
     private String availability;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="date_created")
     private Date dateCreated;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name="date_updated")
+    private Date dateUpdated;
 
 
 
 //    relationships
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
-    @JoinTable(name = "venue_charges",
-        joinColumns = {
-                @JoinColumn(name = "venue_id", referencedColumnName = "venue_id")
-        },
-        inverseJoinColumns = {
-                @JoinColumn(name="charge_id", referencedColumnName = "charge_id")
-        }
-    )
-    private Set<Charges> charges;
+//    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
+//    @JoinTable(name = "venue_charges",
+//        joinColumns = {
+//                @JoinColumn(name = "venue_id", referencedColumnName = "venue_id")
+//        },
+//        inverseJoinColumns = {
+//                @JoinColumn(name="charge_id", referencedColumnName = "charge_id")
+//        }
+//    )
+//    private Set<Charges> charges;
+
+    @OneToMany(mappedBy = "venueMaster", cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
+    private List<VenueCharge> venueCharge;
 
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
@@ -78,78 +85,4 @@ public class VenueMaster {
     private Set<Facility> facilities;
 
 
-//getter and setter
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-
-    }
-
-
-    public String getVenueId() {
-        return venueId;
-    }
-
-    public void setVenueId(String venueId) {
-        this.venueId = venueId;
-    }
-
-    public String getVenueName() {
-        return venueName;
-    }
-
-    public void setVenueName(String venueName) {
-        this.venueName = venueName;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public int getCapacity() {
-        return capacity;
-    }
-
-    public void setCapacity(int capacity) {
-        this.capacity = capacity;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public String getAvailability() {
-        return availability;
-    }
-
-    public void setAvailability(String availability) {
-        this.availability = availability;
-    }
-
-    public Date getDateCreated() {
-        return dateCreated;
-    }
-
-    public void setDateCreated(Date dateCreated) {
-        this.dateCreated = dateCreated;
-    }
 }

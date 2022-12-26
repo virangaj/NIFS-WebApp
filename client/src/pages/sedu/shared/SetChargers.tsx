@@ -11,19 +11,19 @@ import TextField from '@mui/material/TextField';
 import { HiPlusCircle, HiOutlineTrash } from "react-icons/hi";
 
 // import ChargersData from '../../../components/data/Chargers.json'
-import VenueOtherService from "../../../services/VenueOtherService";
+import VenueOtherService from "../../../services/sedu/VenueOtherService";
 
 
 function SetChargers({ setChargers, chargers }: any) {
 
-    const [items, setItems] = useState<any[]>([]);
+    // const [items, setItems] = useState<any[]>([]);
     const [newItem, setNewItem] = useState(0);
     const [cost, setCost] = useState('')
     const [chargesData, setChargesData] = useState<any[]>();
 
     useEffect(() => {
 		retreiveCharges();
-        console.log(chargesData);
+        // console.log(chargesData);
 	}, []);
 
     // load all charges
@@ -99,7 +99,7 @@ function SetChargers({ setChargers, chargers }: any) {
                             value={newItem}
                             onChange={(e: any) => {setNewItem(e.target.value)}}
                         >
-                            <MenuItem value='' disabled>Select a Charge</MenuItem>
+                            <MenuItem value={0} disabled>Select a Charge</MenuItem>
                             {chargesData && chargesData.map((data, index) =>
                                 <MenuItem key={index} value={data.chargeId}>{data.name}</MenuItem>
                             )}
@@ -134,10 +134,10 @@ function SetChargers({ setChargers, chargers }: any) {
                 <h1 className='new-item-title'>Chargers</h1>
                 <hr className='horizontal-line' />
                 {chargers.length !== 0 ? chargers.map((i: any, index: number) => (
-                    <div className='items-container-text grid grid-cols-3 w-[100%] mb-4 lg:mb-2 items-center'>
-                        <p key={index}>{i.name}</p>
-                        <p key={index}>{i.charge}</p>
-                        <HiOutlineTrash className='text-xl hover:text-red-500 cursor-pointer' onClick={() => handleDelete(i.chargeId)} />
+                    <div className='items-container-text grid grid-cols-3 w-[100%] mb-4 lg:mb-2 items-center' key={index}>
+                        <p>{i.name}</p>
+                        <p>{i.charge}</p>
+                        <HiOutlineTrash className='text-xl cursor-pointer hover:text-red-500' onClick={() => handleDelete(i.chargeId)} />
 
                     </div>
                 ))
