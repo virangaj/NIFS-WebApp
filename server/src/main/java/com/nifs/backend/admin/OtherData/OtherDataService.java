@@ -1,9 +1,13 @@
 package com.nifs.backend.admin.OtherData;
 
+import com.nifs.backend.admin.Division.DivisionMaster;
+import com.nifs.backend.admin.Division.DivisionMasterDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OtherDataService {
@@ -15,12 +19,25 @@ public class OtherDataService {
     private ProvinceRepository provinceRepo;
 
 //    return all districts
-    public List<District> returnAllDistricts() {
-        return districtRepo.findAll();
+    public List<DistrictDTO> returnAllDistricts() {
+        List<District> districts =  districtRepo.findAll();
+        List<DistrictDTO> districtDTO = new ArrayList<>();
+        for(District d : districts){
+            DistrictDTO dto = new DistrictDTO(d.getDistrictId(), d.getDistrictName());
+            districtDTO.add(dto);
+        }
+        return districtDTO;
     }
 
-    public List<Province> returnAllProvinces() {
-        return provinceRepo.findAll();
+    public List<ProvinceDTO> returnAllProvinces() {
+
+        List<Province> provinces =  provinceRepo.findAll();
+        List<ProvinceDTO> provinceDTO = new ArrayList<>();
+        for(Province p : provinces){
+            ProvinceDTO dto = new ProvinceDTO(p.getProvinceId(), p.getProvinceName());
+            provinceDTO.add(dto);
+        }
+        return provinceDTO;
     }
 
 //    add new province
@@ -60,5 +77,19 @@ public class OtherDataService {
         else {
             return null;
         }
+    }
+//return Districts By Province Id
+    public List<DistrictDTO> returnDistrictsByProvinceId(int id) {
+        Optional<Province> p = provinceRepo.findById(id);
+        if(p.isPresent()){
+            List<District> districts =  districtRepo.findDistrictByProvinceId(id);
+            List<DistrictDTO> districtDTO = new ArrayList<>();
+            for(District d : districts){
+                DistrictDTO dto = new DistrictDTO(d.getDistrictId(), d.getDistrictName());
+                districtDTO.add(dto);
+            }
+            return districtDTO;
+        }
+        return null;
     }
 }

@@ -1,2 +1,14 @@
-package com.nifs.backend.admin.OtherData;public class DistrictDTO {
+package com.nifs.backend.admin.OtherData;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class DistrictDTO {
+
+    private int id;
+    private String dName;
 }

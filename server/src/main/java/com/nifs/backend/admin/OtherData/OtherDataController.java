@@ -15,8 +15,13 @@ public class OtherDataController {
 
 //    return all districts
     @GetMapping("/district")
-    List<District> returnAllDistricts(){
+    List<DistrictDTO> returnAllDistricts(){
         return dataService.returnAllDistricts();
+    }
+
+    @GetMapping("/district/province/{pId}")
+    List<DistrictDTO> returnDistrictsByProvinceId(@PathVariable int pId){
+        return dataService.returnDistrictsByProvinceId(pId);
     }
 
     //    add new district
@@ -33,7 +38,7 @@ public class OtherDataController {
 
     //    return all provinces
     @GetMapping("/province")
-    List<Province> returnAllProvinces() {
+    List<ProvinceDTO> returnAllProvinces() {
         return dataService.returnAllProvinces();
     }
 

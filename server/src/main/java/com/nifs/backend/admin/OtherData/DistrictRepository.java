@@ -6,7 +6,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 public interface DistrictRepository extends JpaRepository<District, Integer> {
+    @Query("select d from District d where d.province.provinceId = ?1 order by d.districtId")
+    List<District> findDistrictByProvinceId(int provinceId);
     @Transactional
     @Modifying
     @Query("update District d set d.districtName = :districtName where d.districtId = :districtId")
