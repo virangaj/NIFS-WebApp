@@ -1,9 +1,9 @@
-package com.nifs.backend.SEDU.VenueMaster;
+package com.nifs.backend.sedu.VenueMaster;
 
-import com.nifs.backend.SEDU.Charges.ChargeRepository;
-import com.nifs.backend.SEDU.Charges.Charges;
-import com.nifs.backend.SEDU.Facility.Facility;
-import com.nifs.backend.SEDU.Facility.FacilityRepository;
+import com.nifs.backend.sedu.Charges.ChargeRepository;
+import com.nifs.backend.sedu.Charges.Charges;
+import com.nifs.backend.sedu.Facility.Facility;
+import com.nifs.backend.sedu.Facility.FacilityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,9 +1,9 @@
-package com.nifs.backend.Admin.Division;
+package com.nifs.backend.admin.Division;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.nifs.backend.Admin.EmployeeMaster.EmployeeMaster;
-import com.nifs.backend.Admin.Locations.Locations;
+import com.nifs.backend.admin.EmployeeMaster.EmployeeMaster;
+import com.nifs.backend.admin.Locations.Locations;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -47,6 +47,7 @@ public class DivisionMaster {
     @OneToMany(mappedBy = "division", cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JsonIgnoreProperties("division")
     private List<EmployeeMaster> employee;
+
 
 //    constructor for create new instance
     public DivisionMaster(String divisionId, String name, Date createdDate, Locations location) {

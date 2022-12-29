@@ -1,9 +1,7 @@
-package com.nifs.backend.SEDU.Facility;
+package com.nifs.backend.sedu.Facility;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.nifs.backend.SEDU.VenueMaster.VenueMaster;
+import com.nifs.backend.sedu.VenueMaster.VenueMaster;
 import jakarta.persistence.*;
 import lombok.*;
 

@@ -1,6 +1,5 @@
-package com.nifs.backend.Admin.EmployeeDesignation;
+package com.nifs.backend.admin.EmployeeDesignation;
 
-import com.nifs.backend.Admin.Locations.Locations;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

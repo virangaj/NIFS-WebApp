@@ -1,4 +1,4 @@
-package com.nifs.backend.Admin.OtherData;
+package com.nifs.backend.admin.OtherData;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

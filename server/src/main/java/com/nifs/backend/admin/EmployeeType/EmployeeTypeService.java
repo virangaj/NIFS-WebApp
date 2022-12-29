@@ -1,9 +1,7 @@
-package com.nifs.backend.Admin.EmployeeType;
+package com.nifs.backend.admin.EmployeeType;
 
-import com.nifs.backend.Admin.Division.DivisionMaster;
-import com.nifs.backend.Admin.Division.DivisionMasterDTO;
-import com.nifs.backend.Admin.Locations.LocationRepository;
-import com.nifs.backend.Admin.Locations.Locations;
+import com.nifs.backend.admin.Locations.LocationRepository;
+import com.nifs.backend.admin.Locations.Locations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

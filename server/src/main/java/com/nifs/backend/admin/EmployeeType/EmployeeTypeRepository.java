@@ -1,4 +1,4 @@
-package com.nifs.backend.Admin.EmployeeType;
+package com.nifs.backend.admin.EmployeeType;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

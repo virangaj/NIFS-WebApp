@@ -1,10 +1,9 @@
-package com.nifs.backend.Admin.OtherData;
+package com.nifs.backend.admin.OtherData;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.nifs.backend.admin.EmployeeMaster.EmployeeMaster;
 import jakarta.persistence.*;
 import lombok.*;
-import org.aspectj.asm.IRelationship;
 
 import java.util.List;
 import java.util.Set;
@@ -30,5 +29,8 @@ public class Province {
     @JsonIgnoreProperties("province")
     private Set<District> districts;
 
+    @OneToMany(mappedBy = "province", cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("province")
+    private List<EmployeeMaster> employee;
 
 }

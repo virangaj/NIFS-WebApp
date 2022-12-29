@@ -1,9 +1,7 @@
-package com.nifs.backend.Admin.EmployeeCategory;
+package com.nifs.backend.admin.EmployeeCategory;
 
-import com.nifs.backend.Admin.Division.DivisionMaster;
-import com.nifs.backend.Admin.Division.DivisionMasterDTO;
-import com.nifs.backend.Admin.Locations.LocationRepository;
-import com.nifs.backend.Admin.Locations.Locations;
+import com.nifs.backend.admin.Locations.LocationRepository;
+import com.nifs.backend.admin.Locations.Locations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -72,10 +70,10 @@ public class EmployeeCategoryService {
         return empCatRepo.findById(empCatId);
     }
 
-    public Boolean updateEmployeeCategory(EmployeeCategory empCatData, String empCatId) {
+    public Boolean updateEmployeeCategory(EmpCatDTO empCatData, String empCatId) {
         if(empCatRepo.returnEmployeeCategory(empCatId) != null){
             Date d = new Date();
-            empCatRepo.UpdateEmployeeCategory(empCatData.getDescription(), empCatData.getOtRate(), d, empCatId);
+            empCatRepo.UpdateEmployeeCategory(empCatData.getDescription(), Float.parseFloat(empCatData.getOtRate()), d, empCatId);
             return true;
         }
         return false;

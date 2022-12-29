@@ -1,4 +1,4 @@
-package com.nifs.backend.Admin.EmployeeCategory;
+package com.nifs.backend.admin.EmployeeCategory;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +49,7 @@ public class EmployeeCategoryController {
 
 //    update employee category
     @PatchMapping("/update/{empCatId}")
-    Boolean updateEmployeeCategory(@RequestBody EmployeeCategory empCatData, @PathVariable String empCatId){
+    Boolean updateEmployeeCategory(@RequestBody EmpCatDTO empCatData, @PathVariable String empCatId){
         return empCatService.updateEmployeeCategory(empCatData, empCatId);
     }
 

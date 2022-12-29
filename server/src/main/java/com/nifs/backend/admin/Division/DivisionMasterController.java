@@ -1,4 +1,4 @@
-package com.nifs.backend.Admin.Division;
+package com.nifs.backend.admin.Division;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -7,14 +7,14 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("admin/divisionmaster")
+@RequestMapping("admin/division")
 @CrossOrigin
 public class DivisionMasterController {
 
     @Autowired
     private DivisionMasterService diviMasterService;
     @GetMapping
-    private List<DivisionMaster> getAll(){
+    private List<DivisionMasterDTO> getAll(){
         return diviMasterService.getAll();
     }
 
@@ -43,8 +43,8 @@ public class DivisionMasterController {
     }
 
 //    update division master
-    @PostMapping("/update/{dvId}")
-   private Boolean updateDivisionMaster(@RequestBody DivisionMaster dmData, @PathVariable String dvId){
+    @PatchMapping("/update/{dvId}")
+    private Boolean updateDivisionMaster(@RequestBody DivisionMasterDTO dmData, @PathVariable String dvId){
         return diviMasterService.updateDivisionMaster(dmData, dvId);
     }
 //    delete division

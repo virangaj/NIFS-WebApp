@@ -1,4 +1,4 @@
-package com.nifs.backend.SEDU.Charges;
+package com.nifs.backend.sedu.Charges;
 
 
 import org.springframework.beans.factory.annotation.Autowired;

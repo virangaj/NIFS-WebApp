@@ -1,8 +1,8 @@
-package com.nifs.backend.SEDU.VenueMaster;
+package com.nifs.backend.sedu.VenueMaster;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.nifs.backend.SEDU.Charges.Charges;
+import com.nifs.backend.sedu.Charges.Charges;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

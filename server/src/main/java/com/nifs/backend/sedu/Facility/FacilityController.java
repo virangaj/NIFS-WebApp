@@ -1,6 +1,5 @@
-package com.nifs.backend.SEDU.Facility;
+package com.nifs.backend.sedu.Facility;
 
-import com.nifs.backend.SEDU.Charges.Charges;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

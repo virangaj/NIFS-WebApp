@@ -1,9 +1,7 @@
-package com.nifs.backend.SEDU.EventRequestMaster;
+package com.nifs.backend.sedu.EventRequestMaster;
 
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.sql.Blob;
 
 @Entity
 @Setter

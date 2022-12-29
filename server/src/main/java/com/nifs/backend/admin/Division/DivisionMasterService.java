@@ -1,7 +1,7 @@
-package com.nifs.backend.Admin.Division;
+package com.nifs.backend.admin.Division;
 
-import com.nifs.backend.Admin.Locations.LocationRepository;
-import com.nifs.backend.Admin.Locations.Locations;
+import com.nifs.backend.admin.Locations.LocationRepository;
+import com.nifs.backend.admin.Locations.Locations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,8 +21,14 @@ public class DivisionMasterService {
 
 
 //    get all divisions
-    public List<DivisionMaster> getAll() {
-        return diviMasterRepo.findAll();
+    public List<DivisionMasterDTO> getAll() {
+        List<DivisionMaster> divData = diviMasterRepo.findAll();
+        List<DivisionMasterDTO> divDTO = new ArrayList<>();
+        for(DivisionMaster d : divData){
+            DivisionMasterDTO dto = new DivisionMasterDTO(d.getDivisionId(), d.getName(), d.getLocation().getLocationName());
+            divDTO.add(dto);
+        }
+        return divDTO;
     }
 
 
@@ -31,7 +37,7 @@ public class DivisionMasterService {
         if (diviMasterRepo.returnDivision(d.getDivisionId()) == null) {
 
             Date date = new Date();
-            Locations l = locRepo.getLocation(d.getLocationId());
+            Locations l = locRepo.getLocation(d.getLocation());
             DivisionMaster dm = new DivisionMaster(d.getDivisionId(), d.getName(), date, l);
             diviMasterRepo.save(dm);
             return true;
@@ -76,7 +82,7 @@ public class DivisionMasterService {
     }
 
 //    update division master
-    public Boolean updateDivisionMaster(DivisionMaster dmData, String dvId) {
+    public Boolean updateDivisionMaster(DivisionMasterDTO dmData, String dvId) {
         if(diviMasterRepo.returnDivision(dvId) != null){
             Date d = new Date();
             diviMasterRepo.updateDivisionMaster(dmData.getName(), d, dvId);

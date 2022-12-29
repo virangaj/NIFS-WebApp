@@ -1,12 +1,11 @@
-package com.nifs.backend.Admin.EmployeeDesignation;
+package com.nifs.backend.admin.EmployeeDesignation;
 
-import com.nifs.backend.Admin.Division.DivisionMaster;
-import com.nifs.backend.Admin.Division.DivisionMasterDTO;
-import com.nifs.backend.Admin.Locations.LocationRepository;
-import com.nifs.backend.Admin.Locations.Locations;
+import com.nifs.backend.admin.Locations.LocationRepository;
+import com.nifs.backend.admin.Locations.Locations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -80,5 +79,16 @@ public List<DesignationMasterDTO> getDesignationByLocationId(String locId){
         } else {
             return "ED1001";
         }
+    }
+
+    //update designation
+    public Boolean updateDesignation(String id, DesignationMasterDTO dto) {
+        if(desRepo.returnDesignation(id) != null){
+            Date d = new Date();
+            desRepo.updateDesignation(dto.getDesignationName(), d, id);
+            return true;
+        }
+        return false;
+
     }
 }

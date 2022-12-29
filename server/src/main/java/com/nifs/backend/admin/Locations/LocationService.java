@@ -1,4 +1,4 @@
-package com.nifs.backend.Admin.Locations;
+package com.nifs.backend.admin.Locations;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

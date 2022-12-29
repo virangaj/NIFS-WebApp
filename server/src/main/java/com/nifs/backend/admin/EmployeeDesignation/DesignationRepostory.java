@@ -1,4 +1,4 @@
-package com.nifs.backend.Admin.EmployeeDesignation;
+package com.nifs.backend.admin.EmployeeDesignation;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -6,9 +6,14 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 public interface DesignationRepostory extends JpaRepository<DesignationMaster, String> {
+    @Transactional
+    @Modifying
+    @Query("update DesignationMaster d set d.designationName = ?1, d.dateUpdated = ?2 where d.id = ?3")
+    void updateDesignation(String designationName, Date dateUpdated, String id);
     @Query("select distinct d from DesignationMaster d where d.location.locationId = ?1 order by d.id, d.designationName")
     List<DesignationMaster> findDesignatonByLocationId(String locationId);
     @Transactional

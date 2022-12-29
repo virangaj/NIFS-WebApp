@@ -1,18 +1,21 @@
-package com.nifs.backend.Admin.EmployeeMaster;
+package com.nifs.backend.admin.EmployeeMaster;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.nifs.backend.Admin.Division.DivisionMaster;
-import com.nifs.backend.Admin.EmployeeCategory.EmployeeCategory;
-import com.nifs.backend.Admin.EmployeeDesignation.DesignationMaster;
-import com.nifs.backend.Admin.EmployeeType.EmployeeTypeMaster;
-import com.nifs.backend.Admin.Locations.Locations;
-import com.nifs.backend.Login.EmployeeLogin;
+import com.nifs.backend.admin.Division.DivisionMaster;
+import com.nifs.backend.admin.EmployeeCategory.EmployeeCategory;
+import com.nifs.backend.admin.EmployeeDesignation.DesignationMaster;
+import com.nifs.backend.admin.EmployeeType.EmployeeTypeMaster;
+import com.nifs.backend.admin.Locations.Locations;
+import com.nifs.backend.admin.OtherData.District;
+import com.nifs.backend.admin.OtherData.Province;
+import com.nifs.backend.login.EmployeeLogin;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Getter
@@ -142,7 +145,17 @@ public class EmployeeMaster {
     //relationships
 
     //district
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
+    @JoinColumn(name = "district", referencedColumnName = "district_id")
+    @JsonIgnoreProperties("employee")
+    private District district;
 
+
+    //province
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
+    @JoinColumn(name = "province", referencedColumnName = "province_id")
+    @JsonIgnoreProperties("employee")
+    private Province province;
 
     //employee type
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
@@ -179,5 +192,9 @@ public class EmployeeMaster {
     //login
     @OneToOne(mappedBy = "employee")
     private EmployeeLogin empLogin;
+
+
+
+
 
 }

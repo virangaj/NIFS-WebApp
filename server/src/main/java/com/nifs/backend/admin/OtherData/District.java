@@ -1,9 +1,11 @@
-package com.nifs.backend.Admin.OtherData;
+package com.nifs.backend.admin.OtherData;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.nifs.backend.admin.EmployeeMaster.EmployeeMaster;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Getter
@@ -28,5 +30,11 @@ public class District {
     @JoinColumn(name = "province_id", referencedColumnName = "province_id", nullable = false)
     @JsonIgnoreProperties("districts")
     private Province province;
+
+    @OneToMany(mappedBy = "district", cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("district")
+    private List<EmployeeMaster> employee;
+
+
 
 }

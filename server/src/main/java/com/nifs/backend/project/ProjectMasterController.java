@@ -1,2 +1,4 @@
-package com.nifs.backend.project;public class ProjectMasterController {
+package com.nifs.backend.project;
+
+public class ProjectMasterController {
 }

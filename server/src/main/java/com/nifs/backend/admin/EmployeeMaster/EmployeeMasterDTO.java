@@ -1,13 +1,10 @@
-package com.nifs.backend.Admin.EmployeeMaster;
+package com.nifs.backend.admin.EmployeeMaster;
 
 
-import com.nifs.backend.Admin.EmployeeDesignation.DesignationMaster;
-import com.nifs.backend.Admin.Locations.Locations;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import java.util.Date;
 
 @Getter
 @Setter

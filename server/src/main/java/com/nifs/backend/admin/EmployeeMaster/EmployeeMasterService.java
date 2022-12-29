@@ -1,15 +1,15 @@
-package com.nifs.backend.Admin.EmployeeMaster;
+package com.nifs.backend.admin.EmployeeMaster;
 
-import com.nifs.backend.Admin.Division.DivisionMaster;
-import com.nifs.backend.Admin.Division.DivisionMasterRepository;
-import com.nifs.backend.Admin.EmployeeCategory.EmployeeCategory;
-import com.nifs.backend.Admin.EmployeeCategory.EmployeeCategoryRepository;
-import com.nifs.backend.Admin.EmployeeDesignation.DesignationMaster;
-import com.nifs.backend.Admin.EmployeeDesignation.DesignationRepostory;
-import com.nifs.backend.Admin.EmployeeType.EmployeeTypeMaster;
-import com.nifs.backend.Admin.EmployeeType.EmployeeTypeRepository;
-import com.nifs.backend.Admin.Locations.LocationRepository;
-import com.nifs.backend.Admin.Locations.Locations;
+import com.nifs.backend.admin.Division.DivisionMaster;
+import com.nifs.backend.admin.Division.DivisionMasterRepository;
+import com.nifs.backend.admin.EmployeeCategory.EmployeeCategory;
+import com.nifs.backend.admin.EmployeeCategory.EmployeeCategoryRepository;
+import com.nifs.backend.admin.EmployeeDesignation.DesignationMaster;
+import com.nifs.backend.admin.EmployeeDesignation.DesignationRepostory;
+import com.nifs.backend.admin.EmployeeType.EmployeeTypeMaster;
+import com.nifs.backend.admin.EmployeeType.EmployeeTypeRepository;
+import com.nifs.backend.admin.Locations.LocationRepository;
+import com.nifs.backend.admin.Locations.Locations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

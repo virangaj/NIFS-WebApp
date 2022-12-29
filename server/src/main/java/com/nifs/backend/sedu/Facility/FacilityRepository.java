@@ -1,4 +1,4 @@
-package com.nifs.backend.SEDU.Facility;
+package com.nifs.backend.sedu.Facility;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

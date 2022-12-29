@@ -1,4 +1,4 @@
-package com.nifs.backend.Admin.Locations;
+package com.nifs.backend.admin.Locations;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

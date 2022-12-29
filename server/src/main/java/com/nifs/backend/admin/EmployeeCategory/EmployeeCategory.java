@@ -1,8 +1,8 @@
-package com.nifs.backend.Admin.EmployeeCategory;
+package com.nifs.backend.admin.EmployeeCategory;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.nifs.backend.Admin.EmployeeMaster.EmployeeMaster;
-import com.nifs.backend.Admin.Locations.Locations;
+import com.nifs.backend.admin.EmployeeMaster.EmployeeMaster;
+import com.nifs.backend.admin.Locations.Locations;
 import jakarta.persistence.*;
 import lombok.*;
 

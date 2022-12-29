@@ -1,4 +1,4 @@
-package com.nifs.backend.Admin.EmployeeType;
+package com.nifs.backend.admin.EmployeeType;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -42,14 +42,14 @@ public class EmployeeTypeController {
 
 //    update employee Type
 
-    @PatchMapping("update/{type_id}")
+    @PatchMapping("/update/{type_id}")
     private Boolean updateEmployeeType(@PathVariable String type_id, @RequestBody EmployeeTypeDTO empTypeData){
         return empTypeService.updateEmployeeType(empTypeData, type_id);
     }
 
 
 //    delete employee type
-    @DeleteMapping("delete/{id}")
+    @DeleteMapping("/delete/{id}")
     private Boolean deleteEmployeeType(@PathVariable String id){
         return empTypeService.deleteEmployeeType(id);
     }

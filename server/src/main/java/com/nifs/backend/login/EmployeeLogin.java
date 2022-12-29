@@ -1,6 +1,6 @@
-package com.nifs.backend.Login;
+package com.nifs.backend.login;
 
-import com.nifs.backend.Admin.EmployeeMaster.EmployeeMaster;
+import com.nifs.backend.admin.EmployeeMaster.EmployeeMaster;
 import jakarta.persistence.*;
 import lombok.*;
 

@@ -1,4 +1,4 @@
-package com.nifs.backend.Admin.Division;
+package com.nifs.backend.admin.Division;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

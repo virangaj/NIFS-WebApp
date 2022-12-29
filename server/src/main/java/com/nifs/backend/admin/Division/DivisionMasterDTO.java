@@ -1,4 +1,4 @@
-package com.nifs.backend.Admin.Division;
+package com.nifs.backend.admin.Division;
 
 
 import lombok.AllArgsConstructor;
@@ -14,7 +14,7 @@ public class DivisionMasterDTO {
 
     private String divisionId;
     private String name;
-    private String locationId;
+    private String location;
 
 
 

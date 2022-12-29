@@ -1,11 +1,7 @@
-package com.nifs.backend.SEDU.Charges;
+package com.nifs.backend.sedu.Charges;
 
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.nifs.backend.SEDU.VenueMaster.VenueCharge;
-import com.nifs.backend.SEDU.VenueMaster.VenueMaster;
+import com.nifs.backend.sedu.VenueMaster.VenueCharge;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,7 +10,6 @@ import lombok.Setter;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name="venue_charges_master")

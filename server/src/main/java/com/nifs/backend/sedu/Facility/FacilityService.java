@@ -1,4 +1,4 @@
-package com.nifs.backend.SEDU.Facility;
+package com.nifs.backend.sedu.Facility;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

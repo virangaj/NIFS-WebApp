@@ -1,7 +1,5 @@
-package com.nifs.backend.Admin.EmployeeMaster;
+package com.nifs.backend.admin.EmployeeMaster;
 
-import com.nifs.backend.Admin.EmployeeType.EmployeeTypeMaster;
-import org.apache.el.parser.BooleanNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.HttpMessageNotWritableException;
 import org.springframework.web.bind.annotation.*;

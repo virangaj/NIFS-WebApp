@@ -1,4 +1,4 @@
-package com.nifs.backend.Admin.EmployeeDesignation;
+package com.nifs.backend.admin.EmployeeDesignation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -7,6 +7,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("admin/designation")
+@CrossOrigin
 public class DesignationController {
 
     @Autowired
@@ -34,6 +35,13 @@ public class DesignationController {
     @PostMapping
     private Boolean createDesignation(@RequestBody DesignationMasterDTO desData){
         return desService.createDesignation(desData);
+    }
+
+
+    //update designation
+    @PatchMapping("/update/{id}")
+    Boolean updateDesignation(@PathVariable String id, @RequestBody DesignationMasterDTO dto){
+        return desService.updateDesignation(id, dto);
     }
 
     @DeleteMapping("/delete/{id}")

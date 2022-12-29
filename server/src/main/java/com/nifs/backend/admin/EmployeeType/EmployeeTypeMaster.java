@@ -1,12 +1,10 @@
-package com.nifs.backend.Admin.EmployeeType;
+package com.nifs.backend.admin.EmployeeType;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.nifs.backend.Admin.EmployeeMaster.EmployeeMaster;
-import com.nifs.backend.Admin.Locations.Locations;
+import com.nifs.backend.admin.EmployeeMaster.EmployeeMaster;
+import com.nifs.backend.admin.Locations.Locations;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.type.SqlTypes;
 
 import java.util.Date;
 import java.util.List;

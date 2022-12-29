@@ -1,12 +1,11 @@
-package com.nifs.backend.Admin.Locations;
+package com.nifs.backend.admin.Locations;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.nifs.backend.Admin.Division.DivisionMaster;
-import com.nifs.backend.Admin.EmployeeCategory.EmployeeCategory;
-import com.nifs.backend.Admin.EmployeeDesignation.DesignationMaster;
-import com.nifs.backend.Admin.EmployeeMaster.EmployeeMaster;
-import com.nifs.backend.Admin.EmployeeType.EmployeeTypeMaster;
-import com.nifs.backend.Admin.OtherData.District;
+import com.nifs.backend.admin.Division.DivisionMaster;
+import com.nifs.backend.admin.EmployeeCategory.EmployeeCategory;
+import com.nifs.backend.admin.EmployeeDesignation.DesignationMaster;
+import com.nifs.backend.admin.EmployeeMaster.EmployeeMaster;
+import com.nifs.backend.admin.EmployeeType.EmployeeTypeMaster;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,7 +14,6 @@ import lombok.Setter;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Setter

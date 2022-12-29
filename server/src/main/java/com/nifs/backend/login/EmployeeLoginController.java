@@ -1,4 +1,4 @@
-package com.nifs.backend.Login;
+package com.nifs.backend.login;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;

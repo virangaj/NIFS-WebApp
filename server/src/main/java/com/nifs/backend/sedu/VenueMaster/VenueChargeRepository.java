@@ -1,9 +1,8 @@
-package com.nifs.backend.SEDU.VenueMaster;
+package com.nifs.backend.sedu.VenueMaster;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.lang.Nullable;
 
 import java.util.Optional;
 

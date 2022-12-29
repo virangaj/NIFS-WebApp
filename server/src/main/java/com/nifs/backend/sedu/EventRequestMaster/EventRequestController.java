@@ -1,4 +1,4 @@
-package com.nifs.backend.SEDU.EventRequestMaster;
+package com.nifs.backend.sedu.EventRequestMaster;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
