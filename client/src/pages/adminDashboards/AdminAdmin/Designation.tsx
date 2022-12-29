@@ -2,62 +2,54 @@ import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { useEffect, useMemo, useState } from 'react';
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
-import EmployeeTypeService from '../../../services/admin/EmployeeTypeService';
-import EmpTypeAction from './shared/EmpTypeAction';
 import Ripple from '../../../components/Ripple';
-import ILocationData from '../../../types/LocationData';
-import LocationMasterService from '../../../services/admin/LocationMasterService';
-import ImportFromXlsx from './shared/ImportFromXlsx';
 import { HiX } from 'react-icons/hi';
 import { toast } from 'react-toastify';
+import IDesignationData from '../../../types/DesignationData';
+import ILocationData from '../../../types/LocationData';
+import LocationMasterService from '../../../services/admin/LocationMasterService';
+import DesignationMasterService from '../../../services/admin/DesignationMasterService';
+import DesignationAction from './shared/DesignationAction';
 
-function EmployeeType() {
-	const [empTypes, setEmpType] = useState<Array<any>>([]);
-	const [pageSize, setPageSize] = useState(5);
+function Designation() {
+	const [pageSize, setPageSize] = useState(10);
 	const [rowId, setRowId] = useState(0);
 	const [loading, setLoading] = useState(false);
-	const [t_id, setT_Id] = useState('');
-	const [locationData, setLocationData] = useState<ILocationData[]>();
-
 	const [deleteId, setDeleteId] = useState('');
+	const [designationData, setDesignationData] = useState<Array<any>>([]);
+	const [locationData, setLocationData] = useState<ILocationData[]>();
+	const [d_id, setD_Id] = useState('');
 
 	const [values, setValues] = useState<any>({
-		typeId: '',
-		typeName: '',
+		id: '',
+		designationName: '',
 		location: '',
 	});
-
 	useEffect(() => {
-		const filteredData = empTypes.filter((emp) => emp.typeId !== deleteId);
-		setEmpType(filteredData);
+		const filteredData = designationData?.filter((emp) => emp.id !== deleteId);
+		setDesignationData(filteredData);
 	}, [deleteId]);
-
+	
 	useEffect(() => {
-		retreiveEmpTypes();
+		retreiveDesignations();
 		retreiveLocations();
 	}, []);
 
 	useEffect(() => {
-		console.log(rowId);
-	}, [rowId]);
-
-	//set t_id
-	useEffect(() => {
 		// console.log(v_id)
 		setValues({
-			typeId: t_id,
-			typeName: values?.typeName,
+			id: d_id,
+			designationName: values?.designationName,
 			location: values?.location,
 		});
 		// console.log(values)
-	}, [t_id]);
-
-	//retrieve employee types
-	const retreiveEmpTypes = () => {
-		EmployeeTypeService.getAllEmpTypes()
+	}, [d_id]);
+	
+	const retreiveDesignations = () => {
+		DesignationMasterService.getAllDesignations()
 			.then((res: any) => {
-				setEmpType(res.data);
-				console.log(empTypes);
+				setDesignationData(res.data);
+				console.log(designationData);
 			})
 			.catch((e: any) => {
 				console.log(e);
@@ -74,29 +66,26 @@ function EmployeeType() {
 				console.log(e);
 			});
 	};
-
 	const resetForm = () => {
 		setValues({
-			typeId: '',
-			typeName: '',
+			id: '',
+			designationName: '',
 			location: '',
 		});
-		setT_Id('');
+		setD_Id('');
 	};
 	const generateVenueID = () => {
 		// window.location.reload;
 
-		EmployeeTypeService.getNewEmpTypeId()
+		DesignationMasterService.getNewDesignationId()
 			.then((res: any) => {
-				setT_Id(res.data);
+				setD_Id(res.data);
 				// console.log(t_id)
 			})
 			.catch((e: any) => {
 				console.log(e);
 			});
 	};
-
-	//onchange function
 	const onChange = (e: any) => {
 		setValues((preState: any) => ({
 			...preState,
@@ -104,15 +93,14 @@ function EmployeeType() {
 		}));
 	};
 
-	//add new employeee type
 	const onSubmit = async (e: any) => {
 		e.preventDefault();
 
-		if (values.typeId !== '') {
+		if (values.id !== '') {
 			setLoading(true);
 			setTimeout(async () => {
-				const result = await EmployeeTypeService.saveEmpType(values);
-				toast.success('New Employee Type is added', {
+				const result = await DesignationMasterService.saveDesignation(values);
+				toast.success('New Designation is added', {
 					position: 'top-right',
 					autoClose: 5000,
 					hideProgressBar: false,
@@ -142,10 +130,10 @@ function EmployeeType() {
 
 	const columns = useMemo(
 		() => [
-			{ field: 'typeId', headerName: 'Type Id', width: 160 },
+			{ field: 'id', headerName: 'Designation Id', width: 160 },
 			{
-				field: 'typeName',
-				headerName: 'Type Name',
+				field: 'designationName',
+				headerName: 'Designation Name',
 				width: 200,
 				editable: true,
 			},
@@ -160,7 +148,7 @@ function EmployeeType() {
 				headerName: 'Action',
 				type: 'actions',
 				renderCell: (params: any) => (
-					<EmpTypeAction {...{ params, rowId, setRowId, setDeleteId }} />
+					<DesignationAction {...{ params, rowId, setRowId, setDeleteId }} />
 				),
 				width: 200,
 			},
@@ -171,34 +159,25 @@ function EmployeeType() {
 	return (
 		<>
 			<div className='page-title'>
-				<p>Employee Types</p>
+				<p>Employee Designations</p>
 
 				<hr className='admin-horizontal-line' />
 			</div>
 
 			<div className='admin-panel-flex'>
 				<div className='admin-table-section'>
-					<h2 className='text-lg font-bold'>All Employee Types</h2>
+					<h2 className='text-lg font-bold'>All Designations</h2>
 					<p className='hint-text'>(Double click to edit)</p>
 
-					{/* {empTypes?.map((emp: any, i: number) => (
-						<EmpTypeRow
-							key={i}
-							id={emp.typeId}
-							name={emp.typeName}
-							location={emp.location}
-						/>
-					))} */}
-
-					<Box sx={{ width: '1000px', height: '500px' }}>
+					<Box sx={{ width: '1000px', height: '700px' }}>
 						<DataGrid
 							checkboxSelection={true}
 							components={{ Toolbar: GridToolbar }}
 							rowHeight={50}
 							columns={columns}
-							rows={empTypes}
-							getRowId={(row) => row.typeId}
-							rowsPerPageOptions={[5, 10, 20]}
+							rows={designationData}
+							getRowId={(row) => row.id}
+							rowsPerPageOptions={[10, 20, 30]}
 							pageSize={pageSize}
 							onPageSizeChange={(newPagesize) => setPageSize(newPagesize)}
 							onCellEditCommit={(params: any) => setRowId(params.id)}
@@ -206,21 +185,21 @@ function EmployeeType() {
 					</Box>
 				</div>
 
-				{/* add new employee type */}
+				{/* add new Designations */}
 				<div className='admin-form-section'>
-					<h2 className='text-lg font-bold'>Add New Employee Type</h2>
+					<h2 className='text-lg font-bold'>Add New Designation</h2>
 
 					{!loading ? (
 						<form onSubmit={onSubmit} className='admin-form'>
 							<div className='generate-id-in-form'>
 								<p className='flex items-center'>
 									Type Id -{' '}
-									{t_id ? (
+									{d_id ? (
 										<>
-											{t_id}
+											{d_id}
 											<HiX
 												className='text-xl cursor-pointer hover:text-red-600'
-												onClick={() => setT_Id('')}
+												onClick={() => setD_Id('')}
 											/>
 										</>
 									) : (
@@ -261,15 +240,15 @@ function EmployeeType() {
 							</div>
 							<div>
 								<label className='input-label' htmlFor='typeName'>
-									Employee Type
+									Designation
 								</label>
 								<input
 									id='typeName'
 									type='text'
 									className='tailwind-text-box'
 									onChange={onChange}
-									name='typeName'
-									value={values.typeName}
+									name='designationName'
+									value={values.designationName}
 								/>
 							</div>
 							<Stack
@@ -297,10 +276,8 @@ function EmployeeType() {
 					)}
 				</div>
 			</div>
-
-			<ImportFromXlsx />
 		</>
 	);
 }
 
-export default EmployeeType;
+export default Designation;

@@ -6,23 +6,10 @@ import { useState, useEffect } from 'react';
 import Modal from '@mui/material/Modal';
 import { BiCheck, BiSave, BiTrash } from 'react-icons/bi';
 
-import { type } from '@testing-library/user-event/dist/type';
 import EmployeeCatService from '../../../../services/admin/EmployeeCatService';
+import { toast } from 'react-toastify';
 
-const style = {
-	position: 'absolute' as 'absolute',
-	top: '50%',
-	left: '50%',
-	transform: 'translate(-50%, -50%)',
-	width: 400,
-	bgcolor: 'black',
-	border: '2px solid #000',
-	borderRadius: '10px',
-	boxShadow: 24,
-	p: 4,
-};
-
-function EmpCatAction({ params, rowId, setRowId }: any) {
+function EmpCatAction({ params, rowId, setRowId, setDeleteId }: any) {
 	const [loading, setLoading] = useState(false);
 	const [success, setSuccess] = useState(false);
 	const [deleteLoading, setDeleteLoadng] = useState(false);
@@ -38,7 +25,7 @@ function EmpCatAction({ params, rowId, setRowId }: any) {
 	const handleUpdate = async () => {
 		setLoading(true);
 		const { employeeCategoryId, description, location, otRate } = params.row;
-		
+
 		setTimeout(async () => {
 			const result = await EmployeeCatService.editEmpCat({
 				employeeCategoryId,
@@ -49,8 +36,18 @@ function EmpCatAction({ params, rowId, setRowId }: any) {
 			if (result) {
 				setSuccess(true);
 				setRowId(null);
+				toast.success(`Employee Type updated to ${description}`, {
+					position: 'top-right',
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					theme: 'dark',
+				});
 			}
-			console.log(employeeCategoryId);
+			// console.log(employeeCategoryId);
 			setLoading(false);
 		}, 1500);
 	};
@@ -60,10 +57,23 @@ function EmpCatAction({ params, rowId, setRowId }: any) {
 		setDeleteLoadng(true);
 		setDeleteConfirm(false);
 
-		const { employeeCategoryId } = params.row;
-		const result = await EmployeeCatService.deleteEmpCat(employeeCategoryId);
-		console.log('deleted ' + employeeCategoryId);
-		setDeleteLoadng(false);
+		setTimeout(async () => {
+			const { employeeCategoryId } = params.row;
+			const result = await EmployeeCatService.deleteEmpCat(employeeCategoryId);
+
+			toast.error(`Employee Type ${params.row.description} is deleted`, {
+				position: 'top-right',
+				autoClose: 5000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+				theme: 'dark',
+			});
+			setDeleteId(params.row.employeeCategoryId);
+			setDeleteLoadng(false);
+		}, 1000);
 	};
 
 	return (
@@ -77,20 +87,20 @@ function EmpCatAction({ params, rowId, setRowId }: any) {
 			>
 				{success ? (
 					<Fab
-						color="primary"
+						color='primary'
 						sx={{
 							width: 40,
 							height: 40,
 							bgcolor: green[500],
 							'&:hover': { bgcolor: green[700] },
 						}}
-						className="cursor-pointer"
+						className='cursor-pointer'
 					>
-						<BiCheck className="text-xl text-white row-commit-icon" />
+						<BiCheck className='text-xl text-white row-commit-icon' />
 					</Fab>
 				) : (
 					<Fab
-						color="primary"
+						color='primary'
 						sx={{
 							width: 40,
 							height: 40,
@@ -98,7 +108,7 @@ function EmpCatAction({ params, rowId, setRowId }: any) {
 						disabled={params.id !== rowId || loading}
 						onClick={handleUpdate}
 					>
-						<BiSave className="row-commit-icon" />
+						<BiSave className='row-commit-icon' />
 					</Fab>
 				)}
 
@@ -125,19 +135,19 @@ function EmpCatAction({ params, rowId, setRowId }: any) {
 				}}
 			>
 				<Fab
-					color="warning"
+					color='warning'
 					sx={{
 						width: 40,
 						height: 40,
 						bgcolor: red[500],
 						'&:hover': { bgcolor: red[700] },
 					}}
-					className="cursor-pointer"
+					className='cursor-pointer'
 					onClick={() => {
 						setDeleteConfirm((val) => !val);
 					}}
 				>
-					<BiTrash className="text-xl text-white row-commit-icon" />
+					<BiTrash className='text-xl text-white row-commit-icon' />
 				</Fab>
 
 				{deleteLoading && (
@@ -159,59 +169,59 @@ function EmpCatAction({ params, rowId, setRowId }: any) {
 				onClose={() => {
 					setDeleteConfirm((val) => !val);
 				}}
-				aria-labelledby="modal-modal-title"
-				aria-describedby="modal-modal-description"
+				aria-labelledby='modal-modal-title'
+				aria-describedby='modal-modal-description'
 			>
-				<Box sx={style}>
-					<h3 className="flex flex-col text-lg font-bold text-center text-red-400">
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							className="w-48 mx-auto icon icon-tabler icon-tabler-alert-circle stroke-error"
-							viewBox="0 0 24 24"
-							strokeWidth="1.5"
-							stroke="currentColor"
-							fill="none"
-							strokeLinecap="round"
-							strokeLinejoin="round"
-						>
-							<path
-								stroke="none"
-								d="M0 0h24v24H0z"
-								fill="none"
-							></path>
-							<circle
-								cx="12"
-								cy="12"
-								r="9"
-							></circle>
-							<line
-								x1="12"
-								y1="8"
-								x2="12"
-								y2="12"
-							></line>
-							<line
-								x1="12"
-								y1="16"
-								x2="12.01"
-								y2="16"
-							></line>
-						</svg>
-						<span className="text-white">Are you sure?</span>
-					</h3>
-					<p className="py-4 text-base text-white">
-						Do you really want to delete this Employee Type? Once you delete
-						data is no longer saved in our database.
-					</p>
-					<code className="text-white">{/* [{params.typeName}] */}</code>
-
-					<button
-						className="delete-confirm-btn"
-						onClick={handleDelete}
-					>
-						Confirm
-					</button>
-				</Box>
+				<div className='action-com-model'>
+					<div className='flex flex-col items-center justify-between lg:flex-row'>
+						<div className='flex flex-col items-center lg:flex-row'>
+							<svg
+								xmlns='http://www.w3.org/2000/svg'
+								className='w-16 h-16 p-3 mb-4 text-red-400 border border-red-100 rounded-2xl bg-red-50 lg:mb-0'
+								fill='none'
+								viewBox='0 0 24 24'
+								stroke='currentColor'
+							>
+								<path
+									strokeLinecap='round'
+									strokeLinejoin='round'
+									strokeWidth='2'
+									d='M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z'
+								></path>
+							</svg>
+							<div className='flex flex-col ml-3'>
+								<div className='mb-2 font-medium leading-none'>
+									Do you want to delete Employee Category named as{' '}
+									<code className='px-2 bg-red-200 rounded-lg'>
+										{' '}
+										{params.row.employeeCategoryId} - {params.row.description}
+									</code>
+									?
+								</div>
+								<p className='mt-1 text-sm leading-none text-gray-600'>
+									By deleting this employee category you will lose this employee
+									category data
+								</p>
+							</div>
+						</div>
+						<div className='mt-4 lg:mt-0'>
+							<button
+								className='action-com-model-sucess-btn'
+								onClick={() => {
+									setDeleteConfirm((val) => !val);
+								}}
+							>
+								Cancel
+							</button>
+							<button
+								className='action-com-model-error-btn'
+								onClick={handleDelete}
+							>
+								Delete
+							</button>
+						</div>
+					</div>
+				</div>
 			</Modal>
 		</>
 	);

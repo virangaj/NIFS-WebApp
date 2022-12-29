@@ -7,6 +7,7 @@ import EmployeeType from "./AdminAdmin/EmployeeType";
 import SideNavbar from "./AdminAdmin/SideNavbar";
 import Dots from "../../images/dots_circle_b.png";
 import EmpCategory from "./AdminAdmin/EmpCategory";
+import Designation from "./AdminAdmin/Designation";
 
 function AdminAdmin() {
 	return (
@@ -20,7 +21,10 @@ function AdminAdmin() {
 					{/* employee type*/}
 					<Routes>
 						<Route path={RouteName.EmployeeType} element={<EmployeeType />} />
-            <Route path={RouteName.EmployeeCategory} element={<EmpCategory />} />
+           				<Route path={RouteName.EmployeeCategory} element={<EmpCategory />} />
+           				<Route path={RouteName.Employee} element={<Employees />} />
+           				<Route path={RouteName.Designation} element={<Designation />} />
+
 					</Routes>
 
 					{/* employee */}

@@ -83,7 +83,6 @@ function EventRequest() {
 
     const generateEventId = () => {
         setEventId(generateID('ER'))
-        
     }
 
 
