@@ -194,7 +194,7 @@ function EmployeeType() {
 						<DataGrid
 							checkboxSelection={true}
 							components={{ Toolbar: GridToolbar }}
-							rowHeight={50}
+							rowHeight={60}
 							columns={columns}
 							rows={empTypes}
 							getRowId={(row) => row.typeId}

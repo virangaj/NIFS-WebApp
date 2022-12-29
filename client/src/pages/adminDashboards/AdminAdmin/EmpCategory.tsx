@@ -202,7 +202,7 @@ function EmpCategory() {
 						<DataGrid
 							checkboxSelection={true}
 							components={{ Toolbar: GridToolbar }}
-							rowHeight={50}
+							rowHeight={60}
 							columns={columns}
 							rows={empCats}
 							getRowId={(row) => row.employeeCategoryId}
