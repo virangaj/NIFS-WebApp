@@ -52,14 +52,7 @@ const editEmpCat = async (favJSON: any) => {
 
 	});
 
-	// const response = await axios.patch(
-	// 	process.env.REACT_APP_BACKEND_SERVER +
-	// 		`/admin/employeecategory/update/${favJSON.employeeCategoryId}` +
-	// 	favJSON,
-	// 	config
-	// );
 
-	// alert("Favourite created --- "+ response);
 	return response;
 };
 

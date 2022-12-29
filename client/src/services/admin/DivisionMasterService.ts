@@ -13,18 +13,18 @@ const config = {
 axios.defaults.baseURL = process.env.REACT_APP_BACKEND_SERVER;
 
 const getAllDivisions = () => {
-	return http.get<Array<any>>('/admin/divisionmaster');
+	return http.get<Array<any>>('/admin/division');
 };
 
 const getDivision = (id: any) => {
-	return http.get<any>(`/admin/divisionmaster/${id}`);
+	return http.get<any>(`/admin/division/${id}`);
 };
 
 const saveDivision = async (favJSON: any) => {
 	console.log(favJSON);
 	const response = await axios({
 		method: 'post',
-		url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/divisionmaster`,
+		url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/division`,
 		data: favJSON,
 		headers: { 'Content-Type': 'application/json; charset=utf-8' },
 	});
@@ -34,31 +34,31 @@ const saveDivision = async (favJSON: any) => {
 
 //get new id
 const getNewDivisionId = () => {
-	return http.get('/admin/divisionmaster/newid');
+	return http.get('/admin/division/newid');
 };
 
 //get employee cat by location id
 const getDivisionByLocationId = (id: any) => {
-	return http.get<any>(`/admin/divisionmaster/location/${id}`);
+	return http.get<any>(`/admin/division/location/${id}`);
 };
 
 const editDivision = async (favJSON: any) => {
 	console.log(favJSON);
-	// const response = await axios({
-	// 	method: 'patch',
-	// 	url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/divisionmaster/${favJSON.typeId}`,
-	// 	data: favJSON,
-	// 	headers: { 'Content-Type': 'application/json; charset=utf-8' },
+	const response = await axios({
+		method: 'patch',
+		url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/division/update/${favJSON.divisionId}`,
+		data: favJSON,
+		headers: { 'Content-Type': 'application/json; charset=utf-8' },
 
-	// });
+	});
 
-	const response = await axios.patch(
-		process.env.REACT_APP_BACKEND_SERVER +
-			'/admin/divisionmaster/' +
-			favJSON.typeId,
-		favJSON,
-		config
-	);
+	// const response = await axios.patch(
+	// 	process.env.REACT_APP_BACKEND_SERVER +
+	// 		'/admin/divisionmaster/' +
+	// 		favJSON.typeId,
+	// 	favJSON,
+	// 	config
+	// );
 
 	// alert("Favourite created --- "+ response);
 	return response;
@@ -68,7 +68,7 @@ const deleteDivision = async (id: string) => {
 	console.log(id);
 	const response = await axios({
 		method: 'delete',
-		url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/divisionmaster/${id}`,
+		url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/division/delete/${id}`,
 		headers: { 'Content-Type': 'application/json; charset=utf-8' },
 	});
 	// alert("Favourite created --- "+ response);

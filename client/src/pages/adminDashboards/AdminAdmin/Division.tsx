@@ -5,51 +5,53 @@ import Box from '@mui/material/Box';
 import Ripple from '../../../components/Ripple';
 import { HiX } from 'react-icons/hi';
 import { toast } from 'react-toastify';
-import IDesignationData from '../../../types/DesignationData';
+
 import ILocationData from '../../../types/LocationData';
 import LocationMasterService from '../../../services/admin/LocationMasterService';
-import DesignationMasterService from '../../../services/admin/DesignationMasterService';
-import DesignationAction from './shared/DesignationAction';
-
-function Designation() {
+import IDivisionData from '../../../types/DivisionData';
+import DivisionMasterService from '../../../services/admin/DivisionMasterService';
+import DivisionAction from './shared/DivisionAction';
+function Division() {
 	const [pageSize, setPageSize] = useState(10);
 	const [rowId, setRowId] = useState(0);
 	const [loading, setLoading] = useState(false);
 	const [deleteId, setDeleteId] = useState('');
-	const [designationData, setDesignationData] = useState<Array<IDesignationData>>([]);
+	const [divisionData, setDivisionData] = useState<Array<IDivisionData>>([]);
 	const [locationData, setLocationData] = useState<ILocationData[]>();
 	const [d_id, setD_Id] = useState('');
 
 	const [values, setValues] = useState<any>({
-		id: '',
-		designationName: '',
+		divisionId: '',
+		name: '',
 		location: '',
 	});
 	useEffect(() => {
-		const filteredData = designationData?.filter((emp) => emp.id !== deleteId);
-		setDesignationData(filteredData);
+		const filteredData = divisionData?.filter(
+			(emp) => emp.divisionId !== deleteId
+		);
+		setDivisionData(filteredData);
 	}, [deleteId]);
-	
+
 	useEffect(() => {
-		retreiveDesignations();
+		retreiveDivisions();
 		retreiveLocations();
 	}, []);
 
 	useEffect(() => {
 		// console.log(v_id)
 		setValues({
-			id: d_id,
-			designationName: values?.designationName,
+			divisionId: d_id,
+			name: values?.name,
 			location: values?.location,
 		});
 		// console.log(values)
 	}, [d_id]);
-	
-	const retreiveDesignations = () => {
-		DesignationMasterService.getAllDesignations()
+
+	const retreiveDivisions = () => {
+		DivisionMasterService.getAllDivisions()
 			.then((res: any) => {
-				setDesignationData(res.data);
-				console.log(designationData);
+				setDivisionData(res.data);
+				console.log(divisionData);
 			})
 			.catch((e: any) => {
 				console.log(e);
@@ -66,10 +68,11 @@ function Designation() {
 				console.log(e);
 			});
 	};
+
 	const resetForm = () => {
 		setValues({
-			id: '',
-			designationName: '',
+			divisionId: '',
+			name: '',
 			location: '',
 		});
 		setD_Id('');
@@ -77,7 +80,7 @@ function Designation() {
 	const generateVenueID = () => {
 		// window.location.reload;
 
-		DesignationMasterService.getNewDesignationId()
+		DivisionMasterService.getNewDivisionId()
 			.then((res: any) => {
 				setD_Id(res.data);
 				// console.log(t_id)
@@ -96,11 +99,11 @@ function Designation() {
 	const onSubmit = async (e: any) => {
 		e.preventDefault();
 
-		if (values.id !== '') {
+		if (values.divisionId !== '') {
 			setLoading(true);
 			setTimeout(async () => {
-				const result = await DesignationMasterService.saveDesignation(values);
-				toast.success('New Designation is added', {
+				const result = await DivisionMasterService.saveDivision(values);
+				toast.success('New Division is added', {
 					position: 'top-right',
 					autoClose: 5000,
 					hideProgressBar: false,
@@ -130,10 +133,10 @@ function Designation() {
 
 	const columns = useMemo(
 		() => [
-			{ field: 'id', headerName: 'Designation Id', width: 160 },
+			{ field: 'divisionId', headerName: 'Division Id', width: 160 },
 			{
-				field: 'designationName',
-				headerName: 'Designation Name',
+				field: 'name',
+				headerName: 'Division Name',
 				width: 200,
 				editable: true,
 			},
@@ -148,7 +151,7 @@ function Designation() {
 				headerName: 'Action',
 				type: 'actions',
 				renderCell: (params: any) => (
-					<DesignationAction {...{ params, rowId, setRowId, setDeleteId }} />
+					<DivisionAction {...{ params, rowId, setRowId, setDeleteId }} />
 				),
 				width: 200,
 			},
@@ -159,14 +162,14 @@ function Designation() {
 	return (
 		<>
 			<div className='page-title'>
-				<p>Employee Designations</p>
+				<p>Divisions</p>
 
 				<hr className='admin-horizontal-line' />
 			</div>
 
 			<div className='admin-panel-flex'>
 				<div className='admin-table-section'>
-					<h2 className='text-lg font-bold'>All Designations</h2>
+					<h2 className='text-lg font-bold'>All Divisions</h2>
 					<p className='hint-text'>(Double click to edit)</p>
 
 					<Box sx={{ width: '1000px', height: '700px' }}>
@@ -175,8 +178,8 @@ function Designation() {
 							components={{ Toolbar: GridToolbar }}
 							rowHeight={60}
 							columns={columns}
-							rows={designationData}
-							getRowId={(row) => row.id}
+							rows={divisionData}
+							getRowId={(row) => row.divisionId}
 							rowsPerPageOptions={[10, 20, 30]}
 							pageSize={pageSize}
 							onPageSizeChange={(newPagesize) => setPageSize(newPagesize)}
@@ -185,9 +188,9 @@ function Designation() {
 					</Box>
 				</div>
 
-				{/* add new Designations */}
+				{/* add new Division */}
 				<div className='admin-form-section'>
-					<h2 className='text-lg font-bold'>Add New Designation</h2>
+					<h2 className='text-lg font-bold'>Add New Division</h2>
 
 					{!loading ? (
 						<form onSubmit={onSubmit} className='admin-form'>
@@ -240,15 +243,15 @@ function Designation() {
 							</div>
 							<div>
 								<label className='input-label' htmlFor='typeName'>
-									Designation
+									Division
 								</label>
 								<input
 									id='typeName'
 									type='text'
 									className='tailwind-text-box'
 									onChange={onChange}
-									name='designationName'
-									value={values.designationName}
+									name='name'
+									value={values.name}
 								/>
 							</div>
 							<Stack
@@ -280,4 +283,4 @@ function Designation() {
 	);
 }
 
-export default Designation;
+export default Division;

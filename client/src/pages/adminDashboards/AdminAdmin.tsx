@@ -8,6 +8,7 @@ import SideNavbar from "./AdminAdmin/SideNavbar";
 import Dots from "../../images/dots_circle_b.png";
 import EmpCategory from "./AdminAdmin/EmpCategory";
 import Designation from "./AdminAdmin/Designation";
+import Division from "./AdminAdmin/Division";
 
 function AdminAdmin() {
 	return (
@@ -24,6 +25,8 @@ function AdminAdmin() {
            				<Route path={RouteName.EmployeeCategory} element={<EmpCategory />} />
            				<Route path={RouteName.Employee} element={<Employees />} />
            				<Route path={RouteName.Designation} element={<Designation />} />
+           				<Route path={RouteName.Divisions} element={<Division />} />
+
 
 					</Routes>
 
