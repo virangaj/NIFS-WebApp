@@ -18,9 +18,9 @@ public class EmployeeLogin {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "epf_no", referencedColumnName = "epf_no", unique = true)
-    private EmployeeMaster employee;
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "epf_no", referencedColumnName = "epf_no", unique = true)
+//    private EmployeeMaster employee;
 
     @Column(name = "password", nullable = false)
     private String password;

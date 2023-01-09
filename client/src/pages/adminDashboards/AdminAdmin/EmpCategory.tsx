@@ -119,17 +119,31 @@ function EmpCategory() {
 			setLoading(true);
 			setTimeout(async () => {
 				const result = await EmployeeCatService.saveEmpCat(values);
-				toast.success('New Employee Category is added', {
-					position: 'top-right',
-					autoClose: 5000,
-					hideProgressBar: false,
-					closeOnClick: true,
-					pauseOnHover: true,
-					draggable: true,
-					progress: undefined,
-					theme: 'dark',
-				});
-				resetForm();
+				if(result.data){
+					toast.success('New Employee Category is added', {
+						position: 'top-right',
+						autoClose: 5000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+						
+					});
+					resetForm();
+				}
+				else{
+					toast.error('Request cannot completed!', {
+						position: 'top-right',
+						autoClose: 5000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+						
+					});
+				}
 				setLoading(false);
 			}, 1000);
 		} else {
@@ -141,7 +155,7 @@ function EmpCategory() {
 				pauseOnHover: true,
 				draggable: true,
 				progress: undefined,
-				theme: 'dark',
+				
 			});
 		}
 	};

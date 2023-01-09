@@ -18,8 +18,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "employee_master")
@@ -46,9 +45,11 @@ public class EmployeeMaster {
 
     @Column(name = "gender", length = 5)
     private String gender;
-
+    @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Column(name = "dob")
-    private Date dob;
+    private String dob;
 
     @Column(name = "address", length = 255)
     private String address;
@@ -159,41 +160,77 @@ public class EmployeeMaster {
 
     //employee type
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
-    @JoinColumn(name = "emp_type_id", referencedColumnName = "type_id", nullable = false)
+    @JoinColumn(name = "emp_type_id", referencedColumnName = "type_id")
     @JsonIgnoreProperties("employee")
     private EmployeeTypeMaster empType;
 
     //category
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
-    @JoinColumn(name = "emp_category_id", referencedColumnName = "employee_category_code", nullable = false)
+    @JoinColumn(name = "emp_category_id", referencedColumnName = "employee_category_code")
     @JsonIgnoreProperties("employee")
     private EmployeeCategory empCategory;
 
 
     //designation
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
-    @JoinColumn(name = "designation_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "designation_id", referencedColumnName = "id")
     @JsonIgnoreProperties("employee")
     private DesignationMaster designation;
 
     //division
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
-    @JoinColumn(name = "division_id", referencedColumnName = "division_id", nullable = false)
+    @JoinColumn(name = "division_id", referencedColumnName = "division_id")
     @JsonIgnoreProperties("employee")
     private DivisionMaster division;
 
     //locations
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
-    @JoinColumn(name = "location_id", referencedColumnName = "location_id", nullable = false)
+    @JoinColumn(name = "location_id", referencedColumnName = "location_id")
     @JsonIgnoreProperties("employee")
     private Locations location;
 
+    public EmployeeMaster(int epfNo, String initials, String firstName, String lastName, String gender, String dob, String address, String contactNo, String personalEmail, String gsuitEmail, String nicNo, String nicIssuedDate, String passportNo, String passExpireDate, String licenseNo, String licenseIssuedDate, String licenseExpireDate, String contactPerson, String cpRelationship, String cpAddress, String cpTelephone, String cpStatus, String cpCivilStatus, String cpReligion, String appointmentDate, String contractStart, String contractEnd, Boolean isDelete, District district, Province province, EmployeeTypeMaster empType, EmployeeCategory empCategory, DesignationMaster designation, DivisionMaster division, Locations location) {
+        this.epfNo = epfNo;
+        this.initials = initials;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.dob = dob;
+        this.address = address;
+        this.contactNo = contactNo;
+        PersonalEmail = personalEmail;
+        GsuitEmail = gsuitEmail;
+        this.nicNo = nicNo;
+        NicIssuedDate = nicIssuedDate;
+        this.passportNo = passportNo;
+        PassExpireDate = passExpireDate;
+        this.licenseNo = licenseNo;
+        this.licenseIssuedDate = licenseIssuedDate;
+        this.licenseExpireDate = licenseExpireDate;
+        this.contactPerson = contactPerson;
+        this.cpRelationship = cpRelationship;
+        this.cpAddress = cpAddress;
+        this.cpTelephone = cpTelephone;
+        this.cpStatus = cpStatus;
+        this.cpCivilStatus = cpCivilStatus;
+        this.cpReligion = cpReligion;
+        this.appointmentDate = appointmentDate;
+        this.contractStart = contractStart;
+        this.contractEnd = contractEnd;
+        this.isDelete = isDelete;
+        this.district = district;
+        this.province = province;
+        this.empType = empType;
+        this.empCategory = empCategory;
+        this.designation = designation;
+        this.division = division;
+        this.location = location;
+    }
 
-    //login
-    @OneToOne(mappedBy = "employee")
-    private EmployeeLogin empLogin;
 
-
+//login
+//    @OneToOne(mappedBy = "employee")
+//    private EmployeeLogin empLogin;
 
 
 

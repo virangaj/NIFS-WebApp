@@ -119,8 +119,8 @@ a {
 }
 
 @layer components {
-	body{
-		@apply bg-[#dfe7ee] 
+	body {
+		@apply bg-[#dfe7ee];
 	}
 	.admin-side-nav {
 		@apply z-20 flex-shrink-0 block w-64 mb-10 overflow-y-auto bg-white rounded-tr-lg rounded-br-lg;
@@ -160,54 +160,55 @@ a {
 	.delete-confirm-btn {
 		@apply float-right p-2 text-white bg-red-400 rounded-md hover:bg-red-800;
 	}
-	.tailwind-text-box{
+	.tailwind-text-box {
 		@apply block w-full px-4 py-2 my-2 text-gray-700 bg-white border border-gray-300 rounded-md focus:border-blue-500 focus:outline-none
-		/* @apply block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring */
+		/* @apply block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring */;
 	}
-	.input-label{
-		@apply text-gray-700 mt-2
+	.input-label {
+		@apply mt-2 text-gray-700;
 	}
-	.action-com-model{
-		@apply flex flex-col w-[80%] p-8 duration-300 translate-y-1/2 bg-white shadow-md rounded-2xl mx-auto top-3/4 backdrop-blur-sm
+	.action-com-model {
+		@apply flex flex-col w-[80%] p-8 duration-300 translate-y-1/2 bg-white shadow-md rounded-2xl mx-auto top-3/4 backdrop-blur-sm;
 	}
-	.action-com-model-error-btn{
-		@apply px-5 py-2 ml-4 text-sm font-medium tracking-wider text-white bg-red-500 border-2 border-red-500 rounded-full shadow-sm hover:shadow-lg
+	.action-com-model-error-btn {
+		@apply px-5 py-2 ml-4 text-sm font-medium tracking-wider text-white bg-red-500 border-2 border-red-500 rounded-full shadow-sm hover:shadow-lg;
 	}
-	.action-com-model-sucess-btn{
-		@apply px-5 py-2 ml-4 text-sm font-medium tracking-wider text-white bg-blue-500 border-2 border-blue-500 rounded-full shadow-sm hover:shadow-lg
+	.action-com-model-sucess-btn {
+		@apply px-5 py-2 ml-4 text-sm font-medium tracking-wider text-white bg-blue-500 border-2 border-blue-500 rounded-full shadow-sm hover:shadow-lg;
 	}
-	.rounded-outline-success-btn{
-		@apply  px-3 py-1 ml-4 text-sm font-medium tracking-wider text-blue-500 border-2 border-blue-500 rounded-full shadow-sm hover:shadow-lg
+	.rounded-outline-success-btn {
+		@apply px-3 py-1 ml-4 text-sm font-medium tracking-wider text-blue-500 border-2 border-blue-500 rounded-full shadow-sm hover:shadow-lg;
 	}
-	.page-title{
-		@apply font-bold text-2xl bg-white p-3 rounded-lg mb-4 shadow-lg
+	.page-title {
+		@apply p-3 mb-4 text-2xl font-bold bg-white rounded-lg shadow-lg;
 	}
-	.admin-horizontal-line{
-		@apply mb-2 border rounded-full mt-2 border-gray-300
+	.admin-horizontal-line {
+		@apply mt-2 mb-2 border border-gray-300 rounded-full;
 	}
-	.admin-table-section{
-		@apply bg-white rounded-xl p-4 shadow-lg
+	.admin-table-section {
+		@apply p-4 bg-white shadow-lg rounded-xl;
 	}
-	.admin-form{
-		@apply border p-4 rounded-lg mt-4
+	.admin-form {
+		@apply p-4 mt-4 border rounded-lg;
 	}
-	.admin-form-section{
-		@apply bg-white rounded-xl p-4 xl:w-full xl:ml-10 mt-4 xl:mt-0 shadow-lg
+	.admin-form-section {
+		@apply p-4 mt-4 bg-white shadow-lg rounded-xl xl:w-full xl:ml-10 xl:mt-0;
 	}
-	.admin-form-buton-stack{
-		@apply mt-10
+	.admin-form-buton-stack {
+		@apply mt-10;
 	}
-	.generate-id-in-form{
-		@apply flex items-center mb-4 justify-between
+	.generate-id-in-form {
+		@apply flex items-center justify-between mb-4;
 	}
-	.employee-form-layout{
-		@apply grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 lg:grid-cols-3
+	.employee-form-layout {
+		@apply grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 lg:grid-cols-3;
+	}
+	.admin-tab-menu {
+		@apply bg-white rounded-lg shadow-lg;
 	}
 
-}	
-
-
-
+	
+}
 
 /* alert box */
 
@@ -216,15 +217,16 @@ a {
 	color: var(--black) !important;
 	border-radius: 10px !important;
 	font-family: 'Poppins' !important;
-
 }
 
-.Toastify__close-button{
+.Toastify__close-button {
 	color: var(--gray) !important;
 }
-.Toastify__progress-bar{
+.Toastify__progress-bar {
 	width: 80% !important;
 
 	margin-left: 5% !important;
 	border-radius: 5px !important;
 }
+
+

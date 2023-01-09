@@ -8,6 +8,10 @@ import org.springframework.transaction.annotation.Transactional;
 public interface EmployeeMasterRepository extends JpaRepository<EmployeeMaster, Integer> {
     @Transactional
     @Modifying
+    @Query("update EmployeeMaster e set e.isDelete = ?1 where e.epfNo = ?2")
+    void updateIsDelete(Boolean isDelete, int epfNo);
+    @Transactional
+    @Modifying
     @Query("delete from EmployeeMaster e where e.epfNo = ?1")
     void deleteEmployee(int epfNo);
 

@@ -38,6 +38,7 @@ public class DesignationController {
     }
 
 
+
     //update designation
     @PatchMapping("/update/{id}")
     Boolean updateDesignation(@PathVariable String id, @RequestBody DesignationMasterDTO dto){

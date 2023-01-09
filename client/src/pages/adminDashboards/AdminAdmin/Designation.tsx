@@ -100,18 +100,34 @@ function Designation() {
 			setLoading(true);
 			setTimeout(async () => {
 				const result = await DesignationMasterService.saveDesignation(values);
-				toast.success('New Designation is added', {
-					position: 'top-right',
-					autoClose: 5000,
-					hideProgressBar: false,
-					closeOnClick: true,
-					pauseOnHover: true,
-					draggable: true,
-					progress: undefined,
-					theme: 'dark',
-				});
+				// console.log(result)
+				if(result.data){
+					toast.success('New Designation is added', {
+						position: 'top-right',
+						autoClose: 5000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+						
+					});
+					resetForm();
+				}
+				else{
+					toast.error('Request cannot completed!', {
+						position: 'top-right',
+						autoClose: 5000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+						
+					});
+				}
 				setLoading(false);
-				resetForm();
+
 			}, 1000);
 		} else {
 			// alert('Please add a ID');
@@ -123,7 +139,7 @@ function Designation() {
 				pauseOnHover: true,
 				draggable: true,
 				progress: undefined,
-				theme: 'dark',
+				
 			});
 		}
 	};

@@ -9,12 +9,12 @@ export default interface IEmployeeData {
 	district: number;
 	province: number;
 	contactNo: string;
-	PersonalEmail: string;
-	GsuitEmail:string;
+	personalEmail: string;
+	gsuitEmail:string;
 	nicNo: string;
-	NicIssuedDate: string;
+	nicIssuedDate: string;
 	passportNo: string;
-	PassExpireDate: string;
+	passExpireDate: string;
 	licenseNo: string;
 	licenseIssuedDate: string;
 	licenseExpireDate: string;

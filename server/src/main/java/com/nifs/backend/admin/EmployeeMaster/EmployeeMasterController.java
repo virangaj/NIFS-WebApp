@@ -25,14 +25,38 @@ public class EmployeeMasterController {
        }
     }
 
+    @GetMapping("/withoutdelete")
+    private List<EmployeeMasterDTO> getAllEmployeesWithoutDeleted() throws HttpMessageNotWritableException {
+        try{
+            return empService.getAllEmployeesWithoutDeleted();
+        }
+        catch(HttpMessageNotWritableException e){
+            return null;
+        }
+    }
+
+    @GetMapping("/deleted")
+    private List<EmployeeMasterDTO> getAllEmployeeDataCurrentlyNotWorking() throws HttpMessageNotWritableException {
+        try{
+            return empService.getAllEmployeeDataCurrentlyNotWorking();
+        }
+        catch(HttpMessageNotWritableException e){
+            return null;
+        }
+    }
 
     @PostMapping
-    private Boolean addEmployee(@RequestBody EmployeeMaster empData){
+    private Boolean addEmployee(@RequestBody EmployeeMasterDTO empData){
         return empService.addEmployee(empData);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @PatchMapping("/delete/{id}")
     private Boolean deleteEmployee(@PathVariable int id){
         return empService.deleteEmployee(id);
+    }
+
+    @DeleteMapping("/harddelete/{id}")
+    private Boolean hardDeleteEmployee(@PathVariable int id){
+        return empService.hardDeleteEmployee(id);
     }
 }

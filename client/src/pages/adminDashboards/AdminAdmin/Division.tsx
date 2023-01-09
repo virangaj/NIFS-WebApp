@@ -103,18 +103,33 @@ function Division() {
 			setLoading(true);
 			setTimeout(async () => {
 				const result = await DivisionMasterService.saveDivision(values);
-				toast.success('New Division is added', {
-					position: 'top-right',
-					autoClose: 5000,
-					hideProgressBar: false,
-					closeOnClick: true,
-					pauseOnHover: true,
-					draggable: true,
-					progress: undefined,
-					theme: 'dark',
-				});
+				if(result.data){
+					toast.success('New Division is added', {
+						position: 'top-right',
+						autoClose: 5000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+					
+					});
+				
+					resetForm();
+				}
+				else{
+					toast.error('Request cannot completed!', {
+						position: 'top-right',
+						autoClose: 5000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+					
+					});
+				}
 				setLoading(false);
-				resetForm();
 			}, 1000);
 		} else {
 			// alert('Please add a ID');
@@ -126,7 +141,7 @@ function Division() {
 				pauseOnHover: true,
 				draggable: true,
 				progress: undefined,
-				theme: 'dark',
+			
 			});
 		}
 	};
