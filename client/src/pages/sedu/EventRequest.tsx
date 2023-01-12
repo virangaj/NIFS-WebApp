@@ -37,6 +37,7 @@ function EventRequest() {
     const [eventAttachment, setEventAttachment] = useState<File | any>()
 
     const [values, setValues] = useState<IEventRequest>({
+<<<<<<< HEAD
         event_id: '',
         event_type: '',
         type: '',
@@ -47,18 +48,37 @@ function EventRequest() {
         start_time: '',
         end_time: '',
         no_participants: 0,
+=======
+        eventId: '',
+        eventType: '',
+        type: '',
+        title: '',
+        remarks: '',
+        startDate: '',
+        endDate: '',
+        startTime: '',
+        endTime: '',
+        noParticipants: 0,
+>>>>>>> fd3210359d6c143215aef639c14815d77d7d10c7
         budget: 0,
         project: '',
         vote: '',
         location: '',
+<<<<<<< HEAD
         venue_name: '',
         venue_type: '',
         fund_type: '',
+=======
+        venueName: '',
+        venueType: '',
+        fundType: '',
+>>>>>>> fd3210359d6c143215aef639c14815d77d7d10c7
     })
 
 
     useEffect(() => {
         setValues({
+<<<<<<< HEAD
             event_id: values?.event_id,
             event_type: values?.event_type,
             type: values?.type,
@@ -69,10 +89,23 @@ function EventRequest() {
             start_time: startTime ? startTime : '',
             end_time: endTime ? endTime : '',
             no_participants: values?.no_participants,
+=======
+            eventId: getEventId,
+            eventType: values?.eventType,
+            type: values?.type,
+            title: values?.title,
+            remarks: values?.remarks,
+            startDate: startDate ? startDate : '',
+            endDate: endDate ? endDate : '',
+            startTime: startTime ? startTime : '',
+            endTime: endTime ? endTime : '',
+            noParticipants: values?.noParticipants,
+>>>>>>> fd3210359d6c143215aef639c14815d77d7d10c7
             budget: values?.budget,
             project: values?.project,
             vote: values?.vote,
             location: values?.location,
+<<<<<<< HEAD
             venue_name: values?.venue_name,
             venue_type: values?.venue_type,
             fund_type: values?.fund_type,
@@ -83,6 +116,18 @@ function EventRequest() {
     const generateEventId = () => {
         setEventId(generateID('SER'))
         console.log(getEventId)
+=======
+            venueName: values?.venueName,
+            venueType: values?.venueType,
+            fundType: values?.fundType,
+        });
+    }, [startDate, endDate, startTime, endTime, getEventId])
+
+
+
+    const generateEventId = () => {
+        setEventId(generateID('ER'))
+>>>>>>> fd3210359d6c143215aef639c14815d77d7d10c7
     }
 
 
@@ -97,6 +142,7 @@ function EventRequest() {
 
     const resetForm = () => {
         setValues({
+<<<<<<< HEAD
             event_id: '',
             event_type: '',
             type: '',
@@ -107,24 +153,70 @@ function EventRequest() {
             start_time: '',
             end_time: '',
             no_participants: 0,
+=======
+            eventId: '',
+            eventType: '',
+            type: '',
+            title: '',
+            remarks: '',
+            startDate: '',
+            endDate: '',
+            startTime: '',
+            endTime: '',
+            noParticipants: 0,
+>>>>>>> fd3210359d6c143215aef639c14815d77d7d10c7
             budget: 0,
             project: '',
             vote: '',
             location: '',
+<<<<<<< HEAD
             venue_name: '',
             venue_type: '',
             fund_type: '',
+=======
+            venueName: '',
+            venueType: '',
+            fundType: '',
+>>>>>>> fd3210359d6c143215aef639c14815d77d7d10c7
         })
         setStartDate('')
         setStartTime('')
         setEndDate('')
         setEndTime('')
+<<<<<<< HEAD
+=======
+        setEventId('')
+>>>>>>> fd3210359d6c143215aef639c14815d77d7d10c7
     }
 
     const onSubmit = async (e: any) => {
         e.preventDefault();
+<<<<<<< HEAD
 
         console.log(values)
+=======
+        setValues({
+            eventId: getEventId,
+            eventType: values?.eventType,
+            type: values?.type,
+            title: values?.title,
+            remarks: values?.remarks,
+            startDate: values?.startDate,
+            endDate: values?.endDate,
+            startTime: values?.startTime,
+            endTime: values?.endTime,
+            noParticipants: values?.noParticipants,
+            budget: values?.budget,
+            project: values?.project,
+            vote: values?.vote,
+            location: values?.location,
+            venueName: values?.venueName,
+            venueType: values?.venueType,
+            fundType: values?.fundType,
+        });
+        console.log(values)
+        console.log(getEventId)
+>>>>>>> fd3210359d6c143215aef639c14815d77d7d10c7
     }
 
     return (
@@ -133,7 +225,11 @@ function EventRequest() {
             <hr className='horizontal-line' />
 
             <form onSubmit={onSubmit}>
+<<<<<<< HEAD
                 <div className="form-flex items-center">
+=======
+                <div className="items-center form-flex">
+>>>>>>> fd3210359d6c143215aef639c14815d77d7d10c7
                     <div className="form-left-section">
                     </div>
                 </div>
@@ -144,18 +240,28 @@ function EventRequest() {
 
                     {/* event id */}
 
+<<<<<<< HEAD
                     <Box className='input-field flex items-center'>
                         <TextField required
+=======
+                    <Box className='flex items-center justify-between input-field'>
+                        {/* <TextField required
+>>>>>>> fd3210359d6c143215aef639c14815d77d7d10c7
                             id="outlined-basic"
                             label="Event ID"
                             variant="outlined"
                             type="text"
+<<<<<<< HEAD
                             name='event_id'
+=======
+                            name='eventId'
+>>>>>>> fd3210359d6c143215aef639c14815d77d7d10c7
                             onChange={onChange}
                             defaultValue={getEventId}
                             InputProps={{
                                 readOnly: true,
                             }}
+<<<<<<< HEAD
                         />
 
                         <Button variant="outlined" className='!ml-4' onClick={generateEventId} size="large" color='info'>New</Button>
@@ -167,6 +273,19 @@ function EventRequest() {
                     </div>
                     {/* end date */}
                     <div className='lg:ml-10 mx-0 mb-4 md:my-0' >
+=======
+                        /> */}
+                        Request ID - {getEventId && getEventId}
+                        <button type='button' className='rounded-outline-success-btn' onClick={generateEventId} style={{ marginLeft: '20px' }}>New</button>
+                    </Box>
+
+                    {/* start date */}
+                    <div className='mx-0 mb-4 lg:ml-10 md:my-0' >
+                        <CustomeDataPicker date={startDate} setDate={setStartDate} title='Start Date' />
+                    </div>
+                    {/* end date */}
+                    <div className='mx-0 mb-4 lg:ml-10 md:my-0' >
+>>>>>>> fd3210359d6c143215aef639c14815d77d7d10c7
                         <CustomeDataPicker date={endDate} setDate={setEndDate} title='End Date' />
                     </div>
                     {/* event type */}
@@ -177,8 +296,13 @@ function EventRequest() {
 
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
+<<<<<<< HEAD
                             value={values.event_type}
                             name='event_type'
+=======
+                            value={values.eventType}
+                            name='eventType'
+>>>>>>> fd3210359d6c143215aef639c14815d77d7d10c7
                             size='small'
                             label="Event Type"
                             onChange={onChange}
@@ -197,12 +321,20 @@ function EventRequest() {
                     </Box>
 
                     {/* start time */}
+<<<<<<< HEAD
                     <div className='lg:ml-10 mx-0 mb-4 md:my-0' >
+=======
+                    <div className='mx-0 mb-4 lg:ml-10 md:my-0' >
+>>>>>>> fd3210359d6c143215aef639c14815d77d7d10c7
                         <CustomeTimePicker time={startTime} setTime={setStartTime} title='Start Time' />
                     </div>
 
                     {/* end time */}
+<<<<<<< HEAD
                     <div className='lg:ml-10 mx-0 mb-4 md:my-0' >
+=======
+                    <div className='mx-0 mb-4 lg:ml-10 md:my-0' >
+>>>>>>> fd3210359d6c143215aef639c14815d77d7d10c7
                         <CustomeTimePicker time={endTime} setTime={setEndTime} title='End Time' />
                     </div>
 
@@ -234,21 +366,36 @@ function EventRequest() {
                     </Box>
 
                     {/* no of participants */}
+<<<<<<< HEAD
                     <Box className='input-field lg:ml-10 mx-0'>
+=======
+                    <Box className='mx-0 input-field lg:ml-10'>
+>>>>>>> fd3210359d6c143215aef639c14815d77d7d10c7
                         <TextField
                             fullWidth required id="outlined-basic"
                             label="No of Participants"
                             variant="outlined"
                             type="number"
+<<<<<<< HEAD
                             name='no_participants'
                             size="small"
                             onChange={onChange}
                             value={values.no_participants}
+=======
+                            name='noParticipants'
+                            size="small"
+                            onChange={onChange}
+                            value={values.noParticipants}
+>>>>>>> fd3210359d6c143215aef639c14815d77d7d10c7
 
                         />
                     </Box>
 
+<<<<<<< HEAD
                     <Box className='input-field lg:ml-10 mx-0'>
+=======
+                    <Box className='mx-0 input-field lg:ml-10'>
+>>>>>>> fd3210359d6c143215aef639c14815d77d7d10c7
                         <TextField
                             fullWidth required id="outlined-basic"
                             label="Expect Budget"
@@ -265,7 +412,11 @@ function EventRequest() {
 
                 </div>
                 {/* event title */}
+<<<<<<< HEAD
                 <Box className='input-field lg:ml-4 mx-0'>
+=======
+                <Box className='mx-0 input-field lg:ml-4'>
+>>>>>>> fd3210359d6c143215aef639c14815d77d7d10c7
 
                     <TextField
                         fullWidth required multiline id="outlined-basic"
@@ -282,7 +433,11 @@ function EventRequest() {
                 </Box>
 
                 {/*remarks  */}
+<<<<<<< HEAD
                 <Box className='input-field lg:ml-4 mx-0'>
+=======
+                <Box className='mx-0 input-field lg:ml-4'>
+>>>>>>> fd3210359d6c143215aef639c14815d77d7d10c7
 
                     <TextField
                         fullWidth required multiline id="outlined-multiline-flexible"
@@ -298,10 +453,17 @@ function EventRequest() {
                     />
                 </Box>
 
+<<<<<<< HEAD
                 <div className="form-flex items-center">
                     <div className="form-left-section">
                         {/* project */}
                         <Box className='input-field lg:ml-4 mx-0'>
+=======
+                <div className="items-center form-flex">
+                    <div className="form-left-section">
+                        {/* project */}
+                        <Box className='mx-0 input-field lg:ml-4'>
+>>>>>>> fd3210359d6c143215aef639c14815d77d7d10c7
                             <InputLabel id="demo-simple-select-label" className='input-label'>Project *</InputLabel>
                             <Select
                                 fullWidth
@@ -330,7 +492,11 @@ function EventRequest() {
                     </div>
                     <div className="form-right-section">
                         {/* vote */}
+<<<<<<< HEAD
                         <Box className='input-field lg:ml-4 mx-0'>
+=======
+                        <Box className='mx-0 input-field lg:ml-4'>
+>>>>>>> fd3210359d6c143215aef639c14815d77d7d10c7
                             <InputLabel id="demo-simple-select-label" className='input-label'>Vote *</InputLabel>
                             <Select
                                 fullWidth
@@ -359,19 +525,32 @@ function EventRequest() {
 
                     </div>
                 </div>
+<<<<<<< HEAD
                 <div className="form-flex items-center">
                     <div className="form-left-section">
 
                         {/* Budget */}
                         <Box className='input-field lg:ml-4 mx-0'>
+=======
+                <div className="items-center form-flex">
+                    <div className="form-left-section">
+
+                        {/* Budget */}
+                        <Box className='mx-0 input-field lg:ml-4'>
+>>>>>>> fd3210359d6c143215aef639c14815d77d7d10c7
                             <InputLabel id="demo-simple-select-label" className='input-label'>External /Fund Internal / Budget*</InputLabel>
                             <Select
                                 fullWidth
 
                                 labelId="demo-simple-select-label"
                                 id="demo-simple-select"
+<<<<<<< HEAD
                                 value={values.fund_type}
                                 name='fund_type'
+=======
+                                value={values.fundType}
+                                name='fundType'
+>>>>>>> fd3210359d6c143215aef639c14815d77d7d10c7
                                 size='small'
                                 label="Fund"
                                 onChange={onChange}
@@ -392,7 +571,11 @@ function EventRequest() {
                     <div className="form-right-section">
 
                         {/* location */}
+<<<<<<< HEAD
                         <Box className='input-field lg:ml-4 mx-0'>
+=======
+                        <Box className='mx-0 input-field lg:ml-4'>
+>>>>>>> fd3210359d6c143215aef639c14815d77d7d10c7
                             <InputLabel id="demo-simple-select-label" className='input-label'>Location *</InputLabel>
                             <Select
                                 fullWidth
@@ -416,22 +599,37 @@ function EventRequest() {
                         </Box>
                     </div>
                 </div>
+<<<<<<< HEAD
                 <div className="form-flex items-center">
+=======
+                <div className="items-center form-flex">
+>>>>>>> fd3210359d6c143215aef639c14815d77d7d10c7
                     <div className="form-right-section">
 
 
                         {/* venue name */}
+<<<<<<< HEAD
                         <Box className='input-field lg:ml-4 mx-0'>
+=======
+                        <Box className='mx-0 input-field lg:ml-4'>
+>>>>>>> fd3210359d6c143215aef639c14815d77d7d10c7
 
                             <TextField
                                 fullWidth required multiline id="outlined-multiline-flexible"
                                 label="Venue Name"
                                 variant="outlined"
                                 type="search"
+<<<<<<< HEAD
                                 name='venue_name'
                                 size="small"
                                 onChange={onChange}
                                 value={values.venue_name}
+=======
+                                name='venueName'
+                                size="small"
+                                onChange={onChange}
+                                value={values.venueName}
+>>>>>>> fd3210359d6c143215aef639c14815d77d7d10c7
 
 
                             />
@@ -439,13 +637,22 @@ function EventRequest() {
                     </div>
                     <div className="form-right-section">
                         {/* Venue type */}
+<<<<<<< HEAD
                         <Box className='input-field lg:ml-4 mx-0'>
+=======
+                        <Box className='mx-0 input-field lg:ml-4'>
+>>>>>>> fd3210359d6c143215aef639c14815d77d7d10c7
                             <InputLabel id="demo-simple-select-label" className='input-label'>Venue Type *</InputLabel>
                             <Select
                                 fullWidth labelId="demo-simple-select-label"
                                 id="demo-simple-select"
+<<<<<<< HEAD
                                 value={values.venue_type}
                                 name='venue_type'
+=======
+                                value={values.venueType}
+                                name='venueType'
+>>>>>>> fd3210359d6c143215aef639c14815d77d7d10c7
                                 size='small'
                                 label="Fund"
                                 onChange={onChange}

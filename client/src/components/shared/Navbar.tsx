@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import * as React from 'react';
+=======
+import React, {useEffect,useState} from 'react';
+>>>>>>> fd3210359d6c143215aef639c14815d77d7d10c7
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -16,6 +20,7 @@ import Logo from '../../images/nifs_logo.png'
 import { Link, useLocation } from 'react-router-dom';
 import Pages from '../data/MainNavPages.json';
 import './navbar.css'
+<<<<<<< HEAD
 const settings = [
     {
         id: 0,
@@ -26,6 +31,43 @@ const settings = [
 const Navbar = () => {
 
     // nav bar function and variables
+=======
+
+const Navbar = () => {
+
+    const [user, setUser] = useState<any>({});
+
+    useEffect(() => {
+        localStorage.setItem('loginUser', JSON.stringify(
+            { 
+                name: 'Viranga', 
+                epfNo:456, 
+                division:"admin", 
+                role : "admin"
+            }
+        ));
+        const storeData = window.localStorage.getItem('loginUser');
+        if(storeData){
+            setUser(JSON.parse(storeData));
+        }
+
+        // console.log(user.epfNo)
+      }, []);
+
+    const settings = [
+        {
+            id: 0,
+            title: 'Login',
+            link: '/login',
+        },
+        {
+            id: 0,
+            title: 'Dashboard',
+            link: `/dashboard/${user.division}/${user.role}`,
+        }
+    ];
+    // navbar function and variables
+>>>>>>> fd3210359d6c143215aef639c14815d77d7d10c7
     const location: any = useLocation();
 
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
@@ -189,7 +231,13 @@ const Navbar = () => {
                         >
                             {settings && settings.map((setting, index) => (
                                 <MenuItem key={index} onClick={handleCloseUserMenu}>
+<<<<<<< HEAD
                                     <Typography textAlign="center">{setting.title}</Typography>
+=======
+                                  {setting.title === 'Dashboard' 
+                                  ? user.role === "admin" ? <Link to={setting.link}><Typography textAlign="center">{setting.title}</Typography></Link> : <></>
+                                  : <Link to={setting.link}><Typography textAlign="center">{setting.title}</Typography></Link>}
+>>>>>>> fd3210359d6c143215aef639c14815d77d7d10c7
                                 </MenuItem>
                             ))}
                         </Menu>

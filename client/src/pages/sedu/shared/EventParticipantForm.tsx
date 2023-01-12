@@ -25,6 +25,7 @@ function EventParticipantForm({ type, total, setTotal }: any) {
 
     })
 
+<<<<<<< HEAD
     const [getId, setId] = useState('');
 
     useEffect(() => {
@@ -38,6 +39,28 @@ function EventParticipantForm({ type, total, setTotal }: any) {
 
 
 
+=======
+    const [p_id, setP_id] = useState<String | any>('');
+
+    useEffect(()=>{
+        generateEventId();
+        console.log("trigger "+ p_id)
+        setValue({
+            id: p_id,
+            p_type: type,
+            name: value?.name,
+            nic: value?.nic,
+            contactNo: value?.contactNo,
+            address: value?.address,
+            email: value?.email
+        })
+    }, [value.name])
+
+    const generateEventId = () => {
+        setP_id(generateID('PM'))
+        
+    }
+>>>>>>> fd3210359d6c143215aef639c14815d77d7d10c7
 
     const onChange = (e: any) => {
         setValue((preState: any) => ({
@@ -48,11 +71,26 @@ function EventParticipantForm({ type, total, setTotal }: any) {
 
 
     const handleAdd = () => {
+<<<<<<< HEAD
 
         console.log(generateID(type.substring(0, 3)))
         if (value.name !== '') {
 
 
+=======
+        setValue({
+            id: p_id,
+            p_type: type,
+            name: value?.name,
+            nic: value?.nic,
+            contactNo: value?.contactNo,
+            address: value?.address,
+            email: value?.email
+        })
+        
+        console.log(value)
+        if (value.name !== '') {
+>>>>>>> fd3210359d6c143215aef639c14815d77d7d10c7
             setTotal((prev: any) => [...prev, value]);
             reset()
         }
@@ -66,7 +104,11 @@ function EventParticipantForm({ type, total, setTotal }: any) {
 
     const reset = () => {
         setValue({
+<<<<<<< HEAD
             id: generateID(type.substring(0, 3)),
+=======
+            id: '',
+>>>>>>> fd3210359d6c143215aef639c14815d77d7d10c7
             p_type: type,
             name: '',
             nic: '',
@@ -82,7 +124,11 @@ function EventParticipantForm({ type, total, setTotal }: any) {
 
     return (
         <>
+<<<<<<< HEAD
             <div className="flex flex-col sm:flex-row items-center justify-between">
+=======
+            <div className="flex flex-col items-center justify-between sm:flex-row">
+>>>>>>> fd3210359d6c143215aef639c14815d77d7d10c7
                 {/* name */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 justify-between w-[100%]">
                     <Box className='w-[250px] mb-4'>

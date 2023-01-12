@@ -19,7 +19,11 @@ function NifsRepresentatives({ total, setTotal }: any) {
     }
 
 
+<<<<<<< HEAD
     console.log(total)
+=======
+    // console.log(total)
+>>>>>>> fd3210359d6c143215aef639c14815d77d7d10c7
 
     return (
         <>
@@ -45,7 +49,11 @@ function NifsRepresentatives({ total, setTotal }: any) {
                             <td>{t.contactNo}</td>
                             <td>{t.address}</td>
                             <td>{t.email}</td>
+<<<<<<< HEAD
                             <td><HiOutlineTrash className='text-xl hover:text-red-500 cursor-pointer' onClick={() => handleDelete(t.id)} /></td>
+=======
+                            <td><HiOutlineTrash className='text-xl cursor-pointer hover:text-red-500' onClick={() => handleDelete(t.id)} /></td>
+>>>>>>> fd3210359d6c143215aef639c14815d77d7d10c7
 
                         </tr>
 

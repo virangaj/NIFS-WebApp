@@ -1,4 +1,5 @@
 export default interface IEventRequest {
+<<<<<<< HEAD
     event_id: String,
     event_type: String,
     type: String,
@@ -16,6 +17,25 @@ export default interface IEventRequest {
     venue_name: String,
     venue_type: String,
     fund_type: String,
+=======
+    eventId: string,
+    eventType: string,
+    type: string,
+    title: string,
+    remarks: string,
+    startDate: string,
+    endDate: string,
+    startTime: string,
+    endTime: string,
+    noParticipants: number,
+    budget: number,
+    project: string,
+    vote: string,
+    location: string,
+    venueName: string,
+    venueType: string,
+    fundType: string,
+>>>>>>> fd3210359d6c143215aef639c14815d77d7d10c7
     
 
   }

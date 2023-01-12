@@ -7,7 +7,11 @@
                 "title": "Venue Master",
                 "link": "/sedu/venue-master",
                 "img": "https://img.icons8.com/fluency/50/000000/home.png",
+<<<<<<< HEAD
                 "only_admin": false
+=======
+                "only_admin": true
+>>>>>>> fd3210359d6c143215aef639c14815d77d7d10c7
             },
             {
                 "title": "Participant Master",
@@ -37,31 +41,51 @@
                 "title": "Attendance Feedback",
                 "link": "/sedu/attendance-feedback",
                 "img": "https://img.icons8.com/fluency/50/000000/feedback-hub.png",
+<<<<<<< HEAD
                 "only_admin": false
+=======
+                "only_admin": true
+>>>>>>> fd3210359d6c143215aef639c14815d77d7d10c7
             },
             {
                 "title": " Update Event Material",
                 "link": "/sedu/update-material",
                 "img": "https://img.icons8.com/fluency/50/000000/available-updates.png",
+<<<<<<< HEAD
                 "only_admin": false
+=======
+                "only_admin": true
+>>>>>>> fd3210359d6c143215aef639c14815d77d7d10c7
             },
             {
                 "title": "Quick Response Code",
                 "link": "/sedu/quick-response",
                 "img": "https://img.icons8.com/fluency/50/000000/barcode-scanner.png",
+<<<<<<< HEAD
                 "only_admin": false
+=======
+                "only_admin": true
+>>>>>>> fd3210359d6c143215aef639c14815d77d7d10c7
             },
             {
                 "title": "Project Proposal",
                 "link": "/sedu/project-proposal",
                 "img": "https://img.icons8.com/fluency/50/000000/documents.png",
+<<<<<<< HEAD
                 "only_admin": false
+=======
+                "only_admin": true
+>>>>>>> fd3210359d6c143215aef639c14815d77d7d10c7
             },
             {
                 "title": "Material Search",
                 "link": "/sedu/material-search",
                 "img": "https://img.icons8.com/fluency/50/000000/search.png",
+<<<<<<< HEAD
                 "only_admin": false
+=======
+                "only_admin": true
+>>>>>>> fd3210359d6c143215aef639c14815d77d7d10c7
             }
         ]
     },

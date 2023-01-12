@@ -1,0 +1,36 @@
+export default interface IEmployeeData {
+	epfNo: number;
+	initials: string;
+	firstName: string;
+	lastName: string;
+	gender: string;
+	dob: string;
+	address: string;
+	district: number;
+	province: number;
+	contactNo: string;
+	personalEmail: string;
+	gsuitEmail:string;
+	nicNo: string;
+	nicIssuedDate: string;
+	passportNo: string;
+	passExpireDate: string;
+	licenseNo: string;
+	licenseIssuedDate: string;
+	licenseExpireDate: string;
+	contactPerson: string;
+	cpRelationship: string;
+	cpAddress: string;
+	cpTelephone: string;
+	cpStatus: string;
+	cpCivilStatus: string;
+	cpReligion: string;
+	appointmentDate: string;
+	contractStart: string;
+	contractEnd: string;
+	location: string;
+	empType: string;
+	empCategory: string;
+	designation: string;
+	division: string;
+}
