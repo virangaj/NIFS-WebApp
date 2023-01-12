@@ -1,20 +1,15 @@
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { useEffect, useMemo, useState } from 'react';
 import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
-import InputLabel from '@mui/material/InputLabel';
-
 import EmployeeTypeService from '../../../services/admin/EmployeeTypeService';
-import EmpTypeRow from './shared/EmpTypeRow';
 import EmpTypeAction from './shared/EmpTypeAction';
 import Ripple from '../../../components/Ripple';
 import ILocationData from '../../../types/LocationData';
 import LocationMasterService from '../../../services/admin/LocationMasterService';
 import ImportFromXlsx from './shared/ImportFromXlsx';
+import { HiX } from 'react-icons/hi';
+import { toast } from 'react-toastify';
 
 function EmployeeType() {
 	const [empTypes, setEmpType] = useState<Array<any>>([]);
@@ -24,11 +19,18 @@ function EmployeeType() {
 	const [t_id, setT_Id] = useState('');
 	const [locationData, setLocationData] = useState<ILocationData[]>();
 
+	const [deleteId, setDeleteId] = useState('');
+
 	const [values, setValues] = useState<any>({
 		typeId: '',
 		typeName: '',
 		location: '',
 	});
+
+	useEffect(() => {
+		const filteredData = empTypes.filter((emp) => emp.typeId !== deleteId);
+		setEmpType(filteredData);
+	}, [deleteId]);
 
 	useEffect(() => {
 		retreiveEmpTypes();
@@ -105,15 +107,49 @@ function EmployeeType() {
 	//add new employeee type
 	const onSubmit = async (e: any) => {
 		e.preventDefault();
-		console.log(values);
+
 		if (values.typeId !== '') {
 			setLoading(true);
-			const result = await EmployeeTypeService.saveEmpType(values);
-			alert('done');
-			resetForm();
-			setLoading(false);
+			setTimeout(async () => {
+				const result = await EmployeeTypeService.saveEmpType(values);
+				if(result.data){
+					toast.success('New Employee Type is added', {
+						position: 'top-right',
+						autoClose: 5000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+					});
+					resetForm();
+				}
+				else{
+					toast.error('Request cannot completed!', {
+						position: 'top-right',
+						autoClose: 5000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+					});
+				
+				}
+
+				setLoading(false);
+			}, 1000);
 		} else {
-			alert('Please add a ID');
+			// alert('Please add a ID');
+			toast.error('Please add an ID', {
+				position: 'top-right',
+				autoClose: 5000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+			});
 		}
 	};
 
@@ -130,13 +166,14 @@ function EmployeeType() {
 				field: 'location',
 				headerName: 'Location',
 				width: 200,
+				editable: true,
 			},
 			{
 				field: 'actions',
 				headerName: 'Action',
 				type: 'actions',
 				renderCell: (params: any) => (
-					<EmpTypeAction {...{ params, rowId, setRowId }} />
+					<EmpTypeAction {...{ params, rowId, setRowId, setDeleteId }} />
 				),
 				width: 200,
 			},
@@ -146,13 +183,16 @@ function EmployeeType() {
 
 	return (
 		<>
-			<h1 className="page-title">Employee Types</h1>
-			<hr className="horizontal-line" />
+			<div className='admin-page-title'>
+				<p>Employee Types</p>
 
-			<div className="admin-panel-flex">
-				<div>
-					<h2 className="text-lg font-bold">All Employee Types</h2>
-					<p className="hint-text">(Double click to edit)</p>
+				<hr className='admin-horizontal-line' />
+			</div>
+
+			<div className='admin-panel-flex'>
+				<div className='admin-table-section'>
+					<h2 className='text-lg font-bold'>All Employee Types</h2>
+					<p className='hint-text'>(Double click to edit)</p>
 
 					{/* {empTypes?.map((emp: any, i: number) => (
 						<EmpTypeRow
@@ -163,9 +203,11 @@ function EmployeeType() {
 						/>
 					))} */}
 
-					<Box sx={{ width: '800px', height: '500px' }}>
+					<Box sx={{ width: '1000px', height: '500px' }}>
 						<DataGrid
+							checkboxSelection={true}
 							components={{ Toolbar: GridToolbar }}
+							rowHeight={60}
 							columns={columns}
 							rows={empTypes}
 							getRowId={(row) => row.typeId}
@@ -178,90 +220,89 @@ function EmployeeType() {
 				</div>
 
 				{/* add new employee type */}
-				<div className="p-4 mt-10 border-2 border-gray-400 rounded-lg w-96">
-					<h2 className="text-lg font-bold">Add New Employee Type</h2>
+				<div className='admin-form-section'>
+					<h2 className='text-lg font-bold'>Add New Employee Type</h2>
 
 					{!loading ? (
-						<form
-							onSubmit={onSubmit}
-							className="mt-5"
-						>
-							<div className="flex items-center">
-								<p>Type Id - {t_id ? t_id : ''}</p>
-								<Button
-									variant="outlined"
+						<form onSubmit={onSubmit} className='admin-form'>
+							<div className='generate-id-in-form'>
+								<p className='flex items-center'>
+									Type Id -{' '}
+									{t_id ? (
+										<>
+											{t_id}
+											<HiX
+												className='text-xl cursor-pointer hover:text-red-600'
+												onClick={() => setT_Id('')}
+											/>
+										</>
+									) : (
+										''
+									)}
+								</p>
+								<button
+									type='button'
+									className='rounded-outline-success-btn'
 									onClick={generateVenueID}
 									style={{ marginLeft: '20px' }}
 								>
 									New
-								</Button>
+								</button>
 							</div>
-							<Box className="flex items-center mt-5">
-								<p className="mr-5">Location</p>
-								<Select
-									className="w-44"
-									labelId="demo-simple-select-label"
-									id="demo-simple-select"
+							<div>
+								<label className='input-label' htmlFor='location'>
+									Location
+								</label>
+								<select
+									className='tailwind-text-box'
 									value={values.location}
-									name="location"
-									size="small"
-									label="Location"
+									id='location'
+									name='location'
 									onChange={onChange}
 								>
-									<MenuItem
-										value=""
-										disabled
-									>
+									<option disabled value=''>
 										Select Location
-									</MenuItem>
+									</option>
 									{locationData?.map((l: ILocationData, i: number) => {
 										return (
-											<MenuItem
-												key={i}
-												value={l.locationId}
-											>
+											<option key={i} value={l.locationId}>
 												{l.locationName}
-											</MenuItem>
+											</option>
 										);
 									})}
-								</Select>
-							</Box>
-
-							<Box className="flex items-center mt-5 mb-10">
-								<TextField
-									fullWidth
-									required
-									id="outlined-basic"
-									label="Employee Type"
-									variant="outlined"
-									type="search"
-									name="typeName"
-									size="small"
+								</select>
+							</div>
+							<div>
+								<label className='input-label' htmlFor='typeName'>
+									Employee Type
+								</label>
+								<input
+									id='typeName'
+									type='text'
+									className='tailwind-text-box'
 									onChange={onChange}
+									name='typeName'
 									value={values.typeName}
 								/>
-							</Box>
-
+							</div>
 							<Stack
-								direction="row"
-								justifyContent="flex-end"
-								alignItems="flex-end"
+								direction='row'
+								justifyContent='flex-end'
+								alignItems='flex-end'
 								spacing={2}
+								className='admin-form-buton-stack'
 							>
-								<Button
-									variant="contained"
-									type="reset"
-									color="error"
+								<button
+									className='action-com-model-error-btn'
+									type='reset'
+									color='error'
 									onClick={resetForm}
 								>
 									Reset
-								</Button>
-								<Button
-									variant="contained"
-									type="submit"
-								>
+								</button>
+								<button className='action-com-model-sucess-btn' type='submit'>
 									Submit
-								</Button>
+								</button>
 							</Stack>
 						</form>
 					) : (
@@ -270,7 +311,7 @@ function EmployeeType() {
 				</div>
 			</div>
 
-      <ImportFromXlsx/>
+			<ImportFromXlsx />
 		</>
 	);
 }

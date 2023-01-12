@@ -14,6 +14,8 @@ import EmpTypeAction from './shared/EmpTypeAction';
 import Ripple from '../../../components/Ripple';
 import ILocationData from '../../../types/LocationData';
 import LocationMasterService from '../../../services/admin/LocationMasterService';
+import { HiX } from 'react-icons/hi';
+import { toast } from 'react-toastify';
 
 function EmpCategory() {
 	const [empCats, setEmpCats] = useState<Array<any>>([]);
@@ -22,6 +24,7 @@ function EmpCategory() {
 	const [loading, setLoading] = useState(false);
 	const [cat_id, setCat_Id] = useState('');
 	const [locationData, setLocationData] = useState<ILocationData[]>();
+	const [deleteId, setDeleteId] = useState('');
 
 	const [values, setValues] = useState<any>({
 		employeeCategoryId: '',
@@ -34,7 +37,12 @@ function EmpCategory() {
 		retreiveEmpCats();
 		retreiveLocations();
 	}, []);
-
+	useEffect(() => {
+		const filteredData = empCats.filter(
+			(emp) => emp.employeeCategoryId !== deleteId
+		);
+		setEmpCats(filteredData);
+	}, [deleteId]);
 	useEffect(() => {
 		console.log(rowId);
 	}, [rowId]);
@@ -106,16 +114,49 @@ function EmpCategory() {
 	//add new employeee type
 	const onSubmit = async (e: any) => {
 		e.preventDefault();
-		console.log(values);
 
-		if (values.typeId !== '') {
+		if (values.employeeCategoryId !== '') {
 			setLoading(true);
-			const result = await EmployeeCatService.saveEmpCat(values);
-			alert('done');
-			resetForm();
-			setLoading(false);
+			setTimeout(async () => {
+				const result = await EmployeeCatService.saveEmpCat(values);
+				if(result.data){
+					toast.success('New Employee Category is added', {
+						position: 'top-right',
+						autoClose: 5000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+						
+					});
+					resetForm();
+				}
+				else{
+					toast.error('Request cannot completed!', {
+						position: 'top-right',
+						autoClose: 5000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+						
+					});
+				}
+				setLoading(false);
+			}, 1000);
 		} else {
-			alert('Please add a ID');
+			toast.error('Please add an ID', {
+				position: 'top-right',
+				autoClose: 5000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+				
+			});
 		}
 	};
 
@@ -140,7 +181,7 @@ function EmpCategory() {
 				headerName: 'Action',
 				type: 'actions',
 				renderCell: (params: any) => (
-					<EmpCatAction {...{ params, rowId, setRowId }} />
+					<EmpCatAction {...{ params, rowId, setRowId, setDeleteId }} />
 				),
 				width: 200,
 			},
@@ -150,13 +191,16 @@ function EmpCategory() {
 
 	return (
 		<>
-			<h1 className="page-title">Employee Category</h1>
-			<hr className="horizontal-line" />
+			<div className='admin-page-title'>
+				<p>Employee Category</p>
 
-			<div className="admin-panel-flex">
-				<div>
-					<h2 className="text-lg font-bold">All Employee Category</h2>
-					<p className="hint-text">(Double click to edit)</p>
+				<hr className='admin-horizontal-line' />
+			</div>
+
+			<div className='admin-panel-flex'>
+				<div className='admin-table-section'>
+					<h2 className='text-lg font-bold'>All Employee Category</h2>
+					<p className='hint-text'>(Double click to edit)</p>
 
 					{/* {empCats?.map((emp: any, i: number) => (
 						<EmpCatAction
@@ -170,7 +214,9 @@ function EmpCategory() {
 
 					<Box sx={{ width: '1000px', height: '500px' }}>
 						<DataGrid
+							checkboxSelection={true}
 							components={{ Toolbar: GridToolbar }}
+							rowHeight={60}
 							columns={columns}
 							rows={empCats}
 							getRowId={(row) => row.employeeCategoryId}
@@ -182,104 +228,105 @@ function EmpCategory() {
 					</Box>
 				</div>
 
-				<div className="p-4 mt-10 border-2 border-gray-400 rounded-lg w-96">
-					<h2 className="text-lg font-bold">Add New Employee Category</h2>
+				<div className='admin-form-section'>
+					<h2 className='text-lg font-bold'>Add New Employee Category</h2>
 
 					{!loading ? (
-						<form
-							onSubmit={onSubmit}
-							className="mt-5"
-						>
-							<div className="flex items-center">
-								<p>Category Id - {cat_id ? cat_id : ''}</p>
-								<Button
-									variant="outlined"
+						<form onSubmit={onSubmit} className='admin-form'>
+							<div className='generate-id-in-form'>
+								<p className='flex items-center'>
+									Category Id -{' '}
+									{cat_id ? (
+										<>
+											{cat_id}
+											<HiX
+												className='text-xl cursor-pointer hover:text-red-600'
+												onClick={() => setCat_Id('')}
+											/>
+										</>
+									) : (
+										''
+									)}
+								</p>
+								<button
+									type='button'
+									className='rounded-outline-success-btn'
 									onClick={generateVenueID}
 									style={{ marginLeft: '20px' }}
 								>
 									New
-								</Button>
+								</button>
 							</div>
-							<Box className="flex items-center mt-5">
-								<p className="mr-5">Location</p>
-								<Select
-									className="w-44"
-									labelId="demo-simple-select-label"
-									id="demo-simple-select"
+
+							<div>
+								<label className='input-label' htmlFor='location'>
+									Location
+								</label>
+								<select
+									className='tailwind-text-box'
 									value={values.location}
-									name="location"
-									size="small"
-									label="Location"
+									id='location'
+									name='location'
 									onChange={onChange}
 								>
-									<MenuItem
-										value=""
-										disabled
-									>
+									<option disabled value=''>
 										Select Location
-									</MenuItem>
+									</option>
 									{locationData?.map((l: ILocationData, i: number) => {
 										return (
-											<MenuItem
-												key={i}
-												value={l.locationId}
-											>
+											<option key={i} value={l.locationId}>
 												{l.locationName}
-											</MenuItem>
+											</option>
 										);
 									})}
-								</Select>
-							</Box>
-
-							<Box className="flex items-center mt-5">
-								<TextField
-									fullWidth
-									required
-									id="outlined-basic"
-									label="Category"
-									variant="outlined"
-									type="search"
-									name="description"
-									size="small"
+								</select>
+							</div>
+							<div>
+								<label className='input-label' htmlFor='category'>
+									Category
+								</label>
+								<input
+									id='category'
+									type='text'
+									className='tailwind-text-box'
 									onChange={onChange}
 									value={values.description}
+									name='description'
 								/>
-							</Box>
+							</div>
 
-							<Box className="flex items-center mt-5 mb-10">
-								<TextField
-									fullWidth
-									required
-									id="outlined-basic"
-									label="OT Rate"
-									variant="outlined"
-									type="search"
-									name="otRate"
-									size="small"
+							<div>
+								<label className='input-label' htmlFor='otRate'>
+									OT Rate
+								</label>
+								<input
+									id='otRate'
+									type='text'
+									className='tailwind-text-box'
 									onChange={onChange}
 									value={values.otRate}
+									name='otRate'
 								/>
-							</Box>
+							</div>
+
 							<Stack
-								direction="row"
-								justifyContent="flex-end"
-								alignItems="flex-end"
+								direction='row'
+								justifyContent='flex-end'
+								alignItems='flex-end'
 								spacing={2}
+								className='admin-form-buton-stack'
 							>
-								<Button
-									variant="contained"
-									type="reset"
-									color="error"
+								<button
+									className='action-com-model-error-btn'
+									type='reset'
+									color='error'
 									onClick={resetForm}
 								>
 									Reset
-								</Button>
-								<Button
-									variant="contained"
-									type="submit"
-								>
+								</button>
+								<button className='action-com-model-sucess-btn' type='submit'>
 									Submit
-								</Button>
+								</button>
 							</Stack>
 						</form>
 					) : (

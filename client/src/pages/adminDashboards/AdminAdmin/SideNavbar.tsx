@@ -1,6 +1,7 @@
 import React from 'react';
-import { BiUserPin } from 'react-icons/bi';
-import { GrUserSettings, GrUserManager, GrUserWorker } from 'react-icons/gr';
+import { BiCategoryAlt, BiUserPin } from 'react-icons/bi';
+import { HiOutlineUserGroup, HiOutlineOfficeBuilding } from 'react-icons/hi';
+import { RiUserStarLine } from "react-icons/ri";
 import { Link, useLocation } from 'react-router-dom';
 import { RouteName } from '../../../constant/routeNames';
 function SideNavbar() {
@@ -15,14 +16,45 @@ function SideNavbar() {
 						<span
 							className={
 								location.pathname ===
+								`/dashboard/admin/admin${RouteName.Employee}`
+									? 'active-admin-panel-marker'
+									: 'admin-panel-marker'
+							}
+							aria-hidden="true"
+						></span>
+						<Link to={`/dashboard/admin/admin${RouteName.Employee}`}>
+							<p
+								className={
+									location.pathname ===
+									`/dashboard/admin/admin${RouteName.Employee}`
+										? 'admin-sidebar-text-active'
+										: 'admin-sidebar-text'
+								}
+							>
+								<HiOutlineUserGroup className="w-5 h-5" />
+								<span className="ml-4">Employees</span>
+							</p>
+						</Link>
+					</li>
+					<li className="relative px-6 py-3">
+						<span
+							className={
+								location.pathname ===
 								`/dashboard/admin/admin${RouteName.EmployeeType}`
 									? 'active-admin-panel-marker'
-									: 'admin-panel-marke'
+									: 'admin-panel-marker'
 							}
 							aria-hidden="true"
 						></span>
 						<Link to={`/dashboard/admin/admin${RouteName.EmployeeType}`}>
-							<p className="admin-sidebar-text">
+							<p
+								className={
+									location.pathname ===
+									`/dashboard/admin/admin${RouteName.EmployeeType}`
+										? 'admin-sidebar-text-active'
+										: 'admin-sidebar-text'
+								}
+							>
 								<BiUserPin className="w-5 h-5" />
 								<span className="ml-4">Employee Types</span>
 							</p>
@@ -34,13 +66,20 @@ function SideNavbar() {
 								location.pathname ===
 								`/dashboard/admin/admin${RouteName.EmployeeCategory}`
 									? 'active-admin-panel-marker'
-									: 'admin-panel-marke'
+									: 'admin-panel-marker'
 							}
 							aria-hidden="true"
 						></span>
 						<Link to={`/dashboard/admin/admin${RouteName.EmployeeCategory}`}>
-							<p className="admin-sidebar-text">
-								<GrUserSettings className="w-5 h-5" />
+							<p
+								className={
+									location.pathname ===
+									`/dashboard/admin/admin${RouteName.EmployeeCategory}`
+										? 'admin-sidebar-text-active'
+										: 'admin-sidebar-text'
+								}
+							>
+								<BiCategoryAlt className="w-5 h-5" />
 								<span className="ml-4">Employee Category</span>
 							</p>
 						</Link>
@@ -52,13 +91,20 @@ function SideNavbar() {
 								location.pathname ===
 								`/dashboard/admin/admin${RouteName.Designation}`
 									? 'active-admin-panel-marker'
-									: 'admin-panel-marke'
+									: 'admin-panel-marker'
 							}
 							aria-hidden="true"
 						></span>
 						<Link to={`/dashboard/admin/admin${RouteName.Designation}`}>
-							<p className="admin-sidebar-text">
-								<GrUserManager className="w-5 h-5" />
+							<p
+								className={
+									location.pathname ===
+									`/dashboard/admin/admin${RouteName.Designation}`
+										? 'admin-sidebar-text-active'
+										: 'admin-sidebar-text'
+								}
+							>
+								<RiUserStarLine className="w-5 h-5" />
 								<span className="ml-4">Designations</span>
 							</p>
 						</Link>
@@ -70,13 +116,20 @@ function SideNavbar() {
 								location.pathname ===
 								`/dashboard/admin/admin${RouteName.Divisions}`
 									? 'active-admin-panel-marker'
-									: 'admin-panel-marke'
+									: 'admin-panel-marker'
 							}
 							aria-hidden="true"
 						></span>
 						<Link to={`/dashboard/admin/admin${RouteName.Divisions}`}>
-							<p className="admin-sidebar-text">
-								<GrUserWorker className="w-5 h-5" />
+							<p
+								className={
+									location.pathname ===
+									`/dashboard/admin/admin${RouteName.Divisions}`
+										? 'admin-sidebar-text-active'
+										: 'admin-sidebar-text'
+								}
+							>
+								<HiOutlineOfficeBuilding className="w-5 h-5" />
 								<span className="ml-4">Divisions</span>
 							</p>
 						</Link>

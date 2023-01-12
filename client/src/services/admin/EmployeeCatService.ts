@@ -20,7 +20,7 @@ const getEmpCat = (id: any) => {
 	return http.get<any>(`/admin/employeecategory/${id}`);
 };
 
-const saveEmpCat = async (favJSON:any) => {
+const saveEmpCat = async (favJSON: any) => {
 	console.log(favJSON);
 	const response = await axios({
 		method: 'post',
@@ -34,46 +34,47 @@ const saveEmpCat = async (favJSON:any) => {
 
 //get new id
 const getNewEmpCatId = () => {
-    return http.get("/admin/employeecategory/newid");
-  }
-  
+	return http.get('/admin/employeecategory/newid');
+};
 
+//get employee cat by location id
+const getEmpCatByLocationId = (id: any) => {
+	return http.get<any>(`/admin/employeecategory/location/${id}`);
+};
 
-const editEmpCat =async (favJSON:any) => {
+const editEmpCat = async (favJSON: any) => {
 	console.log(favJSON);
-	// const response = await axios({
-	// 	method: 'patch',
-	// 	url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/employeecategory/${favJSON.typeId}`,
-	// 	data: favJSON,
-	// 	headers: { 'Content-Type': 'application/json; charset=utf-8' },
-        
-	// });
+	const response = await axios({
+		method: 'patch',
+		url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/employeecategory/update/${favJSON.employeeCategoryId}`,
+		data: favJSON,
+		headers: { 'Content-Type': 'application/json; charset=utf-8' },
 
-	const response = await axios.patch(process.env.REACT_APP_BACKEND_SERVER + '/admin/employeecategory/' + favJSON.typeId, favJSON, config);
+	});
 
-	// alert("Favourite created --- "+ response);
+
 	return response;
 };
 
-const deleteEmpCat = async (id:string) => {
-    console.log(id);
+const deleteEmpCat = async (id: string) => {
+	console.log(id);
 	const response = await axios({
 		method: 'delete',
-		url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/employeecategory/${id}`,
+		url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/employeecategory/delete/${id}`,
 		headers: { 'Content-Type': 'application/json; charset=utf-8' },
 	});
 	// alert("Favourite created --- "+ response);
 	return response;
-}
+};
 
 const EmployeeCatService = {
 	getAllEmpCategories,
 	getEmpCat,
 	saveEmpCat,
-    editEmpCat,
-    deleteEmpCat,
-    getNewEmpCatId
-
+	editEmpCat,
+	deleteEmpCat,
+	getNewEmpCatId,
+	getEmpCatByLocationId,
 };
 
 export default EmployeeCatService;

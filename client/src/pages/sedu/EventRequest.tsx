@@ -83,7 +83,6 @@ function EventRequest() {
 
     const generateEventId = () => {
         setEventId(generateID('ER'))
-        
     }
 
 
@@ -179,7 +178,7 @@ function EventRequest() {
                             }}
                         /> */}
                         Request ID - {getEventId && getEventId}
-                        <Button variant="outlined" className='!ml-4' onClick={generateEventId} size="large" color='info'>New</Button>
+                        <button type='button' className='rounded-outline-success-btn' onClick={generateEventId} style={{ marginLeft: '20px' }}>New</button>
                     </Box>
 
                     {/* start date */}
