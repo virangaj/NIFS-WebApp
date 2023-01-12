@@ -1,41 +1,44 @@
-package com.nifs.backend.SEDU.Facility;
+package com.nifs.backend.sedu.Facility;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.nifs.backend.sedu.VenueMaster.VenueMaster;
 import jakarta.persistence.*;
+import lombok.*;
+
+import java.util.Date;
+import java.util.Set;
 
 @Entity
-@Table(name="venue_facility")
+@Table(name="venue_facility_master")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Facility {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private int id;
-    @Column(name="facility_id")
-    private String facility_id;
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name = "id", nullable = false)
+//    private Integer id;
 
-    @Column(name = "facility_name")
+    @Id
+    @Column(name="facility_id", nullable = false, length = 10)
+    private String facilityId;
+
+    @Column(name = "facility_name",  nullable = false, length = 50)
     private String name;
 
-    public int getId() {
-        return id;
-    }
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name="date_created")
+    private Date dateCreated;
 
-    public void setId(int id) {
-        this.id = id;
-    }
 
-    public String getFacilityId() {
-        return facility_id;
-    }
 
-    public void setFacilityId(String facilityId) {
-        this.facility_id = facilityId;
-    }
 
-    public String getFacilityName() {
-        return name;
-    }
+//    relationships
+//    @JsonBackReference
+    @ManyToMany(mappedBy = "facilities", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private Set<VenueMaster> venues;
 
-    public void setFacilityName(String facilityName) {
-        this.name = facilityName;
-    }
+
 }
