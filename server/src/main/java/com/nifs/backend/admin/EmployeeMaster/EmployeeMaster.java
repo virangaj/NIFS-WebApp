@@ -7,15 +7,11 @@ import com.nifs.backend.admin.EmployeeCategory.EmployeeCategory;
 import com.nifs.backend.admin.EmployeeDesignation.DesignationMaster;
 import com.nifs.backend.admin.EmployeeType.EmployeeTypeMaster;
 import com.nifs.backend.admin.Locations.Locations;
-import com.nifs.backend.admin.OtherData.District;
-import com.nifs.backend.admin.OtherData.Province;
-import com.nifs.backend.login.EmployeeLogin;
+import com.nifs.backend.admin.OtherData.entity.District;
+import com.nifs.backend.admin.OtherData.entity.Province;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
-
-import java.util.Date;
-import java.util.List;
 
 @Entity
 @Data

@@ -191,7 +191,7 @@ function EmpCategory() {
 
 	return (
 		<>
-			<div className='page-title'>
+			<div className='admin-page-title'>
 				<p>Employee Category</p>
 
 				<hr className='admin-horizontal-line' />

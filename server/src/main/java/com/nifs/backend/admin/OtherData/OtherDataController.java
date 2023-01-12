@@ -1,5 +1,10 @@
 package com.nifs.backend.admin.OtherData;
 
+import com.nifs.backend.admin.OtherData.dto.DistrictDTO;
+import com.nifs.backend.admin.OtherData.dto.ProvinceDTO;
+import com.nifs.backend.admin.OtherData.entity.District;
+import com.nifs.backend.admin.OtherData.entity.Province;
+import com.nifs.backend.admin.OtherData.entity.Religions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -50,5 +55,13 @@ public class OtherDataController {
     }
 
 
+    @GetMapping("/religions")
+    List<Religions> returnAllReligions(){
+        return dataService.returnAllReligions();
+    }
 
+    @PostMapping("/religions")
+    boolean addNewReligions(@RequestBody Religions relData){
+        return dataService.addNewReligions(relData);
+    }
 }

@@ -1,4 +1,4 @@
-package com.nifs.backend.admin.OtherData;
+package com.nifs.backend.admin.OtherData.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,8 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DistrictDTO {
+public class ProvinceDTO {
 
     private int id;
-    private String dName;
+    private String pName;
+
 }

@@ -5,11 +5,11 @@ export function generateID(key: any) {
 	// let k = Math.floor(Math.random() * 25)
 	// var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	const today = new Date();
+	
 	let d = today.getDate() < 10 ? '0' + today.getDate() : today.getDate();
+	let month = today.getMonth() + 1
 	let mo =
-		today.getMonth() + 1 < 10
-			? '0' + today.getMonth() + 1
-			: today.getMonth() + 1;
+		month < 10 ? '0' + month : month;
 	let y =
 		today.getFullYear() < 10 ? '0' + today.getFullYear() : today.getFullYear();
 
@@ -19,9 +19,8 @@ export function generateID(key: any) {
 	let s =
 		today.getSeconds() < 10 ? '0' + today.getSeconds() : today.getSeconds();
 
-	let time = h + '' + min + '' + s;
-	let day = y.toString().substring(2, 4) + '' + mo + '' + d;
+	let time = `${h}${min}${s}`;
+	let day = `${y.toString().substring(2, 4)}${mo}${d}`;
 
 	return day + key.toUpperCase() + time;
 }
-

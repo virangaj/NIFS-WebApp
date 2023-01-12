@@ -14,7 +14,7 @@ public class EmployeeMasterController {
     @Autowired
     private EmployeeMasterService empService;
 
-    //get all employees
+    //get all currently working employees
     @GetMapping
     private List<EmployeeMasterDTO> getAllEmployees() throws HttpMessageNotWritableException {
        try{
@@ -25,6 +25,7 @@ public class EmployeeMasterController {
        }
     }
 
+    //return all employees worked so far
     @GetMapping("/withoutdelete")
     private List<EmployeeMasterDTO> getAllEmployeesWithoutDeleted() throws HttpMessageNotWritableException {
         try{
@@ -35,6 +36,7 @@ public class EmployeeMasterController {
         }
     }
 
+    // return all deleted employees
     @GetMapping("/deleted")
     private List<EmployeeMasterDTO> getAllEmployeeDataCurrentlyNotWorking() throws HttpMessageNotWritableException {
         try{
@@ -43,6 +45,13 @@ public class EmployeeMasterController {
         catch(HttpMessageNotWritableException e){
             return null;
         }
+    }
+
+
+    //get employee by employee id
+    @GetMapping("/{id}")
+    private EmployeeMasterDTO getEmployeeById(@PathVariable int id){
+        return empService.getEmployeeById(id);
     }
 
     @PostMapping

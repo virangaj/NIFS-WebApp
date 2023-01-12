@@ -1,4 +1,4 @@
-package com.nifs.backend.admin.OtherData;
+package com.nifs.backend.admin.OtherData.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.nifs.backend.admin.EmployeeMaster.EmployeeMaster;

@@ -30,8 +30,8 @@ function AllEmployees() {
 			});
 	};
 
-	const allEmployeesWithDeleted = () => {
-		EmployeeService.getAllEmployeeDataWithDeleted()
+	const allEmployeesWithoutDeleted = () => {
+		EmployeeService.getAllEmployeeDataWithoutDeleted()
 			.then((res: any) => {
 				setEmpData(res.data);
 			})
@@ -282,7 +282,7 @@ function AllEmployees() {
                 <button
 					className='action-com-model-sucess-btn !bg-orange-600 border-orange-600'
 					type='submit'
-					onClick={allEmployeesWithDeleted}
+					onClick={allEmployeesWithoutDeleted}
 				>
 					Get all Employees previously worked
 				</button>

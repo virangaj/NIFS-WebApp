@@ -176,7 +176,7 @@ function Division() {
 
 	return (
 		<>
-			<div className='page-title'>
+			<div className='admin-page-title'>
 				<p>Divisions</p>
 
 				<hr className='admin-horizontal-line' />

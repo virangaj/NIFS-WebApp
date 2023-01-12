@@ -1,7 +1,13 @@
 package com.nifs.backend.admin.OtherData;
 
-import com.nifs.backend.admin.Division.DivisionMaster;
-import com.nifs.backend.admin.Division.DivisionMasterDTO;
+import com.nifs.backend.admin.OtherData.dto.DistrictDTO;
+import com.nifs.backend.admin.OtherData.dto.ProvinceDTO;
+import com.nifs.backend.admin.OtherData.entity.District;
+import com.nifs.backend.admin.OtherData.entity.Province;
+import com.nifs.backend.admin.OtherData.entity.Religions;
+import com.nifs.backend.admin.OtherData.repository.DistrictRepository;
+import com.nifs.backend.admin.OtherData.repository.ProvinceRepository;
+import com.nifs.backend.admin.OtherData.repository.ReligionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +23,9 @@ public class OtherDataService {
 
     @Autowired
     private ProvinceRepository provinceRepo;
+
+    @Autowired
+    private ReligionRepository relRepo;
 
 //    return all districts
     public List<DistrictDTO> returnAllDistricts() {
@@ -91,5 +100,19 @@ public class OtherDataService {
             return districtDTO;
         }
         return null;
+    }
+
+    //return all religions
+    public List<Religions> returnAllReligions() {
+        return relRepo.findAll();
+    }
+
+    //save religion
+    public boolean addNewReligions(Religions relData) {
+        if(relRepo.findByName(relData.getName()).isEmpty()){
+            relRepo.save(relData);
+            return true;
+        }
+        return false;
     }
 }

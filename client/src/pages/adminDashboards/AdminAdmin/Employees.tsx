@@ -16,7 +16,7 @@ function Employees() {
 
 	return (
 		<>
-			<div className='page-title'>
+			<div className='admin-page-title'>
 				<p>Employees</p>
 
 				<hr className='admin-horizontal-line' />

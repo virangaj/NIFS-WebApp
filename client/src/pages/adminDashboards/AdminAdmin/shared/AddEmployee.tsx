@@ -3,6 +3,9 @@ import Box from '@mui/material/Box';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
+import { Stack } from '@mui/system';
+import { toast } from 'react-toastify';
+
 import EmployeeCatService from '../../../../services/admin/EmployeeCatService';
 import LocationMasterService from '../../../../services/admin/LocationMasterService';
 import IDesignationData from '../../../../types/DesignationData';
@@ -14,10 +17,8 @@ import ILocationData from '../../../../types/LocationData';
 import EmployeeTypeService from '../../../../services/admin/EmployeeTypeService';
 import DivisionMasterService from '../../../../services/admin/DivisionMasterService';
 import DesignationMasterService from '../../../../services/admin/DesignationMasterService';
-import { Stack } from '@mui/system';
 import CustomeDataPicker from '../../../../components/DataPicker';
 import OtherDataServices from '../../../../services/admin/OtherDataServices';
-import { toast } from 'react-toastify';
 import EmployeeService from '../../../../services/admin/EmployeeService';
 import Ripple from '../../../../components/Ripple';
 
@@ -29,6 +30,7 @@ function AddEmployee() {
 	const [divisionData, setDivisionData] = useState<IDivisionData[]>();
 	const [provinces, setProvinces] = useState<any[]>();
 	const [districts, setDistricts] = useState<any[]>();
+	const [religions, setReligions] = useState<any[]>();
 
 	const [loading, setLoading] = useState(false);
 
@@ -146,6 +148,14 @@ function AddEmployee() {
 		OtherDataServices.getAllProvinces()
 			.then((res: any) => {
 				setProvinces(res.data);
+				// console.log(provinces);
+			})
+			.catch((e: any) => {
+				console.log(e);
+			});
+		OtherDataServices.getAllReligions()
+			.then((res: any) => {
+				setReligions(res.data);
 				// console.log(provinces);
 			})
 			.catch((e: any) => {
@@ -277,7 +287,7 @@ function AddEmployee() {
 			setLoading(true);
 			setTimeout(async () => {
 				const result = await EmployeeService.saveEmployee(empData);
-				if(result.data){
+				if (result.data) {
 					toast.success('New Employee is added', {
 						position: 'top-right',
 						autoClose: 5000,
@@ -286,11 +296,9 @@ function AddEmployee() {
 						pauseOnHover: true,
 						draggable: true,
 						progress: undefined,
-						
 					});
 					// resetForm();
-				}
-				else{
+				} else {
 					toast.error('Request cannot completed!', {
 						position: 'top-right',
 						autoClose: 5000,
@@ -299,7 +307,6 @@ function AddEmployee() {
 						pauseOnHover: true,
 						draggable: true,
 						progress: undefined,
-						
 					});
 					// resetForm();
 				}
@@ -314,7 +321,6 @@ function AddEmployee() {
 				pauseOnHover: true,
 				draggable: true,
 				progress: undefined,
-				
 			});
 		}
 	};
@@ -708,14 +714,25 @@ function AddEmployee() {
 									<label className='input-label' htmlFor='cpReligion'>
 										Religion
 									</label>
-									<input
-										id='cpReligion'
-										type='text'
+									<select
 										className='tailwind-text-box'
+										id='cpReligion'
 										value={empData.cpReligion}
 										name='cpReligion'
 										onChange={onChange}
-									/>
+									>
+										<option disabled value=''>
+											Select Religion
+										</option>
+										{religions?.map((l: any, i: number) => {
+											return (
+												<option key={i} value={l.name}>
+													{l.name}
+												</option>
+											);
+										})}
+									</select>
+									
 								</div>
 							</div>
 						</div>

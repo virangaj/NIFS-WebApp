@@ -174,7 +174,7 @@ function Designation() {
 
 	return (
 		<>
-			<div className='page-title'>
+			<div className='admin-page-title'>
 				<p>Employee Designations</p>
 
 				<hr className='admin-horizontal-line' />

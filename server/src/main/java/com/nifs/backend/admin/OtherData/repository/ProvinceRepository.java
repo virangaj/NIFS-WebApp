@@ -1,5 +1,7 @@
-package com.nifs.backend.admin.OtherData;
+package com.nifs.backend.admin.OtherData.repository;
 
+import com.nifs.backend.admin.OtherData.entity.District;
+import com.nifs.backend.admin.OtherData.entity.Province;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

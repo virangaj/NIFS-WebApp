@@ -1,7 +1,6 @@
 package com.nifs.backend.admin.EmployeeMaster;
 
 
-import jakarta.persistence.Column;
 import lombok.*;
 
 @Data
@@ -19,13 +18,13 @@ public class EmployeeMasterDTO {
     private String dob;
     private String address;
     private  String contactNo;
-    private String PersonalEmail;
-    private String GsuitEmail;
+    private String personalEmail;
+    private String gsuitEmail;
 
     private String nicNo;
-    private String NicIssuedDate;
+    private String nicIssuedDate;
     private String passportNo;
-    private String PassExpireDate;
+    private String passExpireDate;
     private String licenseNo;
     private String licenseIssuedDate;
     private String licenseExpireDate;
@@ -66,7 +65,6 @@ public class EmployeeMasterDTO {
 
     //locations
     private String location;
-
 
 
 }

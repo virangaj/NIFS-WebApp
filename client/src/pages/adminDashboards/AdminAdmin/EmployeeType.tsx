@@ -183,7 +183,7 @@ function EmployeeType() {
 
 	return (
 		<>
-			<div className='page-title'>
+			<div className='admin-page-title'>
 				<p>Employee Types</p>
 
 				<hr className='admin-horizontal-line' />

@@ -8,5 +8,6 @@ spring:
             clientSecret: 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
 
 
+
 server:
   port: 8080

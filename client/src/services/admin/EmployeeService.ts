@@ -8,7 +8,11 @@ const getAllEmployeeData = () => {
 	return http.get<Array<any>>('/admin/employee');
 };
 
-const getAllEmployeeDataWithDeleted = () => {
+const getEmployeeDataById = (id:number) => {
+	return http.get<Array<any>>(`/admin/employee/${id}`);
+};
+
+const getAllEmployeeDataWithoutDeleted = () => {
 	return http.get<Array<any>>('/admin/employee/withoutdelete');
 };
 
@@ -31,8 +35,9 @@ const saveEmployee = async (favJSON: any) => {
 
 const EmployeeService = {
 	getAllEmployeeData,
+	getEmployeeDataById,
     saveEmployee,
-	getAllEmployeeDataWithDeleted,
+	getAllEmployeeDataWithoutDeleted,
 	getAllEmployeeDataCurrentlyNotWorking
    
 };

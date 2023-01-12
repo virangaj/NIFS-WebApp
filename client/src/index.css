@@ -180,6 +180,9 @@ a {
 		@apply px-3 py-1 ml-4 text-sm font-medium tracking-wider text-blue-500 border-2 border-blue-500 rounded-full shadow-sm hover:shadow-lg;
 	}
 	.page-title {
+		@apply p-3 mb-4 text-2xl font-bold bg-white rounded-lg;
+	}
+	.admin-page-title {
 		@apply p-3 mb-4 text-2xl font-bold bg-white rounded-lg shadow-lg;
 	}
 	.admin-horizontal-line {
@@ -205,6 +208,9 @@ a {
 	}
 	.admin-tab-menu {
 		@apply bg-white rounded-lg shadow-lg;
+	}
+	.error-text-message{
+		@apply text-red-500 italic text-sm
 	}
 
 	

@@ -13,6 +13,10 @@ const getAllDistricts = () => {
 	return http.get<Array<any>>('/admin/otherdata/district');
 };
 
+const getAllReligions = () => {
+	return http.get<Array<any>>('/admin/otherdata/religions');
+};
+
 
 const getDistrictByProvinceId = (id: any) => {
 	return http.get<any>(`/admin/otherdata/district/province/${id}`);
@@ -21,6 +25,7 @@ const getDistrictByProvinceId = (id: any) => {
 const OtherDataServices = {
 	getAllProvinces,
     getAllDistricts,
+	getAllReligions,
 	getDistrictByProvinceId,
 };
 
