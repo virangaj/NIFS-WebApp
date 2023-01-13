@@ -30,7 +30,7 @@ function EmpCategory() {
 		empCatId: '',
 		description: '',
 		otRate: '',
-		location: '',
+		locationId: '',
 	});
 
 	useEffect(() => {
@@ -52,7 +52,7 @@ function EmpCategory() {
 			empCatId: cat_id,
 			description: values?.description,
 			otRate: values?.otRate,
-			location: values?.location,
+			locationId: values?.locationId,
 		});
 		// console.log(values)
 	}, [cat_id]);
@@ -84,7 +84,7 @@ function EmpCategory() {
 			empCatId: '',
 			description: '',
 			otRate: '',
-			location: '',
+			locationId: '',
 		});
 		setCat_Id('');
 	};
@@ -253,14 +253,14 @@ function EmpCategory() {
 							</div>
 
 							<div>
-								<label className='input-label' htmlFor='location'>
+								<label className='input-label' htmlFor='locationId'>
 									Location
 								</label>
 								<select
 									className='tailwind-text-box'
 									value={values.location}
 									id='location'
-									name='location'
+									name='locationId'
 									onChange={onChange}
 								>
 									<option disabled value=''>

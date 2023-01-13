@@ -13,8 +13,8 @@ import java.util.List;
 public interface EmployeeCategoryRepository extends JpaRepository<EmployeeCategory, String> {
     @Query("""
             select e from EmployeeCategory e
-            where e.location.locationId = ?1
-            order by e.empCatId, e.description, e.otRate, e.location.locationId""")
+            where e.locationId.locationId = ?1
+            order by e.empCatId, e.description, e.otRate, e.locationId.locationId""")
     List<EmployeeCategory> findCategoryByLocationId(
             String locationId);
     @Transactional

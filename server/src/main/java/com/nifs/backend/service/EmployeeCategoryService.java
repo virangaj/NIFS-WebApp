@@ -27,7 +27,7 @@ public class EmployeeCategoryService implements EmployeeCatServiceInterface{
         List<EmployeeCategory> empCatData = empCatRepo.findAll();
         List<EmpCatDTO> empDTO = new ArrayList<EmpCatDTO>();
         for(EmployeeCategory emp : empCatData){
-            EmpCatDTO dtoSingle = new EmpCatDTO(emp.getEmpCatId(), emp.getDescription(), Float.toString(emp.getOtRate()), emp.getLocation().getLocationName());
+            EmpCatDTO dtoSingle = new EmpCatDTO(emp.getEmpCatId(), emp.getDescription(), Float.toString(emp.getOtRate()), emp.getLocationId().getLocationName());
             empDTO.add(dtoSingle);
         }
         return empDTO;
@@ -41,7 +41,7 @@ public class EmployeeCategoryService implements EmployeeCatServiceInterface{
     public Boolean createNewCategory(EmpCatDTO e)  {
         if(empCatRepo.returnEmployeeCategory(e.getEmpCatId()) == null){
             Date d = new Date();
-            Locations l = locRepo.getLocation(e.getLocation());
+            Locations l = locRepo.getLocation(e.getLocationId());
 
             EmployeeCategory empCat  = new EmployeeCategory(e.getEmpCatId(), e.getDescription(), Float.parseFloat(e.getOtRate()), d, l);
 
@@ -99,7 +99,7 @@ public class EmployeeCategoryService implements EmployeeCatServiceInterface{
             List<EmployeeCategory> empCatData = empCatRepo.findCategoryByLocationId(locId);
             List<EmpCatDTO> empDTO = new ArrayList<EmpCatDTO>();
             for(EmployeeCategory emp : empCatData){
-                EmpCatDTO dtoSingle = new EmpCatDTO(emp.getEmpCatId(), emp.getDescription(), Float.toString(emp.getOtRate()), emp.getLocation().getLocationId());
+                EmpCatDTO dtoSingle = new EmpCatDTO(emp.getEmpCatId(), emp.getDescription(), Float.toString(emp.getOtRate()), emp.getLocationId().getLocationId());
                 empDTO.add(dtoSingle);
             }
             return empDTO;

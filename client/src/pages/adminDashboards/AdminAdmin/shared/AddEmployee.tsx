@@ -422,14 +422,14 @@ function AddEmployee() {
 								</div>
 								<div className='hidden lg:block'></div>
 								<div>
-									<label className='input-label' htmlFor='province'>
+									<label className='input-label' htmlFor='provinceId'>
 										Province
 									</label>
 									<select
 										className='tailwind-text-box'
 										value={empData.provinceId}
 										id='province'
-										name='province'
+										name='provinceId'
 										onChange={onChange}
 									>
 										<option disabled value={0}>
@@ -447,14 +447,14 @@ function AddEmployee() {
 								</div>
 
 								<div>
-									<label className='input-label' htmlFor='district'>
+									<label className='input-label' htmlFor='districtId'>
 										District
 									</label>
 									<select
 										className='tailwind-text-box'
 										value={empData.districtId}
 										id='district'
-										name='district'
+										name='districtId'
 										onChange={onChange}
 									>
 										{empData.provinceId ? (

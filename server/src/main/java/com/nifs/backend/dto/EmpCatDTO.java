@@ -13,7 +13,7 @@ public class EmpCatDTO {
     private String empCatId;
     private String description;
     private String otRate;
-    private String location;
+    private String locationId;
 
 
 }

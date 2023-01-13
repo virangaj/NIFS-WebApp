@@ -45,7 +45,7 @@ public class EmployeeCategory {
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
     @JoinColumn(name = "location_id", referencedColumnName = "location_id", nullable = false)
     @JsonIgnoreProperties("empCategory")
-    private Locations location;
+    private Locations locationId;
 
     //employee
     @OneToMany(mappedBy = "empCatId", cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
@@ -54,11 +54,11 @@ public class EmployeeCategory {
 
     //constructor for create instance
 
-    public EmployeeCategory(String empCatId, String description, float otRate, Date dateCreated, Locations location) {
+    public EmployeeCategory(String empCatId, String description, float otRate, Date dateCreated, Locations locationId) {
         this.empCatId = empCatId;
         this.description = description;
         this.otRate = otRate;
         this.dateCreated = dateCreated;
-        this.location = location;
+        this.locationId = locationId;
     }
 }
