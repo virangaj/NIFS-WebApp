@@ -47,10 +47,10 @@ public class EmployeeMaster {
     private  String contactNo;
 
     @Column(name = "personal_email", length = 50)
-    private String PersonalEmail;
+    private String personalEmail;
 
     @Column(name = "gsuit_email", length = 50)
-    private String GsuitEmail;
+    private String gsuitEmail;
 
     @Column(name = "nic_no", length = 15)
     private String nicNo;
@@ -59,7 +59,7 @@ public class EmployeeMaster {
     @JsonFormat(pattern = "dd/MM/yyyy")
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Column(name = "nic_issued_date")
-    private String NicIssuedDate;
+    private String nicIssuedDate;
 
     @Column(name = "passport_no",length = 50)
     private String passportNo;
@@ -68,7 +68,7 @@ public class EmployeeMaster {
     @Column(name="passport_expire_date")
     @JsonFormat(pattern = "dd/MM/yyyy")
     @DateTimeFormat(pattern = "dd/MM/yyyy")
-    private String PassExpireDate;
+    private String passExpireDate;
 
     @Column(name = "license_no", length = 50)
     private String licenseNo;
@@ -139,14 +139,14 @@ public class EmployeeMaster {
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
     @JoinColumn(name = "district", referencedColumnName = "district_id")
     @JsonIgnoreProperties("employee")
-    private District district;
+    private District districtId;
 
 
     //province
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
     @JoinColumn(name = "province", referencedColumnName = "province_id")
     @JsonIgnoreProperties("employee")
-    private Province province;
+    private Province provinceId;
 
     //employee type
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
@@ -177,9 +177,9 @@ public class EmployeeMaster {
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
     @JoinColumn(name = "location_id", referencedColumnName = "location_id")
     @JsonIgnoreProperties("employee")
-    private Locations location;
+    private Locations locationId;
 
-    public EmployeeMaster(int epfNo, String initials, String firstName, String lastName, String gender, String dob, String address, String contactNo, String personalEmail, String gsuitEmail, String nicNo, String nicIssuedDate, String passportNo, String passExpireDate, String licenseNo, String licenseIssuedDate, String licenseExpireDate, String contactPerson, String cpRelationship, String cpAddress, String cpTelephone, String cpStatus, String cpCivilStatus, String cpReligion, String appointmentDate, String contractStart, String contractEnd, Boolean isDelete, District district, Province province, EmployeeTypeMaster empTypeId, EmployeeCategory empCatId, DesignationMaster designationId, DivisionMaster divisionId, Locations location) {
+    public EmployeeMaster(int epfNo, String initials, String firstName, String lastName, String gender, String dob, String address, String contactNo, String personalEmail, String gsuitEmail, String nicNo, String nicIssuedDate, String passportNo, String passExpireDate, String licenseNo, String licenseIssuedDate, String licenseExpireDate, String contactPerson, String cpRelationship, String cpAddress, String cpTelephone, String cpStatus, String cpCivilStatus, String cpReligion, String appointmentDate, String contractStart, String contractEnd, Boolean isDelete, District districtId, Province provinceId, EmployeeTypeMaster empTypeId, EmployeeCategory empCatId, DesignationMaster designationId, DivisionMaster divisionId, Locations locationId) {
         this.epfNo = epfNo;
         this.initials = initials;
         this.firstName = firstName;
@@ -188,12 +188,12 @@ public class EmployeeMaster {
         this.dob = dob;
         this.address = address;
         this.contactNo = contactNo;
-        PersonalEmail = personalEmail;
-        GsuitEmail = gsuitEmail;
+        this.personalEmail = personalEmail;
+        this.gsuitEmail = gsuitEmail;
         this.nicNo = nicNo;
-        NicIssuedDate = nicIssuedDate;
+        this.nicIssuedDate = nicIssuedDate;
         this.passportNo = passportNo;
-        PassExpireDate = passExpireDate;
+        this.passExpireDate = passExpireDate;
         this.licenseNo = licenseNo;
         this.licenseIssuedDate = licenseIssuedDate;
         this.licenseExpireDate = licenseExpireDate;
@@ -208,13 +208,13 @@ public class EmployeeMaster {
         this.contractStart = contractStart;
         this.contractEnd = contractEnd;
         this.isDelete = isDelete;
-        this.district = district;
-        this.province = province;
+        this.districtId = districtId;
+        this.provinceId = provinceId;
         this.empTypeId = empTypeId;
         this.empCatId = empCatId;
         this.designationId = designationId;
         this.divisionId = divisionId;
-        this.location = location;
+        this.locationId = locationId;
     }
 
 

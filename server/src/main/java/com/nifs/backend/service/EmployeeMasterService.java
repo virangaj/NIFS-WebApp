@@ -40,7 +40,7 @@ public class EmployeeMasterService implements EmployeeMasterServiceInterface{
         List<EmployeeMasterDTO> dto = new ArrayList<>();
         for (EmployeeMaster e : emp) {
             if(!e.getIsDelete()) {
-                EmployeeMasterDTO single = new  EmployeeMasterDTO(e.getEpfNo(), e.getInitials(), e.getFirstName(), e.getLastName(), e.getGender(), e.getDob(), e.getAddress(), e.getContactNo(), e.getPersonalEmail(), e.getGsuitEmail(), e.getNicNo(), e.getNicIssuedDate(), e.getPassportNo(), e.getPassExpireDate(), e.getLicenseNo(), e.getLicenseIssuedDate(), e.getLicenseExpireDate(),e.getContactPerson(), e.getCpRelationship(), e.getCpAddress(), e.getCpTelephone(), e.getCpStatus(), e.getCpCivilStatus(), e.getCpReligion(), e.getAppointmentDate(), e.getContractStart(), e.getContractEnd(), e.getProvince().getProvinceName(), e.getDistrict().getDistrictName(), e.getEmpTypeId().getEmpTypeId(), e.getEmpCatId().getEmpCatId(), e.getDesignationId().getDesignationId(), e.getDivisionId().getDivisionId(), e.getLocation().getLocationId());
+                EmployeeMasterDTO single = new  EmployeeMasterDTO(e.getEpfNo(), e.getInitials(), e.getFirstName(), e.getLastName(), e.getGender(), e.getDob(), e.getAddress(), e.getContactNo(), e.getPersonalEmail(), e.getGsuitEmail(), e.getNicNo(), e.getNicIssuedDate(), e.getPassportNo(), e.getPassExpireDate(), e.getLicenseNo(), e.getLicenseIssuedDate(), e.getLicenseExpireDate(),e.getContactPerson(), e.getCpRelationship(), e.getCpAddress(), e.getCpTelephone(), e.getCpStatus(), e.getCpCivilStatus(), e.getCpReligion(), e.getAppointmentDate(), e.getContractStart(), e.getContractEnd(), e.getProvinceId().getProvinceName(), e.getDistrictId().getDistrictName(), e.getEmpTypeId().getEmpTypeId(), e.getEmpCatId().getEmpCatId(), e.getDesignationId().getDesignationId(), e.getDivisionId().getDivisionId(), e.getLocationId().getLocationId());
                 dto.add(single);
             }
         }
@@ -53,7 +53,7 @@ public class EmployeeMasterService implements EmployeeMasterServiceInterface{
         List<EmployeeMaster> emp = empRepo.findAll();
         List<EmployeeMasterDTO> dto = new ArrayList<>();
         for (EmployeeMaster e : emp) {
-            EmployeeMasterDTO single = new  EmployeeMasterDTO(e.getEpfNo(), e.getInitials(), e.getFirstName(), e.getLastName(), e.getGender(), e.getDob(), e.getAddress(), e.getContactNo(), e.getPersonalEmail(), e.getGsuitEmail(), e.getNicNo(), e.getNicIssuedDate(), e.getPassportNo(), e.getPassExpireDate(), e.getLicenseNo(), e.getLicenseIssuedDate(), e.getLicenseExpireDate(),e.getContactPerson(), e.getCpRelationship(), e.getCpAddress(), e.getCpTelephone(), e.getCpStatus(), e.getCpCivilStatus(), e.getCpReligion(), e.getAppointmentDate(), e.getContractStart(), e.getContractEnd(), e.getProvince().getProvinceName(), e.getDistrict().getDistrictName(), e.getEmpTypeId().getEmpTypeId(), e.getEmpCatId().getEmpCatId(), e.getDesignationId().getDesignationId(), e.getDivisionId().getDivisionId(), e.getLocation().getLocationId());
+            EmployeeMasterDTO single = new  EmployeeMasterDTO(e.getEpfNo(), e.getInitials(), e.getFirstName(), e.getLastName(), e.getGender(), e.getDob(), e.getAddress(), e.getContactNo(), e.getPersonalEmail(), e.getGsuitEmail(), e.getNicNo(), e.getNicIssuedDate(), e.getPassportNo(), e.getPassExpireDate(), e.getLicenseNo(), e.getLicenseIssuedDate(), e.getLicenseExpireDate(),e.getContactPerson(), e.getCpRelationship(), e.getCpAddress(), e.getCpTelephone(), e.getCpStatus(), e.getCpCivilStatus(), e.getCpReligion(), e.getAppointmentDate(), e.getContractStart(), e.getContractEnd(), e.getProvinceId().getProvinceName(), e.getDistrictId().getDistrictName(), e.getEmpTypeId().getEmpTypeId(), e.getEmpCatId().getEmpCatId(), e.getDesignationId().getDesignationId(), e.getDivisionId().getDivisionId(), e.getLocationId().getLocationId());
             dto.add(single);
         }
         return dto;
@@ -64,7 +64,7 @@ public class EmployeeMasterService implements EmployeeMasterServiceInterface{
         List<EmployeeMasterDTO> dto = new ArrayList<>();
         for (EmployeeMaster e : emp) {
             if(e.getIsDelete()) {
-                EmployeeMasterDTO single = new  EmployeeMasterDTO(e.getEpfNo(), e.getInitials(), e.getFirstName(), e.getLastName(), e.getGender(), e.getDob(), e.getAddress(), e.getContactNo(), e.getPersonalEmail(), e.getGsuitEmail(), e.getNicNo(), e.getNicIssuedDate(), e.getPassportNo(), e.getPassExpireDate(), e.getLicenseNo(), e.getLicenseIssuedDate(), e.getLicenseExpireDate(),e.getContactPerson(), e.getCpRelationship(), e.getCpAddress(), e.getCpTelephone(), e.getCpStatus(), e.getCpCivilStatus(), e.getCpReligion(), e.getAppointmentDate(), e.getContractStart(), e.getContractEnd(), e.getProvince().getProvinceName(), e.getDistrict().getDistrictName(), e.getEmpTypeId().getEmpTypeId(), e.getEmpCatId().getEmpCatId(), e.getDesignationId().getDesignationId(), e.getDivisionId().getDivisionId(), e.getLocation().getLocationId());
+                EmployeeMasterDTO single = new  EmployeeMasterDTO(e.getEpfNo(), e.getInitials(), e.getFirstName(), e.getLastName(), e.getGender(), e.getDob(), e.getAddress(), e.getContactNo(), e.getPersonalEmail(), e.getGsuitEmail(), e.getNicNo(), e.getNicIssuedDate(), e.getPassportNo(), e.getPassExpireDate(), e.getLicenseNo(), e.getLicenseIssuedDate(), e.getLicenseExpireDate(),e.getContactPerson(), e.getCpRelationship(), e.getCpAddress(), e.getCpTelephone(), e.getCpStatus(), e.getCpCivilStatus(), e.getCpReligion(), e.getAppointmentDate(), e.getContractStart(), e.getContractEnd(), e.getProvinceId().getProvinceName(), e.getDistrictId().getDistrictName(), e.getEmpTypeId().getEmpTypeId(), e.getEmpCatId().getEmpCatId(), e.getDesignationId().getDesignationId(), e.getDivisionId().getDivisionId(), e.getLocationId().getLocationId());
                 dto.add(single);
             }
         }
@@ -76,19 +76,19 @@ public class EmployeeMasterService implements EmployeeMasterServiceInterface{
         if (empRepo.returnEmployeeById(e.getEpfNo()) == null) {
 
             //get designation
-            DesignationMaster d = desRepo.returnDesignation(e.getDesignation());
+            DesignationMaster d = desRepo.returnDesignation(e.getDesignationId());
             //get emp category
-            EmployeeCategory empCat = catRepo.returnEmployeeCategory(e.getEmpCategory());
+            EmployeeCategory empCat = catRepo.returnEmployeeCategory(e.getEmpCatId());
             //get emp division
-            DivisionMaster divMaster = divRepo.returnDivision(e.getDivision());
+            DivisionMaster divMaster = divRepo.returnDivision(e.getDivisionId());
             //get emp type
-            EmployeeTypeMaster empType = typeRepo.returnType(e.getEmpType());
+            EmployeeTypeMaster empType = typeRepo.returnType(e.getEmpTypeId());
             //get location
-            Locations locData = locRepo.getLocation(e.getLocation());
+            Locations locData = locRepo.getLocation(e.getLocationId());
             //get district
-            District dData = disRepo.returnDistrictById(Integer.parseInt(e.getDistrict()));
+            District dData = disRepo.returnDistrictById(Integer.parseInt(e.getDistrictId()));
             //get province
-            Province province = proRepo.findProvinceById(Integer.parseInt(e.getProvince()));
+            Province province = proRepo.findProvinceById(Integer.parseInt(e.getProvinceId()));
 
 //            EmployeeMaster employee = new EmployeeMaster(e.getEpfNo(), e.getInitials(), e.getFirstName(), e.getLastName(), e.getGender(), e.getContactNo(), e.getPersonalEmail(), e.getGsuitEmail(), e.getNicNo(), e.getNicIssuedDate(), e.getPassportNo(), e.getPassExpireDate(), e.getLicenseNo(), e.getLicenseIssuedDate(), e.getLicenseExpireDate(), e.getContactPerson(), e.getCpRelationship(), e.getCpAddress(), e.getCpTelephone(), e.getCpStatus(), e.getCpCivilStatus(), e.getCpReligion(), e.getAppointmentDate(), e.getContractStart(), e.getContractEnd(), dData, province, empType, empCat,d, divMaster, locData);
             EmployeeMaster employeeMaster = new EmployeeMaster(e.getEpfNo(), e.getInitials(), e.getFirstName(), e.getLastName(), e.getGender(), e.getDob(), e.getAddress(), e.getContactNo(), e.getPersonalEmail(), e.getGsuitEmail(), e.getNicNo(), e.getNicIssuedDate(), e.getPassportNo(), e.getPassExpireDate(), e.getLicenseNo(), e.getLicenseIssuedDate(), e.getLicenseExpireDate(),e.getContactPerson(), e.getCpRelationship(), e.getCpAddress(), e.getCpTelephone(), e.getCpStatus(), e.getCpCivilStatus(), e.getCpReligion(), e.getAppointmentDate(), e.getContractStart(), e.getContractEnd(), false, dData, province, empType,empCat,d,divMaster,locData);
@@ -124,7 +124,7 @@ public class EmployeeMasterService implements EmployeeMasterServiceInterface{
         if(e != null){
 
 //            EmployeeMasterDTO empDto = new EmployeeMasterDTO(empData.getEpfNo(), empData.getEmpType().getTypeId(), empData.getEmpCategory().getEmployeeCategoryId(), empData.getDesignation().getId(), empData.getDivision().getDivisionId(), empData.getLocation().getLocationId());
-            return new EmployeeMasterDTO(e.getEpfNo(), e.getInitials(), e.getFirstName(), e.getLastName(), e.getGender(), e.getDob(), e.getAddress(), e.getContactNo(), e.getPersonalEmail(), e.getGsuitEmail(), e.getNicNo(), e.getNicIssuedDate(), e.getPassportNo(), e.getPassExpireDate(), e.getLicenseNo(), e.getLicenseIssuedDate(), e.getLicenseExpireDate(),e.getContactPerson(), e.getCpRelationship(), e.getCpAddress(), e.getCpTelephone(), e.getCpStatus(), e.getCpCivilStatus(), e.getCpReligion(), e.getAppointmentDate(), e.getContractStart(), e.getContractEnd(), e.getProvince().getProvinceName(), e.getDistrict().getDistrictName(), e.getEmpTypeId().getEmpTypeId(), e.getEmpCatId().getEmpCatId(), e.getDesignationId().getDesignationId(), e.getDivisionId().getDivisionId(), e.getLocation().getLocationId());
+            return new EmployeeMasterDTO(e.getEpfNo(), e.getInitials(), e.getFirstName(), e.getLastName(), e.getGender(), e.getDob(), e.getAddress(), e.getContactNo(), e.getPersonalEmail(), e.getGsuitEmail(), e.getNicNo(), e.getNicIssuedDate(), e.getPassportNo(), e.getPassExpireDate(), e.getLicenseNo(), e.getLicenseIssuedDate(), e.getLicenseExpireDate(),e.getContactPerson(), e.getCpRelationship(), e.getCpAddress(), e.getCpTelephone(), e.getCpStatus(), e.getCpCivilStatus(), e.getCpReligion(), e.getAppointmentDate(), e.getContractStart(), e.getContractEnd(), e.getProvinceId().getProvinceName(), e.getDistrictId().getDistrictName(), e.getEmpTypeId().getEmpTypeId(), e.getEmpCatId().getEmpCatId(), e.getDesignationId().getDesignationId(), e.getDivisionId().getDivisionId(), e.getLocationId().getLocationId());
         }
         return null;
     }

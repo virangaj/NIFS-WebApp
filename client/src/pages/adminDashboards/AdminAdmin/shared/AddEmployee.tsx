@@ -53,8 +53,8 @@ function AddEmployee() {
 		gender: '',
 		dob: '',
 		address: '',
-		district: 0,
-		province: 0,
+		districtId: 0,
+		provinceId: 0,
 		contactNo: '',
 		personalEmail: '',
 		gsuitEmail: '',
@@ -75,7 +75,7 @@ function AddEmployee() {
 		appointmentDate: '',
 		contractStart: '',
 		contractEnd: '',
-		location: '',
+		locationId: '',
 		empTypeId: '',
 		empCatId: '',
 		designationId: '',
@@ -95,8 +95,8 @@ function AddEmployee() {
 			gender: empData?.gender,
 			dob: birthDate ? birthDate : '',
 			address: empData?.address,
-			district: empData?.district,
-			province: empData?.province,
+			districtId: empData?.districtId,
+			provinceId: empData?.provinceId,
 			contactNo: empData?.contactNo,
 			personalEmail: empData?.personalEmail,
 			gsuitEmail: empData?.gsuitEmail,
@@ -117,7 +117,7 @@ function AddEmployee() {
 			appointmentDate: appDate ? appDate : '',
 			contractStart: conStartDate ? conStartDate : '',
 			contractEnd: conEndDate ? conEndDate : '',
-			location: empData?.location,
+			locationId: empData?.locationId,
 			empTypeId: empData?.empTypeId,
 			empCatId: empData?.empCatId,
 			designationId: empData?.designationId,
@@ -165,16 +165,16 @@ function AddEmployee() {
 
 	// get other data on location selected
 	useEffect(() => {
-		retreiveOtherEmployeeData(empData?.location);
-	}, [empData?.location]);
+		retreiveOtherEmployeeData(empData?.locationId);
+	}, [empData?.locationId]);
 
 	useEffect(() => {
-		retrieveDistricts(empData?.province);
+		retrieveDistricts(empData?.provinceId);
 		// console.log(empData?.province)
-	}, [empData?.province]);
+	}, [empData?.provinceId]);
 
 	const retrieveDistricts = (id: number) => {
-		if (empData?.province) {
+		if (empData?.provinceId) {
 			OtherDataServices.getDistrictByProvinceId(id)
 				.then((res: any) => {
 					setDistricts(res.data);
@@ -187,7 +187,7 @@ function AddEmployee() {
 	};
 
 	const retreiveOtherEmployeeData = (id: string) => {
-		if (empData?.location) {
+		if (empData?.locationId) {
 			EmployeeCatService.getEmpCatByLocationId(id)
 				.then((res: any) => {
 					setEmployeeCatData(res.data);
@@ -242,8 +242,8 @@ function AddEmployee() {
 			gender: '',
 			dob: '',
 			address: '',
-			district: 0,
-			province: 0,
+			districtId: 0,
+			provinceId: 0,
 			contactNo: '',
 			personalEmail: '',
 			gsuitEmail: '',
@@ -264,7 +264,7 @@ function AddEmployee() {
 			appointmentDate: '',
 			contractStart: '',
 			contractEnd: '',
-			location: '',
+			locationId: '',
 			empTypeId: '',
 			empCatId: '',
 			designationId: '',
@@ -427,7 +427,7 @@ function AddEmployee() {
 									</label>
 									<select
 										className='tailwind-text-box'
-										value={empData.province}
+										value={empData.provinceId}
 										id='province'
 										name='province'
 										onChange={onChange}
@@ -438,7 +438,7 @@ function AddEmployee() {
 
 										{provinces?.map((p: any, i: number) => {
 											return (
-												<option key={i} value={p.id}>
+												<option key={i} value={p.provinceId}>
 													{p.pname} Province
 												</option>
 											);
@@ -452,12 +452,12 @@ function AddEmployee() {
 									</label>
 									<select
 										className='tailwind-text-box'
-										value={empData.district}
+										value={empData.districtId}
 										id='district'
 										name='district'
 										onChange={onChange}
 									>
-										{empData.province ? (
+										{empData.provinceId ? (
 											<option disabled value={0}>
 												Select District
 											</option>
@@ -468,7 +468,7 @@ function AddEmployee() {
 										)}
 										{districts?.map((d: any, i: number) => {
 											return (
-												<option key={i} value={d.id}>
+												<option key={i} value={d.districtId}>
 													{d.dname}
 												</option>
 											);
@@ -741,14 +741,14 @@ function AddEmployee() {
 
 							<div className='employee-form-layout'>
 								<div>
-									<label className='input-label' htmlFor='location'>
+									<label className='input-label' htmlFor='locationId'>
 										Location
 									</label>
 									<select
 										className='tailwind-text-box'
-										value={empData.location}
+										value={empData.locationId}
 										id='location'
-										name='location'
+										name='locationId'
 										onChange={onChange}
 									>
 										<option disabled value=''>
@@ -765,17 +765,17 @@ function AddEmployee() {
 								</div>
 
 								<div>
-									<label className='input-label' htmlFor='empType'>
+									<label className='input-label' htmlFor='empTypeId'>
 										Employee Type
 									</label>
 									<select
 										className='tailwind-text-box'
 										value={empData.empTypeId}
 										id='empType'
-										name='empType'
+										name='empTypeId'
 										onChange={onChange}
 									>
-										{empData.location ? (
+										{empData.locationId ? (
 											<option disabled value=''>
 												Select Employee Type
 											</option>
@@ -794,17 +794,17 @@ function AddEmployee() {
 									</select>
 								</div>
 								<div>
-									<label className='input-label' htmlFor='empCategory'>
+									<label className='input-label' htmlFor='empCatId'>
 										Employee Category
 									</label>
 									<select
 										className='tailwind-text-box'
 										value={empData.empCatId}
 										id='empCategory'
-										name='empCategory'
+										name='empCatId'
 										onChange={onChange}
 									>
-										{empData.location ? (
+										{empData.locationId ? (
 											<option disabled value=''>
 												Select Employee Category
 											</option>
@@ -824,17 +824,17 @@ function AddEmployee() {
 								</div>
 
 								<div>
-									<label className='input-label' htmlFor='designation'>
+									<label className='input-label' htmlFor='designationId'>
 										Designation
 									</label>
 									<select
 										className='tailwind-text-box'
 										value={empData.designationId}
 										id='designation'
-										name='designation'
+										name='designationId'
 										onChange={onChange}
 									>
-										{empData.location ? (
+										{empData.locationId ? (
 											<option disabled value=''>
 												Select Designation
 											</option>
@@ -854,17 +854,17 @@ function AddEmployee() {
 								</div>
 
 								<div>
-									<label className='input-label' htmlFor='division'>
+									<label className='input-label' htmlFor='divisionId'>
 										Division
 									</label>
 									<select
 										className='tailwind-text-box'
 										value={empData.divisionId}
 										id='division'
-										name='division'
+										name='divisionId'
 										onChange={onChange}
 									>
-										{empData.location ? (
+										{empData.locationId ? (
 											<option disabled value=''>
 												Select Division
 											</option>

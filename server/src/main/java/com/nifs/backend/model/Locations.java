@@ -1,11 +1,6 @@
 package com.nifs.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.nifs.backend.model.DivisionMaster;
-import com.nifs.backend.model.EmployeeCategory;
-import com.nifs.backend.model.DesignationMaster;
-import com.nifs.backend.model.EmployeeMaster;
-import com.nifs.backend.model.EmployeeTypeMaster;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -72,7 +67,7 @@ public class Locations {
     private List<EmployeeTypeMaster> empType;
 
     //employee
-    @OneToMany(mappedBy = "location", cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "locationId", cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JsonIgnoreProperties("location")
     private List<EmployeeMaster> employee;
 

@@ -30,7 +30,7 @@ public class District {
     @JsonIgnoreProperties("districts")
     private Province province;
 
-    @OneToMany(mappedBy = "district", cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "districtId", cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JsonIgnoreProperties("district")
     private List<EmployeeMaster> employee;
 

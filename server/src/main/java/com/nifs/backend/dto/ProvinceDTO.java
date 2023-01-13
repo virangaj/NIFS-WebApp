@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ProvinceDTO {
 
-    private int id;
+    private int provinceId;
     private String pName;
 
 }

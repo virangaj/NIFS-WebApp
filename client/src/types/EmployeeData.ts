@@ -6,8 +6,8 @@ export default interface IEmployeeData {
 	gender: string | any;
 	dob: string | any;
 	address: string | any;
-	district: number;
-	province: number;
+	districtId: number;
+	provinceId: number;
 	contactNo: string | any;
 	personalEmail: string | any;
 	gsuitEmail: string | any;
@@ -28,7 +28,7 @@ export default interface IEmployeeData {
 	appointmentDate: string | any;
 	contractStart: string | any;
 	contractEnd: string | any;
-	location: string | any;
+	locationId: string | any;
 	empTypeId: string | any;
 	empCatId: string | any;
 	designationId: string | any;

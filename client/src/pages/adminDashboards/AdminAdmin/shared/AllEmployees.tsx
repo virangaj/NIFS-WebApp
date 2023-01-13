@@ -40,7 +40,7 @@ function AllEmployees() {
 			});
 	};
 
-    const getAllEmployeeDataCurrentlyNotWorking = () => {
+	const getAllEmployeeDataCurrentlyNotWorking = () => {
 		EmployeeService.getAllEmployeeDataCurrentlyNotWorking()
 			.then((res: any) => {
 				setEmpData(res.data);
@@ -90,15 +90,15 @@ function AllEmployees() {
 				editable: true,
 			},
 			{
-				field: 'district',
+				field: 'districtId',
 				headerName: 'District',
 				width: 100,
 				editable: true,
 			},
 			{
-				field: 'province',
+				field: 'provinceId',
 				headerName: 'Province',
-				width: 100,
+				width: 150,
 				editable: true,
 			},
 			{
@@ -120,31 +120,31 @@ function AllEmployees() {
 				editable: true,
 			},
 			{
-				field: 'empType',
+				field: 'empTypeId',
 				headerName: 'Employee Type',
 				width: 200,
 				editable: true,
 			},
 			{
-				field: 'empCategory',
+				field: 'empCatId',
 				headerName: 'Employee Category',
 				width: 200,
 				editable: true,
 			},
 			{
-				field: 'division',
+				field: 'divisionId',
 				headerName: 'Division',
 				width: 200,
 				editable: true,
 			},
 			{
-				field: 'designation',
+				field: 'designationId',
 				headerName: 'Designation',
 				width: 200,
 				editable: true,
 			},
 			{
-				field: 'location',
+				field: 'locationId',
 				headerName: 'Location',
 				width: 200,
 				editable: true,
@@ -271,23 +271,23 @@ function AllEmployees() {
 		<div>
 			<div className='flex items-center mb-6'>
 				<h2 className='text-xl font-bold'>All Employee Details</h2>
-                <button
+				<button
 					className='action-com-model-sucess-btn'
 					type='submit'
 					onClick={retreiveEmployees}
 				>
 					Get only current Employees
 				</button>
-                
-                <button
+
+				<button
 					className='action-com-model-sucess-btn !bg-orange-600 border-orange-600'
 					type='submit'
 					onClick={allEmployeesWithoutDeleted}
 				>
 					Get all Employees previously worked
 				</button>
-               
-                <button
+
+				<button
 					className='action-com-model-error-btn'
 					type='submit'
 					onClick={getAllEmployeeDataCurrentlyNotWorking}
