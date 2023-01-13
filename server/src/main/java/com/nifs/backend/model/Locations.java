@@ -51,7 +51,7 @@ public class Locations {
     private List<DesignationMaster> designations;
 
     //division
-    @OneToMany(mappedBy = "location", cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "locationId", cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JsonIgnoreProperties("location")
     private List<DivisionMaster> divisions;
 

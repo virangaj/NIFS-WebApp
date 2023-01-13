@@ -23,7 +23,7 @@ function Division() {
 	const [values, setValues] = useState<any>({
 		divisionId: '',
 		name: '',
-		location: '',
+		locationId: '',
 	});
 	useEffect(() => {
 		const filteredData = divisionData?.filter(
@@ -42,7 +42,7 @@ function Division() {
 		setValues({
 			divisionId: d_id,
 			name: values?.name,
-			location: values?.location,
+			locationId: values?.locationId,
 		});
 		// console.log(values)
 	}, [d_id]);
@@ -73,7 +73,7 @@ function Division() {
 		setValues({
 			divisionId: '',
 			name: '',
-			location: '',
+			locationId: '',
 		});
 		setD_Id('');
 	};
@@ -103,7 +103,7 @@ function Division() {
 			setLoading(true);
 			setTimeout(async () => {
 				const result = await DivisionMasterService.saveDivision(values);
-				if(result.data){
+				if (result.data) {
 					toast.success('New Division is added', {
 						position: 'top-right',
 						autoClose: 5000,
@@ -112,12 +112,10 @@ function Division() {
 						pauseOnHover: true,
 						draggable: true,
 						progress: undefined,
-					
 					});
-				
+
 					resetForm();
-				}
-				else{
+				} else {
 					toast.error('Request cannot completed!', {
 						position: 'top-right',
 						autoClose: 5000,
@@ -126,7 +124,6 @@ function Division() {
 						pauseOnHover: true,
 						draggable: true,
 						progress: undefined,
-					
 					});
 				}
 				setLoading(false);
@@ -141,7 +138,6 @@ function Division() {
 				pauseOnHover: true,
 				draggable: true,
 				progress: undefined,
-			
 			});
 		}
 	};
@@ -234,14 +230,14 @@ function Division() {
 								</button>
 							</div>
 							<div>
-								<label className='input-label' htmlFor='location'>
+								<label className='input-label' htmlFor='locationId'>
 									Location
 								</label>
 								<select
 									className='tailwind-text-box'
 									value={values.location}
 									id='location'
-									name='location'
+									name='locationId'
 									onChange={onChange}
 								>
 									<option disabled value=''>

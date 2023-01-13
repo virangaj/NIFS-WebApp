@@ -31,7 +31,7 @@ public class DivisionMasterService implements DivisionMasterServiceInterface{
         List<DivisionMaster> divData = divMasterRepo.findAll();
         List<DivisionMasterDTO> divDTO = new ArrayList<>();
         for(DivisionMaster d : divData){
-            DivisionMasterDTO dto = new DivisionMasterDTO(d.getDivisionId(), d.getName(), d.getLocation().getLocationName());
+            DivisionMasterDTO dto = new DivisionMasterDTO(d.getDivisionId(), d.getName(), d.getLocationId().getLocationName());
             divDTO.add(dto);
         }
         return divDTO;
@@ -43,7 +43,7 @@ public class DivisionMasterService implements DivisionMasterServiceInterface{
         if (divMasterRepo.returnDivision(d.getDivisionId()) == null) {
 
             Date date = new Date();
-            Locations l = locRepo.getLocation(d.getLocation());
+            Locations l = locRepo.getLocation(d.getLocationId());
             DivisionMaster dm = new DivisionMaster(d.getDivisionId(), d.getName(), date, l);
             divMasterRepo.save(dm);
             return true;
@@ -107,7 +107,7 @@ public class DivisionMasterService implements DivisionMasterServiceInterface{
             List<DivisionMaster> dm =  divMasterRepo.findDivisionByLocationId(locID);
             List<DivisionMasterDTO> dDTO = new ArrayList<DivisionMasterDTO>();
             for(DivisionMaster d : dm){
-                DivisionMasterDTO dDTOSingle = new DivisionMasterDTO(d.getDivisionId(), d.getName(), d.getLocation().getLocationId());
+                DivisionMasterDTO dDTOSingle = new DivisionMasterDTO(d.getDivisionId(), d.getName(), d.getLocationId().getLocationId());
                 dDTO.add(dDTOSingle);
             }
             return dDTO;
@@ -119,7 +119,7 @@ public class DivisionMasterService implements DivisionMasterServiceInterface{
     public DivisionMasterDTO getDivisionById(String id) {
         DivisionMaster d = divMasterRepo.returnDivision(id);
         if(d != null){
-            return new DivisionMasterDTO(d.getDivisionId(), d.getName(), d.getLocation().getLocationId());
+            return new DivisionMasterDTO(d.getDivisionId(), d.getName(), d.getLocationId().getLocationId());
         }
         return null;
     }
