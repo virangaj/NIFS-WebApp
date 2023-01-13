@@ -5,7 +5,8 @@ spring:
         registration:
           google:
             clientId: 1074743985698-djimta8ltkrou35vq0hmtk1sqh3cv4if.apps.googleusercontent.com
-            clientSecret: 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
+            redirectUri: http://localhost:3000/oauth2/callback
+#            clientSecret: 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
 
 
 
