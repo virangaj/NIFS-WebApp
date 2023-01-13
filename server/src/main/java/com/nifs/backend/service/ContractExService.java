@@ -1,4 +1,4 @@
 package com.nifs.backend.service;
 
-public class ContractExService {
+public class ContractExService implements ContractExServiceInterface {
 }

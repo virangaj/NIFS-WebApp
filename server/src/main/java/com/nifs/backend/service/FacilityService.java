@@ -10,11 +10,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class FacilityService {
+public class FacilityService implements FacilityServiceInterface{
 
     @Autowired
     private FacilityRepository facRepo;
 
+    //create facility
     public String createFacility(Facility facData){
         if(facRepo.returnFacility(facData.getFacilityId()) == null){
             Date d = new Date();
@@ -27,11 +28,12 @@ public class FacilityService {
         }
     }
 
+    //get all facilities
     public List<Facility> getAll() {
         return facRepo.findAll();
     }
 
-
+    //return new facility id
     public String returnNewFacilityId() {
         String lastId = facRepo.returnLastId();
         String idText = lastId.replaceAll("[^A-Za-z]", "");
@@ -41,7 +43,6 @@ public class FacilityService {
         return idText + idNum;
     }
 //    get facility by id
-
     public Optional<Facility> returnFacility(String facilityId) {
         return facRepo.findById(facilityId);
     }

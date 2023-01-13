@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class EmployeeMasterService {
+public class EmployeeMasterService implements EmployeeMasterServiceInterface{
 
     @Autowired
     private EmployeeMasterRepository empRepo;
@@ -33,6 +33,8 @@ public class EmployeeMasterService {
     private DistrictRepository disRepo;
     @Autowired
     private ProvinceRepository proRepo;
+
+    //get all employees
     public List<EmployeeMasterDTO> getAllEmployees() {
         List<EmployeeMaster> emp = empRepo.findAll();
         List<EmployeeMasterDTO> dto = new ArrayList<>();
@@ -46,6 +48,7 @@ public class EmployeeMasterService {
     }
 
 
+    //get all employees without delete
     public List<EmployeeMasterDTO> getAllEmployeesWithoutDeleted() {
         List<EmployeeMaster> emp = empRepo.findAll();
         List<EmployeeMasterDTO> dto = new ArrayList<>();
@@ -55,6 +58,7 @@ public class EmployeeMasterService {
         }
         return dto;
     }
+    //get All Employee Data Currently Not Working
     public List<EmployeeMasterDTO> getAllEmployeeDataCurrentlyNotWorking() {
         List<EmployeeMaster> emp = empRepo.findAll();
         List<EmployeeMasterDTO> dto = new ArrayList<>();
@@ -67,6 +71,7 @@ public class EmployeeMasterService {
         return dto;
     }
 
+    //add employee
     public Boolean addEmployee(EmployeeMasterDTO e) {
         if (empRepo.returnEmployeeById(e.getEpfNo()) == null) {
 
@@ -95,6 +100,7 @@ public class EmployeeMasterService {
         return false;
     }
 
+    //delete employee -> update isDelete
     public Boolean deleteEmployee(int id) {
         if (empRepo.returnEmployeeById(id) != null) {
             empRepo.updateIsDelete(true, id);
@@ -103,6 +109,7 @@ public class EmployeeMasterService {
         return false;
     }
 
+    //remove employee from database
     public Boolean hardDeleteEmployee(int id) {
         if (empRepo.returnEmployeeById(id) != null) {
             empRepo.deleteEmployee(id);

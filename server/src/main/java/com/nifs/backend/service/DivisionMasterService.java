@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class DivisionMasterService {
+public class DivisionMasterService implements DivisionMasterServiceInterface{
 
     @Autowired
     private DivisionMasterRepository divMasterRepo;
@@ -62,7 +62,7 @@ public class DivisionMasterService {
             System.out.println("division "+e.getDivision().getDivisionId());
         }
         if (divisionMaster != null) {
-           // divMasterRepo.deleteById(divisionMaster.getDivisionId());
+            divMasterRepo.deleteById(divisionMaster.getDivisionId());
             return true;
         } else {
             return false;

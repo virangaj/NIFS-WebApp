@@ -11,7 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class LocationService {
+public class LocationService implements LocationServiceInterface {
 
     @Autowired
     private LocationRepository locRepo;

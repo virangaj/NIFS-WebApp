@@ -1,7 +1,7 @@
 package com.nifs.backend.controller;
 
 import com.nifs.backend.dto.EmployeeTypeDTO;
-import com.nifs.backend.service.EmployeeTypeService;
+import com.nifs.backend.service.EmployeeTypeServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +14,7 @@ import java.util.List;
 public class EmployeeTypeController {
 
     @Autowired
-    private EmployeeTypeService empTypeService;
+    private EmployeeTypeServiceInterface empTypeService;
 
 
 //    get all employee types
@@ -43,7 +43,6 @@ public class EmployeeTypeController {
 
 
 //    update employee Type
-
     @PatchMapping("/update/{type_id}")
     private Boolean updateEmployeeType(@PathVariable String type_id, @RequestBody EmployeeTypeDTO empTypeData){
         return empTypeService.updateEmployeeType(empTypeData, type_id);

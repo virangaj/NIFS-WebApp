@@ -1,4 +1,4 @@
 package com.nifs.backend.service;
 
-public class ProjectMasterService {
+public class ProjectMasterService implements ProjectMasterServiceInterface {
 }

@@ -1,8 +1,9 @@
 package com.nifs.backend.controller;
 
 
-import com.nifs.backend.service.ChargeService;
+
 import com.nifs.backend.model.Charges;
+import com.nifs.backend.service.ChargeServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +17,7 @@ public class ChargeController {
 
 
     @Autowired
-    ChargeService chargeService;
+    ChargeServiceInterface chargeService;
 
 
     @GetMapping("/newid")
@@ -24,13 +25,7 @@ public class ChargeController {
         return chargeService.returnNewChargeId();
     }
 
-//    @PutMapping("/edit/{chargeId}")
-//    Charges editCharge(@PathVariable String chargeId, @RequestBody Charges chargeData){
-//        return chargeService.editCharge(chargeId, chargeData);
-//    }
-
 //    get charge by id
-
     @GetMapping("/{chargeId}")
     Optional<Charges> returnCharge(@PathVariable String chargeId){
         return chargeService.returnCharge(chargeId);

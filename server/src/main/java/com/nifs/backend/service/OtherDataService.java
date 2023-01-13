@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class OtherDataService {
+public class OtherDataService implements OtherDataServiceInterface {
 
     @Autowired
     private DistrictRepository districtRepo;

@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class EmployeeCategoryService {
+public class EmployeeCategoryService implements EmployeeCatServiceInterface{
 
     @Autowired
     private EmployeeCategoryRepository empCatRepo;
@@ -37,8 +37,8 @@ public class EmployeeCategoryService {
 
     }
 
-    //    add new employee category
-    public Boolean createNewCategory(EmpCatDTO e) {
+    //create new category
+    public Boolean createNewCategory(EmpCatDTO e)  {
         if(empCatRepo.returnEmployeeCategory(e.getEmployeeCategoryId()) == null){
             Date d = new Date();
             Locations l = locRepo.getLocation(e.getLocation());
@@ -73,6 +73,7 @@ public class EmployeeCategoryService {
         return empCatRepo.findById(empCatId);
     }
 
+    //update employee category
     public Boolean updateEmployeeCategory(EmpCatDTO empCatData, String empCatId) {
         if(empCatRepo.returnEmployeeCategory(empCatId) != null){
             Date d = new Date();
@@ -82,6 +83,7 @@ public class EmployeeCategoryService {
         return false;
     }
 
+    //delete employee category
     public Boolean deleteEmployeeCategory(String empCatId) {
         if(empCatRepo.returnEmployeeCategory(empCatId) != null){
             empCatRepo.deleteEmployeeCategory(empCatId);
@@ -91,7 +93,7 @@ public class EmployeeCategoryService {
         }
     }
 
-
+//get category by location id
     public List<EmpCatDTO> getCategoryByLocationId(String locId) {
         if(locRepo.getLocation(locId) != null){
             List<EmployeeCategory> empCatData = empCatRepo.findCategoryByLocationId(locId);

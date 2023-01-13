@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class DesignationService {
+public class DesignationService implements DesignationServiceInterface{
 
     @Autowired
     private DesignationRepostory desRepo;
@@ -82,7 +82,6 @@ public class DesignationService {
             return "ED1001";
         }
     }
-
     //update designation
     public Boolean updateDesignation(String id, DesignationMasterDTO dto) {
         if(desRepo.returnDesignation(id) != null){

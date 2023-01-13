@@ -14,7 +14,7 @@ import java.util.List;
 
 
 @Service
-public class EmployeeTypeService {
+public class EmployeeTypeService implements EmployeeTypeServiceInterface{
 
     @Autowired
     private EmployeeTypeRepository empTypeRepo;
