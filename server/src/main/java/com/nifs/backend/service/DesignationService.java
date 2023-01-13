@@ -26,7 +26,7 @@ public class DesignationService implements DesignationServiceInterface{
         List<DesignationMaster> dm = desRepo.findAll();
         List<DesignationMasterDTO> dDTO = new ArrayList<DesignationMasterDTO>();
         for(DesignationMaster d : dm){
-            DesignationMasterDTO dDTOSingle = new DesignationMasterDTO(d.getId(), d.getDesignationName(), d.getLocation().getLocationName());
+            DesignationMasterDTO dDTOSingle = new DesignationMasterDTO(d.getDesignationId(), d.getDesignationName(), d.getLocation().getLocationName());
             dDTO.add(dDTOSingle);
         }
         return dDTO;
@@ -34,10 +34,10 @@ public class DesignationService implements DesignationServiceInterface{
 
     // create designation
     public Boolean createDesignation(DesignationMasterDTO d) {
-        if(desRepo.returnDesignation(d.getId()) == null){
+        if(desRepo.returnDesignation(d.getDesignationId()) == null){
             Date date = new Date();
             Locations l = locRepo.getLocation(d.getLocation());
-            DesignationMaster dm = new DesignationMaster(d.getId(), d.getDesignationName(), date, l);
+            DesignationMaster dm = new DesignationMaster(d.getDesignationId(), d.getDesignationName(), date, l);
             desRepo.save(dm);
             return true;
         }
@@ -60,7 +60,7 @@ public class DesignationService implements DesignationServiceInterface{
                 List<DesignationMaster> dm = desRepo.findDesignatonByLocationId(locId);
                 List<DesignationMasterDTO> dDTO = new ArrayList<DesignationMasterDTO>();
                 for(DesignationMaster d : dm){
-                    DesignationMasterDTO dDTOSingle = new DesignationMasterDTO(d.getId(), d.getDesignationName(), d.getLocation().getLocationId());
+                    DesignationMasterDTO dDTOSingle = new DesignationMasterDTO(d.getDesignationId(), d.getDesignationName(), d.getLocation().getLocationId());
                     dDTO.add(dDTOSingle);
                 }
                 return dDTO;
@@ -97,7 +97,7 @@ public class DesignationService implements DesignationServiceInterface{
     public DesignationMasterDTO returnDesignationById(String id) {
         DesignationMaster d = desRepo.returnDesignation(id);
         if(d != null){
-            return new DesignationMasterDTO(d.getId(), d.getDesignationName(), d.getLocation().getLocationId());
+            return new DesignationMasterDTO(d.getDesignationId(), d.getDesignationName(), d.getLocation().getLocationId());
         }
         return null;
     }

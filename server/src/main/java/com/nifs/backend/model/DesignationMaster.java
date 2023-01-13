@@ -21,7 +21,7 @@ public class DesignationMaster {
 
     @Id
     @Column(name = "id", nullable = false, length = 10)
-    private String id;
+    private String designationId;
 
     @Column(name = "designation_name", length = 255)
     private String designationName;
@@ -48,12 +48,12 @@ public class DesignationMaster {
     private Locations location;
 
     //employee
-    @OneToMany(mappedBy = "designation", cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "designationId", cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JsonIgnoreProperties("designation")
     private List<EmployeeMaster> employee;
 
-    public DesignationMaster(String id, String designationName, Date dateCreated, Locations location) {
-        this.id = id;
+    public DesignationMaster(String designationId, String designationName, Date dateCreated, Locations location) {
+        this.designationId = designationId;
         this.designationName = designationName;
         this.dateCreated = dateCreated;
         this.location = location;

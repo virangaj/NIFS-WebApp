@@ -78,7 +78,7 @@ function AddEmployee() {
 		location: '',
 		empTypeId: '',
 		empCatId: '',
-		designation: '',
+		designationId: '',
 		division: '',
 	});
 
@@ -120,7 +120,7 @@ function AddEmployee() {
 			location: empData?.location,
 			empTypeId: empData?.empTypeId,
 			empCatId: empData?.empCatId,
-			designation: empData?.designation,
+			designationId: empData?.designationId,
 			division: empData?.division,
 		});
 	}, [
@@ -267,7 +267,7 @@ function AddEmployee() {
 			location: '',
 			empTypeId: '',
 			empCatId: '',
-			designation: '',
+			designationId: '',
 			division: '',
 		});
 		setBirthDate('');
@@ -829,7 +829,7 @@ function AddEmployee() {
 									</label>
 									<select
 										className='tailwind-text-box'
-										value={empData.designation}
+										value={empData.designationId}
 										id='designation'
 										name='designation'
 										onChange={onChange}
@@ -845,7 +845,7 @@ function AddEmployee() {
 										)}
 										{designationData?.map((l: IDesignationData, i: number) => {
 											return (
-												<option key={i} value={l.id}>
+												<option key={i} value={l.designationId}>
 													{l.designationName}
 												</option>
 											);

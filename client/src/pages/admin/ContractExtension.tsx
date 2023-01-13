@@ -26,7 +26,7 @@ function ContractExtension() {
 		docNo: '',
 		date: '',
 		epfNo: 0,
-		designation: '',
+		designationId: '',
 		division: '',
 		hod: '',
 		remark: '',
@@ -37,7 +37,7 @@ function ContractExtension() {
 			docNo: values?.docNo,
 			date: requestDate ? requestDate : '',
 			epfNo: values?.epfNo,
-			designation: values?.designation,
+			designationId: values?.designationId,
 			division: values?.division,
 			hod: values?.hod,
 			remark: values?.remark,
@@ -49,7 +49,7 @@ function ContractExtension() {
 			docNo: getDocNo && getDocNo,
 			date: requestDate ? requestDate : '',
 			epfNo: values?.epfNo,
-			designation: values?.designation,
+			designationId: values?.designationId,
 			division: values?.division,
 			hod: values?.hod,
 			remark: values?.remark,
@@ -76,7 +76,7 @@ function ContractExtension() {
 			docNo: getDocNo && getDocNo,
 			date: requestDate ? requestDate : '',
 			epfNo: values?.epfNo,
-			designation: employee?.designation,
+			designationId: employee?.designationId,
 			division: employee?.division,
 			hod: values?.hod,
 			remark: values?.remark,
@@ -87,7 +87,7 @@ function ContractExtension() {
 	//get designation and division
 	const retriveEmployeeDetails = (emp: any) => {
 		//get designation
-		DesignationMasterService.getDesignation(emp?.designation)
+		DesignationMasterService.getDesignation(emp?.designationId)
 			.then((res: any) => {
 				setDesignationData(res.data);
 			})
@@ -124,7 +124,7 @@ function ContractExtension() {
 			docNo: '',
 			date: '',
 			epfNo: 0,
-			designation: '',
+			designationId: '',
 			division: '',
 			hod: '',
 			remark: '',
@@ -137,7 +137,7 @@ function ContractExtension() {
 			docNo: '',
 			date: '',
 			epfNo: 0,
-			designation: '',
+			designationId: '',
 			division: '',
 			hod: '',
 			remark: '',

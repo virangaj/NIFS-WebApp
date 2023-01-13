@@ -16,20 +16,24 @@ function Designation() {
 	const [rowId, setRowId] = useState(0);
 	const [loading, setLoading] = useState(false);
 	const [deleteId, setDeleteId] = useState('');
-	const [designationData, setDesignationData] = useState<Array<IDesignationData>>([]);
+	const [designationData, setDesignationData] = useState<
+		Array<IDesignationData>
+	>([]);
 	const [locationData, setLocationData] = useState<ILocationData[]>();
 	const [d_id, setD_Id] = useState('');
 
 	const [values, setValues] = useState<any>({
-		id: '',
+		designationId: '',
 		designationName: '',
 		location: '',
 	});
 	useEffect(() => {
-		const filteredData = designationData?.filter((emp) => emp.id !== deleteId);
+		const filteredData = designationData?.filter(
+			(emp) => emp.designationId !== deleteId
+		);
 		setDesignationData(filteredData);
 	}, [deleteId]);
-	
+
 	useEffect(() => {
 		retreiveDesignations();
 		retreiveLocations();
@@ -38,13 +42,13 @@ function Designation() {
 	useEffect(() => {
 		// console.log(v_id)
 		setValues({
-			id: d_id,
+			designationId: d_id,
 			designationName: values?.designationName,
 			location: values?.location,
 		});
 		// console.log(values)
 	}, [d_id]);
-	
+
 	const retreiveDesignations = () => {
 		DesignationMasterService.getAllDesignations()
 			.then((res: any) => {
@@ -68,7 +72,7 @@ function Designation() {
 	};
 	const resetForm = () => {
 		setValues({
-			id: '',
+			designationId: '',
 			designationName: '',
 			location: '',
 		});
@@ -101,7 +105,7 @@ function Designation() {
 			setTimeout(async () => {
 				const result = await DesignationMasterService.saveDesignation(values);
 				// console.log(result)
-				if(result.data){
+				if (result.data) {
 					toast.success('New Designation is added', {
 						position: 'top-right',
 						autoClose: 5000,
@@ -110,11 +114,9 @@ function Designation() {
 						pauseOnHover: true,
 						draggable: true,
 						progress: undefined,
-						
 					});
 					resetForm();
-				}
-				else{
+				} else {
 					toast.error('Request cannot completed!', {
 						position: 'top-right',
 						autoClose: 5000,
@@ -123,11 +125,9 @@ function Designation() {
 						pauseOnHover: true,
 						draggable: true,
 						progress: undefined,
-						
 					});
 				}
 				setLoading(false);
-
 			}, 1000);
 		} else {
 			// alert('Please add a ID');
@@ -139,14 +139,13 @@ function Designation() {
 				pauseOnHover: true,
 				draggable: true,
 				progress: undefined,
-				
 			});
 		}
 	};
 
 	const columns = useMemo(
 		() => [
-			{ field: 'id', headerName: 'Designation Id', width: 160 },
+			{ field: 'designationId', headerName: 'Designation Id', width: 160 },
 			{
 				field: 'designationName',
 				headerName: 'Designation Name',
@@ -192,7 +191,7 @@ function Designation() {
 							rowHeight={60}
 							columns={columns}
 							rows={designationData}
-							getRowId={(row) => row.id}
+							getRowId={(row) => row.designationId}
 							rowsPerPageOptions={[10, 20, 30]}
 							pageSize={pageSize}
 							onPageSizeChange={(newPagesize) => setPageSize(newPagesize)}

@@ -165,7 +165,7 @@ public class EmployeeMaster {
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
     @JoinColumn(name = "designation_id", referencedColumnName = "id")
     @JsonIgnoreProperties("employee")
-    private DesignationMaster designation;
+    private DesignationMaster designationId;
 
     //division
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
@@ -179,7 +179,7 @@ public class EmployeeMaster {
     @JsonIgnoreProperties("employee")
     private Locations location;
 
-    public EmployeeMaster(int epfNo, String initials, String firstName, String lastName, String gender, String dob, String address, String contactNo, String personalEmail, String gsuitEmail, String nicNo, String nicIssuedDate, String passportNo, String passExpireDate, String licenseNo, String licenseIssuedDate, String licenseExpireDate, String contactPerson, String cpRelationship, String cpAddress, String cpTelephone, String cpStatus, String cpCivilStatus, String cpReligion, String appointmentDate, String contractStart, String contractEnd, Boolean isDelete, District district, Province province, EmployeeTypeMaster empTypeId, EmployeeCategory empCatId, DesignationMaster designation, DivisionMaster division, Locations location) {
+    public EmployeeMaster(int epfNo, String initials, String firstName, String lastName, String gender, String dob, String address, String contactNo, String personalEmail, String gsuitEmail, String nicNo, String nicIssuedDate, String passportNo, String passExpireDate, String licenseNo, String licenseIssuedDate, String licenseExpireDate, String contactPerson, String cpRelationship, String cpAddress, String cpTelephone, String cpStatus, String cpCivilStatus, String cpReligion, String appointmentDate, String contractStart, String contractEnd, Boolean isDelete, District district, Province province, EmployeeTypeMaster empTypeId, EmployeeCategory empCatId, DesignationMaster designationId, DivisionMaster division, Locations location) {
         this.epfNo = epfNo;
         this.initials = initials;
         this.firstName = firstName;
@@ -212,7 +212,7 @@ public class EmployeeMaster {
         this.province = province;
         this.empTypeId = empTypeId;
         this.empCatId = empCatId;
-        this.designation = designation;
+        this.designationId = designationId;
         this.division = division;
         this.location = location;
     }
