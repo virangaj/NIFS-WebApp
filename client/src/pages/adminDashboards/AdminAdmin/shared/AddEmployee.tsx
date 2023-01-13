@@ -340,8 +340,8 @@ function AddEmployee() {
 										EPF No
 									</label>
 									<input
-										id='epfNo'
-										type='text'
+										id='outlined-basic'
+										type='search'
 										className='tailwind-text-box'
 										value={empData.epfNo > 0 ? empData.epfNo : ''}
 										onChange={onChange}
@@ -355,8 +355,8 @@ function AddEmployee() {
 										Initials
 									</label>
 									<input
-										id='initials'
-										type='text'
+										id='outlined-basic'
+										type='search'
 										className='tailwind-text-box'
 										value={empData.initials}
 										name='initials'
@@ -369,8 +369,8 @@ function AddEmployee() {
 										First Name
 									</label>
 									<input
-										id='firstName'
-										type='text'
+										id='outlined-basic'
+										type='search'
 										className='tailwind-text-box'
 										value={empData.firstName}
 										name='firstName'
@@ -383,8 +383,8 @@ function AddEmployee() {
 										Last Name
 									</label>
 									<input
-										id='lastName'
-										type='text'
+										id='outlined-basic'
+										type='search'
 										className='tailwind-text-box'
 										value={empData.lastName}
 										name='lastName'
@@ -480,8 +480,8 @@ function AddEmployee() {
 										Address
 									</label>
 									<input
-										id='address'
-										type='text'
+										id='outlined-basic'
+										type='search'
 										className='tailwind-text-box'
 										value={empData.address}
 										name='address'
@@ -493,8 +493,8 @@ function AddEmployee() {
 										Contact Number (+94 XXXXXXXXX)
 									</label>
 									<input
-										id='contactNo'
-										type='text'
+										id='outlined-basic'
+										type='search'
 										className='tailwind-text-box'
 										value={empData.contactNo}
 										name='contactNo'
@@ -533,8 +533,8 @@ function AddEmployee() {
 										NIC No
 									</label>
 									<input
-										id='nicNo'
-										type='text'
+										id='outlined-basic'
+										type='search'
 										className='tailwind-text-box'
 										value={empData.nicNo}
 										name='nicNo'
@@ -557,8 +557,8 @@ function AddEmployee() {
 										Passport No
 									</label>
 									<input
-										id='passportNo'
-										type='text'
+										id='outlined-basic'
+										type='search'
 										className='tailwind-text-box'
 										value={empData.passportNo}
 										name='passportNo'
@@ -582,8 +582,8 @@ function AddEmployee() {
 										License No
 									</label>
 									<input
-										id='licenseNo'
-										type='text'
+										id='outlined-basic'
+										type='search'
 										className='tailwind-text-box'
 										value={empData.licenseNo}
 										name='licenseNo'
@@ -623,8 +623,8 @@ function AddEmployee() {
 										Contact Person
 									</label>
 									<input
-										id='contactPerson'
-										type='text'
+										id='outlined-basic'
+										type='search'
 										className='tailwind-text-box'
 										value={empData.contactPerson}
 										name='contactPerson'
@@ -637,8 +637,8 @@ function AddEmployee() {
 										Relationship
 									</label>
 									<input
-										id='cpRelationship'
-										type='text'
+										id='outlined-basic'
+										type='search'
 										className='tailwind-text-box'
 										value={empData.cpRelationship}
 										name='cpRelationship'
@@ -652,8 +652,8 @@ function AddEmployee() {
 										Address
 									</label>
 									<input
-										id='cpAddress'
-										type='text'
+										id='outlined-basic'
+										type='search'
 										className='tailwind-text-box'
 										value={empData.cpAddress}
 										name='cpAddress'
@@ -666,8 +666,8 @@ function AddEmployee() {
 										Telephone No (+94 XXXXXXXXX)
 									</label>
 									<input
-										id='cpTelephone'
-										type='text'
+										id='outlined-basic'
+										type='search'
 										className='tailwind-text-box'
 										value={empData.cpTelephone}
 										name='cpTelephone'
@@ -682,8 +682,8 @@ function AddEmployee() {
 										Status
 									</label>
 									<input
-										id='cpStatus'
-										type='text'
+										id='outlined-basic'
+										type='search'
 										className='tailwind-text-box'
 										value={empData.cpStatus}
 										name='cpStatus'
@@ -732,7 +732,6 @@ function AddEmployee() {
 											);
 										})}
 									</select>
-									
 								</div>
 							</div>
 						</div>

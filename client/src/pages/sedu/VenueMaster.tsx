@@ -1,13 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 import Stack from '@mui/material/Stack';
 
-import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
-import InputLabel from '@mui/material/InputLabel';
-
 import SelectFacility from './shared/SelectFacility';
 import SetChargers from './shared/SetChargers';
 import VenueMasterService from '../../services/sedu/VenueMasterService';
@@ -200,8 +195,8 @@ function VenueMaster() {
 								</label>
 
 								<input
-									id='venueName'
-									type='text'
+									id='outlined-basic'
+									type='search'
 									className='mr-4 tailwind-text-box w-[90%]'
 									onChange={onChange}
 									name='venueName'
@@ -216,7 +211,7 @@ function VenueMaster() {
 								<select
 									className='tailwind-text-box w-[90%]'
 									value={values.type}
-									id='type'
+									id='outlined-basic'
 									name='type'
 									onChange={onChange}
 								>
@@ -240,8 +235,8 @@ function VenueMaster() {
 								</label>
 
 								<input
-									id='availability'
-									type='text'
+									id='outlined-basic'
+									type='search'
 									className='mr-4 tailwind-text-box w-[90%]'
 									onChange={onChange}
 									name='availability'
@@ -282,8 +277,8 @@ function VenueMaster() {
 								</label>
 
 								<input
-									id='remark'
-									type='text'
+									id='outlined-basic'
+									type='search'
 									className='mr-4 tailwind-text-box w-[90%]'
 									onChange={onChange}
 									name='remark'
@@ -291,7 +286,6 @@ function VenueMaster() {
 									required
 								/>
 							</div>
-
 
 							<div>
 								<label className='input-label' htmlFor='capacity'>
@@ -314,7 +308,7 @@ function VenueMaster() {
 									<option value={100}>100</option>
 								</select>
 							</div>
-							
+
 							<SetChargers chargers={chargers} setChargers={setChargers} />
 						</div>
 					</div>
