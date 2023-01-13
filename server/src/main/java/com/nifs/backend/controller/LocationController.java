@@ -1,7 +1,6 @@
 package com.nifs.backend.controller;
 
 import com.nifs.backend.dto.LocationDTO;
-import com.nifs.backend.service.LocationService;
 import com.nifs.backend.model.Locations;
 import com.nifs.backend.service.LocationServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;

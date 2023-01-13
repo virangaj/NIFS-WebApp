@@ -47,7 +47,7 @@ public class Charges {
 //    @JsonIgnore
 //    private Set<VenueMaster> venues;
 
-    @OneToMany(mappedBy = "charge", cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "chargeId", cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
     private List<VenueCharge> venueCharges;
 
 

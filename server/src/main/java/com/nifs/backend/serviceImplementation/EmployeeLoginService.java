@@ -1,5 +1,6 @@
-package com.nifs.backend.service;
+package com.nifs.backend.serviceImplementation;
 
+import com.nifs.backend.service.EmployeeLoginServiceInterface;
 import org.springframework.stereotype.Service;
 
 @Service

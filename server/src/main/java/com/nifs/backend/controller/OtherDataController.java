@@ -5,7 +5,6 @@ import com.nifs.backend.dto.ProvinceDTO;
 import com.nifs.backend.model.Province;
 import com.nifs.backend.model.Religions;
 import com.nifs.backend.model.District;
-import com.nifs.backend.service.OtherDataService;
 import com.nifs.backend.service.OtherDataServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

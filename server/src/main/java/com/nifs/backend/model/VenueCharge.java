@@ -31,16 +31,16 @@ public class VenueCharge {
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
     @JoinColumn(name = "charge_id", referencedColumnName = "charge_id", nullable = false)
-    private Charges charge;
+    private Charges chargeId;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="date_created")
     private Date dateCreated;
 
-    public VenueCharge(VenueMaster venueMaster, Charges charge, Date dateCreated) {
+    public VenueCharge(VenueMaster venueMaster, Charges chargeId, Date dateCreated) {
 
         this.venueMaster = venueMaster;
-        this.charge = charge;
+        this.chargeId = chargeId;
         this.dateCreated = dateCreated;
     }
 
