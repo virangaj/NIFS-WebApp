@@ -1,9 +1,9 @@
 export default interface IContractExtension {
     docNo: string,
     date: string,
-    emploeeId: string,
+    epfNo: number,
     designation: string,
-    divison: string,
+    division: string,
     hod: string,
     remark: string,
 }

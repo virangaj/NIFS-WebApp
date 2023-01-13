@@ -212,6 +212,12 @@ a {
 	.error-text-message{
 		@apply text-red-500 italic text-sm
 	}
+	.normal-text{
+		@apply text-base my-2
+	}
+	.italic-sm-text{
+		@apply text-sm italic text-gray-400 font-extralight
+	}
 
 	
 }
