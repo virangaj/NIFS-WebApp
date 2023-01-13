@@ -25,7 +25,7 @@ function Designation() {
 	const [values, setValues] = useState<any>({
 		designationId: '',
 		designationName: '',
-		location: '',
+		locationId: '',
 	});
 	useEffect(() => {
 		const filteredData = designationData?.filter(
@@ -44,7 +44,7 @@ function Designation() {
 		setValues({
 			designationId: d_id,
 			designationName: values?.designationName,
-			location: values?.location,
+			locationId: values?.locationId,
 		});
 		// console.log(values)
 	}, [d_id]);
@@ -74,7 +74,7 @@ function Designation() {
 		setValues({
 			designationId: '',
 			designationName: '',
-			location: '',
+			locationId: '',
 		});
 		setD_Id('');
 	};
@@ -231,14 +231,14 @@ function Designation() {
 								</button>
 							</div>
 							<div>
-								<label className='input-label' htmlFor='location'>
+								<label className='input-label' htmlFor='locationId'>
 									Location
 								</label>
 								<select
 									className='tailwind-text-box'
-									value={values.location}
+									value={values.locationId}
 									id='location'
-									name='location'
+									name='locationId'
 									onChange={onChange}
 								>
 									<option disabled value=''>

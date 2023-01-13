@@ -46,7 +46,7 @@ public class Locations {
 
 //    relationships
     //designation
-    @OneToMany(mappedBy = "location", cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "locationId", cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JsonIgnoreProperties("location")
     private List<DesignationMaster> designations;
 

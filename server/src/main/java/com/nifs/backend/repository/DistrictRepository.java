@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 public interface DistrictRepository extends JpaRepository<District, Integer> {
-    @Query("select d from District d where d.province.provinceId = ?1 order by d.districtId")
+    @Query("select d from District d where d.provinceId.provinceId = ?1 order by d.districtId")
     List<District> findDistrictByProvinceId(int provinceId);
     @Transactional
     @Modifying

@@ -15,7 +15,7 @@ public interface DesignationRepostory extends JpaRepository<DesignationMaster, S
     @Modifying
     @Query("update DesignationMaster d set d.designationName = ?1, d.dateUpdated = ?2 where d.designationId = ?3")
     void updateDesignation(String designationName, Date dateUpdated, String id);
-    @Query("select distinct d from DesignationMaster d where d.location.locationId = ?1 order by d.designationId, d.designationName")
+    @Query("select distinct d from DesignationMaster d where d.locationId.locationId = ?1 order by d.designationId, d.designationName")
     List<DesignationMaster> findDesignatonByLocationId(String locationId);
     @Transactional
     @Modifying

@@ -13,7 +13,7 @@ public class DesignationMasterDTO {
 
     private String designationId;
     private String designationName;
-    private String location;
+    private String locationId;
 
 
 }

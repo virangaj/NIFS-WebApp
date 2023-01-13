@@ -67,7 +67,7 @@ public class OtherDataService implements OtherDataServiceInterface {
     public Boolean addDistrict(District dData, int provinceId) {
         Province province = provinceRepo.findProvinceById(provinceId);
         if(districtRepo.returnDistrict(dData.getDistrictName()) == null){
-            dData.setProvince(province);
+            dData.setProvinceId(province);
             districtRepo.save(dData);
             return true;
         }
