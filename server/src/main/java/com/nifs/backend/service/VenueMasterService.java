@@ -17,7 +17,7 @@ import java.util.Optional;
 import java.util.Set;
 
 @Service
-public class VenueMasterService {
+public class VenueMasterService implements VenueMasterServiceInterface {
 
     @Autowired
     private VenueMasterRepository venueRepo;
