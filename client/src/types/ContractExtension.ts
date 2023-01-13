@@ -3,7 +3,7 @@ export default interface IContractExtension {
 	date: string;
 	epfNo: number;
 	designationId: string;
-	division: string;
+	divisionId: string;
 	hod: string;
 	remark: string;
 }

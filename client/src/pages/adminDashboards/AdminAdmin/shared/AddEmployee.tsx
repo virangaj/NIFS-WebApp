@@ -79,7 +79,7 @@ function AddEmployee() {
 		empTypeId: '',
 		empCatId: '',
 		designationId: '',
-		division: '',
+		divisionId: '',
 	});
 
 	useEffect(() => {
@@ -121,7 +121,7 @@ function AddEmployee() {
 			empTypeId: empData?.empTypeId,
 			empCatId: empData?.empCatId,
 			designationId: empData?.designationId,
-			division: empData?.division,
+			divisionId: empData?.divisionId,
 		});
 	}, [
 		birthDate,
@@ -268,7 +268,7 @@ function AddEmployee() {
 			empTypeId: '',
 			empCatId: '',
 			designationId: '',
-			division: '',
+			divisionId: '',
 		});
 		setBirthDate('');
 		setNICIDate('');
@@ -859,7 +859,7 @@ function AddEmployee() {
 									</label>
 									<select
 										className='tailwind-text-box'
-										value={empData.division}
+										value={empData.divisionId}
 										id='division'
 										name='division'
 										onChange={onChange}

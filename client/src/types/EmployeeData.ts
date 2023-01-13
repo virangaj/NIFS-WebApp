@@ -32,5 +32,5 @@ export default interface IEmployeeData {
 	empTypeId: string | any;
 	empCatId: string | any;
 	designationId: string | any;
-	division: string | any;
+	divisionId: string | any;
 }

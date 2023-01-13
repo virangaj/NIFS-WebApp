@@ -59,7 +59,7 @@ public class DivisionMasterService implements DivisionMasterServiceInterface{
 
         List<EmployeeMaster> empMaster = empRepo.findByDivisionId(divisionId);
         for(EmployeeMaster e: empMaster){
-            System.out.println("division "+e.getDivision().getDivisionId());
+            System.out.println("division "+e.getDivisionId().getDivisionId());
         }
         if (divisionMaster != null) {
             divMasterRepo.deleteById(divisionMaster.getDivisionId());

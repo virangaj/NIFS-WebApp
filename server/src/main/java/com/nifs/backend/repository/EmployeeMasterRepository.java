@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 public interface EmployeeMasterRepository extends JpaRepository<EmployeeMaster, Integer> {
-    @Query("select e from EmployeeMaster e where e.division.divisionId = ?1 order by e")
+    @Query("select e from EmployeeMaster e where e.divisionId.divisionId = ?1 order by e")
     List<EmployeeMaster> findByDivisionId(String divisionId);
 
 

@@ -27,7 +27,7 @@ function ContractExtension() {
 		date: '',
 		epfNo: 0,
 		designationId: '',
-		division: '',
+		divisionId: '',
 		hod: '',
 		remark: '',
 	});
@@ -38,7 +38,7 @@ function ContractExtension() {
 			date: requestDate ? requestDate : '',
 			epfNo: values?.epfNo,
 			designationId: values?.designationId,
-			division: values?.division,
+			divisionId: values?.divisionId,
 			hod: values?.hod,
 			remark: values?.remark,
 		});
@@ -50,7 +50,7 @@ function ContractExtension() {
 			date: requestDate ? requestDate : '',
 			epfNo: values?.epfNo,
 			designationId: values?.designationId,
-			division: values?.division,
+			divisionId: values?.divisionId,
 			hod: values?.hod,
 			remark: values?.remark,
 		});
@@ -77,7 +77,7 @@ function ContractExtension() {
 			date: requestDate ? requestDate : '',
 			epfNo: values?.epfNo,
 			designationId: employee?.designationId,
-			division: employee?.division,
+			divisionId: employee?.divisionId,
 			hod: values?.hod,
 			remark: values?.remark,
 		});
@@ -97,7 +97,7 @@ function ContractExtension() {
 
 		//get divions
 
-		DivisionMasterService.getDivision(emp?.division)
+		DivisionMasterService.getDivision(emp?.divisionId)
 			.then((res: any) => {
 				setDivisionData(res.data);
 			})
@@ -125,7 +125,7 @@ function ContractExtension() {
 			date: '',
 			epfNo: 0,
 			designationId: '',
-			division: '',
+			divisionId: '',
 			hod: '',
 			remark: '',
 		});
@@ -138,7 +138,7 @@ function ContractExtension() {
 			date: '',
 			epfNo: 0,
 			designationId: '',
-			division: '',
+			divisionId: '',
 			hod: '',
 			remark: '',
 		});

@@ -42,7 +42,7 @@ public class DivisionMaster {
 
 
     //employee
-    @OneToMany(mappedBy = "division", cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "divisionId", cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JsonIgnoreProperties("division")
     private List<EmployeeMaster> employee;
 
