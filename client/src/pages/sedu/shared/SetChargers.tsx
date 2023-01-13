@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-
+import React, { useState, useEffect } from 'react';
 
 import Box from '@mui/material/Box';
 import MenuItem from '@mui/material/MenuItem';
@@ -7,28 +6,25 @@ import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import TextField from '@mui/material/TextField';
 
-
-import { HiPlusCircle, HiOutlineTrash } from "react-icons/hi";
+import { HiPlusCircle, HiOutlineTrash } from 'react-icons/hi';
 
 // import ChargersData from '../../../components/data/Chargers.json'
-import VenueOtherService from "../../../services/sedu/VenueOtherService";
-
+import VenueOtherService from '../../../services/sedu/VenueOtherService';
 
 function SetChargers({ setChargers, chargers }: any) {
+	// const [items, setItems] = useState<any[]>([]);
+	const [newItem, setNewItem] = useState('');
+	const [cost, setCost] = useState('');
+	const [chargesData, setChargesData] = useState<any[]>();
 
-    // const [items, setItems] = useState<any[]>([]);
-    const [newItem, setNewItem] = useState(0);
-    const [cost, setCost] = useState('')
-    const [chargesData, setChargesData] = useState<any[]>();
-
-    useEffect(() => {
+	useEffect(() => {
 		retreiveCharges();
-        // console.log(chargesData);
+		// console.log(chargesData);
 	}, []);
 
-    // load all charges
+	// load all charges
 
-    const retreiveCharges = () => {
+	const retreiveCharges = () => {
 		VenueOtherService.getAllCharges()
 			.then((res: any) => {
 				setChargesData(res.data);
@@ -38,113 +34,106 @@ function SetChargers({ setChargers, chargers }: any) {
 				console.log(e);
 			});
 	};
-    //  delete charge
-    const handleDelete = (id: any) => {
-        setChargers((prev: any) => prev.filter((i: any) => i.chargeId !== id))
-    }
+	//  delete charge
+	const handleDelete = (id: any) => {
+		setChargers((prev: any) => prev.filter((i: any) => i.chargeId !== id));
+	};
 
-    useEffect(()=>{
-        if(newItem){
-            let place = 0;
-            chargesData && chargesData.map((data, index) => {
-                if (data.chargeId === newItem) {
-                    place = index;
-                }
-            })
+	useEffect(() => {
+		if (newItem) {
+			let place = 0;
+			chargesData &&
+				chargesData.map((data, index) => {
+					if (data.chargeId === newItem) {
+						place = index;
+					}
+				});
 
-            setCost(newItem ? chargesData && chargesData[place].charge : null);
-        }
+			setCost(newItem ? chargesData && chargesData[place].charge : null);
+		}
+	}, [newItem]);
 
-    },[newItem])
+	// add charge
+	const handleAdd = () => {
+		if (newItem) {
+			let place = 0;
+			chargesData &&
+				chargesData.map((data, index) => {
+					if (data.chargeId === newItem) {
+						place = index;
+					}
+				});
 
-    // add charge
-    const handleAdd = () => {
+			const item = {
+				chargeId: newItem ? chargesData && chargesData[place].chargeId : null,
+				name: newItem ? chargesData && chargesData[place].name : null,
+				charge: newItem ? chargesData && chargesData[place].charge : null,
+			};
 
-        if (newItem) {
-            let place = 0;
-            chargesData && chargesData.map((data, index) => {
-                if (data.chargeId === newItem) {
-                    place = index;
-                }
-            })
+			setChargers((prev: any) => [...prev, item]);
+		} else {
+			alert('Select Charges to add!');
+		}
+	};
 
-            const item = {
-                chargeId: newItem ? chargesData && chargesData[place].chargeId : null,
-                name: newItem ? chargesData && chargesData[place].name : null,
-                charge: newItem ? chargesData && chargesData[place].charge : null,
-            }
+	return (
+		<>
+			<Box className='input-field'>
+				<label className='input-label' htmlFor='newItem'>
+					Charges
+				</label>
+				<div className='flex-section'>
+					<div>
+						<select
+							className='w-full tailwind-text-box'
+							value={newItem}
+							id='newItem'
+							name='newItem'
+							onChange={(e: any) => setNewItem(e.target.value)}
+						>
+							<option value='' disabled>
+								Select a Charge
+							</option>
+							{chargesData &&
+								chargesData.map((data, index) => (
+									<option key={index} value={data.chargeId}>
+										{data.name}
+									</option>
+								))}
+						</select>
+					</div>
 
-            setChargers((prev: any) => [...prev, item])
-        }
-        else {
-            alert('Select Charges to add!')
-        }
+					<p className='mr-20'>{cost && cost}</p>
 
-    }
+					<div>
+						<HiPlusCircle className='form-icon' onClick={handleAdd} />
+					</div>
+				</div>
+			</Box>
 
-
-    return (
-        <>
-            <Box className='input-field'>
-                <div className='flex-section'>
-                    <div className='input-field'>
-                        <InputLabel id="demo-simple-select-label">Charges</InputLabel>
-                        <Select
-                            sx={{width: '60%'}}
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            name='newItem'
-                            size='small'
-                            label="Charge"
-                            value={newItem}
-                            onChange={(e: any) => {setNewItem(e.target.value)}}
-                        >
-                            <MenuItem value={0} disabled>Select a Charge</MenuItem>
-                            {chargesData && chargesData.map((data, index) =>
-                                <MenuItem key={index} value={data.chargeId}>{data.name}</MenuItem>
-                            )}
-                        </Select>
-                    </div>
-
-                    {/* <TextField
-                        sx={{ marginLeft: '10px', marginRight: '10px', width: '60%' }}
-                        id="outlined-basic"
-                        label="Cost"
-                        variant="outlined"
-                        type="number"
-                        name='cost'
-                        size="small"
-                        onChange={(e: any) => setCost(e.target.value)}
-                        value={cost}
-
-                    /> */}
-                    <p className="mr-20">
-                        {cost && cost}
-                    </p>
-
-
-
-                    <div>
-                        <HiPlusCircle className='form-icon' onClick={handleAdd} />
-                    </div>
-                </div>
-            </Box>
-
-            <div className='items-container'>
-                <h1 className='new-item-title'>Chargers</h1>
-                <hr className='horizontal-line' />
-                {chargers.length !== 0 ? chargers.map((i: any, index: number) => (
-                    <div className='items-container-text grid grid-cols-3 w-[100%] mb-4 lg:mb-2 items-center' key={index}>
-                        <p>{i.name}</p>
-                        <p>{i.charge}</p>
-                        <HiOutlineTrash className='text-xl cursor-pointer hover:text-red-500' onClick={() => handleDelete(i.chargeId)} />
-
-                    </div>
-                ))
-                    : <p className='items-container-text'>No Items to display</p>}
-            </div>
-        </>
-    )
+			<div className='items-container'>
+				<h1 className='new-item-title'>Chargers</h1>
+				<hr className='horizontal-line' />
+				{chargers.length !== 0 ? (
+					chargers.map((i: any, index: number) => (
+						<div
+							className='items-container-text grid grid-cols-3 w-[100%] mb-4 lg:mb-2 items-center'
+							key={index}
+						>
+							<p>{i.name}</p>
+							<p>{i.charge}</p>
+							<HiOutlineTrash
+								className='text-xl cursor-pointer hover:text-red-500'
+								onClick={() => handleDelete(i.chargeId)}
+							/>
+						</div>
+					))
+				) : (
+					<p className='items-container-text'>No Items to display</p>
+				)}
+			</div>
+		</>
+	);
 }
 
-export default SetChargers
+export default SetChargers;
