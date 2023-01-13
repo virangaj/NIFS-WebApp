@@ -161,7 +161,7 @@ function EmployeeType() {
 				editable: true,
 			},
 			{
-				field: 'location',
+				field: 'locationId',
 				headerName: 'Location',
 				width: 200,
 				editable: true,
@@ -253,7 +253,7 @@ function EmployeeType() {
 								</label>
 								<select
 									className='tailwind-text-box'
-									value={values.location}
+									value={values.locationId}
 									id='location'
 									name='locationId'
 									onChange={onChange}

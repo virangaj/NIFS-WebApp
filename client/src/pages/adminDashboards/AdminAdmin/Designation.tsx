@@ -149,11 +149,11 @@ function Designation() {
 			{
 				field: 'designationName',
 				headerName: 'Designation Name',
-				width: 200,
+				width: 250,
 				editable: true,
 			},
 			{
-				field: 'location',
+				field: 'locationId',
 				headerName: 'Location',
 				width: 200,
 				editable: true,

@@ -169,7 +169,7 @@ function EmpCategory() {
 				width: 200,
 				editable: true,
 			},
-			{ field: 'location', headerName: 'Location', width: 200 },
+			{ field: 'locationId', headerName: 'Location', width: 200 },
 			{
 				field: 'actions',
 				headerName: 'Action',
@@ -258,7 +258,7 @@ function EmpCategory() {
 								</label>
 								<select
 									className='tailwind-text-box'
-									value={values.location}
+									value={values.locationId}
 									id='location'
 									name='locationId'
 									onChange={onChange}
