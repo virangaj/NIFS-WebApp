@@ -23,25 +23,38 @@ public class EmployeeTypeService implements EmployeeTypeServiceInterface{
 
 //    get all types
     public List<EmployeeTypeDTO> getAllTypes() {
-        List<EmployeeTypeMaster> em =  empTypeRepo.findAll();
-        List<EmployeeTypeDTO> dto = new ArrayList<EmployeeTypeDTO>();
-        for(EmployeeTypeMaster d : em){
-            EmployeeTypeDTO DTOSingle = new EmployeeTypeDTO(d.getEmpTypeId(), d.getTypeName(),d.getLocation().getLocationName());
-            dto.add(DTOSingle);
+        try{
+            List<EmployeeTypeMaster> em =  empTypeRepo.findAll();
+            List<EmployeeTypeDTO> dto = new ArrayList<EmployeeTypeDTO>();
+            for(EmployeeTypeMaster d : em){
+                EmployeeTypeDTO DTOSingle = new EmployeeTypeDTO(d.getEmpTypeId(), d.getTypeName(),d.getLocation().getLocationName());
+                dto.add(DTOSingle);
+            }
+            return dto;
         }
-        return dto;
+        catch(Exception err){
+            System.out.println(err.toString());
+            return null;
+        }
     }
 
 
 //    create new employee type
     public Boolean createEmpType(EmployeeTypeDTO e) {
         if(empTypeRepo.returnType(e.getEmpTypeId()) == null ){
-            Date d = new Date();
-            Locations l = locRepo.getLocation(e.getLocation());
-            EmployeeTypeMaster etMaster = new EmployeeTypeMaster(e.getEmpTypeId(), e.getTypeName(), d, l);
+            try{
+                Date d = new Date();
+                Locations l = locRepo.getLocation(e.getLocation());
+                EmployeeTypeMaster etMaster = new EmployeeTypeMaster(e.getEmpTypeId(), e.getTypeName(), d, l);
 //            System.out.println(empTypeData.getLocation().getLocationName());
-            empTypeRepo.save(etMaster);
-            return true;
+                empTypeRepo.save(etMaster);
+                return true;
+            }
+            catch(Exception err){
+                System.out.println(err.toString());
+                return false;
+            }
+
         }
         return false;
     }
@@ -64,13 +77,19 @@ public class EmployeeTypeService implements EmployeeTypeServiceInterface{
 //    get emp type by location id
     public List<EmployeeTypeDTO> GetEmpTypeByLocationId(String locID){
         if(locRepo.getLocation(locID) != null){
-            List<EmployeeTypeMaster> em =  empTypeRepo.findEmpTypeByLocationId(locID);
-            List<EmployeeTypeDTO> dto = new ArrayList<EmployeeTypeDTO>();
-            for(EmployeeTypeMaster d : em){
-                EmployeeTypeDTO DTOSingle = new EmployeeTypeDTO(d.getEmpTypeId(), d.getTypeName(),d.getLocation().getLocationId());
-                dto.add(DTOSingle);
+            try{
+                List<EmployeeTypeMaster> em = empTypeRepo.findEmpTypeByLocationId(locID);
+                List<EmployeeTypeDTO> dto = new ArrayList<EmployeeTypeDTO>();
+                for (EmployeeTypeMaster d : em) {
+                    EmployeeTypeDTO DTOSingle = new EmployeeTypeDTO(d.getEmpTypeId(), d.getTypeName(), d.getLocation().getLocationId());
+                    dto.add(DTOSingle);
+                }
+                return dto;
             }
-            return dto;
+            catch(Exception e){
+                System.out.println(e.toString());
+                return null;
+            }
         }
         return null;
     }
@@ -82,9 +101,15 @@ public class EmployeeTypeService implements EmployeeTypeServiceInterface{
 
         if(empTypeRepo.returnType(type_id) != null){
 
-            Date d = new Date();
-            empTypeRepo.updateEmployeeType(data.getTypeName(), d, type_id);
-            return true;
+           Date d = new Date();
+           try{
+               empTypeRepo.updateEmployeeType(data.getTypeName(), d, type_id);
+               return true;
+           }
+           catch(Exception e){
+               System.out.println(e.toString());
+               return false;
+           }
         }
 
         return false;
@@ -95,8 +120,14 @@ public class EmployeeTypeService implements EmployeeTypeServiceInterface{
 //    delete employee type
     public Boolean deleteEmployeeType(String id) {
         if(empTypeRepo.returnType(id) != null){
-            empTypeRepo.deleteEmployeeType(id);
-            return true;
+           try{
+               empTypeRepo.deleteEmployeeType(id);
+               return true;
+           }
+           catch(Exception e){
+               System.out.println(e.toString());
+               return false;
+           }
         }
 
         return false;

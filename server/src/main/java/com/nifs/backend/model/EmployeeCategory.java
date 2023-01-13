@@ -23,7 +23,7 @@ public class EmployeeCategory {
 
     @Id
     @Column(name = "employee_category_code", nullable = false, length = 10)
-    private String employeeCategoryId;
+    private String empCatId;
 
     @Column(name = "description", length = 255)
     private String description;
@@ -48,14 +48,14 @@ public class EmployeeCategory {
     private Locations location;
 
     //employee
-    @OneToMany(mappedBy = "empCategory", cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "empCatId", cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JsonIgnoreProperties("empCategory")
     private List<EmployeeMaster> employee;
 
     //constructor for create instance
 
-    public EmployeeCategory(String employeeCategoryId, String description, float otRate, Date dateCreated, Locations location) {
-        this.employeeCategoryId = employeeCategoryId;
+    public EmployeeCategory(String empCatId, String description, float otRate, Date dateCreated, Locations location) {
+        this.empCatId = empCatId;
         this.description = description;
         this.otRate = otRate;
         this.dateCreated = dateCreated;

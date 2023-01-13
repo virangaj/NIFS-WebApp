@@ -24,6 +24,7 @@ function EmpTypeAction({ params, rowId, setRowId, setDeleteId }: any) {
 	const handleUpdate = async () => {
 		setLoading(true);
 		const { empTypeId, typeName, location } = params.row;
+		console.log(params.row);
 		setTimeout(async () => {
 			const result = await EmployeeTypeService.editEmpType({
 				empTypeId,

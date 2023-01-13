@@ -46,12 +46,10 @@ const editEmpCat = async (favJSON: any) => {
 	console.log(favJSON);
 	const response = await axios({
 		method: 'patch',
-		url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/employeecategory/update/${favJSON.employeeCategoryId}`,
+		url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/employeecategory/update/${favJSON.empCatId}`,
 		data: favJSON,
 		headers: { 'Content-Type': 'application/json; charset=utf-8' },
-
 	});
-
 
 	return response;
 };

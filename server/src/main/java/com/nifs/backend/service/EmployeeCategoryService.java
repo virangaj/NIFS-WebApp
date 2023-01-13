@@ -27,7 +27,7 @@ public class EmployeeCategoryService implements EmployeeCatServiceInterface{
         List<EmployeeCategory> empCatData = empCatRepo.findAll();
         List<EmpCatDTO> empDTO = new ArrayList<EmpCatDTO>();
         for(EmployeeCategory emp : empCatData){
-            EmpCatDTO dtoSingle = new EmpCatDTO(emp.getEmployeeCategoryId(), emp.getDescription(), Float.toString(emp.getOtRate()), emp.getLocation().getLocationName());
+            EmpCatDTO dtoSingle = new EmpCatDTO(emp.getEmpCatId(), emp.getDescription(), Float.toString(emp.getOtRate()), emp.getLocation().getLocationName());
             empDTO.add(dtoSingle);
         }
         return empDTO;
@@ -39,11 +39,11 @@ public class EmployeeCategoryService implements EmployeeCatServiceInterface{
 
     //create new category
     public Boolean createNewCategory(EmpCatDTO e)  {
-        if(empCatRepo.returnEmployeeCategory(e.getEmployeeCategoryId()) == null){
+        if(empCatRepo.returnEmployeeCategory(e.getEmpCatId()) == null){
             Date d = new Date();
             Locations l = locRepo.getLocation(e.getLocation());
 
-            EmployeeCategory empCat  = new EmployeeCategory(e.getEmployeeCategoryId(), e.getDescription(), Float.parseFloat(e.getOtRate()), d, l);
+            EmployeeCategory empCat  = new EmployeeCategory(e.getEmpCatId(), e.getDescription(), Float.parseFloat(e.getOtRate()), d, l);
 
             empCatRepo.save(empCat);
             return true;
@@ -99,7 +99,7 @@ public class EmployeeCategoryService implements EmployeeCatServiceInterface{
             List<EmployeeCategory> empCatData = empCatRepo.findCategoryByLocationId(locId);
             List<EmpCatDTO> empDTO = new ArrayList<EmpCatDTO>();
             for(EmployeeCategory emp : empCatData){
-                EmpCatDTO dtoSingle = new EmpCatDTO(emp.getEmployeeCategoryId(), emp.getDescription(), Float.toString(emp.getOtRate()), emp.getLocation().getLocationId());
+                EmpCatDTO dtoSingle = new EmpCatDTO(emp.getEmpCatId(), emp.getDescription(), Float.toString(emp.getOtRate()), emp.getLocation().getLocationId());
                 empDTO.add(dtoSingle);
             }
             return empDTO;

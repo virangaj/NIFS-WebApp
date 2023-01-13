@@ -46,10 +46,9 @@ const editEmpType = async (favJSON: any) => {
 	console.log(favJSON);
 	const response = await axios({
 		method: 'patch',
-		url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/employeetype/update/${favJSON.typeId}`,
+		url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/employeetype/update/${favJSON.empTypeId}`,
 		data: favJSON,
 		headers: { 'Content-Type': 'application/json; charset=utf-8' },
-
 	});
 
 	// const response = await axios.patch(

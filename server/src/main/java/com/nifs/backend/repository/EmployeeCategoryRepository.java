@@ -14,18 +14,18 @@ public interface EmployeeCategoryRepository extends JpaRepository<EmployeeCatego
     @Query("""
             select e from EmployeeCategory e
             where e.location.locationId = ?1
-            order by e.employeeCategoryId, e.description, e.otRate, e.location.locationId""")
+            order by e.empCatId, e.description, e.otRate, e.location.locationId""")
     List<EmployeeCategory> findCategoryByLocationId(
             String locationId);
     @Transactional
     @Modifying
-    @Query("delete from EmployeeCategory e where e.employeeCategoryId like :employeeCategoryId")
-    void deleteEmployeeCategory(String employeeCategoryId);
+    @Query("delete from EmployeeCategory e where e.empCatId like :empCatId")
+    void deleteEmployeeCategory(String empCatId);
     @Transactional
     @Modifying
     @Query("""
             UPDATE EmployeeCategory e set e.description = :description, e.otRate = :otRate, e.dateUpdated =:dateUpdated
-            WHERE e.employeeCategoryId LIKE :employeeCategoryId""")
+            WHERE e.empCatId LIKE :employeeCategoryId""")
     void UpdateEmployeeCategory(@Param("description") String description, @Param("otRate") float otRate, @Param("dateUpdated") Date dateUpdated,
                                 @Param("employeeCategoryId") String employeeCategoryId);
 

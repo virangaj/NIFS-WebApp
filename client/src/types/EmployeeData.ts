@@ -30,7 +30,7 @@ export default interface IEmployeeData {
 	contractEnd: string | any;
 	location: string | any;
 	empTypeId: string | any;
-	empCategory: string | any;
+	empCatId: string | any;
 	designation: string | any;
 	division: string | any;
 }

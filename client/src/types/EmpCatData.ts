@@ -1,6 +1,6 @@
 export default interface IEmpCatData {
-    employeeCategoryId : string,
-    description : string,
-    otRate : string,
-    location : string,
+	empCatId: string;
+	description: string;
+	otRate: string;
+	location: string;
 }

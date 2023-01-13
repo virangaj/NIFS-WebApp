@@ -10,7 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class EmpCatDTO {
-    private String employeeCategoryId;
+    private String empCatId;
     private String description;
     private String otRate;
     private String location;
