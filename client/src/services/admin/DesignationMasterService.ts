@@ -17,7 +17,7 @@ const getAllDesignations = () => {
 };
 
 const getDesignation = (id: any) => {
-	return http.get<any>(`/admin/designation/${id}`);
+	return http.get<any>(`/admin/designation/get/${id}`);
 };
 
 const saveDesignation = async (favJSON: any) => {

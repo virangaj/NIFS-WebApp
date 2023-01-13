@@ -17,7 +17,7 @@ const getAllDivisions = () => {
 };
 
 const getDivision = (id: any) => {
-	return http.get<any>(`/admin/division/${id}`);
+	return http.get<any>(`/admin/division/get/${id}`);
 };
 
 const saveDivision = async (favJSON: any) => {
