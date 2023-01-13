@@ -62,7 +62,7 @@ public class Locations {
     private List<EmployeeCategory> empCategory;
 
     //employee type
-    @OneToMany(mappedBy = "location", cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "locationId", cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JsonIgnoreProperties("location")
     private List<EmployeeTypeMaster> empType;
 

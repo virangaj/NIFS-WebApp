@@ -24,7 +24,7 @@ function EmployeeType() {
 	const [values, setValues] = useState<any>({
 		empTypeId: '',
 		typeName: '',
-		location: '',
+		locationId: '',
 	});
 
 	useEffect(() => {
@@ -47,7 +47,7 @@ function EmployeeType() {
 		setValues({
 			empTypeId: t_id,
 			typeName: values?.typeName,
-			location: values?.location,
+			locationId: values?.locationId,
 		});
 		// console.log(values)
 	}, [t_id]);
@@ -79,7 +79,7 @@ function EmployeeType() {
 		setValues({
 			empTypeId: '',
 			typeName: '',
-			location: '',
+			locationId: '',
 		});
 		setT_Id('');
 	};
@@ -248,14 +248,14 @@ function EmployeeType() {
 								</button>
 							</div>
 							<div>
-								<label className='input-label' htmlFor='location'>
+								<label className='input-label' htmlFor='locationId'>
 									Location
 								</label>
 								<select
 									className='tailwind-text-box'
 									value={values.location}
 									id='location'
-									name='location'
+									name='locationId'
 									onChange={onChange}
 								>
 									<option disabled value=''>

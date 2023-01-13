@@ -27,7 +27,7 @@ public class EmployeeTypeService implements EmployeeTypeServiceInterface{
             List<EmployeeTypeMaster> em =  empTypeRepo.findAll();
             List<EmployeeTypeDTO> dto = new ArrayList<EmployeeTypeDTO>();
             for(EmployeeTypeMaster d : em){
-                EmployeeTypeDTO DTOSingle = new EmployeeTypeDTO(d.getEmpTypeId(), d.getTypeName(),d.getLocation().getLocationName());
+                EmployeeTypeDTO DTOSingle = new EmployeeTypeDTO(d.getEmpTypeId(), d.getTypeName(),d.getLocationId().getLocationName());
                 dto.add(DTOSingle);
             }
             return dto;
@@ -44,7 +44,7 @@ public class EmployeeTypeService implements EmployeeTypeServiceInterface{
         if(empTypeRepo.returnType(e.getEmpTypeId()) == null ){
             try{
                 Date d = new Date();
-                Locations l = locRepo.getLocation(e.getLocation());
+                Locations l = locRepo.getLocation(e.getLocationId());
                 EmployeeTypeMaster etMaster = new EmployeeTypeMaster(e.getEmpTypeId(), e.getTypeName(), d, l);
 //            System.out.println(empTypeData.getLocation().getLocationName());
                 empTypeRepo.save(etMaster);
@@ -81,7 +81,7 @@ public class EmployeeTypeService implements EmployeeTypeServiceInterface{
                 List<EmployeeTypeMaster> em = empTypeRepo.findEmpTypeByLocationId(locID);
                 List<EmployeeTypeDTO> dto = new ArrayList<EmployeeTypeDTO>();
                 for (EmployeeTypeMaster d : em) {
-                    EmployeeTypeDTO DTOSingle = new EmployeeTypeDTO(d.getEmpTypeId(), d.getTypeName(), d.getLocation().getLocationId());
+                    EmployeeTypeDTO DTOSingle = new EmployeeTypeDTO(d.getEmpTypeId(), d.getTypeName(), d.getLocationId().getLocationId());
                     dto.add(DTOSingle);
                 }
                 return dto;

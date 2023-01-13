@@ -17,8 +17,8 @@ public interface EmployeeTypeRepository extends JpaRepository<EmployeeTypeMaster
     void updateEmployeeType(String typeName, Date dateUpdated, String typeId);
     @Query("""
             select e from EmployeeTypeMaster e
-            where e.location.locationId = ?1
-            order by e.empTypeId, e.typeName, e.location.locationId""")
+            where e.locationId.locationId = ?1
+            order by e.empTypeId, e.typeName, e.locationId.locationId""")
     List<EmployeeTypeMaster> findEmpTypeByLocationId(
             String locationId);
     @Transactional

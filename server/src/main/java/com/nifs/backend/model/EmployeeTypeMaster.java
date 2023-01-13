@@ -38,17 +38,17 @@ public class EmployeeTypeMaster {
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
     @JoinColumn(name = "location_id", referencedColumnName = "location_id", nullable = false)
     @JsonIgnoreProperties("empType")
-    private Locations location;
+    private Locations locationId;
 
     //employee
     @OneToMany(mappedBy = "empTypeId", cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JsonIgnoreProperties("empType")
     private List<EmployeeMaster> employee;
 
-    public EmployeeTypeMaster(String EmpTypeId, String typeName, Date dateCreated, Locations location) {
+    public EmployeeTypeMaster(String EmpTypeId, String typeName, Date dateCreated, Locations locationId) {
         this.empTypeId = EmpTypeId;
         this.typeName = typeName;
         this.dateCreated = dateCreated;
-        this.location = location;
+        this.locationId = locationId;
     }
 }
