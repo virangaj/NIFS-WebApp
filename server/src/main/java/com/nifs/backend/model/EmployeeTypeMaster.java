@@ -17,7 +17,7 @@ public class EmployeeTypeMaster {
 
     @Id
     @Column(name = "type_id", nullable = false, length = 10)
-    private String typeId;
+    private String empTypeId;
 
     @Column(name = "type_name", nullable = false, length = 100)
     private String typeName;
@@ -41,12 +41,12 @@ public class EmployeeTypeMaster {
     private Locations location;
 
     //employee
-    @OneToMany(mappedBy = "empType", cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "empTypeId", cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JsonIgnoreProperties("empType")
     private List<EmployeeMaster> employee;
 
-    public EmployeeTypeMaster(String typeId, String typeName, Date dateCreated, Locations location) {
-        this.typeId = typeId;
+    public EmployeeTypeMaster(String EmpTypeId, String typeName, Date dateCreated, Locations location) {
+        this.empTypeId = EmpTypeId;
         this.typeName = typeName;
         this.dateCreated = dateCreated;
         this.location = location;

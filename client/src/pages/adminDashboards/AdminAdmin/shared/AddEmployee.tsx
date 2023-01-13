@@ -76,7 +76,7 @@ function AddEmployee() {
 		contractStart: '',
 		contractEnd: '',
 		location: '',
-		empType: '',
+		empTypeId: '',
 		empCategory: '',
 		designation: '',
 		division: '',
@@ -118,7 +118,7 @@ function AddEmployee() {
 			contractStart: conStartDate ? conStartDate : '',
 			contractEnd: conEndDate ? conEndDate : '',
 			location: empData?.location,
-			empType: empData?.empType,
+			empTypeId: empData?.empTypeId,
 			empCategory: empData?.empCategory,
 			designation: empData?.designation,
 			division: empData?.division,
@@ -265,7 +265,7 @@ function AddEmployee() {
 			contractStart: '',
 			contractEnd: '',
 			location: '',
-			empType: '',
+			empTypeId: '',
 			empCategory: '',
 			designation: '',
 			division: '',
@@ -770,7 +770,7 @@ function AddEmployee() {
 									</label>
 									<select
 										className='tailwind-text-box'
-										value={empData.empType}
+										value={empData.empTypeId}
 										id='empType'
 										name='empType'
 										onChange={onChange}
@@ -786,7 +786,7 @@ function AddEmployee() {
 										)}
 										{employeeTypeData?.map((l: IEmpTypeData, i: number) => {
 											return (
-												<option key={i} value={l.typeId}>
+												<option key={i} value={l.empTypeId}>
 													{l.typeName}
 												</option>
 											);

@@ -10,7 +10,7 @@ export default interface IEmployeeData {
 	province: number;
 	contactNo: string | any;
 	personalEmail: string | any;
-	gsuitEmail:string | any;
+	gsuitEmail: string | any;
 	nicNo: string | any;
 	nicIssuedDate: string | any;
 	passportNo: string | any;
@@ -29,7 +29,7 @@ export default interface IEmployeeData {
 	contractStart: string | any;
 	contractEnd: string | any;
 	location: string | any;
-	empType: string | any;
+	empTypeId: string | any;
 	empCategory: string | any;
 	designation: string | any;
 	division: string | any;

@@ -26,7 +26,7 @@ public class EmployeeTypeService implements EmployeeTypeServiceInterface{
         List<EmployeeTypeMaster> em =  empTypeRepo.findAll();
         List<EmployeeTypeDTO> dto = new ArrayList<EmployeeTypeDTO>();
         for(EmployeeTypeMaster d : em){
-            EmployeeTypeDTO DTOSingle = new EmployeeTypeDTO(d.getTypeId(), d.getTypeName(),d.getLocation().getLocationName());
+            EmployeeTypeDTO DTOSingle = new EmployeeTypeDTO(d.getEmpTypeId(), d.getTypeName(),d.getLocation().getLocationName());
             dto.add(DTOSingle);
         }
         return dto;
@@ -35,10 +35,10 @@ public class EmployeeTypeService implements EmployeeTypeServiceInterface{
 
 //    create new employee type
     public Boolean createEmpType(EmployeeTypeDTO e) {
-        if(empTypeRepo.returnType(e.getTypeId()) == null ){
+        if(empTypeRepo.returnType(e.getEmpTypeId()) == null ){
             Date d = new Date();
             Locations l = locRepo.getLocation(e.getLocation());
-            EmployeeTypeMaster etMaster = new EmployeeTypeMaster(e.getTypeId(), e.getTypeName(), d, l);
+            EmployeeTypeMaster etMaster = new EmployeeTypeMaster(e.getEmpTypeId(), e.getTypeName(), d, l);
 //            System.out.println(empTypeData.getLocation().getLocationName());
             empTypeRepo.save(etMaster);
             return true;
@@ -67,7 +67,7 @@ public class EmployeeTypeService implements EmployeeTypeServiceInterface{
             List<EmployeeTypeMaster> em =  empTypeRepo.findEmpTypeByLocationId(locID);
             List<EmployeeTypeDTO> dto = new ArrayList<EmployeeTypeDTO>();
             for(EmployeeTypeMaster d : em){
-                EmployeeTypeDTO DTOSingle = new EmployeeTypeDTO(d.getTypeId(), d.getTypeName(),d.getLocation().getLocationId());
+                EmployeeTypeDTO DTOSingle = new EmployeeTypeDTO(d.getEmpTypeId(), d.getTypeName(),d.getLocation().getLocationId());
                 dto.add(DTOSingle);
             }
             return dto;
