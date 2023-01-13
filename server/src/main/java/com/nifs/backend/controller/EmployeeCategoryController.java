@@ -1,7 +1,7 @@
 package com.nifs.backend.controller;
 
 
-import com.nifs.backend.service.EmployeeCategoryService;
+import com.nifs.backend.service.EmployeeCatServiceInterface;
 import com.nifs.backend.dto.EmpCatDTO;
 import com.nifs.backend.model.EmployeeCategory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ public class EmployeeCategoryController {
 
 
     @Autowired
-    private EmployeeCategoryService empCatService;
+    private EmployeeCatServiceInterface empCatService;
 
 //    get all employee categories
     @GetMapping

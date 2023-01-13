@@ -1,5 +1,5 @@
 export default interface IDivisionData {
-    divisionId : string,
-    name : string,
-    location : string,
+	divisionId: string;
+	name: string;
+	locationId: string;
 }

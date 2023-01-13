@@ -11,7 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 public interface DivisionMasterRepository extends JpaRepository<DivisionMaster, String> {
-    @Query("select d from DivisionMaster d where d.location.locationId = ?1 order by d.divisionId, d.name")
+    @Query("select d from DivisionMaster d where d.locationId.locationId = ?1 order by d.divisionId, d.name")
     List<DivisionMaster> findDivisionByLocationId(String locationId);
 
     @Transactional

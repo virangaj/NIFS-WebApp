@@ -5,7 +5,7 @@ import com.nifs.backend.dto.ProvinceDTO;
 import com.nifs.backend.model.Province;
 import com.nifs.backend.model.Religions;
 import com.nifs.backend.model.District;
-import com.nifs.backend.service.OtherDataService;
+import com.nifs.backend.service.OtherDataServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +17,7 @@ import java.util.List;
 public class OtherDataController {
 
     @Autowired
-    private OtherDataService dataService;
+    private OtherDataServiceInterface dataService;
 
 //    return all districts
     @GetMapping("/district")
@@ -25,6 +25,7 @@ public class OtherDataController {
         return dataService.returnAllDistricts();
     }
 
+    //return districts bt province id
     @GetMapping("/district/province/{pId}")
     List<DistrictDTO> returnDistrictsByProvinceId(@PathVariable int pId){
         return dataService.returnDistrictsByProvinceId(pId);

@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.Optional;
 
 public interface VenueChargeRepository extends JpaRepository<VenueCharge, Integer> {
-    @Query("select v from VenueCharge v where v.id = :id order by v.venueMaster.venueId, v.charge.chargeId")
+    @Query("select v from VenueCharge v where v.id = :id order by v.venueMaster.venueId, v.chargeId.chargeId")
     Optional<VenueCharge> returnVenueCharges(@Param("id") int id);
 
     @Query("select v from VenueCharge v where v.id = :id")

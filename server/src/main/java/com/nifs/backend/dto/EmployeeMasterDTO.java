@@ -48,23 +48,23 @@ public class EmployeeMasterDTO {
 
     //relationships
 
-    private String province;
-    private String district;
+    private String provinceId;
+    private String districtId;
 
     //employee type
-    private String empType;
+    private String empTypeId;
 
     //category
-    private String empCategory;
+    private String empCatId;
 
     //designation
-    private String designation;
+    private String designationId;
 
     //division
-    private String division;
+    private String divisionId;
 
     //locations
-    private String location;
+    private String locationId;
 
 
 }

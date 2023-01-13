@@ -14,7 +14,7 @@ public class DivisionMasterDTO {
 
     private String divisionId;
     private String name;
-    private String location;
+    private String locationId;
 
 
 

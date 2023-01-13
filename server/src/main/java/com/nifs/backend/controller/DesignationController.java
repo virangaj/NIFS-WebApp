@@ -1,7 +1,7 @@
 package com.nifs.backend.controller;
 
 import com.nifs.backend.dto.DesignationMasterDTO;
-import com.nifs.backend.service.DesignationService;
+import com.nifs.backend.service.DesignationServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +13,7 @@ import java.util.List;
 public class DesignationController {
 
     @Autowired
-    private DesignationService desService;
+    private DesignationServiceInterface desService;
 
 //    get all designations
     @GetMapping

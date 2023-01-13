@@ -24,11 +24,11 @@ function EmpCatAction({ params, rowId, setRowId, setDeleteId }: any) {
 	//update emp type
 	const handleUpdate = async () => {
 		setLoading(true);
-		const { employeeCategoryId, description, location, otRate } = params.row;
+		const { empCatId, description, location, otRate } = params.row;
 
 		setTimeout(async () => {
 			const result = await EmployeeCatService.editEmpCat({
-				employeeCategoryId,
+				empCatId,
 				description,
 				location,
 				otRate,
@@ -58,8 +58,8 @@ function EmpCatAction({ params, rowId, setRowId, setDeleteId }: any) {
 		setDeleteConfirm(false);
 
 		setTimeout(async () => {
-			const { employeeCategoryId } = params.row;
-			const result = await EmployeeCatService.deleteEmpCat(employeeCategoryId);
+			const { empCatId } = params.row;
+			const result = await EmployeeCatService.deleteEmpCat(empCatId);
 
 			toast.error(`Employee Type ${params.row.description} is deleted`, {
 				position: 'top-right',
@@ -71,7 +71,7 @@ function EmpCatAction({ params, rowId, setRowId, setDeleteId }: any) {
 				progress: undefined,
 				theme: 'dark',
 			});
-			setDeleteId(params.row.employeeCategoryId);
+			setDeleteId(params.row.empCatId);
 			setDeleteLoadng(false);
 		}, 1000);
 	};
@@ -194,7 +194,7 @@ function EmpCatAction({ params, rowId, setRowId, setDeleteId }: any) {
 									Do you want to delete Employee Category named as{' '}
 									<code className='px-2 bg-red-200 rounded-lg'>
 										{' '}
-										{params.row.employeeCategoryId} - {params.row.description}
+										{params.row.empCatId} - {params.row.description}
 									</code>
 									?
 								</div>

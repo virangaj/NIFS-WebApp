@@ -10,9 +10,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class EmployeeTypeDTO {
-    private String typeId;
+    private String empTypeId;
     private String typeName;
-    private String location;
+    private String locationId;
 
 
 }

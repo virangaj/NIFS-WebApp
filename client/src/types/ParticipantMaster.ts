@@ -1,7 +1,7 @@
 export default interface IParticipantMaster {
-    p_code: string,
+    pCode: string,
     date: any,
-    p_name: string,
+    pName: string,
     nic: string,
     gender: string,
     address: string,

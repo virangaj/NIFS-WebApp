@@ -1,14 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 import Stack from '@mui/material/Stack';
 
-import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
-import InputLabel from '@mui/material/InputLabel';
-
-
 import SelectFacility from './shared/SelectFacility';
 import SetChargers from './shared/SetChargers';
 import VenueMasterService from '../../services/sedu/VenueMasterService';
@@ -167,7 +161,7 @@ function VenueMaster() {
 
 			{!loading ? (
 				<form onSubmit={onSubmit}>
-					<div className='form-flex'>
+					<div className='grid grid-cols-1 md:grid-cols-2'>
 						<div className='form-left-section'>
 							<Box className='flex items-center justify-between input-field'>
 								<p>Venue Id - {v_id ? v_id : ''}</p>
@@ -194,142 +188,126 @@ function VenueMaster() {
 									New
 								</button>
 							</Box>
-                            
-                          
 
-							<Box className='input-field'>
-								<TextField
-									fullWidth
-									required
+							<div>
+								<label className='input-label' htmlFor='venueName'>
+									Venue Name
+								</label>
+
+								<input
 									id='outlined-basic'
-									label='Venue Name'
-									variant='outlined'
 									type='search'
+									className='mr-4 tailwind-text-box w-[90%]'
+									onChange={onChange}
 									name='venueName'
-									size='small'
-									onChange={onChange}
 									value={values.venueName}
+									required
 								/>
-							</Box>
-
-							<Box className='input-field'>
-								<InputLabel
-									id='demo-simple-select-label'
-									className='input-label'
-								>
+							</div>
+							<div>
+								<label className='input-label' htmlFor='type'>
 									Venue Type
-								</InputLabel>
-								<Select
-									fullWidth
-									labelId='demo-simple-select-label'
-									id='demo-simple-select'
+								</label>
+								<select
+									className='tailwind-text-box w-[90%]'
 									value={values.type}
+									id='outlined-basic'
 									name='type'
-									size='small'
-									label='Venue Type'
 									onChange={onChange}
 								>
-									{/* <MenuItem value='' disabled>Select a Type</MenuItem> */}
-									<MenuItem value='Room'>Room</MenuItem>
-									<MenuItem value='Lab'>Lab</MenuItem>
-									<MenuItem value='Auditorium'>Auditorium</MenuItem>
-								</Select>
-							</Box>
+									<option value='' disabled>
+										Select Venue Type
+									</option>
+									<option value='Room'>Room</option>
+									<option value='Lab'>Lab</option>
+									<option value='Auditorium'>Auditorium</option>
+								</select>
+							</div>
 
 							<SelectFacility
 								setFacilities={setFacilities}
 								facilities={facilities}
 							/>
 
-							<Box className='input-field'>
-								<TextField
-									fullWidth
-									required
+							<div>
+								<label className='input-label' htmlFor='availability'>
+									Availability
+								</label>
+
+								<input
 									id='outlined-basic'
-									label='Availability'
-									variant='outlined'
 									type='search'
-									name='availability'
-									size='small'
+									className='mr-4 tailwind-text-box w-[90%]'
 									onChange={onChange}
+									name='availability'
 									value={values.availability}
+									required
 								/>
-							</Box>
+							</div>
 						</div>
 
 						{/* form right section */}
 						<div className='form-right-section'>
-							<Box className='input-field'>
-								<InputLabel
-									id='demo-simple-select-label'
-									className='input-label'
-								>
+							<div>
+								<label className='input-label' htmlFor='location'>
 									Location
-								</InputLabel>
-								<Select
-									fullWidth
-									labelId='demo-simple-select-label'
-									id='demo-simple-select'
+								</label>
+								<select
+									className='tailwind-text-box w-[90%]'
 									value={values.location}
+									id='location'
 									name='location'
-									size='small'
-									label='Venue Name'
 									onChange={onChange}
 								>
-									<MenuItem value='' disabled>
+									<option disabled value=''>
 										Select Location
-									</MenuItem>
+									</option>
 									{locationData?.map((l: ILocationData, i: number) => {
 										return (
-											<MenuItem value={l.locationId}>{l.locationName}</MenuItem>
+											<option key={i} value={l.locationId}>
+												{l.locationName}
+											</option>
 										);
 									})}
-								</Select>
-							</Box>
+								</select>
+							</div>
+							<div>
+								<label className='input-label' htmlFor='remark'>
+									Remark
+								</label>
 
-							<Box className='input-field'>
-								<TextField
-									fullWidth
-									required
-									multiline
-									id='outlined-multiline-flexible'
-									label='Remark'
-									variant='outlined'
+								<input
+									id='outlined-basic'
 									type='search'
+									className='mr-4 tailwind-text-box w-[90%]'
+									onChange={onChange}
 									name='remark'
-									size='small'
-									onChange={onChange}
 									value={values.remark}
+									required
 								/>
-							</Box>
+							</div>
 
-							<Box className='input-field'>
-								<InputLabel
-									id='demo-simple-select-label'
-									className='input-label'
-								>
+							<div>
+								<label className='input-label' htmlFor='capacity'>
 									Capacity
-								</InputLabel>
-								<Select
-									fullWidth
-									labelId='demo-simple-select-label'
-									id='demo-simple-select'
+								</label>
+								<select
+									className='tailwind-text-box w-[90%]'
 									value={values.capacity}
+									id='capacity'
 									name='capacity'
-									size='small'
-									label='Venue Name'
 									onChange={onChange}
 								>
-									<MenuItem value={0} disabled>
+									<option value={0} disabled>
 										Select Capacity
-									</MenuItem>
-									<MenuItem value={10}>10</MenuItem>
-									<MenuItem value={20}>20</MenuItem>
-									<MenuItem value={30}>30</MenuItem>
-									<MenuItem value={50}>50</MenuItem>
-									<MenuItem value={100}>100</MenuItem>
-								</Select>
-							</Box>
+									</option>
+									<option value={10}>10</option>
+									<option value={20}>20</option>
+									<option value={30}>30</option>
+									<option value={50}>50</option>
+									<option value={100}>100</option>
+								</select>
+							</div>
 
 							<SetChargers chargers={chargers} setChargers={setChargers} />
 						</div>

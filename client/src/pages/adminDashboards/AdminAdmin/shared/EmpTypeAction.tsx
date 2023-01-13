@@ -23,10 +23,11 @@ function EmpTypeAction({ params, rowId, setRowId, setDeleteId }: any) {
 	//update emp type
 	const handleUpdate = async () => {
 		setLoading(true);
-		const { typeId, typeName, location } = params.row;
+		const { empTypeId, typeName, location } = params.row;
+		console.log(params.row);
 		setTimeout(async () => {
 			const result = await EmployeeTypeService.editEmpType({
-				typeId,
+				empTypeId,
 				typeName,
 				location,
 			});
@@ -44,7 +45,7 @@ function EmpTypeAction({ params, rowId, setRowId, setDeleteId }: any) {
 					theme: 'dark',
 				});
 			}
-			// console.log(typeId);
+			// console.log(empTypeId);
 			setLoading(false);
 		}, 1500);
 	};
@@ -54,9 +55,9 @@ function EmpTypeAction({ params, rowId, setRowId, setDeleteId }: any) {
 		setDeleteLoadng(true);
 		setDeleteConfirm(false);
 		setTimeout(async () => {
-			const { typeId } = params.row;
-			const result = await EmployeeTypeService.deleteEmpType(typeId);
-			// console.log('deleted ' + typeId);
+			const { empTypeId } = params.row;
+			const result = await EmployeeTypeService.deleteEmpType(empTypeId);
+			// console.log('deleted ' + empTypeId);
 			toast.error(`Employee Type ${params.row.typeName} is deleted`, {
 				position: 'top-right',
 				autoClose: 5000,
@@ -67,7 +68,7 @@ function EmpTypeAction({ params, rowId, setRowId, setDeleteId }: any) {
 				progress: undefined,
 				theme: 'dark',
 			});
-			setDeleteId(params.row.typeId);
+			setDeleteId(params.row.empTypeId);
 
 			setDeleteLoadng(false);
 		}, 1500);
@@ -192,7 +193,7 @@ function EmpTypeAction({ params, rowId, setRowId, setDeleteId }: any) {
 									Do you want to delete Employee Type named as{' '}
 									<code className='px-2 bg-red-200 rounded-lg'>
 										{' '}
-										{params.row.typeId} - {params.row.typeName}
+										{params.row.empTypeId} - {params.row.typeName}
 									</code>
 									?
 								</div>

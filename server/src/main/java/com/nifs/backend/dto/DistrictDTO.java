@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class DistrictDTO {
 
-    private int id;
+    private int districtId;
     private String dName;
 }

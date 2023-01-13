@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
@@ -10,252 +10,269 @@ import InputLabel from '@mui/material/InputLabel';
 import IVenueMaster from '../../types/VenueMaster';
 import Autocomplete from '@mui/material/Autocomplete';
 
-
 import IParticipantMaster from '../../types/ParticipantMaster';
 import CustomeDataPicker from '../../components/DataPicker';
 import ParticipantMasterService from '../../services/sedu/ParticipantMasterService';
 import Ripple from '../../components/Ripple';
 
-
 function ParticipantMaster() {
+	const [participantCode, setParticipantsCode] = useState('');
+	const [date, setDate] = React.useState<string | null>(null);
 
-    const [participantCode, setParticipantsCode] = useState('')
-    const [date, setDate] = React.useState<string | null>(null);
+	const [loading, setLoading] = useState(false);
 
-    const [loading, setLoading] = useState(false)
+	const [values, setValues] = useState<IParticipantMaster>({
+		pCode: '',
+		date: '',
+		pName: '',
+		nic: '',
+		gender: '',
+		address: '',
+		contactNo: '',
+		email: '',
+		instituteName: '',
+	});
 
+	const onChange = (e: any) => {
+		setValues((preState) => ({
+			...preState,
+			[e.target.name]: e.target.value,
+		}));
+	};
 
-    const [values, setValues] = useState<IParticipantMaster>({
-        p_code: '',
-        date: '',
-        p_name: '',
-        nic: '',
-        gender: '',
-        address: '',
-        contactNo: '',
-        email: '',
-        instituteName: '',
-    });
+	useEffect(() => {
+		setValues({
+			pCode: participantCode ? participantCode : '',
+			date: date ? date : '',
+			pName: values?.pName,
+			nic: values?.nic,
+			gender: values?.gender,
+			address: values?.address,
+			contactNo: values?.contactNo,
+			email: values?.email,
+			instituteName: values?.instituteName,
+		});
+	}, [participantCode, date]);
 
-    const onChange = (e: any) => {
-        setValues((preState) => ({
-            ...preState,
-            [e.target.name]: e.target.value
-        }))
-    }
+	const resetForm = () => {
+		setValues({
+			pCode: '',
+			date: '',
+			pName: '',
+			nic: '',
+			gender: '',
+			address: '',
+			contactNo: '',
+			email: '',
+			instituteName: '',
+		});
+	};
+	const onSubmit = async (e: any) => {
+		e.preventDefault();
 
-    useEffect(() => {
-        setValues({
-            p_code: participantCode ? participantCode : '',
-            date: date ? date : '',
-            p_name: values?.p_name,
-            nic: values?.nic,
-            gender: values?.gender,
-            address: values?.address,
-            contactNo: values?.contactNo,
-            email: values?.email,
-            instituteName: values?.instituteName,
-        });
-    }, [participantCode, date])
+		try {
+			setLoading(true);
+			// const result = await ParticipantMasterService.saveParticipant(values);
+			alert('done');
+		} catch (e: any) {
+			setLoading(true);
+			alert(e);
+		}
+		setLoading(false);
 
-    const resetForm = () => {
-        setValues({
-            p_code: '',
-            date: '',
-            p_name: '',
-            nic: '',
-            gender: '',
-            address: '',
-            contactNo: '',
-            email: '',
-            instituteName: '',
-        })
+		console.log(values);
+	};
+	console.log(date);
+	const participants = [
+		{ label: 'The Shawshank Redemption', year: 1994 },
+		{ label: 'The Godfather', year: 1972 },
+		{ label: 'The Godfather: Part II', year: 1974 },
+		{ label: 'The Dark Knight', year: 2008 },
+		{ label: '12 Angry Men', year: 1957 },
+		{ label: "Schindler's List", year: 1993 },
+		{ label: 'Pulp Fiction', year: 1994 },
+	];
+	return (
+		<div className='sub-body-content lg:!w-[60%]'>
+			<h1 className='page-title'>Participant Master</h1>
+			<hr className='horizontal-line' />
 
+			{!loading ? (
+				<form onSubmit={onSubmit} className='w-[90%] mx-auto'>
+					<div className='form-flex'>
+						<Box className='input-field lg:mr-10 mx-0 !lg:w-[60%] w-[100%]'>
+							<Autocomplete
+								disablePortal
+								id='combo-box-demo'
+								options={participants}
+								isOptionEqualToValue={(option: any) => option.label}
+								onChange={(event, value: any) => {
+									setParticipantsCode(value.label);
+								}}
+								renderInput={(params) => (
+									<TextField
+										{...params}
+										fullWidth
+										required
+										label='Participant Code'
+										name='participant'
+										value={participantCode}
+									/>
+								)}
+							/>
+						</Box>
 
+						<CustomeDataPicker
+							date={date}
+							setDate={setDate}
+							title='Date'
+							className='mx-0 lg:ml-10'
+						/>
+					</div>
 
-    }
-    const onSubmit = async (e: any) => {
-        e.preventDefault();
+					<div className="mb-4">
+						<label className='input-label' htmlFor='pName'>
+							Participant Name
+						</label>
 
-        try {
-            setLoading(true)
-            const result = await ParticipantMasterService.saveParticipant(values)
-            alert('done')
-        } catch (e: any) {
-            setLoading(true)
-            alert(e)
-        }
-        setLoading(false)
+						<input
+							id='pName'
+							type='text'
+							className='tailwind-text-box '
+							onChange={onChange}
+							name='pName'
+							value={values.pName}
+							required
+						/>
+					</div>
 
+					<div className='grid grid-cols-1 gap-10 md:grid-cols-2 place-content-between'>
+						<div className="mb-4">
+							<label className='input-label' htmlFor='nic'>
+								NIC
+							</label>
 
-        console.log(values)
-    }
-    console.log(date)
-    const participants = [
-        { label: 'The Shawshank Redemption', year: 1994 },
-        { label: 'The Godfather', year: 1972 },
-        { label: 'The Godfather: Part II', year: 1974 },
-        { label: 'The Dark Knight', year: 2008 },
-        { label: '12 Angry Men', year: 1957 },
-        { label: "Schindler's List", year: 1993 },
-        { label: 'Pulp Fiction', year: 1994 }
-    ]
-    return (
-        <div className='sub-body-content lg:!w-[60%]'>
-            <h1 className='page-title'>Participant Master</h1>
-            <hr className='horizontal-line' />
+							<input
+								id='nic'
+								type='text'
+								className='tailwind-text-box '
+								onChange={onChange}
+								name='nic'
+								value={values.nic}
+								required
+							/>
+						</div>
 
+						<div className="mb-4">
+							<label className='input-label' htmlFor='gender'>
+								Gender
+							</label>
+							<select
+								className='tailwind-text-box '
+								value={values.gender}
+								name='gender'
+								id='gender'
+								onChange={onChange}
+							>
+								<option value='' disabled>
+									Select Gender
+								</option>
+								<option value='male'>Male</option>
+								<option value='female'>Female</option>
+							</select>
+						</div>
+					</div>
 
+					<div className="mb-4">
+						<label className='input-label' htmlFor='address'>
+							Address
+						</label>
 
-            {!loading ? <form onSubmit={onSubmit}>
+						<input
+							id='address'
+							type='text'
+							className='tailwind-text-box '
+							onChange={onChange}
+							name='address'
+							value={values.address}
+							required
+						/>
+					</div>
+					<div className='grid grid-cols-1 gap-10 md:grid-cols-2'>
+						<div className="mb-4">
+							<label className='input-label' htmlFor='contactNo'>
+								Contact Number
+							</label>
 
-                <div className='form-flex lg:w-[90%]'>
-                    <Box className='input-field lg:mr-10 mx-0 !lg:w-[60%] w-[100%]'>
-                        <Autocomplete
-                            disablePortal
-                            id="combo-box-demo"
-                            options={participants}
-                            isOptionEqualToValue={(option: any) => option.label}
-                            onChange={(event, value: any) => { setParticipantsCode(value.label) }}
-                            renderInput={(params) =>
-                                <TextField {...params} fullWidth required label="Participant Code" name='participant' value={participantCode}
-                                />}
-                        />
-                    </Box>
+							<input
+								id='contactNo'
+								type='text'
+								className='tailwind-text-box '
+								onChange={onChange}
+								name='contactNo'
+								value={values.contactNo}
+								required
+							/>
+						</div>
 
-                    <CustomeDataPicker date={date} setDate={setDate} title='Date' className='lg:ml-10 mx-0' />
-                </div>
-                <Box className='input-field'>
+						<div className="mb-4">
+							<label className='input-label' htmlFor='email'>
+								Email
+							</label>
 
-                    <TextField fullWidth required
-                        id="outlined-basic"
-                        label="Participant Name"
-                        variant="outlined"
-                        type="text"
-                        name='p_name'
-                        size="small"
-                        onChange={onChange}
-                        value={values.p_name}
-                        autoComplete='name'
+							<input
+								id='email'
+								type='email'
+								className='tailwind-text-box '
+								onChange={onChange}
+								name='email'
+								value={values.email}
+								required
+							/>
+						</div>
+					</div>
 
-                    />
-                </Box>
-                <div className='form-flex lg:w-[90%]'>
+					<div className="mb-4">
+						<label className='input-label' htmlFor='instituteName'>
+							Institute Name
+						</label>
 
-                    <Box className='input-field lg:mt-7 mt-0 lg:mr-4 mx-0'>
+						<input
+							id='instituteName'
+							type='instituteName'
+							className='tailwind-text-box '
+							onChange={onChange}
+							name='instituteName'
+							value={values.instituteName}
+							required
+						/>
+					</div>
 
-                        <TextField fullWidth required
-                            id="outlined-basic"
-                            label="NIC"
-                            variant="outlined"
-                            type="text"
-                            name='nic'
-                            size="small"
-                            onChange={onChange}
-                            value={values.nic}
-                        />
-                    </Box>
-
-
-                    <Box className='input-field lg:ml-4 mx-0'>
-                        <InputLabel id="demo-simple-select-label" className='input-label'>Gender</InputLabel>
-                        <Select
-                            fullWidth
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            value={values.gender}
-                            name='gender'
-                            size='small'
-                            label="Venue Name"
-                            onChange={onChange}
-                            autoComplete='sex'
-                        >
-                            <MenuItem value='' disabled>Select Gender</MenuItem>
-                            <MenuItem value='male'>Male</MenuItem>
-                            <MenuItem value='female'>Female</MenuItem>
-
-                        </Select>
-                    </Box>
-                </div>
-
-                <Box className='input-field'>
-                    <TextField
-                        fullWidth required multiline id="outlined-basic"
-                        label="Address"
-                        variant="outlined"
-                        type="search"
-                        name='address'
-                        size="small"
-                        onChange={onChange}
-                        value={values.address}
-
-                    />
-                </Box>
-
-                <Box className='input-field'>
-                    <TextField
-                        fullWidth required id="outlined-basic"
-                        label="Contact Number"
-                        variant="outlined"
-                        type="search"
-                        name='contactNo'
-                        size="small"
-                        onChange={onChange}
-                        value={values.contactNo}
-                        autoComplete='tel'
-
-
-                    />
-                </Box>
-
-                <Box className='input-field'>
-                    <TextField
-                        fullWidth required id="outlined-basic"
-                        label="email"
-                        variant="outlined"
-                        type="email"
-                        name='email'
-                        size="small"
-                        onChange={onChange}
-                        value={values.email}
-                        autoComplete='email'
-
-
-                    />
-                </Box>
-
-                <Box className='input-field'>
-                    <TextField
-                        fullWidth required id="outlined-basic"
-                        label="Institute Name"
-                        variant="outlined"
-                        type="search"
-                        name='instituteName'
-                        size="small"
-                        onChange={onChange}
-                        value={values.instituteName}
-
-                    />
-                </Box>
-
-
-                <Stack
-                    direction="row"
-                    justifyContent="flex-end"
-                    alignItems="flex-end"
-                    spacing={2}
-                >
-                    <Button variant="contained" type='reset' color="error" onClick={resetForm}>Reset</Button>
-                    <Button variant="contained" type='submit'>Submit</Button>
-
-                </Stack>
-            </form>
-                :
-                <Ripple />
-            }
-
-        </div>
-    )
+					<Stack
+						direction='row'
+						justifyContent='flex-end'
+						alignItems='flex-end'
+						spacing={2}
+						className='admin-form-buton-stack'
+					>
+						<button
+							className='action-com-model-error-btn'
+							type='reset'
+							color='error'
+							onClick={resetForm}
+						>
+							Reset
+						</button>
+						<button className='action-com-model-sucess-btn' type='submit'>
+							Submit
+						</button>
+					</Stack>
+				</form>
+			) : (
+				<Ripple />
+			)}
+		</div>
+	);
 }
 
-export default ParticipantMaster
+export default ParticipantMaster;

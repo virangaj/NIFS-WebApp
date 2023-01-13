@@ -1,5 +1,5 @@
 export default interface IEmpTypeData {
-    typeId : string,
-    typeName : string,
-    location : string,
+	empTypeId: string;
+	typeName: string;
+	locationId: string;
 }

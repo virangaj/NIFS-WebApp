@@ -1,8 +1,8 @@
 package com.nifs.backend.controller;
 
 import com.nifs.backend.dto.DivisionMasterDTO;
-import com.nifs.backend.service.DivisionMasterService;
 import com.nifs.backend.model.DivisionMaster;
+import com.nifs.backend.service.DivisionMasterServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +15,7 @@ import java.util.Optional;
 public class DivisionMasterController {
 
     @Autowired
-    private DivisionMasterService divMasterService;
+    private DivisionMasterServiceInterface divMasterService;
     @GetMapping
     private List<DivisionMasterDTO> getAll(){
         return divMasterService.getAll();

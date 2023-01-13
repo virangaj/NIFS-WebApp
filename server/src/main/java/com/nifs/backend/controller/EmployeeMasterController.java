@@ -1,7 +1,7 @@
 package com.nifs.backend.controller;
 
 import com.nifs.backend.dto.EmployeeMasterDTO;
-import com.nifs.backend.service.EmployeeMasterService;
+import com.nifs.backend.service.EmployeeMasterServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.HttpMessageNotWritableException;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +14,7 @@ import java.util.List;
 public class EmployeeMasterController {
 
     @Autowired
-    private EmployeeMasterService empService;
+    private EmployeeMasterServiceInterface empService;
 
     //get all currently working employees
     @GetMapping

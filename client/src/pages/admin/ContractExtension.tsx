@@ -26,8 +26,8 @@ function ContractExtension() {
 		docNo: '',
 		date: '',
 		epfNo: 0,
-		designation: '',
-		division: '',
+		designationId: '',
+		divisionId: '',
 		hod: '',
 		remark: '',
 	});
@@ -37,8 +37,8 @@ function ContractExtension() {
 			docNo: values?.docNo,
 			date: requestDate ? requestDate : '',
 			epfNo: values?.epfNo,
-			designation: values?.designation,
-			division: values?.division,
+			designationId: values?.designationId,
+			divisionId: values?.divisionId,
 			hod: values?.hod,
 			remark: values?.remark,
 		});
@@ -49,8 +49,8 @@ function ContractExtension() {
 			docNo: getDocNo && getDocNo,
 			date: requestDate ? requestDate : '',
 			epfNo: values?.epfNo,
-			designation: values?.designation,
-			division: values?.division,
+			designationId: values?.designationId,
+			divisionId: values?.divisionId,
 			hod: values?.hod,
 			remark: values?.remark,
 		});
@@ -76,8 +76,8 @@ function ContractExtension() {
 			docNo: getDocNo && getDocNo,
 			date: requestDate ? requestDate : '',
 			epfNo: values?.epfNo,
-			designation: employee?.designation,
-			division: employee?.division,
+			designationId: employee?.designationId,
+			divisionId: employee?.divisionId,
 			hod: values?.hod,
 			remark: values?.remark,
 		});
@@ -87,7 +87,7 @@ function ContractExtension() {
 	//get designation and division
 	const retriveEmployeeDetails = (emp: any) => {
 		//get designation
-		DesignationMasterService.getDesignation(emp?.designation)
+		DesignationMasterService.getDesignation(emp?.designationId)
 			.then((res: any) => {
 				setDesignationData(res.data);
 			})
@@ -97,7 +97,7 @@ function ContractExtension() {
 
 		//get divions
 
-		DivisionMasterService.getDivision(emp?.division)
+		DivisionMasterService.getDivision(emp?.divisionId)
 			.then((res: any) => {
 				setDivisionData(res.data);
 			})
@@ -124,8 +124,8 @@ function ContractExtension() {
 			docNo: '',
 			date: '',
 			epfNo: 0,
-			designation: '',
-			division: '',
+			designationId: '',
+			divisionId: '',
 			hod: '',
 			remark: '',
 		});
@@ -137,8 +137,8 @@ function ContractExtension() {
 			docNo: '',
 			date: '',
 			epfNo: 0,
-			designation: '',
-			division: '',
+			designationId: '',
+			divisionId: '',
 			hod: '',
 			remark: '',
 		});

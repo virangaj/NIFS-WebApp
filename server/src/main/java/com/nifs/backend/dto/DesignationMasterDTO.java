@@ -11,9 +11,9 @@ import lombok.Setter;
 @NoArgsConstructor
 public class DesignationMasterDTO {
 
-    private String id;
+    private String designationId;
     private String designationName;
-    private String location;
+    private String locationId;
 
 
 }

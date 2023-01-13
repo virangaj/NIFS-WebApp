@@ -1,10 +1,10 @@
 export default interface IVenueMaster {
-    venueId: String,
-    venueName: String,
-    type: String,
+    venueId: string,
+    venueName: string,
+    type: string,
     availability: any,
-    location: String,
-    remark: String,
-    capacity: Number,
-    dateCreated: String
+    location: string,
+    remark: string,
+    capacity: number,
+    dateCreated: string
   }

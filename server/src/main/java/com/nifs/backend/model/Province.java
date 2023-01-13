@@ -24,11 +24,11 @@ public class Province {
     private String provinceName;
 
    //Relationship
-    @OneToMany(mappedBy = "province", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "provinceId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnoreProperties("province")
     private Set<District> districts;
 
-    @OneToMany(mappedBy = "province", cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "provinceId", cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JsonIgnoreProperties("province")
     private List<EmployeeMaster> employee;
 

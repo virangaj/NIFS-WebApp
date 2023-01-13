@@ -22,13 +22,13 @@ function EmployeeType() {
 	const [deleteId, setDeleteId] = useState('');
 
 	const [values, setValues] = useState<any>({
-		typeId: '',
+		empTypeId: '',
 		typeName: '',
-		location: '',
+		locationId: '',
 	});
 
 	useEffect(() => {
-		const filteredData = empTypes.filter((emp) => emp.typeId !== deleteId);
+		const filteredData = empTypes.filter((emp) => emp.empTypeId !== deleteId);
 		setEmpType(filteredData);
 	}, [deleteId]);
 
@@ -45,9 +45,9 @@ function EmployeeType() {
 	useEffect(() => {
 		// console.log(v_id)
 		setValues({
-			typeId: t_id,
+			empTypeId: t_id,
 			typeName: values?.typeName,
-			location: values?.location,
+			locationId: values?.locationId,
 		});
 		// console.log(values)
 	}, [t_id]);
@@ -77,9 +77,9 @@ function EmployeeType() {
 
 	const resetForm = () => {
 		setValues({
-			typeId: '',
+			empTypeId: '',
 			typeName: '',
-			location: '',
+			locationId: '',
 		});
 		setT_Id('');
 	};
@@ -108,11 +108,11 @@ function EmployeeType() {
 	const onSubmit = async (e: any) => {
 		e.preventDefault();
 
-		if (values.typeId !== '') {
+		if (values.empTypeId !== '') {
 			setLoading(true);
 			setTimeout(async () => {
 				const result = await EmployeeTypeService.saveEmpType(values);
-				if(result.data){
+				if (result.data) {
 					toast.success('New Employee Type is added', {
 						position: 'top-right',
 						autoClose: 5000,
@@ -123,8 +123,7 @@ function EmployeeType() {
 						progress: undefined,
 					});
 					resetForm();
-				}
-				else{
+				} else {
 					toast.error('Request cannot completed!', {
 						position: 'top-right',
 						autoClose: 5000,
@@ -134,7 +133,6 @@ function EmployeeType() {
 						draggable: true,
 						progress: undefined,
 					});
-				
 				}
 
 				setLoading(false);
@@ -155,7 +153,7 @@ function EmployeeType() {
 
 	const columns = useMemo(
 		() => [
-			{ field: 'typeId', headerName: 'Type Id', width: 160 },
+			{ field: 'empTypeId', headerName: 'Type Id', width: 160 },
 			{
 				field: 'typeName',
 				headerName: 'Type Name',
@@ -163,7 +161,7 @@ function EmployeeType() {
 				editable: true,
 			},
 			{
-				field: 'location',
+				field: 'locationId',
 				headerName: 'Location',
 				width: 200,
 				editable: true,
@@ -210,7 +208,7 @@ function EmployeeType() {
 							rowHeight={60}
 							columns={columns}
 							rows={empTypes}
-							getRowId={(row) => row.typeId}
+							getRowId={(row) => row.empTypeId}
 							rowsPerPageOptions={[5, 10, 20]}
 							pageSize={pageSize}
 							onPageSizeChange={(newPagesize) => setPageSize(newPagesize)}
@@ -250,14 +248,14 @@ function EmployeeType() {
 								</button>
 							</div>
 							<div>
-								<label className='input-label' htmlFor='location'>
+								<label className='input-label' htmlFor='locationId'>
 									Location
 								</label>
 								<select
 									className='tailwind-text-box'
-									value={values.location}
+									value={values.locationId}
 									id='location'
-									name='location'
+									name='locationId'
 									onChange={onChange}
 								>
 									<option disabled value=''>

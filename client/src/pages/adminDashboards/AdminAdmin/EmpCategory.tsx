@@ -27,10 +27,10 @@ function EmpCategory() {
 	const [deleteId, setDeleteId] = useState('');
 
 	const [values, setValues] = useState<any>({
-		employeeCategoryId: '',
+		empCatId: '',
 		description: '',
 		otRate: '',
-		location: '',
+		locationId: '',
 	});
 
 	useEffect(() => {
@@ -38,9 +38,7 @@ function EmpCategory() {
 		retreiveLocations();
 	}, []);
 	useEffect(() => {
-		const filteredData = empCats.filter(
-			(emp) => emp.employeeCategoryId !== deleteId
-		);
+		const filteredData = empCats.filter((emp) => emp.empCatId !== deleteId);
 		setEmpCats(filteredData);
 	}, [deleteId]);
 	useEffect(() => {
@@ -51,10 +49,10 @@ function EmpCategory() {
 	useEffect(() => {
 		// console.log(v_id)
 		setValues({
-			employeeCategoryId: cat_id,
+			empCatId: cat_id,
 			description: values?.description,
 			otRate: values?.otRate,
-			location: values?.location,
+			locationId: values?.locationId,
 		});
 		// console.log(values)
 	}, [cat_id]);
@@ -83,10 +81,10 @@ function EmpCategory() {
 	};
 	const resetForm = () => {
 		setValues({
-			employeeCategoryId: '',
+			empCatId: '',
 			description: '',
 			otRate: '',
-			location: '',
+			locationId: '',
 		});
 		setCat_Id('');
 	};
@@ -115,11 +113,11 @@ function EmpCategory() {
 	const onSubmit = async (e: any) => {
 		e.preventDefault();
 
-		if (values.employeeCategoryId !== '') {
+		if (values.empCatId !== '') {
 			setLoading(true);
 			setTimeout(async () => {
 				const result = await EmployeeCatService.saveEmpCat(values);
-				if(result.data){
+				if (result.data) {
 					toast.success('New Employee Category is added', {
 						position: 'top-right',
 						autoClose: 5000,
@@ -128,11 +126,9 @@ function EmpCategory() {
 						pauseOnHover: true,
 						draggable: true,
 						progress: undefined,
-						
 					});
 					resetForm();
-				}
-				else{
+				} else {
 					toast.error('Request cannot completed!', {
 						position: 'top-right',
 						autoClose: 5000,
@@ -141,7 +137,6 @@ function EmpCategory() {
 						pauseOnHover: true,
 						draggable: true,
 						progress: undefined,
-						
 					});
 				}
 				setLoading(false);
@@ -155,14 +150,13 @@ function EmpCategory() {
 				pauseOnHover: true,
 				draggable: true,
 				progress: undefined,
-				
 			});
 		}
 	};
 
 	const columns = useMemo(
 		() => [
-			{ field: 'employeeCategoryId', headerName: 'Category Id', width: 160 },
+			{ field: 'empCatId', headerName: 'Category Id', width: 160 },
 			{
 				field: 'description',
 				headerName: 'Category Name',
@@ -175,7 +169,7 @@ function EmpCategory() {
 				width: 200,
 				editable: true,
 			},
-			{ field: 'location', headerName: 'Location', width: 200 },
+			{ field: 'locationId', headerName: 'Location', width: 200 },
 			{
 				field: 'actions',
 				headerName: 'Action',
@@ -219,7 +213,7 @@ function EmpCategory() {
 							rowHeight={60}
 							columns={columns}
 							rows={empCats}
-							getRowId={(row) => row.employeeCategoryId}
+							getRowId={(row) => row.empCatId}
 							rowsPerPageOptions={[5, 10, 20]}
 							pageSize={pageSize}
 							onPageSizeChange={(newPagesize) => setPageSize(newPagesize)}
@@ -259,14 +253,14 @@ function EmpCategory() {
 							</div>
 
 							<div>
-								<label className='input-label' htmlFor='location'>
+								<label className='input-label' htmlFor='locationId'>
 									Location
 								</label>
 								<select
 									className='tailwind-text-box'
-									value={values.location}
+									value={values.locationId}
 									id='location'
-									name='location'
+									name='locationId'
 									onChange={onChange}
 								>
 									<option disabled value=''>

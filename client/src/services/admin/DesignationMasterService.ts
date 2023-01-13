@@ -46,13 +46,10 @@ const editDesignation = async (favJSON: any) => {
 	console.log(favJSON);
 	const response = await axios({
 		method: 'patch',
-		url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/designation/update/${favJSON.id}`,
+		url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/designation/update/${favJSON.designationId}`,
 		data: favJSON,
 		headers: { 'Content-Type': 'application/json; charset=utf-8' },
-
 	});
-
-	
 
 	// alert("Favourite created --- "+ response);
 	return response;

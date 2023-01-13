@@ -38,20 +38,20 @@ public class DivisionMaster {
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
     @JoinColumn(name = "location_id", referencedColumnName = "location_id", nullable = false)
     @JsonIgnoreProperties("divisions")
-    private Locations location;
+    private Locations locationId;
 
 
     //employee
-    @OneToMany(mappedBy = "division", cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "divisionId", cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JsonIgnoreProperties("division")
     private List<EmployeeMaster> employee;
 
 
 //    constructor for create new instance
-    public DivisionMaster(String divisionId, String name, Date createdDate, Locations location) {
+    public DivisionMaster(String divisionId, String name, Date createdDate, Locations locationId) {
         this.divisionId = divisionId;
         this.name = name;
         this.createdDate = createdDate;
-        this.location = location;
+        this.locationId = locationId;
     }
 }

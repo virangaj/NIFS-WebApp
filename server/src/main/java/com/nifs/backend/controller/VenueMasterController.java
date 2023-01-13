@@ -4,7 +4,7 @@ import com.nifs.backend.model.Charges;
 import com.nifs.backend.model.Facility;
 import com.nifs.backend.model.VenueCharge;
 import com.nifs.backend.model.VenueMaster;
-import com.nifs.backend.service.VenueMasterService;
+import com.nifs.backend.service.VenueMasterServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,8 +17,9 @@ import java.util.Optional;
 public class VenueMasterController {
 
     @Autowired
-    private VenueMasterService venueService;
+    private VenueMasterServiceInterface venueService;
 
+    //get new venue id
     @GetMapping("/newid")
     private String returnNewVenueId() {
         return venueService.returnNewVenueId();
@@ -30,21 +31,25 @@ public class VenueMasterController {
         return venueService.returnVenue(venueId);
     }
 
+    //return all charges
     @GetMapping("/allcharges")
     private List<VenueCharge> returnAllCharges(){
         return venueService.returnAllCharges();
     }
+
+   //return all charges by id
     @GetMapping("/allcharges/{id}")
     private Optional<VenueCharge> returnAllChargesById(@PathVariable int id){
         return venueService.returnAllChargesById(id);
     }
 
-
+// get all venues
     @GetMapping
     private List<VenueMaster> getAll() {
         return venueService.getAll();
     }
 
+    //create new venue
     @PostMapping
     private Boolean createVenue(@RequestBody VenueMaster venueData) {
         return venueService.createVenue(venueData);
@@ -68,12 +73,13 @@ public class VenueMasterController {
     }
 
 
-
+//delete venue
     @DeleteMapping("/delete/{venue_id}")
     private Boolean deleteVenue(@PathVariable String venue_id) {
         return venueService.deleteVenue(venue_id);
     }
 
+    //remove facility
     @PutMapping("/remove/facility/{venueId}")
     private VenueMaster removeFacility(@PathVariable String venueId, @RequestBody Facility facData){
         return venueService.removeFacility(venueId, facData);

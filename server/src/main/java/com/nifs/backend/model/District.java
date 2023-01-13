@@ -28,9 +28,9 @@ public class District {
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     @JoinColumn(name = "province_id", referencedColumnName = "province_id", nullable = false)
     @JsonIgnoreProperties("districts")
-    private Province province;
+    private Province provinceId;
 
-    @OneToMany(mappedBy = "district", cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "districtId", cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JsonIgnoreProperties("district")
     private List<EmployeeMaster> employee;
 
