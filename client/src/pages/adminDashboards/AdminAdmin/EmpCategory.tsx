@@ -1,21 +1,16 @@
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { useEffect, useMemo, useState } from 'react';
 import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
+
 import Box from '@mui/material/Box';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
-import InputLabel from '@mui/material/InputLabel';
+import { toast } from 'react-toastify';
 
 import EmployeeCatService from '../../../services/admin/EmployeeCatService';
 import EmpCatAction from './shared/EmpCatAction';
-import EmpTypeAction from './shared/EmpTypeAction';
 import Ripple from '../../../components/Ripple';
 import ILocationData from '../../../types/LocationData';
 import LocationMasterService from '../../../services/admin/LocationMasterService';
 import { HiX } from 'react-icons/hi';
-import { toast } from 'react-toastify';
 
 function EmpCategory() {
 	const [empCats, setEmpCats] = useState<Array<any>>([]);

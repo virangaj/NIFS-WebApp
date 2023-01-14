@@ -5,9 +5,13 @@ package com.nifs.backend.controller;
 import com.nifs.backend.model.Charges;
 import com.nifs.backend.service.ChargeServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -32,28 +36,123 @@ public class ChargeController {
     }
 
     @GetMapping
-    List<Charges> returnData() {
-        return chargeService.getAll();
+    ResponseEntity<?> returnData() {
+        Map<String, Object> map = new LinkedHashMap<String, Object>();
+        try {
+            List<Charges> c = chargeService.getAll();
+            if (!c.isEmpty()) {
+
+                //return success response code
+                map.put("status", 1);
+                map.put("code", 200);
+                map.put("data", c);
+                return new ResponseEntity<>(map, HttpStatus.OK);
+            }
+
+            //return error response code
+            map.put("status", 0);
+            map.put("code", 404);
+            map.put("message", "Charges data is not found. Please try again!");
+            return new ResponseEntity<>(map, HttpStatus.OK);
+
+        } catch (Exception e) {
+
+            //return exception response code
+            System.out.println(e.toString());
+            map.put("status", 0);
+            map.put("code", 400);
+            map.put("error", e.toString());
+            map.put("message", "Internal server error. Please try again!");
+            return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
+        }
     }
 
     //create new charge
     @PostMapping
-    String createCharge(@RequestBody Charges chargeData) {
-        return chargeService.createCharge(chargeData);
+    ResponseEntity<?> createCharge(@RequestBody Charges chargeData) {
+        Map<String, Object> map = new LinkedHashMap<String, Object>();
+        try {
+            Charges c = chargeService.createCharge(chargeData);
+            if (c != null) {
+                //return success response code
+                map.put("status", 1);
+                map.put("code", 201);
+                map.put("data", c);
+                return new ResponseEntity<>(map, HttpStatus.OK);
+            }
+            //return error response code
+            map.put("status", 0);
+            map.put("code", 404);
+            map.put("message", "Request Failed. Please Try Again!");
+            return new ResponseEntity<>(map, HttpStatus.OK);
+
+        } catch (Exception e) {
+            //return exception response code
+            System.out.println(e.toString());
+            map.put("status", 0);
+            map.put("code", 400);
+            map.put("error", e.toString());
+            map.put("message", "Internal server error. Please try again!");
+            return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
+        }
     }
 
 
     //    update charge
     @PutMapping("/update/{chargeId}")
-    Boolean updateCharge(@PathVariable String chargeId, @RequestBody Charges chargeData) {
-        return chargeService.updateCharge(chargeId, chargeData);
+    ResponseEntity<?> updateCharge(@PathVariable String chargeId, @RequestBody Charges chargeData) {
+        Map<String, Object> map = new LinkedHashMap<String, Object>();
+        try{
+           if(chargeService.updateCharge(chargeId, chargeData)){
+               //return success response code
+               map.put("status", 1);
+               map.put("code", 201);
+               map.put("message", "Update Request completed!");
+               return new ResponseEntity<>(map, HttpStatus.OK);
+           }
+            //return error response code
+            map.put("status", 0);
+            map.put("code", 404);
+            map.put("message", "Request Failed. Please Try Again!");
+            return new ResponseEntity<>(map, HttpStatus.OK);
+       }catch (Exception e) {
+            //return exception response code
+           System.out.println(e.toString());
+           map.put("status", 0);
+           map.put("code", 400);
+           map.put("error", e.toString());
+           map.put("message", "Internal server error. Please try again!");
+           return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
+       }
     }
 
 
     //    delete charge
     @DeleteMapping("/delete/{chargeId}")
-    private Boolean deleteCharge(@PathVariable String chargeId) {
-        return chargeService.deleteCharge(chargeId);
+    ResponseEntity<?> deleteCharge(@PathVariable String chargeId) {
+        Map<String, Object> map = new LinkedHashMap<String, Object>();
+
+        try{
+            if (chargeService.deleteCharge(chargeId)) {
+                map.put("status", 1);
+                map.put("code", 201);
+                map.put("message", "Charge is Deleted Successfully!");
+                return new ResponseEntity<>(map, HttpStatus.OK);
+            }
+            //return error response code
+            map.put("status", 0);
+            map.put("code", 404);
+            map.put("message", "Request cannot be completed!");
+            return new ResponseEntity<>(map, HttpStatus.OK);
+        }catch (Exception e) {
+            //return exception response code
+            System.out.println(e.toString());
+            map.put("status", 0);
+            map.put("code", 400);
+            map.put("error", e.toString());
+            map.put("message", "Internal server error. Please try again!");
+            return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
+        }
     }
 
 }

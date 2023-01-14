@@ -7,10 +7,18 @@ import java.util.Optional;
 
 public interface ChargeServiceInterface {
 
-    String createCharge(Charges chargeData);
+    //create charge
+    Charges createCharge(Charges chargeData);
+    //get all charges
     List<Charges> getAll();
+    //return new charge
     String returnNewChargeId();
+
+    //return charge by id
     Optional<Charges> returnCharge(String chargeId);
+    //delete charge
     Boolean deleteCharge(String chargeId);
+
+    //update charge
     Boolean updateCharge(String chargeId, Charges chargeData);
 }
