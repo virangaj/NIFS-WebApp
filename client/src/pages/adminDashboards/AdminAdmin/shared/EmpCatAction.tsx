@@ -24,19 +24,32 @@ function EmpCatAction({ params, rowId, setRowId, setDeleteId }: any) {
 	//update emp type
 	const handleUpdate = async () => {
 		setLoading(true);
-		const { empCatId, description, location, otRate } = params.row;
+		const { empCatId, description, locationId, otRate } = params.row;
 
 		setTimeout(async () => {
 			const result = await EmployeeCatService.editEmpCat({
 				empCatId,
 				description,
-				location,
+				locationId,
 				otRate,
 			});
-			if (result) {
+			if (result.data.status === 1) {
 				setSuccess(true);
 				setRowId(null);
-				toast.success(`Employee Type updated to ${description}`, {
+				toast.success(`Emplyee Category updated to ${description}`, {
+					position: 'top-right',
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					theme: 'dark',
+				});
+			} else {
+				setSuccess(false);
+				setRowId(null);
+				toast.success(`${result.data.message}`, {
 					position: 'top-right',
 					autoClose: 5000,
 					hideProgressBar: false,
@@ -58,20 +71,33 @@ function EmpCatAction({ params, rowId, setRowId, setDeleteId }: any) {
 		setDeleteConfirm(false);
 
 		setTimeout(async () => {
-			const { empCatId } = params.row;
+			const { empCatId, description } = params.row;
 			const result = await EmployeeCatService.deleteEmpCat(empCatId);
 
-			toast.error(`Employee Type ${params.row.description} is deleted`, {
-				position: 'top-right',
-				autoClose: 5000,
-				hideProgressBar: false,
-				closeOnClick: true,
-				pauseOnHover: true,
-				draggable: true,
-				progress: undefined,
-				theme: 'dark',
-			});
-			setDeleteId(params.row.empCatId);
+			if (result.data.status === 1) {
+				toast.error(`${description} is deleted`, {
+					position: 'top-right',
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					theme: 'dark',
+				});
+				setDeleteId(empCatId);
+			} else {
+				toast.error(`${result.data.message}`, {
+					position: 'top-right',
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					theme: 'dark',
+				});
+			}
 			setDeleteLoadng(false);
 		}, 1000);
 	};

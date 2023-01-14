@@ -1,6 +1,7 @@
 package com.nifs.backend.service;
 
 import com.nifs.backend.dto.EmpCatDTO;
+import com.nifs.backend.model.DesignationMaster;
 import com.nifs.backend.model.EmployeeCategory;
 
 import java.util.List;
@@ -8,10 +9,10 @@ import java.util.Optional;
 
 public interface EmployeeCatServiceInterface {
     //return all category
-    List<EmpCatDTO> getAll();
+    List<EmpCatDTO> getAllEmpCategories();
 
     //create new category
-    Boolean createNewCategory(EmpCatDTO e);
+    EmployeeCategory createNewCategory(EmpCatDTO e);
     //    return new employee category id
     String returnNewEmpCatId();
     //    return empCat by id
