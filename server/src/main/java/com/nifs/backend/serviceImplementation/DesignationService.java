@@ -28,18 +28,15 @@ public class DesignationService implements DesignationServiceInterface {
 
     //    get all designations
     public List<DesignationMasterDTO> getAllDesignations() {
-        try {
-            List<DesignationMaster> dm = desRepo.findAll();
-            List<DesignationMasterDTO> dDTO = new ArrayList<DesignationMasterDTO>();
-            for (DesignationMaster d : dm) {
-                DesignationMasterDTO dDTOSingle = new DesignationMasterDTO(d.getDesignationId(), d.getDesignationName(), d.getLocationId().getLocationName());
-                dDTO.add(dDTOSingle);
-            }
-            return dDTO;
-        } catch (Exception e) {
-            System.out.println(e.toString());
-            return null;
+
+        List<DesignationMaster> dm = desRepo.findAll();
+        List<DesignationMasterDTO> dDTO = new ArrayList<DesignationMasterDTO>();
+        for (DesignationMaster d : dm) {
+            DesignationMasterDTO dDTOSingle = new DesignationMasterDTO(d.getDesignationId(), d.getDesignationName(), d.getLocationId().getLocationName());
+            dDTO.add(dDTOSingle);
         }
+        return dDTO;
+
     }
 
     // create designation
@@ -56,7 +53,7 @@ public class DesignationService implements DesignationServiceInterface {
 
     }
 
-//    delete designation
+    //    delete designation
     public boolean deleteDesignation(String id) {
 
 
@@ -64,7 +61,7 @@ public class DesignationService implements DesignationServiceInterface {
             desRepo.deleteDesignation(id);
             return true;
         }
-        else{
+        else {
             return false;
         }
 
@@ -86,7 +83,7 @@ public class DesignationService implements DesignationServiceInterface {
 
     }
 
-//    get new id
+    //    get new id
     public String returnNewId() {
         try {
             String lastId = desRepo.returnLastId();
@@ -106,6 +103,7 @@ public class DesignationService implements DesignationServiceInterface {
             return "Request Fail";
         }
     }
+
     //update designation
     public Boolean updateDesignation(String id, DesignationMasterDTO dto) {
 

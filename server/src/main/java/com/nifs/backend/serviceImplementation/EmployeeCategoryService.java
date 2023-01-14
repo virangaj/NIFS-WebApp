@@ -1,6 +1,5 @@
 package com.nifs.backend.serviceImplementation;
 
-import com.nifs.backend.model.DesignationMaster;
 import com.nifs.backend.repository.LocationRepository;
 import com.nifs.backend.model.Locations;
 import com.nifs.backend.dto.EmpCatDTO;
@@ -42,7 +41,7 @@ public class EmployeeCategoryService implements EmployeeCatServiceInterface {
     }
 
     //create new category
-    public EmployeeCategory createNewCategory(EmpCatDTO e) {
+    public boolean createNewCategory(EmpCatDTO e) {
 
             if (empCatRepo.returnEmployeeCategory(e.getEmpCatId()) == null) {
 
@@ -51,11 +50,11 @@ public class EmployeeCategoryService implements EmployeeCatServiceInterface {
 
                 EmployeeCategory empCat = new EmployeeCategory(e.getEmpCatId(), e.getDescription(), Float.parseFloat(e.getOtRate()), d, l);
 
-                return empCatRepo.save(empCat);
-
+                empCatRepo.save(empCat);
+                return true;
             }
             else {
-                return null;
+                return false;
             }
 
     }

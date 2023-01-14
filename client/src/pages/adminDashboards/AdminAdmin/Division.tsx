@@ -115,7 +115,7 @@ function Division() {
 			setLoading(true);
 			setTimeout(async () => {
 				const result = await DivisionMasterService.saveDivision(values);
-				if (result.data) {
+				if (result.data.status === 1) {
 					toast.success('New Division is added', {
 						position: 'top-right',
 						autoClose: 5000,

@@ -116,7 +116,7 @@ function Designation() {
 			setTimeout(async () => {
 				const result = await DesignationMasterService.saveDesignation(values);
 				// console.log(result)
-				if (result.data) {
+				if (result.data.status === 1) {
 					toast.success('New Designation is added', {
 						position: 'top-right',
 						autoClose: 5000,

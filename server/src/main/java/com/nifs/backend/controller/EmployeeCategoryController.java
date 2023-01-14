@@ -27,7 +27,7 @@ public class EmployeeCategoryController {
 
 //    get all employee categories
     @GetMapping
-    ResponseEntity<?> getAllEmpCategories(){
+    private ResponseEntity<?> getAllEmpCategories(){
 
         Map<String, Object> map = new LinkedHashMap<String, Object>();
         try {
@@ -132,18 +132,17 @@ public class EmployeeCategoryController {
 
         Map<String, Object> map = new LinkedHashMap<String, Object>();
         try {
-            EmployeeCategory d = empCatService.createNewCategory(empCatData);
-            if (d != null) {
+
+            if (empCatService.createNewCategory(empCatData)) {
                 //return success response code
                 map.put("status", 1);
                 map.put("code", 201);
-                map.put("data", d);
                 return new ResponseEntity<>(map, HttpStatus.OK);
             }
             //return error response code
             map.put("status", 0);
             map.put("code", 404);
-            map.put("message", "Failed to create new Designation. Please Try Again!");
+            map.put("message", "Failed to create new Employee Category. Please Try Again!");
             return new ResponseEntity<>(map, HttpStatus.OK);
 
         } catch (Exception e) {

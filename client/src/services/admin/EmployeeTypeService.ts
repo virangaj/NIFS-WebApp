@@ -13,7 +13,7 @@ const config = {
 axios.defaults.baseURL = process.env.REACT_APP_BACKEND_SERVER;
 
 const getAllEmpTypes = () => {
-	return http.get<Array<any>>('/admin/employeetype');
+	return http.get<any>('/admin/employeetype');
 };
 
 const getEmpType = (id: any) => {

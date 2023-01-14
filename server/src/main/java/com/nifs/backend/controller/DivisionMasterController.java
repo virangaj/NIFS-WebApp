@@ -143,7 +143,7 @@ public class DivisionMasterController {
             //return error response code
             map.put("status", 0);
             map.put("code", 404);
-            map.put("message", "Failed to create new Designation. Please Try Again!");
+            map.put("message", "Failed to create new Division. Please Try Again!");
             return new ResponseEntity<>(map, HttpStatus.OK);
 
         } catch (Exception e) {

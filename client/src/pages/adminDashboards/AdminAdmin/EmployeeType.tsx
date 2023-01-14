@@ -56,8 +56,19 @@ function EmployeeType() {
 	const retreiveEmpTypes = () => {
 		EmployeeTypeService.getAllEmpTypes()
 			.then((res: any) => {
-				setEmpType(res.data);
-				console.log(empTypes);
+				if (res.data.status === 1) {
+					setEmpType(res.data.data);
+				} else {
+					toast.error(`${res.data.message}`, {
+						position: 'top-right',
+						autoClose: 5000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+					});
+				}
 			})
 			.catch((e: any) => {
 				console.log(e);
@@ -112,7 +123,7 @@ function EmployeeType() {
 			setLoading(true);
 			setTimeout(async () => {
 				const result = await EmployeeTypeService.saveEmpType(values);
-				if (result.data) {
+				if (result.data.status === 1) {
 					toast.success('New Employee Type is added', {
 						position: 'top-right',
 						autoClose: 5000,
@@ -122,6 +133,7 @@ function EmployeeType() {
 						draggable: true,
 						progress: undefined,
 					});
+
 					resetForm();
 				} else {
 					toast.error('Request cannot completed!', {
@@ -207,7 +219,7 @@ function EmployeeType() {
 							components={{ Toolbar: GridToolbar }}
 							rowHeight={60}
 							columns={columns}
-							rows={empTypes}
+							rows={empTypes && empTypes}
 							getRowId={(row) => row.empTypeId}
 							rowsPerPageOptions={[5, 10, 20]}
 							pageSize={pageSize}

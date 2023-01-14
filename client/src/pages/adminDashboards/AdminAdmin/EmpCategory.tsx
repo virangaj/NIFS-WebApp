@@ -123,7 +123,7 @@ function EmpCategory() {
 			setLoading(true);
 			setTimeout(async () => {
 				const result = await EmployeeCatService.saveEmpCat(values);
-				if (result.data) {
+				if (result.data.status === 1) {
 					toast.success('New Employee Category is added', {
 						position: 'top-right',
 						autoClose: 5000,
