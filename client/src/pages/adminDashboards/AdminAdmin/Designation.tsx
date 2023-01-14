@@ -52,8 +52,19 @@ function Designation() {
 	const retreiveDesignations = () => {
 		DesignationMasterService.getAllDesignations()
 			.then((res: any) => {
-				setDesignationData(res.data);
-				console.log(designationData);
+				if (res.data.status === 1) {
+					setDesignationData(res.data.data);
+				} else {
+					toast.error(`${res.data.message}`, {
+						position: 'top-right',
+						autoClose: 5000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+					});
+				}
 			})
 			.catch((e: any) => {
 				console.log(e);
@@ -64,7 +75,7 @@ function Designation() {
 		LocationMasterService.getAllLocations()
 			.then((res: any) => {
 				setLocationData(res.data);
-				console.log(locationData);
+				// console.log(locationData);
 			})
 			.catch((e: any) => {
 				console.log(e);
@@ -190,7 +201,7 @@ function Designation() {
 							components={{ Toolbar: GridToolbar }}
 							rowHeight={60}
 							columns={columns}
-							rows={designationData}
+							rows={designationData && designationData}
 							getRowId={(row) => row.designationId}
 							rowsPerPageOptions={[10, 20, 30]}
 							pageSize={pageSize}

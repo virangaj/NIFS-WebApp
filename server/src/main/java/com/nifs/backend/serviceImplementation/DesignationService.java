@@ -43,21 +43,19 @@ public class DesignationService implements DesignationServiceInterface {
     }
 
     // create designation
-    public Boolean createDesignation(DesignationMasterDTO d) {
+    public DesignationMaster createDesignation(DesignationMasterDTO d) {
         try {
             if (desRepo.returnDesignation(d.getDesignationId()) == null) {
 
                 Date date = new Date();
                 Locations l = locRepo.getLocation(d.getLocationId());
                 DesignationMaster dm = new DesignationMaster(d.getDesignationId(), d.getDesignationName(), date, l);
-                desRepo.save(dm);
-                return true;
-
+                return desRepo.save(dm);
             }
-            return false;
+            return null;
         } catch (Exception e) {
             System.out.println(e.toString());
-            return false;
+            return null;
         }
     }
 
@@ -69,7 +67,9 @@ public class DesignationService implements DesignationServiceInterface {
                 desRepo.deleteDesignation(id);
                 return true;
             }
-            return false;
+            else{
+                return false;
+            }
         } catch (Exception e) {
             System.out.println(e.toString());
             return false;

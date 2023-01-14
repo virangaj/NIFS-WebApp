@@ -24,7 +24,7 @@ function SetChargers({ setChargers, chargers }: any) {
 	const retreiveCharges = () => {
 		VenueOtherService.getAllCharges()
 			.then((res: any) => {
-				console.log(res.data);
+				// console.log(res.data);
 				if (res.data.status === 1) {
 					setChargesData(res.data.data);
 				} else {

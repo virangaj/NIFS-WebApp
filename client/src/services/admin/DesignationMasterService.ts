@@ -13,7 +13,7 @@ const config = {
 axios.defaults.baseURL = process.env.REACT_APP_BACKEND_SERVER;
 
 const getAllDesignations = () => {
-	return http.get<Array<any>>('/admin/designation');
+	return http.get<any>('/admin/designation');
 };
 
 const getDesignation = (id: any) => {

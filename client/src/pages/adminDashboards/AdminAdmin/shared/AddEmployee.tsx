@@ -217,7 +217,19 @@ function AddEmployee() {
 
 			DesignationMasterService.getDesignationByLocationId(id)
 				.then((res: any) => {
-					setDesignationData(res.data);
+					if (res.data.status === 1) {
+						setDesignationData(res.data.data);
+					} else {
+						toast.error(`${res.data.message}`, {
+							position: 'top-right',
+							autoClose: 5000,
+							hideProgressBar: false,
+							closeOnClick: true,
+							pauseOnHover: true,
+							draggable: true,
+							progress: undefined,
+						});
+					}
 					// console.log(designationData);
 				})
 				.catch((e: any) => {
@@ -835,21 +847,33 @@ function AddEmployee() {
 										onChange={onChange}
 									>
 										{empData.locationId ? (
-											<option disabled value=''>
-												Select Designation
-											</option>
+											<>
+												{designationData ? (
+													<>
+														<option disabled value=''>
+															Select Designation
+														</option>
+														{designationData?.map(
+															(l: IDesignationData, i: number) => {
+																return (
+																	<option key={i} value={l.designationId}>
+																		{l.designationName}
+																	</option>
+																);
+															}
+														)}
+													</>
+												) : (
+													<option value='' disabled>
+														Data not found
+													</option>
+												)}
+											</>
 										) : (
 											<option disabled value=''>
 												Select Location First
 											</option>
 										)}
-										{designationData?.map((l: IDesignationData, i: number) => {
-											return (
-												<option key={i} value={l.designationId}>
-													{l.designationName}
-												</option>
-											);
-										})}
 									</select>
 								</div>
 
@@ -865,21 +889,33 @@ function AddEmployee() {
 										onChange={onChange}
 									>
 										{empData.locationId ? (
-											<option disabled value=''>
-												Select Division
-											</option>
+											<>
+												{divisionData ? (
+													<>
+														<option disabled value=''>
+															Select Designation
+														</option>
+														{divisionData?.map(
+															(l: IDivisionData, i: number) => {
+																return (
+																	<option key={i} value={l.divisionId}>
+																		{l.name}
+																	</option>
+																);
+															}
+														)}
+													</>
+												) : (
+													<option value='' disabled>
+														Data not found
+													</option>
+												)}
+											</>
 										) : (
 											<option disabled value=''>
 												Select Location First
 											</option>
 										)}
-										{divisionData?.map((l: IDivisionData, i: number) => {
-											return (
-												<option key={i} value={l.divisionId}>
-													{l.name}
-												</option>
-											);
-										})}
 									</select>
 								</div>
 								<div className='hidden lg:block'></div>

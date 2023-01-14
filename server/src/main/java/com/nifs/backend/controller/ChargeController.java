@@ -83,7 +83,7 @@ public class ChargeController {
             //return error response code
             map.put("status", 0);
             map.put("code", 404);
-            map.put("message", "Request Failed. Please Try Again!");
+            map.put("message", "Failed to create new Charge. Please Try Again!");
             return new ResponseEntity<>(map, HttpStatus.OK);
 
         } catch (Exception e) {
@@ -136,7 +136,7 @@ public class ChargeController {
             if (chargeService.deleteCharge(chargeId)) {
                 map.put("status", 1);
                 map.put("code", 201);
-                map.put("message", "Charge is Deleted Successfully!");
+                map.put("message", "Charge is successfully deleted!");
                 return new ResponseEntity<>(map, HttpStatus.OK);
             }
             //return error response code

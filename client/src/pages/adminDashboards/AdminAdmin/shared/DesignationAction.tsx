@@ -29,10 +29,24 @@ function DesignationAction({ params, rowId, setRowId, setDeleteId }: any) {
 				designationName,
 				location,
 			});
-			if (result) {
+
+			if (result.data.status === 1) {
 				setSuccess(true);
 				setRowId(null);
 				toast.success(`Employee Type updated to ${designationName}`, {
+					position: 'top-right',
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					theme: 'dark',
+				});
+			} else {
+				setSuccess(false);
+				setRowId(null);
+				toast.success(`${result.data.message}`, {
 					position: 'top-right',
 					autoClose: 5000,
 					hideProgressBar: false,
@@ -55,18 +69,31 @@ function DesignationAction({ params, rowId, setRowId, setDeleteId }: any) {
 			const result = await DesignationMasterService.deleteDesignation(
 				designationId
 			);
-			// console.log('deleted ' + typeId);
-			toast.error(`Employee Type ${params.row.designationName} is deleted`, {
-				position: 'top-right',
-				autoClose: 5000,
-				hideProgressBar: false,
-				closeOnClick: true,
-				pauseOnHover: true,
-				draggable: true,
-				progress: undefined,
-				theme: 'dark',
-			});
-			setDeleteId(params.row.designationId);
+			console.log(result);
+			if (result.data.status === 1) {
+				toast.error(`Employee Type ${params.row.designationName} is deleted`, {
+					position: 'top-right',
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					theme: 'dark',
+				});
+				setDeleteId(params.row.designationId);
+			} else {
+				toast.error(`${result.data.message}`, {
+					position: 'top-right',
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					theme: 'dark',
+				});
+			}
 
 			setDeleteLoadng(false);
 		}, 1500);
