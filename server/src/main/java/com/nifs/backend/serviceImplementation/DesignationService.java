@@ -44,55 +44,46 @@ public class DesignationService implements DesignationServiceInterface {
 
     // create designation
     public DesignationMaster createDesignation(DesignationMasterDTO d) {
-        try {
-            if (desRepo.returnDesignation(d.getDesignationId()) == null) {
 
-                Date date = new Date();
-                Locations l = locRepo.getLocation(d.getLocationId());
-                DesignationMaster dm = new DesignationMaster(d.getDesignationId(), d.getDesignationName(), date, l);
-                return desRepo.save(dm);
-            }
-            return null;
-        } catch (Exception e) {
-            System.out.println(e.toString());
-            return null;
+        if (desRepo.returnDesignation(d.getDesignationId()) == null) {
+
+            Date date = new Date();
+            Locations l = locRepo.getLocation(d.getLocationId());
+            DesignationMaster dm = new DesignationMaster(d.getDesignationId(), d.getDesignationName(), date, l);
+            return desRepo.save(dm);
         }
+        return null;
+
     }
 
 //    delete designation
     public boolean deleteDesignation(String id) {
 
-        try {
-            if (desRepo.returnDesignation(id) != null) {
-                desRepo.deleteDesignation(id);
-                return true;
-            }
-            else{
-                return false;
-            }
-        } catch (Exception e) {
-            System.out.println(e.toString());
+
+        if (desRepo.returnDesignation(id) != null) {
+            desRepo.deleteDesignation(id);
+            return true;
+        }
+        else{
             return false;
         }
+
     }
 
     // get designation by location id
     public List<DesignationMasterDTO> getDesignationByLocationId(String locId) {
-        try {
-            if (locRepo.getLocation(locId) != null) {
-                List<DesignationMaster> dm = desRepo.findDesignatonByLocationId(locId);
-                List<DesignationMasterDTO> dDTO = new ArrayList<DesignationMasterDTO>();
-                for (DesignationMaster d : dm) {
-                    DesignationMasterDTO dDTOSingle = new DesignationMasterDTO(d.getDesignationId(), d.getDesignationName(), d.getLocationId().getLocationId());
-                    dDTO.add(dDTOSingle);
-                }
-                return dDTO;
+
+        if (locRepo.getLocation(locId) != null) {
+            List<DesignationMaster> dm = desRepo.findDesignatonByLocationId(locId);
+            List<DesignationMasterDTO> dDTO = new ArrayList<DesignationMasterDTO>();
+            for (DesignationMaster d : dm) {
+                DesignationMasterDTO dDTOSingle = new DesignationMasterDTO(d.getDesignationId(), d.getDesignationName(), d.getLocationId().getLocationId());
+                dDTO.add(dDTOSingle);
             }
-            return null;
-        } catch (Exception e) {
-            System.out.println(e.toString());
-            return null;
+            return dDTO;
         }
+        return null;
+
     }
 
 //    get new id
@@ -117,31 +108,25 @@ public class DesignationService implements DesignationServiceInterface {
     }
     //update designation
     public Boolean updateDesignation(String id, DesignationMasterDTO dto) {
-        try {
-            if (desRepo.returnDesignation(id) != null) {
-                Date d = new Date();
-                desRepo.updateDesignation(dto.getDesignationName(), d, id);
-                return true;
-            }
-            return false;
-        } catch (Exception e) {
-            System.out.println(e.toString());
-            return false;
+
+        if (desRepo.returnDesignation(id) != null) {
+            Date d = new Date();
+            desRepo.updateDesignation(dto.getDesignationName(), d, id);
+            return true;
         }
+        return false;
+
 
     }
 
     //get designation by its id
     public DesignationMasterDTO returnDesignationById(String id) {
-        try {
-            DesignationMaster d = desRepo.returnDesignation(id);
-            if (d != null) {
-                return new DesignationMasterDTO(d.getDesignationId(), d.getDesignationName(), d.getLocationId().getLocationId());
-            }
-            return null;
-        } catch (Exception e) {
-            System.out.println(e.toString());
-            return null;
+
+        DesignationMaster d = desRepo.returnDesignation(id);
+        if (d != null) {
+            return new DesignationMasterDTO(d.getDesignationId(), d.getDesignationName(), d.getLocationId().getLocationId());
         }
+        return null;
+
     }
 }

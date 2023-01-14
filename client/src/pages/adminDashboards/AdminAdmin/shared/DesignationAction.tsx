@@ -22,18 +22,18 @@ function DesignationAction({ params, rowId, setRowId, setDeleteId }: any) {
 
 	const handleUpdate = async () => {
 		setLoading(true);
-		const { designationId, designationName, location } = params.row;
+		const { designationId, designationName, locationId } = params.row;
 		setTimeout(async () => {
 			const result = await DesignationMasterService.editDesignation({
 				designationId,
 				designationName,
-				location,
+				locationId,
 			});
 
 			if (result.data.status === 1) {
 				setSuccess(true);
 				setRowId(null);
-				toast.success(`Employee Type updated to ${designationName}`, {
+				toast.success(`Designation updated to ${designationName}`, {
 					position: 'top-right',
 					autoClose: 5000,
 					hideProgressBar: false,
@@ -65,13 +65,13 @@ function DesignationAction({ params, rowId, setRowId, setDeleteId }: any) {
 		setDeleteLoadng(true);
 		setDeleteConfirm(false);
 		setTimeout(async () => {
-			const { designationId } = params.row;
+			const { designationId, designationName } = params.row;
 			const result = await DesignationMasterService.deleteDesignation(
 				designationId
 			);
 			console.log(result);
 			if (result.data.status === 1) {
-				toast.error(`Employee Type ${params.row.designationName} is deleted`, {
+				toast.error(`${designationName} is deleted`, {
 					position: 'top-right',
 					autoClose: 5000,
 					hideProgressBar: false,
@@ -81,7 +81,7 @@ function DesignationAction({ params, rowId, setRowId, setDeleteId }: any) {
 					progress: undefined,
 					theme: 'dark',
 				});
-				setDeleteId(params.row.designationId);
+				setDeleteId(designationId);
 			} else {
 				toast.error(`${result.data.message}`, {
 					position: 'top-right',

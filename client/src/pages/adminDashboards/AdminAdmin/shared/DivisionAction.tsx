@@ -22,17 +22,30 @@ function DivisionAction({ params, rowId, setRowId, setDeleteId }: any) {
 
 	const handleUpdate = async () => {
 		setLoading(true);
-		const { divisionId, name, location } = params.row;
+		const { divisionId, name, locationId } = params.row;
 		setTimeout(async () => {
 			const result = await DivisionMasterService.editDivision({
 				divisionId,
 				name,
-				location,
+				locationId,
 			});
-			if (result) {
+			if (result.data.status === 1) {
 				setSuccess(true);
 				setRowId(null);
 				toast.success(`Division updated to ${name}`, {
+					position: 'top-right',
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					theme: 'dark',
+				});
+			} else {
+				setSuccess(false);
+				setRowId(null);
+				toast.success(`${result.data.message}`, {
 					position: 'top-right',
 					autoClose: 5000,
 					hideProgressBar: false,
@@ -52,11 +65,23 @@ function DivisionAction({ params, rowId, setRowId, setDeleteId }: any) {
 		setDeleteLoadng(true);
 		setDeleteConfirm(false);
 		setTimeout(async () => {
-			const { divisionId } = params.row;
+			const { divisionId, name } = params.row;
 			const result = await DivisionMasterService.deleteDivision(divisionId);
 			// console.log('deleted ' + typeId);
-			if (result) {
-				toast.error(`Employee Type ${params.row.name} is deleted`, {
+			if (result.data.status === 1) {
+				toast.error(`${name} is deleted`, {
+					position: 'top-right',
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					theme: 'dark',
+				});
+				setDeleteId(divisionId);
+			} else {
+				toast.error(`${result.data.message}`, {
 					position: 'top-right',
 					autoClose: 5000,
 					hideProgressBar: false,
@@ -67,7 +92,6 @@ function DivisionAction({ params, rowId, setRowId, setDeleteId }: any) {
 					theme: 'dark',
 				});
 			}
-			setDeleteId(params.row.divisionId);
 
 			setDeleteLoadng(false);
 		}, 1500);

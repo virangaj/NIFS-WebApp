@@ -1,6 +1,7 @@
 package com.nifs.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.*;
@@ -42,14 +43,14 @@ public class DesignationMaster {
     //relationships
 
     //locations
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
     @JoinColumn(name = "location_id", referencedColumnName = "location_id", nullable = false)
-    @JsonIgnoreProperties("designations")
     private Locations locationId;
 
     //employee
+    @JsonIgnore
     @OneToMany(mappedBy = "designationId", cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
-    @JsonIgnoreProperties("designation")
     private List<EmployeeMaster> employee;
 
     public DesignationMaster(String designationId, String designationName, Date dateCreated, Locations locationId) {

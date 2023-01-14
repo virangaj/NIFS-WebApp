@@ -208,8 +208,20 @@ function AddEmployee() {
 
 			DivisionMasterService.getDivisionByLocationId(id)
 				.then((res: any) => {
-					setDivisionData(res.data);
-					// console.log(divisionData);
+					if (res.data.status === 1) {
+						setDivisionData(res.data.data);
+						// console.log(divisionData);
+					} else {
+						toast.error(`${res.data.message}`, {
+							position: 'top-right',
+							autoClose: 5000,
+							hideProgressBar: false,
+							closeOnClick: true,
+							pauseOnHover: true,
+							draggable: true,
+							progress: undefined,
+						});
+					}
 				})
 				.catch((e: any) => {
 					console.log(e);

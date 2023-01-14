@@ -179,6 +179,7 @@ public class DesignationController {
         }
     }
 
+    //delete designation
     @DeleteMapping("/delete/{id}")
     private ResponseEntity<?> deleteDesignation(@PathVariable String id) {
 

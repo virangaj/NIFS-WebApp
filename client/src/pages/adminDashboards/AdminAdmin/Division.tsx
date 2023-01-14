@@ -50,8 +50,20 @@ function Division() {
 	const retreiveDivisions = () => {
 		DivisionMasterService.getAllDivisions()
 			.then((res: any) => {
-				setDivisionData(res.data);
-				console.log(divisionData);
+				if (res.data.status === 1) {
+					setDivisionData(res.data.data);
+					// console.log(divisionData);
+				} else {
+					toast.error(`${res.data.message}`, {
+						position: 'top-right',
+						autoClose: 5000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+					});
+				}
 			})
 			.catch((e: any) => {
 				console.log(e);
@@ -189,7 +201,7 @@ function Division() {
 							components={{ Toolbar: GridToolbar }}
 							rowHeight={60}
 							columns={columns}
-							rows={divisionData}
+							rows={divisionData && divisionData}
 							getRowId={(row) => row.divisionId}
 							rowsPerPageOptions={[10, 20, 30]}
 							pageSize={pageSize}
