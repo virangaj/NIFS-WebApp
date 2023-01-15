@@ -125,6 +125,9 @@ a {
 	.admin-side-nav {
 		@apply z-20 flex-shrink-0 block w-64 mb-10 overflow-y-auto bg-white rounded-tr-lg rounded-br-lg;
 	}
+	.login-logo {
+		@apply h-auto mx-auto w-44 md:w-56;
+	}
 	.admin-sidebar-text {
 		@apply flex items-center text-gray-700 cursor-pointer hover:font-bold;
 	}
@@ -166,7 +169,7 @@ a {
 		/* @apply block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring */;
 	}
 	.input-label {
-		@apply mt-2 text-gray-700;
+		@apply mt-2 text-gray-600;
 	}
 	.action-com-model {
 		@apply flex flex-col w-[80%] p-8 duration-300 translate-y-1/2 bg-white shadow-md rounded-2xl mx-auto top-3/4 backdrop-blur-sm;

@@ -6,6 +6,7 @@ import Dots from '../images/dots_circle_b.png';
 import { Route, Routes } from 'react-router-dom';
 import { RouteName } from '../constant/routeNames';
 import ContractExtension from './admin/ContractExtension';
+import ResignationRequest from './admin/ResignationRequest';
 
 function AdminMainPage() {
 	return (
@@ -17,7 +18,14 @@ function AdminMainPage() {
 			</div>
 
 			<Routes>
-				<Route path={RouteName.ContractExtension} element={<ContractExtension />} />
+				<Route
+					path={RouteName.ContractExtension}
+					element={<ContractExtension />}
+				/>
+				<Route
+					path={RouteName.ResignationRequest}
+					element={<ResignationRequest />}
+				/>
 			</Routes>
 		</div>
 	);

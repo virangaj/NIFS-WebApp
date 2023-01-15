@@ -61,11 +61,13 @@ public class EmployeeMasterController {
         return empService.addEmployee(empData);
     }
 
+    //change is empty value -> true
     @PatchMapping("/delete/{id}")
     private Boolean deleteEmployee(@PathVariable int id){
         return empService.deleteEmployee(id);
     }
 
+    // remove employee from database
     @DeleteMapping("/harddelete/{id}")
     private Boolean hardDeleteEmployee(@PathVariable int id){
         return empService.hardDeleteEmployee(id);

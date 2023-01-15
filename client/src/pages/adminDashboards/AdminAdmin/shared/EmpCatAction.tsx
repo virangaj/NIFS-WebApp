@@ -49,7 +49,7 @@ function EmpCatAction({ params, rowId, setRowId, setDeleteId }: any) {
 			} else {
 				setSuccess(false);
 				setRowId(null);
-				toast.success(`${result.data.message}`, {
+				toast.error(`${result.data.message}`, {
 					position: 'top-right',
 					autoClose: 5000,
 					hideProgressBar: false,

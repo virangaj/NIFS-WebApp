@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react';
 import Modal from '@mui/material/Modal';
 import { BiCheck, BiSave, BiTrash } from 'react-icons/bi';
 import { toast } from 'react-toastify';
+import EmployeeService from '../../../../services/admin/EmployeeService';
 function EmployeeAction({ params, rowId, setRowId, setDeleteId }: any) {
 	const [loading, setLoading] = useState(false);
 	const [success, setSuccess] = useState(false);
@@ -20,13 +21,88 @@ function EmployeeAction({ params, rowId, setRowId, setDeleteId }: any) {
 
 	const handleUpdate = async () => {
 		setLoading(true);
-		const { epfNo, firstName, lastName } = params.row;
+		// const {
+		// 	epfNo,
+		// 	initials,
+		// 	firstName,
+		// 	lastName,
+		// 	gender,
+		// 	dob,
+		// 	address,
+		// 	districtId,
+		// 	provinceId,
+		// 	contactNo,
+		// 	personalEmail,
+		// 	gsuitEmail,
+		// 	nicNo,
+		// 	nicIssuedDate,
+		// 	passportNo,
+		// 	passExpireDate,
+		// 	licenseNo,
+		// 	licenseIssuedDate,
+		// 	licenseExpireDate,
+		// 	contactPerson,
+		// 	cpRelationship,
+		// 	cpAddress,
+		// 	cpTelephone,
+		// 	cpStatus,
+		// 	cpCivilStatus,
+		// 	cpReligion,
+		// 	appointmentDate,
+		// 	contractStart,
+		// 	contractEnd,
+		// 	locationId,
+		// 	empTypeId,
+		// 	empCatId,
+		// 	designationId,
+		// 	divisionId,
+		// } = params.row;
 		setTimeout(async () => {
 			const result = true;
 			if (result) {
 				setSuccess(true);
 				setRowId(null);
-				toast.success(`${epfNo} - ${firstName} ${lastName} Updated`, {
+				toast.success(
+					`${params.row.epfNo} - ${params.row.firstName} ${params.row.lastName} Updated`,
+					{
+						position: 'top-right',
+						autoClose: 5000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+						theme: 'dark',
+					}
+				);
+			}
+			console.log(params.row);
+			setLoading(false);
+		}, 1500);
+	};
+
+	const handleDelete = async () => {
+		setDeleteLoadng(true);
+		setDeleteConfirm(false);
+		setTimeout(async () => {
+			const { epfNo, firstName, lastName } = params.row;
+			const result = await EmployeeService.hardDelete(params.row.epfNo);
+
+			// console.log(params.row);
+			if (result.data.status === 1) {
+				toast.error(`${epfNo} - ${firstName} ${lastName} is deleted`, {
+					position: 'top-right',
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					theme: 'dark',
+				});
+				setDeleteId(epfNo);
+			} else {
+				toast.error(`${result.data.message}`, {
 					position: 'top-right',
 					autoClose: 5000,
 					hideProgressBar: false,
@@ -37,12 +113,10 @@ function EmployeeAction({ params, rowId, setRowId, setDeleteId }: any) {
 					theme: 'dark',
 				});
 			}
-			// console.log(typeId);
-			setLoading(false);
+
+			setDeleteLoadng(false);
 		}, 1500);
 	};
-
-	const handleDelete = async () => {};
 	return (
 		<>
 			<Box
@@ -157,16 +231,16 @@ function EmployeeAction({ params, rowId, setRowId, setDeleteId }: any) {
 							</svg>
 							<div className='flex flex-col ml-3'>
 								<div className='mb-2 font-medium leading-none'>
-									Do you want to delete Employee Designation named as{' '}
+									Do you want to delete Employee named as{' '}
 									<code className='px-2 bg-red-200 rounded-lg'>
 										{' '}
-										{params.row.divisionId} - {params.row.name}
+										{params.row.epfNo} - {params.row.firstName}{' '}
+										{params.row.lastName}
 									</code>
 									?
 								</div>
 								<p className='mt-1 text-sm leading-none text-gray-600'>
-									By deleting this Employee Designation you will lose this
-									employee type data
+									By deleting this Employee you will lose this Employee data
 								</p>
 							</div>
 						</div>

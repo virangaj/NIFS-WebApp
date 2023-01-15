@@ -1,5 +1,4 @@
 import axios from 'axios';
-
 import http from '../../http-common';
 
 const config = {
@@ -28,7 +27,6 @@ const saveEmpType = async (favJSON: any) => {
 		data: favJSON,
 		headers: { 'Content-Type': 'application/json; charset=utf-8' },
 	});
-	// alert("Favourite created --- "+ response);
 	return response;
 };
 
@@ -50,16 +48,6 @@ const editEmpType = async (favJSON: any) => {
 		data: favJSON,
 		headers: { 'Content-Type': 'application/json; charset=utf-8' },
 	});
-
-	// const response = await axios.patch(
-	// 	process.env.REACT_APP_BACKEND_SERVER +
-	// 		'/admin/employeetype/' +
-	// 		favJSON.typeId,
-	// 	favJSON,
-	// 	config
-	// );
-
-	// alert("Favourite created --- "+ response);
 	return response;
 };
 

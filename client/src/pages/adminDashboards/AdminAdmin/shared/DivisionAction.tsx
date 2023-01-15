@@ -45,7 +45,7 @@ function DivisionAction({ params, rowId, setRowId, setDeleteId }: any) {
 			} else {
 				setSuccess(false);
 				setRowId(null);
-				toast.success(`${result.data.message}`, {
+				toast.error(`${result.data.message}`, {
 					position: 'top-right',
 					autoClose: 5000,
 					hideProgressBar: false,
@@ -213,7 +213,7 @@ function DivisionAction({ params, rowId, setRowId, setDeleteId }: any) {
 							</svg>
 							<div className='flex flex-col ml-3'>
 								<div className='mb-2 font-medium leading-none'>
-									Do you want to delete Employee Designation named as{' '}
+									Do you want to delete Division named as{' '}
 									<code className='px-2 bg-red-200 rounded-lg'>
 										{' '}
 										{params.row.divisionId} - {params.row.name}
@@ -221,8 +221,7 @@ function DivisionAction({ params, rowId, setRowId, setDeleteId }: any) {
 									?
 								</div>
 								<p className='mt-1 text-sm leading-none text-gray-600'>
-									By deleting this Employee Designation you will lose this
-									employee type data
+									By deleting this Division you will lose this division data
 								</p>
 							</div>
 						</div>

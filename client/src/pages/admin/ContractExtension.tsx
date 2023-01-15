@@ -89,7 +89,7 @@ function ContractExtension() {
 		//get designation
 		DesignationMasterService.getDesignation(emp?.designationId)
 			.then((res: any) => {
-				setDesignationData(res.data);
+				setDesignationData(res.data.data);
 			})
 			.catch((e: any) => {
 				console.log(e);
@@ -99,7 +99,7 @@ function ContractExtension() {
 
 		DivisionMasterService.getDivision(emp?.divisionId)
 			.then((res: any) => {
-				setDivisionData(res.data);
+				setDivisionData(res.data.data);
 			})
 			.catch((e: any) => {
 				console.log(e);

@@ -1,121 +1,148 @@
-import * as React from 'react';
+import { useForm, SubmitHandler } from 'react-hook-form';
 
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-
-import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import Logo from '../images/nifs_logo.png';
 
 function Copyright(props: any) {
 	return (
-		<Typography variant="body2" color="text.secondary" align="center" {...props}>
+		<p className='mt-10 text-sm text-center'>
 			{'Copyright © '}
-			<Link color="inherit" href="https://www.nifs.ac.lk/" target='_blank'>
+			<Link color='inherit' href='https://www.nifs.ac.lk/' target='_blank'>
 				National Institute of Fundamental Studies
 			</Link>{' '}
 			{new Date().getFullYear()}
 			{'.'}
-		</Typography>
+		</p>
 	);
 }
 
-const theme = createTheme();
-
 export default function SignInSide() {
-	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-		event.preventDefault();
-		const data = new FormData(event.currentTarget);
-		console.log({
-			email: data.get('email'),
-			password: data.get('password'),
-
-		});
-	};
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm();
+	const onSubmit: SubmitHandler<any> = (data) => console.log(data);
 
 	return (
-		<ThemeProvider theme={theme}>
-			<Grid container component="main" sx={{ height: '100vh' }}>
-				<CssBaseline />
-				<Grid
-					item
-					xs={false}
-					sm={4}
-					md={7}
-					sx={{
-						backgroundImage: 'url(https://tse3.mm.bing.net/th?id=OIP.4tjrzdkgF5KaSo7DRhKe2wHaEK&pid=Api)',
-						backgroundRepeat: 'no-repeat',
-						backgroundColor: (t) =>
-							t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
-						backgroundSize: 'cover',
-						backgroundPosition: 'center',
-					}}
+		<section className='flex flex-col items-center h-screen md:flex-row'>
+			<div className='hidden w-full h-screen bg-indigo-600 md:block md:w-1/2 xl:w-2/3'>
+				<img
+					src='https://source.unsplash.com/random'
+					alt=''
+					className='object-cover w-full h-full'
 				/>
-				<Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-					<Box
-						sx={{
-							my: 20,
-							mx: 4,
-							display: 'flex',
-							flexDirection: 'column',
-							alignItems: 'center',
-						}}
-					>
+			</div>
 
-						<Box sx={{ mr: 1 }}>
-							<img src={Logo} alt="logo" className="login-logo" />
-						</Box>
+			<div className='flex items-center justify-center w-full h-screen px-6 bg-white md:max-w-md lg:max-w-full md:mx-auto md:mx-0 md:w-1/2 xl:w-1/3 lg:px-16 xl:px-12'>
+				<div className='w-full h-100'>
+					<img src={Logo} alt='logo' className='login-logo' />
+					<p className='mt-2 text-sm text-center md:text-md text-sky-500'>
+						National Institute of Fundamental Studies
+					</p>
 
-						<Typography component="h1" variant="h5">
-							Sign in
-						</Typography>
-						<Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
-							<TextField
-								margin="normal"
+					<h1 className='mt-12 text-xl font-bold leading-tight md:text-2xl'>
+						Log in to your account
+					</h1>
+
+					<form className='mt-6' onSubmit={handleSubmit(onSubmit)}>
+						<div>
+							<label className='input-label'>Email Address</label>
+							<input
+								type='email'
+								{...register('email')}
+								placeholder='Enter Email Address'
+								className='tailwind-text-box w-[100%]'
 								required
-								fullWidth
-								id="email"
-								label="Email Address"
-								name="email"
-								autoComplete="email"
-								autoFocus
 							/>
-							<TextField
-								margin="normal"
+						</div>
+
+						<div>
+							<label className='input-label'>First Name</label>
+							<input
+								type='text'
+								{...register('firstName', { pattern: /^[A-Za-z]+$/i })}
+								placeholder='Enter First Name'
+								className='tailwind-text-box w-[100%]'
 								required
-								fullWidth
-								name="password"
-								label="Password"
-								type="password"
-								id="password"
-								autoComplete="current-password"
 							/>
-							{/* <FormControlLabel
-								control={<Checkbox value="remember" color="primary" name="checked" />}
-								label="Remember me"
-							/> */}
-							<Button
-								type="submit"
-								fullWidth
-								variant="contained"
-								sx={{ mt: 3, mb: 2 }}
+						</div>
+
+						<div className='mt-4'>
+							<label className='input-label'>Password</label>
+							<input
+								type='password'
+								{...register('password')}
+								placeholder='Enter Password'
+								className='tailwind-text-box w-[100%]'
+								required
+							/>
+						</div>
+
+						<div className='mt-2 text-right'>
+							<a
+								href='#'
+								className='text-sm font-semibold text-gray-700 hover:text-blue-700 focus:text-blue-700'
 							>
-								LOGIN
-							</Button>
+								Forgot Password?
+							</a>
+						</div>
 
-							<Copyright sx={{ mt: 5 }} />
-						</Box>
-					</Box>
-				</Grid>
-			</Grid>
-		</ThemeProvider>
+						<button
+							type='submit'
+							className='block w-full px-4 py-3 mt-6 font-semibold text-white bg-indigo-500 rounded-lg hover:bg-indigo-400 focus:bg-indigo-400'
+						>
+							Log In
+						</button>
+					</form>
+
+					<hr className='w-full my-6 border-gray-300' />
+
+					<button
+						type='button'
+						className='block w-full px-4 py-3 font-semibold text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:bg-sky-100'
+					>
+						<div className='flex items-center justify-center'>
+							<svg
+								xmlns='http://www.w3.org/2000/svg'
+								xmlnsXlink='http://www.w3.org/1999/xlink'
+								className='w-6 h-6'
+								viewBox='0 0 48 48'
+							>
+								<defs>
+									<path
+										id='a'
+										d='M44.5 20H24v8.5h11.8C34.7 33.9 30.1 37 24 37c-7.2 0-13-5.8-13-13s5.8-13 13-13c3.1 0 5.9 1.1 8.1 2.9l6.4-6.4C34.6 4.1 29.6 2 24 2 11.8 2 2 11.8 2 24s9.8 22 22 22c11 0 21-8 21-22 0-1.3-.2-2.7-.5-4z'
+									/>
+								</defs>
+								<clipPath id='b'>
+									<use xlinkHref='#a' overflow='visible' />
+								</clipPath>
+								<path clipPath='url(#b)' fill='#FBBC05' d='M0 37V11l17 13z' />
+								<path
+									clipPath='url(#b)'
+									fill='#EA4335'
+									d='M0 11l17 13 7-6.1L48 14V0H0z'
+								/>
+								<path
+									clipPath='url(#b)'
+									fill='#34A853'
+									d='M0 37l30-23 7.9 1L48 0v48H0z'
+								/>
+								<path
+									clipPath='url(#b)'
+									fill='#4285F4'
+									d='M48 48L17 24l-4-3 35-10z'
+								/>
+							</svg>
+							<span className='ml-4'>Log in with Google</span>
+						</div>
+					</button>
+
+					<Copyright />
+				</div>
+			</div>
+		</section>
 	);
 }
