@@ -8,6 +8,7 @@ import { RouteName } from '../constant/routeNames';
 import ContractExtension from './admin/ContractExtension';
 import ResignationRequest from './admin/ResignationRequest';
 import AnnualIncrementRequest from './admin/AnnualIncrementRequest';
+import AdministrativeReport from './admin/AdministrativeReport';
 
 function AdminMainPage() {
 	return (
@@ -20,16 +21,20 @@ function AdminMainPage() {
 
 			<Routes>
 				<Route
+					path={RouteName.AdministrativeReport}
+					element={<AdministrativeReport />}
+				/>
+				<Route
+					path={RouteName.AnnualIncrementRequest}
+					element={<AnnualIncrementRequest />}
+				/>
+				<Route
 					path={RouteName.ContractExtension}
 					element={<ContractExtension />}
 				/>
 				<Route
 					path={RouteName.ResignationRequest}
 					element={<ResignationRequest />}
-				/>
-				<Route
-					path={RouteName.AnnualIncrementRequest}
-					element={<AnnualIncrementRequest />}
 				/>
 			</Routes>
 		</div>
