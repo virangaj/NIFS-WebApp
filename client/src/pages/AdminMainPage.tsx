@@ -7,6 +7,7 @@ import { Route, Routes } from 'react-router-dom';
 import { RouteName } from '../constant/routeNames';
 import ContractExtension from './admin/ContractExtension';
 import ResignationRequest from './admin/ResignationRequest';
+import AnnualIncrementRequest from './admin/AnnualIncrementRequest';
 
 function AdminMainPage() {
 	return (
@@ -25,6 +26,10 @@ function AdminMainPage() {
 				<Route
 					path={RouteName.ResignationRequest}
 					element={<ResignationRequest />}
+				/>
+				<Route
+					path={RouteName.AnnualIncrementRequest}
+					element={<AnnualIncrementRequest />}
 				/>
 			</Routes>
 		</div>

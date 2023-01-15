@@ -279,27 +279,26 @@ function ContractExtension() {
 						name='remark'
 						value={values.remark}
 					></textarea>
-
-					<Stack
-						direction='row'
-						justifyContent='flex-end'
-						alignItems='flex-end'
-						spacing={2}
-						className='admin-form-buton-stack'
-					>
-						<button
-							className='action-com-model-error-btn'
-							type='reset'
-							color='error'
-							onClick={resetForm}
-						>
-							Reset
-						</button>
-						<button className='action-com-model-sucess-btn' type='submit'>
-							Submit
-						</button>
-					</Stack>
 				</div>
+				<Stack
+					direction='row'
+					justifyContent='flex-end'
+					alignItems='flex-end'
+					spacing={2}
+					className='admin-form-buton-stack'
+				>
+					<button
+						className='action-com-model-error-btn'
+						type='reset'
+						color='error'
+						onClick={resetForm}
+					>
+						Reset
+					</button>
+					<button className='action-com-model-sucess-btn' type='submit'>
+						Submit
+					</button>
+				</Stack>
 			</form>
 		</div>
 	);

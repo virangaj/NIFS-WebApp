@@ -7,6 +7,7 @@ import com.nifs.backend.model.DesignationMaster;
 import com.nifs.backend.repository.DesignationRepostory;
 import com.nifs.backend.service.DesignationServiceInterface;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +28,7 @@ public class DesignationService implements DesignationServiceInterface {
     private ModelMapper modelMapper;
 
     //    get all designations
+    @Override
     public List<DesignationMasterDTO> getAllDesignations() {
 
         List<DesignationMaster> dm = desRepo.findAll();
@@ -37,19 +39,24 @@ public class DesignationService implements DesignationServiceInterface {
         }
         return dDTO;
 
+//        return modelMapper.map(list, new TypeToken<List<ProviderDTO>>() {
+//        return modelMapper.map(dm, new TypeToken<List<DesignationMasterDTO>>(){}.getType());
     }
 
     // create designation
-    public DesignationMaster createDesignation(DesignationMasterDTO d) {
+    public boolean createDesignation(DesignationMasterDTO d) {
 
         if (desRepo.returnDesignation(d.getDesignationId()) == null) {
 
             Date date = new Date();
             Locations l = locRepo.getLocation(d.getLocationId());
             DesignationMaster dm = new DesignationMaster(d.getDesignationId(), d.getDesignationName(), date, l);
-            return desRepo.save(dm);
+           // DesignationMaster dm = modelMapper.map(d, DesignationMaster.class);
+            
+            desRepo.save(dm);
+            return true;
         }
-        return null;
+        return false;
 
     }
 

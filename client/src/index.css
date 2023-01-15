@@ -186,6 +186,9 @@ a {
 	.page-title {
 		@apply p-3 mb-4 text-2xl font-bold bg-white rounded-lg;
 	}
+	.sub-page-title {
+		@apply p-3 mb-2 text-xl font-bold bg-white rounded-lg;
+	}
 	.admin-page-title {
 		@apply p-3 mb-4 text-2xl font-bold bg-white rounded-lg shadow-lg;
 	}

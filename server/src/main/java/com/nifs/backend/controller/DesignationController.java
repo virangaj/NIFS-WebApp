@@ -26,7 +26,7 @@ public class DesignationController {
         Map<String, Object> map = new LinkedHashMap<String, Object>();
         try {
             List<DesignationMasterDTO> d = desService.getAllDesignations();
-            if (d != null) {
+            if (!d.isEmpty()) {
                 //return success response code
                 map.put("status", 1);
                 map.put("code", 201);
@@ -125,12 +125,13 @@ public class DesignationController {
 
         Map<String, Object> map = new LinkedHashMap<String, Object>();
         try {
-            DesignationMaster d = desService.createDesignation(desData);
-            if (d != null) {
+
+            if (desService.createDesignation(desData)) {
                 //return success response code
                 map.put("status", 1);
                 map.put("code", 201);
-                map.put("data", d);
+                map.put("message", "New Designation added!");
+
                 return new ResponseEntity<>(map, HttpStatus.OK);
             }
             //return error response code

@@ -11,7 +11,7 @@ public interface DesignationServiceInterface {
     List<DesignationMasterDTO> getAllDesignations();
 
     // create designation
-    DesignationMaster createDesignation(DesignationMasterDTO d);
+    boolean createDesignation(DesignationMasterDTO d);
 
     //    delete designation
     boolean deleteDesignation(String id);

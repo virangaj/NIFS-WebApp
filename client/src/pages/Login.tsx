@@ -23,7 +23,9 @@ export default function SignInSide() {
 		handleSubmit,
 		formState: { errors },
 	} = useForm();
-	const onSubmit: SubmitHandler<any> = (data) => console.log(data);
+	const onSubmit: SubmitHandler<any> = (data) => {
+		console.log(data);
+	};
 
 	return (
 		<section className='flex flex-col items-center h-screen md:flex-row'>
@@ -53,17 +55,6 @@ export default function SignInSide() {
 								type='email'
 								{...register('email')}
 								placeholder='Enter Email Address'
-								className='tailwind-text-box w-[100%]'
-								required
-							/>
-						</div>
-
-						<div>
-							<label className='input-label'>First Name</label>
-							<input
-								type='text'
-								{...register('firstName', { pattern: /^[A-Za-z]+$/i })}
-								placeholder='Enter First Name'
 								className='tailwind-text-box w-[100%]'
 								required
 							/>
