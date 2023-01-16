@@ -8,6 +8,7 @@ import { BiCheck, BiSave, BiTrash } from 'react-icons/bi';
 
 import EmployeeCatService from '../../../../services/admin/EmployeeCatService';
 import { toast } from 'react-toastify';
+import { RequestStatus } from '../../../../constant/requestStatus';
 
 function EmpCatAction({ params, rowId, setRowId, setDeleteId }: any) {
 	const [loading, setLoading] = useState(false);
@@ -33,7 +34,7 @@ function EmpCatAction({ params, rowId, setRowId, setDeleteId }: any) {
 				locationId,
 				otRate,
 			});
-			if (result.data.status === 1) {
+			if (result.data.status === RequestStatus.SUCCESS) {
 				setSuccess(true);
 				setRowId(null);
 				toast.success(`Emplyee Category updated to ${description}`, {
@@ -74,7 +75,7 @@ function EmpCatAction({ params, rowId, setRowId, setDeleteId }: any) {
 			const { empCatId, description } = params.row;
 			const result = await EmployeeCatService.deleteEmpCat(empCatId);
 
-			if (result.data.status === 1) {
+			if (result.data.status === RequestStatus.SUCCESS) {
 				toast.error(`${description} is deleted`, {
 					position: 'top-right',
 					autoClose: 5000,

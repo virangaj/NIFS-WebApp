@@ -11,6 +11,7 @@ import Ripple from '../../../components/Ripple';
 import ILocationData from '../../../types/LocationData';
 import LocationMasterService from '../../../services/admin/LocationMasterService';
 import { HiX } from 'react-icons/hi';
+import { RequestStatus } from '../../../constant/requestStatus';
 
 function EmpCategory() {
 	const [empCats, setEmpCats] = useState<Array<any>>([]);
@@ -56,7 +57,7 @@ function EmpCategory() {
 	const retreiveEmpCats = () => {
 		EmployeeCatService.getAllEmpCategories()
 			.then((res: any) => {
-				if (res.data.status === 1) {
+				if (res.data.status === RequestStatus.SUCCESS) {
 					setEmpCats(res.data.data);
 				} else {
 					toast.error(`${res.data.message}`, {
@@ -123,7 +124,7 @@ function EmpCategory() {
 			setLoading(true);
 			setTimeout(async () => {
 				const result = await EmployeeCatService.saveEmpCat(values);
-				if (result.data.status === 1) {
+				if (result.data.status === RequestStatus.SUCCESS) {
 					toast.success('New Employee Category is added', {
 						position: 'top-right',
 						autoClose: 5000,

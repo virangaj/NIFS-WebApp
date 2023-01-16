@@ -21,6 +21,7 @@ import CustomeDataPicker from '../../../../components/DataPicker';
 import OtherDataServices from '../../../../services/admin/OtherDataServices';
 import EmployeeService from '../../../../services/admin/EmployeeService';
 import Ripple from '../../../../components/Ripple';
+import { RequestStatus } from '../../../../constant/requestStatus';
 
 function AddEmployee() {
 	const [locationData, setLocationData] = useState<ILocationData[]>();
@@ -190,7 +191,7 @@ function AddEmployee() {
 		if (empData?.locationId) {
 			EmployeeCatService.getEmpCatByLocationId(id)
 				.then((res: any) => {
-					if (res.data.status === 1) {
+					if (res.data.status === RequestStatus.SUCCESS) {
 						setEmployeeCatData(res.data.data);
 						// console.log(divisionData);
 					} else {
@@ -211,7 +212,7 @@ function AddEmployee() {
 
 			EmployeeTypeService.getEmpTypeByLocationId(id)
 				.then((res: any) => {
-					if (res.data.status === 1) {
+					if (res.data.status === RequestStatus.SUCCESS) {
 						setEmployeeTypeData(res.data.data);
 						// console.log(divisionData);
 					} else {
@@ -232,7 +233,7 @@ function AddEmployee() {
 
 			DivisionMasterService.getDivisionByLocationId(id)
 				.then((res: any) => {
-					if (res.data.status === 1) {
+					if (res.data.status === RequestStatus.SUCCESS) {
 						setDivisionData(res.data.data);
 						// console.log(divisionData);
 					} else {
@@ -253,7 +254,7 @@ function AddEmployee() {
 
 			DesignationMasterService.getDesignationByLocationId(id)
 				.then((res: any) => {
-					if (res.data.status === 1) {
+					if (res.data.status === RequestStatus.SUCCESS) {
 						setDesignationData(res.data.data);
 					} else {
 						toast.error(`${res.data.message}`, {

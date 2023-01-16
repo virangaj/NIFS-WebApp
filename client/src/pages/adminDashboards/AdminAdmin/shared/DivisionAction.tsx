@@ -8,6 +8,7 @@ import { BiCheck, BiSave, BiTrash } from 'react-icons/bi';
 
 import { toast } from 'react-toastify';
 import DivisionMasterService from '../../../../services/admin/DivisionMasterService';
+import { RequestStatus } from '../../../../constant/requestStatus';
 
 function DivisionAction({ params, rowId, setRowId, setDeleteId }: any) {
 	const [loading, setLoading] = useState(false);
@@ -29,7 +30,7 @@ function DivisionAction({ params, rowId, setRowId, setDeleteId }: any) {
 				name,
 				locationId,
 			});
-			if (result.data.status === 1) {
+			if (result.data.status === RequestStatus.SUCCESS) {
 				setSuccess(true);
 				setRowId(null);
 				toast.success(`Division updated to ${name}`, {
@@ -68,7 +69,7 @@ function DivisionAction({ params, rowId, setRowId, setDeleteId }: any) {
 			const { divisionId, name } = params.row;
 			const result = await DivisionMasterService.deleteDivision(divisionId);
 			// console.log('deleted ' + typeId);
-			if (result.data.status === 1) {
+			if (result.data.status === RequestStatus.SUCCESS) {
 				toast.error(`${name} is deleted`, {
 					position: 'top-right',
 					autoClose: 5000,

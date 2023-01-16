@@ -10,6 +10,7 @@ import LocationMasterService from '../../../services/admin/LocationMasterService
 import ImportFromXlsx from './shared/ImportFromXlsx';
 import { HiX } from 'react-icons/hi';
 import { toast } from 'react-toastify';
+import { RequestStatus } from '../../../constant/requestStatus';
 
 function EmployeeType() {
 	const [empTypes, setEmpType] = useState<Array<any>>([]);
@@ -56,7 +57,7 @@ function EmployeeType() {
 	const retreiveEmpTypes = () => {
 		EmployeeTypeService.getAllEmpTypes()
 			.then((res: any) => {
-				if (res.data.status === 1) {
+				if (res.data.status === RequestStatus.SUCCESS) {
 					setEmpType(res.data.data);
 				} else {
 					toast.error(`${res.data.message}`, {
@@ -123,7 +124,7 @@ function EmployeeType() {
 			setLoading(true);
 			setTimeout(async () => {
 				const result = await EmployeeTypeService.saveEmpType(values);
-				if (result.data.status === 1) {
+				if (result.data.status === RequestStatus.SUCCESS) {
 					toast.success('New Employee Type is added', {
 						position: 'top-right',
 						autoClose: 5000,

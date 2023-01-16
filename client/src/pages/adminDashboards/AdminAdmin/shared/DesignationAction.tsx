@@ -8,6 +8,7 @@ import { BiCheck, BiSave, BiTrash } from 'react-icons/bi';
 
 import { toast } from 'react-toastify';
 import DesignationMasterService from '../../../../services/admin/DesignationMasterService';
+import { RequestStatus } from '../../../../constant/requestStatus';
 
 function DesignationAction({ params, rowId, setRowId, setDeleteId }: any) {
 	const [loading, setLoading] = useState(false);
@@ -30,7 +31,7 @@ function DesignationAction({ params, rowId, setRowId, setDeleteId }: any) {
 				locationId,
 			});
 
-			if (result.data.status === 1) {
+			if (result.data.status === RequestStatus.SUCCESS) {
 				setSuccess(true);
 				setRowId(null);
 				toast.success(`Designation updated to ${designationName}`, {
@@ -70,7 +71,7 @@ function DesignationAction({ params, rowId, setRowId, setDeleteId }: any) {
 				designationId
 			);
 			console.log(result);
-			if (result.data.status === 1) {
+			if (result.data.status === RequestStatus.SUCCESS) {
 				toast.error(`${designationName} is deleted`, {
 					position: 'top-right',
 					autoClose: 5000,

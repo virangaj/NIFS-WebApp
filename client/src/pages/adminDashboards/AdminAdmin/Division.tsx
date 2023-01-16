@@ -11,6 +11,7 @@ import LocationMasterService from '../../../services/admin/LocationMasterService
 import IDivisionData from '../../../types/DivisionData';
 import DivisionMasterService from '../../../services/admin/DivisionMasterService';
 import DivisionAction from './shared/DivisionAction';
+import { RequestStatus } from '../../../constant/requestStatus';
 function Division() {
 	const [pageSize, setPageSize] = useState(10);
 	const [rowId, setRowId] = useState(0);
@@ -50,7 +51,7 @@ function Division() {
 	const retreiveDivisions = () => {
 		DivisionMasterService.getAllDivisions()
 			.then((res: any) => {
-				if (res.data.status === 1) {
+				if (res.data.status === RequestStatus.SUCCESS) {
 					setDivisionData(res.data.data);
 					// console.log(divisionData);
 				} else {
@@ -115,7 +116,7 @@ function Division() {
 			setLoading(true);
 			setTimeout(async () => {
 				const result = await DivisionMasterService.saveDivision(values);
-				if (result.data.status === 1) {
+				if (result.data.status === RequestStatus.SUCCESS) {
 					toast.success('New Division is added', {
 						position: 'top-right',
 						autoClose: 5000,

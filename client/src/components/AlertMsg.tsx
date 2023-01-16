@@ -2,7 +2,7 @@ import { toast } from 'react-toastify';
 import { AlertTypes } from '../constant/alertTypes';
 
 function AlertMsg({ type, text }: any) {
-	if (type === AlertTypes.success) {
+	if (type === AlertTypes.SUCCESS) {
 		console.log(type);
 		toast.success(`${text}`, {
 			position: 'top-right',
@@ -14,7 +14,7 @@ function AlertMsg({ type, text }: any) {
 			progress: undefined,
 			theme: 'dark',
 		});
-	} else if (type === AlertTypes.warning) {
+	} else if (type === AlertTypes.WARNING) {
 		console.log(type);
 
 		toast.warning(`${text}`, {
@@ -27,7 +27,7 @@ function AlertMsg({ type, text }: any) {
 			progress: undefined,
 			theme: 'dark',
 		});
-	} else if (type === AlertTypes.error) {
+	} else if (type === AlertTypes.ERROR) {
 		console.log(type);
 
 		toast.error(`${text}`, {
@@ -40,7 +40,7 @@ function AlertMsg({ type, text }: any) {
 			progress: undefined,
 			theme: 'dark',
 		});
-	} else if (type === AlertTypes.info) {
+	} else if (type === AlertTypes.INFO) {
 		console.log(type);
 
 		toast.info(`${text}`, {

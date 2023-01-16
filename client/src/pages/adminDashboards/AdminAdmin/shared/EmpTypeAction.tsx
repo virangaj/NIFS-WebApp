@@ -7,6 +7,7 @@ import Modal from '@mui/material/Modal';
 import { BiCheck, BiSave, BiTrash } from 'react-icons/bi';
 import EmployeeTypeService from '../../../../services/admin/EmployeeTypeService';
 import { toast } from 'react-toastify';
+import { RequestStatus } from '../../../../constant/requestStatus';
 
 function EmpTypeAction({ params, rowId, setRowId, setDeleteId }: any) {
 	const [loading, setLoading] = useState(false);
@@ -31,7 +32,7 @@ function EmpTypeAction({ params, rowId, setRowId, setDeleteId }: any) {
 				typeName,
 				location,
 			});
-			if (result.data.status === 1) {
+			if (result.data.status === RequestStatus.SUCCESS) {
 				setSuccess(true);
 				setRowId(null);
 				toast.success(`Employee Type updated to ${typeName}`, {
@@ -71,7 +72,7 @@ function EmpTypeAction({ params, rowId, setRowId, setDeleteId }: any) {
 			const { empTypeId, typeName } = params.row;
 			const result = await EmployeeTypeService.deleteEmpType(empTypeId);
 			// console.log('deleted ' + empTypeId);
-			if (result.data.status === 1) {
+			if (result.data.status === RequestStatus.SUCCESS) {
 				toast.error(`${typeName} is deleted`, {
 					position: 'top-right',
 					autoClose: 5000,

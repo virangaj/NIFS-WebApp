@@ -1,4 +1,4 @@
-export enum AlertTypes {
+export enum RequestStatus {
 	SUCCESS = 'SUCCESS',
 	ERROR = 'ERROR',
 }

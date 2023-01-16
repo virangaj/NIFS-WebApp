@@ -10,6 +10,7 @@ import ILocationData from '../../../types/LocationData';
 import LocationMasterService from '../../../services/admin/LocationMasterService';
 import DesignationMasterService from '../../../services/admin/DesignationMasterService';
 import DesignationAction from './shared/DesignationAction';
+import { RequestStatus } from '../../../constant/requestStatus';
 
 function Designation() {
 	const [pageSize, setPageSize] = useState(10);
@@ -52,7 +53,7 @@ function Designation() {
 	const retreiveDesignations = () => {
 		DesignationMasterService.getAllDesignations()
 			.then((res: any) => {
-				if (res.data.status === 1) {
+				if (res.data.status === RequestStatus.SUCCESS) {
 					setDesignationData(res.data.data);
 				} else {
 					toast.error(`${res.data.message}`, {
@@ -116,7 +117,7 @@ function Designation() {
 			setTimeout(async () => {
 				const result = await DesignationMasterService.saveDesignation(values);
 				// console.log(result)
-				if (result.data.status === 1) {
+				if (result.data.status === RequestStatus.SUCCESS) {
 					toast.success('New Designation is added', {
 						position: 'top-right',
 						autoClose: 5000,
