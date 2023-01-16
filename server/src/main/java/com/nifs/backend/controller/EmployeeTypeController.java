@@ -34,6 +34,7 @@ public class EmployeeTypeController {
                 //return success response code
                 map.put("status", 1);
                 map.put("code", 201);
+                map.put("count", emp.size());
                 map.put("data", emp);
                 return new ResponseEntity<>(map, HttpStatus.OK);
             }
@@ -71,6 +72,7 @@ public class EmployeeTypeController {
                 //return success response code
                 map.put("status", 1);
                 map.put("code", 201);
+                map.put("count", emp.size());
                 map.put("data", emp);
                 return new ResponseEntity<>(map, HttpStatus.OK);
             }

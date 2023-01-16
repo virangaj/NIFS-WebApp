@@ -33,13 +33,7 @@ public class EmployeeCategoryService implements EmployeeCatServiceInterface {
                 empDTO.add(dtoSingle);
             }
             return empDTO;
-
-
-
-
-
     }
-
     //create new category
     public boolean createNewCategory(EmpCatDTO e) {
 

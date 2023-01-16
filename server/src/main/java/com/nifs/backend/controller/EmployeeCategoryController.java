@@ -36,6 +36,7 @@ public class EmployeeCategoryController {
                 //return success response code
                 map.put("status", 1);
                 map.put("code", 201);
+                map.put("count", emp.size());
                 map.put("data", emp);
                 return new ResponseEntity<>(map, HttpStatus.OK);
             }
@@ -100,12 +101,13 @@ public class EmployeeCategoryController {
 
         Map<String, Object> map = new LinkedHashMap<String, Object>();
         try {
-            List<EmpCatDTO> d = empCatService.getCategoryByLocationId(locId);
-            if (d != null) {
+            List<EmpCatDTO> empCat = empCatService.getCategoryByLocationId(locId);
+            if (empCat != null) {
                 //return success response code
                 map.put("status", 1);
                 map.put("code", 201);
-                map.put("data", d);
+                map.put("count", empCat.size());
+                map.put("data", empCat);
                 return new ResponseEntity<>(map, HttpStatus.OK);
             }
             //return error response code

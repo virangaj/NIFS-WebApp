@@ -52,7 +52,7 @@ public class DesignationService implements DesignationServiceInterface {
             Locations l = locRepo.getLocation(d.getLocationId());
             DesignationMaster dm = new DesignationMaster(d.getDesignationId(), d.getDesignationName(), date, l);
            // DesignationMaster dm = modelMapper.map(d, DesignationMaster.class);
-            
+
             desRepo.save(dm);
             return true;
         }

@@ -8,7 +8,8 @@ import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "employee_master")

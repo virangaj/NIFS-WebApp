@@ -37,6 +37,7 @@ public class DivisionMasterController {
                 //return success response code
                 map.put("status", 1);
                 map.put("code", 200);
+                map.put("count", d.size());
                 map.put("data", d);
                 return new ResponseEntity<>(map, HttpStatus.OK);
             }
@@ -77,6 +78,7 @@ public class DivisionMasterController {
                 //return success response code
                 map.put("status", 1);
                 map.put("code", 201);
+                map.put("count", d.size());
                 map.put("data", d);
                 return new ResponseEntity<>(map, HttpStatus.OK);
             }
