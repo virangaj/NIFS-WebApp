@@ -29,6 +29,7 @@ public class DivisionMasterService implements DivisionMasterServiceInterface {
     private EmployeeMasterRepository empRepo;
 
     //    get all divisions
+    @Override
     public List<DivisionMasterDTO> getAll() {
         try {
             List<DivisionMaster> divData = divMasterRepo.findAll();
@@ -47,27 +48,26 @@ public class DivisionMasterService implements DivisionMasterServiceInterface {
 
 
     //create new divisions
-    public Boolean createDivision(DivisionMasterDTO d) {
-        try {
-            if (divMasterRepo.returnDivision(d.getDivisionId()) == null) {
+    @Override
+    public DivisionMaster createDivision(DivisionMasterDTO d) {
 
-                Date date = new Date();
-                Locations l = locRepo.getLocation(d.getLocationId());
-                DivisionMaster dm = new DivisionMaster(d.getDivisionId(), d.getName(), date, l);
-                divMasterRepo.save(dm);
-                return true;
-            }
-            else {
-                return false;
-            }
-        } catch (Exception e) {
-            System.out.println(e.toString());
-            return false;
+        if (divMasterRepo.returnDivision(d.getDivisionId()) == null) {
+
+            Date date = new Date();
+            Locations l = locRepo.getLocation(d.getLocationId());
+            DivisionMaster dm = new DivisionMaster(d.getDivisionId(), d.getName(), date, l);
+            return divMasterRepo.save(dm);
+
         }
+        else {
+            return null;
+        }
+
 
     }
 
     //delete division
+    @Override
     public Boolean deleteDivision(String divisionId) {
         try {
             DivisionMaster divisionMaster = divMasterRepo.returnDivision(divisionId);
@@ -89,7 +89,8 @@ public class DivisionMasterService implements DivisionMasterServiceInterface {
         }
     }
 
-// return new id
+    // return new id
+    @Override
     public String returnNewDivisionId() {
         try {
             String lastId = divMasterRepo.returnLastId();
@@ -110,17 +111,9 @@ public class DivisionMasterService implements DivisionMasterServiceInterface {
         }
     }
 
-//    return division by id
-    public Optional<DivisionMaster> returnDivision(String divisionId) {
-        try {
-            return divMasterRepo.findById(divisionId);
-        } catch (Exception e) {
-            System.out.println(e.toString());
-            return Optional.empty();
-        }
-    }
 
-//    update division master
+    //    update division master
+    @Override
     public Boolean updateDivisionMaster(DivisionMasterDTO dmData, String dvId) {
         try {
             if (divMasterRepo.returnDivision(dvId) != null) {
@@ -137,7 +130,8 @@ public class DivisionMasterService implements DivisionMasterServiceInterface {
         }
     }
 
-     // get divisions by location id
+    // get divisions by location id
+    @Override
     public List<DivisionMasterDTO> GetDivisionByLocationId(String locID) {
         try {
             if (locRepo.getLocation(locID) != null) {
@@ -157,16 +151,14 @@ public class DivisionMasterService implements DivisionMasterServiceInterface {
     }
 
     //get division by id
+    @Override
     public DivisionMasterDTO getDivisionById(String id) {
-        try {
-            DivisionMaster d = divMasterRepo.returnDivision(id);
-            if (d != null) {
-                return new DivisionMasterDTO(d.getDivisionId(), d.getName(), d.getLocationId().getLocationId());
-            }
-            return null;
-        } catch (Exception e) {
-            System.out.println(e.toString());
-            return null;
+
+        DivisionMaster d = divMasterRepo.returnDivision(id);
+        if (d != null) {
+            return new DivisionMasterDTO(d.getDivisionId(), d.getName(), d.getLocationId().getLocationId());
         }
+        return null;
+
     }
 }

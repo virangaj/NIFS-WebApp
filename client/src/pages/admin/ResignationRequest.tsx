@@ -13,7 +13,7 @@ import DesignationMasterService from '../../services/admin/DesignationMasterServ
 import IDivisionData from '../../types/DivisionData';
 import DivisionMasterService from '../../services/admin/DivisionMasterService';
 
-function ContractExtension() {
+function ResignationRequest() {
 	const [getDocNo, setDocNo] = useState<String | any>('');
 	const [requestDate, setRequestDate] = React.useState<string | null>(null);
 	const [designationData, setDesignationData] = useState<IDesignationData>();
@@ -160,7 +160,7 @@ function ContractExtension() {
 
 	return (
 		<div className='sub-body-content xl:!w-[60%]'>
-			<h1 className='page-title'>Contract Extension</h1>
+			<h1 className='page-title'>Resignation Request</h1>
 			<hr className='horizontal-line' />
 			<form onSubmit={onSubmit}>
 				<div className='grid grid-cols-1 md:grid-cols-2 items-center w-[97%] mx-auto'>
@@ -280,6 +280,7 @@ function ContractExtension() {
 						value={values.remark}
 					></textarea>
 				</div>
+
 				<Stack
 					direction='row'
 					justifyContent='flex-end'
@@ -304,4 +305,4 @@ function ContractExtension() {
 	);
 }
 
-export default ContractExtension;
+export default ResignationRequest;

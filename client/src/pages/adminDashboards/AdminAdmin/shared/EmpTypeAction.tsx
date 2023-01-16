@@ -7,6 +7,7 @@ import Modal from '@mui/material/Modal';
 import { BiCheck, BiSave, BiTrash } from 'react-icons/bi';
 import EmployeeTypeService from '../../../../services/admin/EmployeeTypeService';
 import { toast } from 'react-toastify';
+import { RequestStatus } from '../../../../constant/requestStatus';
 
 function EmpTypeAction({ params, rowId, setRowId, setDeleteId }: any) {
 	const [loading, setLoading] = useState(false);
@@ -31,10 +32,23 @@ function EmpTypeAction({ params, rowId, setRowId, setDeleteId }: any) {
 				typeName,
 				location,
 			});
-			if (result) {
+			if (result.data.status === RequestStatus.SUCCESS) {
 				setSuccess(true);
 				setRowId(null);
 				toast.success(`Employee Type updated to ${typeName}`, {
+					position: 'top-right',
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					theme: 'dark',
+				});
+			} else {
+				setSuccess(false);
+				setRowId(null);
+				toast.error(`${result.data.message}`, {
 					position: 'top-right',
 					autoClose: 5000,
 					hideProgressBar: false,
@@ -55,20 +69,33 @@ function EmpTypeAction({ params, rowId, setRowId, setDeleteId }: any) {
 		setDeleteLoadng(true);
 		setDeleteConfirm(false);
 		setTimeout(async () => {
-			const { empTypeId } = params.row;
+			const { empTypeId, typeName } = params.row;
 			const result = await EmployeeTypeService.deleteEmpType(empTypeId);
 			// console.log('deleted ' + empTypeId);
-			toast.error(`Employee Type ${params.row.typeName} is deleted`, {
-				position: 'top-right',
-				autoClose: 5000,
-				hideProgressBar: false,
-				closeOnClick: true,
-				pauseOnHover: true,
-				draggable: true,
-				progress: undefined,
-				theme: 'dark',
-			});
-			setDeleteId(params.row.empTypeId);
+			if (result.data.status === RequestStatus.SUCCESS) {
+				toast.error(`${typeName} is deleted`, {
+					position: 'top-right',
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					theme: 'dark',
+				});
+				setDeleteId(empTypeId);
+			} else {
+				toast.error(`${result.data.message}`, {
+					position: 'top-right',
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					theme: 'dark',
+				});
+			}
 
 			setDeleteLoadng(false);
 		}, 1500);

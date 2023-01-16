@@ -7,6 +7,7 @@ import com.nifs.backend.model.DesignationMaster;
 import com.nifs.backend.repository.DesignationRepostory;
 import com.nifs.backend.service.DesignationServiceInterface;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,75 +28,69 @@ public class DesignationService implements DesignationServiceInterface {
     private ModelMapper modelMapper;
 
     //    get all designations
+    @Override
     public List<DesignationMasterDTO> getAllDesignations() {
-        try {
-            List<DesignationMaster> dm = desRepo.findAll();
-            List<DesignationMasterDTO> dDTO = new ArrayList<DesignationMasterDTO>();
-            for (DesignationMaster d : dm) {
-                DesignationMasterDTO dDTOSingle = new DesignationMasterDTO(d.getDesignationId(), d.getDesignationName(), d.getLocationId().getLocationName());
-                dDTO.add(dDTOSingle);
-            }
-            return dDTO;
-        } catch (Exception e) {
-            System.out.println(e.toString());
-            return null;
+
+        List<DesignationMaster> dm = desRepo.findAll();
+        List<DesignationMasterDTO> dDTO = new ArrayList<DesignationMasterDTO>();
+        for (DesignationMaster d : dm) {
+            DesignationMasterDTO dDTOSingle = new DesignationMasterDTO(d.getDesignationId(), d.getDesignationName(), d.getLocationId().getLocationName());
+            dDTO.add(dDTOSingle);
         }
+        return dDTO;
+
+//        return modelMapper.map(list, new TypeToken<List<ProviderDTO>>() {
+//        return modelMapper.map(dm, new TypeToken<List<DesignationMasterDTO>>(){}.getType());
     }
 
     // create designation
-    public Boolean createDesignation(DesignationMasterDTO d) {
-        try {
-            if (desRepo.returnDesignation(d.getDesignationId()) == null) {
+    public boolean createDesignation(DesignationMasterDTO d) {
 
-                Date date = new Date();
-                Locations l = locRepo.getLocation(d.getLocationId());
-                DesignationMaster dm = new DesignationMaster(d.getDesignationId(), d.getDesignationName(), date, l);
-                desRepo.save(dm);
-                return true;
+        if (desRepo.returnDesignation(d.getDesignationId()) == null) {
 
-            }
-            return false;
-        } catch (Exception e) {
-            System.out.println(e.toString());
-            return false;
+            Date date = new Date();
+            Locations l = locRepo.getLocation(d.getLocationId());
+            DesignationMaster dm = new DesignationMaster(d.getDesignationId(), d.getDesignationName(), date, l);
+           // DesignationMaster dm = modelMapper.map(d, DesignationMaster.class);
+
+            desRepo.save(dm);
+            return true;
         }
+        return false;
+
     }
 
-//    delete designation
+    //    delete designation
     public boolean deleteDesignation(String id) {
 
-        try {
-            if (desRepo.returnDesignation(id) != null) {
-                desRepo.deleteDesignation(id);
-                return true;
-            }
-            return false;
-        } catch (Exception e) {
-            System.out.println(e.toString());
+
+        if (desRepo.returnDesignation(id) != null) {
+            desRepo.deleteDesignation(id);
+            return true;
+        }
+        else {
             return false;
         }
+
     }
 
     // get designation by location id
     public List<DesignationMasterDTO> getDesignationByLocationId(String locId) {
-        try {
-            if (locRepo.getLocation(locId) != null) {
-                List<DesignationMaster> dm = desRepo.findDesignatonByLocationId(locId);
-                List<DesignationMasterDTO> dDTO = new ArrayList<DesignationMasterDTO>();
-                for (DesignationMaster d : dm) {
-                    DesignationMasterDTO dDTOSingle = new DesignationMasterDTO(d.getDesignationId(), d.getDesignationName(), d.getLocationId().getLocationId());
-                    dDTO.add(dDTOSingle);
-                }
-                return dDTO;
+
+        if (locRepo.getLocation(locId) != null) {
+            List<DesignationMaster> dm = desRepo.findDesignatonByLocationId(locId);
+            List<DesignationMasterDTO> dDTO = new ArrayList<DesignationMasterDTO>();
+            for (DesignationMaster d : dm) {
+                DesignationMasterDTO dDTOSingle = new DesignationMasterDTO(d.getDesignationId(), d.getDesignationName(), d.getLocationId().getLocationId());
+                dDTO.add(dDTOSingle);
             }
-            return null;
-        } catch (Exception e) {
-            System.out.println(e.toString());
-            return null;
+            return dDTO;
         }
+        return null;
+
     }
 
-//    get new id
+    //    get new id
     public String returnNewId() {
         try {
             String lastId = desRepo.returnLastId();
@@ -115,33 +110,28 @@ public class DesignationService implements DesignationServiceInterface {
             return "Request Fail";
         }
     }
+
     //update designation
     public Boolean updateDesignation(String id, DesignationMasterDTO dto) {
-        try {
-            if (desRepo.returnDesignation(id) != null) {
-                Date d = new Date();
-                desRepo.updateDesignation(dto.getDesignationName(), d, id);
-                return true;
-            }
-            return false;
-        } catch (Exception e) {
-            System.out.println(e.toString());
-            return false;
+
+        if (desRepo.returnDesignation(id) != null) {
+            Date d = new Date();
+            desRepo.updateDesignation(dto.getDesignationName(), d, id);
+            return true;
         }
+        return false;
+
 
     }
 
     //get designation by its id
     public DesignationMasterDTO returnDesignationById(String id) {
-        try {
-            DesignationMaster d = desRepo.returnDesignation(id);
-            if (d != null) {
-                return new DesignationMasterDTO(d.getDesignationId(), d.getDesignationName(), d.getLocationId().getLocationId());
-            }
-            return null;
-        } catch (Exception e) {
-            System.out.println(e.toString());
-            return null;
+
+        DesignationMaster d = desRepo.returnDesignation(id);
+        if (d != null) {
+            return new DesignationMasterDTO(d.getDesignationId(), d.getDesignationName(), d.getLocationId().getLocationId());
         }
+        return null;
+
     }
 }

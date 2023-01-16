@@ -1,6 +1,7 @@
 package com.nifs.backend.service;
 
 import com.nifs.backend.dto.DesignationMasterDTO;
+import com.nifs.backend.model.DesignationMaster;
 
 import java.util.List;
 
@@ -10,7 +11,7 @@ public interface DesignationServiceInterface {
     List<DesignationMasterDTO> getAllDesignations();
 
     // create designation
-    Boolean createDesignation(DesignationMasterDTO d);
+    boolean createDesignation(DesignationMasterDTO d);
 
     //    delete designation
     boolean deleteDesignation(String id);

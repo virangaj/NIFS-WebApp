@@ -21,6 +21,7 @@ import CustomeDataPicker from '../../../../components/DataPicker';
 import OtherDataServices from '../../../../services/admin/OtherDataServices';
 import EmployeeService from '../../../../services/admin/EmployeeService';
 import Ripple from '../../../../components/Ripple';
+import { RequestStatus } from '../../../../constant/requestStatus';
 
 function AddEmployee() {
 	const [locationData, setLocationData] = useState<ILocationData[]>();
@@ -190,8 +191,20 @@ function AddEmployee() {
 		if (empData?.locationId) {
 			EmployeeCatService.getEmpCatByLocationId(id)
 				.then((res: any) => {
-					setEmployeeCatData(res.data);
-					// console.log(employeeCatData);
+					if (res.data.status === RequestStatus.SUCCESS) {
+						setEmployeeCatData(res.data.data);
+						// console.log(divisionData);
+					} else {
+						toast.error(`${res.data.message}`, {
+							position: 'top-right',
+							autoClose: 5000,
+							hideProgressBar: false,
+							closeOnClick: true,
+							pauseOnHover: true,
+							draggable: true,
+							progress: undefined,
+						});
+					}
 				})
 				.catch((e: any) => {
 					console.log(e);
@@ -199,8 +212,20 @@ function AddEmployee() {
 
 			EmployeeTypeService.getEmpTypeByLocationId(id)
 				.then((res: any) => {
-					setEmployeeTypeData(res.data);
-					// console.log(employeeTypeData);
+					if (res.data.status === RequestStatus.SUCCESS) {
+						setEmployeeTypeData(res.data.data);
+						// console.log(divisionData);
+					} else {
+						toast.error(`${res.data.message}`, {
+							position: 'top-right',
+							autoClose: 5000,
+							hideProgressBar: false,
+							closeOnClick: true,
+							pauseOnHover: true,
+							draggable: true,
+							progress: undefined,
+						});
+					}
 				})
 				.catch((e: any) => {
 					console.log(e);
@@ -208,8 +233,20 @@ function AddEmployee() {
 
 			DivisionMasterService.getDivisionByLocationId(id)
 				.then((res: any) => {
-					setDivisionData(res.data);
-					// console.log(divisionData);
+					if (res.data.status === RequestStatus.SUCCESS) {
+						setDivisionData(res.data.data);
+						// console.log(divisionData);
+					} else {
+						toast.error(`${res.data.message}`, {
+							position: 'top-right',
+							autoClose: 5000,
+							hideProgressBar: false,
+							closeOnClick: true,
+							pauseOnHover: true,
+							draggable: true,
+							progress: undefined,
+						});
+					}
 				})
 				.catch((e: any) => {
 					console.log(e);
@@ -217,7 +254,19 @@ function AddEmployee() {
 
 			DesignationMasterService.getDesignationByLocationId(id)
 				.then((res: any) => {
-					setDesignationData(res.data);
+					if (res.data.status === RequestStatus.SUCCESS) {
+						setDesignationData(res.data.data);
+					} else {
+						toast.error(`${res.data.message}`, {
+							position: 'top-right',
+							autoClose: 5000,
+							hideProgressBar: false,
+							closeOnClick: true,
+							pauseOnHover: true,
+							draggable: true,
+							progress: undefined,
+						});
+					}
 					// console.log(designationData);
 				})
 				.catch((e: any) => {
@@ -776,21 +825,33 @@ function AddEmployee() {
 										onChange={onChange}
 									>
 										{empData.locationId ? (
-											<option disabled value=''>
-												Select Employee Type
-											</option>
+											<>
+												{employeeTypeData ? (
+													<>
+														<option disabled value=''>
+															Select Designation
+														</option>
+														{employeeTypeData?.map(
+															(l: IEmpTypeData, i: number) => {
+																return (
+																	<option key={i} value={l.empTypeId}>
+																		{l.typeName}
+																	</option>
+																);
+															}
+														)}
+													</>
+												) : (
+													<option value='' disabled>
+														Data not found
+													</option>
+												)}
+											</>
 										) : (
 											<option disabled value=''>
 												Select Location First
 											</option>
 										)}
-										{employeeTypeData?.map((l: IEmpTypeData, i: number) => {
-											return (
-												<option key={i} value={l.empTypeId}>
-													{l.typeName}
-												</option>
-											);
-										})}
 									</select>
 								</div>
 								<div>
@@ -805,21 +866,33 @@ function AddEmployee() {
 										onChange={onChange}
 									>
 										{empData.locationId ? (
-											<option disabled value=''>
-												Select Employee Category
-											</option>
+											<>
+												{employeeCatData ? (
+													<>
+														<option disabled value=''>
+															Select Designation
+														</option>
+														{employeeCatData?.map(
+															(l: IEmpCatData, i: number) => {
+																return (
+																	<option key={i} value={l.empCatId}>
+																		{l.description}
+																	</option>
+																);
+															}
+														)}
+													</>
+												) : (
+													<option value='' disabled>
+														Data not found
+													</option>
+												)}
+											</>
 										) : (
 											<option disabled value=''>
 												Select Location First
 											</option>
 										)}
-										{employeeCatData?.map((l: IEmpCatData, i: number) => {
-											return (
-												<option key={i} value={l.empCatId}>
-													{l.description}
-												</option>
-											);
-										})}
 									</select>
 								</div>
 
@@ -835,21 +908,33 @@ function AddEmployee() {
 										onChange={onChange}
 									>
 										{empData.locationId ? (
-											<option disabled value=''>
-												Select Designation
-											</option>
+											<>
+												{designationData ? (
+													<>
+														<option disabled value=''>
+															Select Designation
+														</option>
+														{designationData?.map(
+															(l: IDesignationData, i: number) => {
+																return (
+																	<option key={i} value={l.designationId}>
+																		{l.designationName}
+																	</option>
+																);
+															}
+														)}
+													</>
+												) : (
+													<option value='' disabled>
+														Data not found
+													</option>
+												)}
+											</>
 										) : (
 											<option disabled value=''>
 												Select Location First
 											</option>
 										)}
-										{designationData?.map((l: IDesignationData, i: number) => {
-											return (
-												<option key={i} value={l.designationId}>
-													{l.designationName}
-												</option>
-											);
-										})}
 									</select>
 								</div>
 
@@ -865,21 +950,33 @@ function AddEmployee() {
 										onChange={onChange}
 									>
 										{empData.locationId ? (
-											<option disabled value=''>
-												Select Division
-											</option>
+											<>
+												{divisionData ? (
+													<>
+														<option disabled value=''>
+															Select Designation
+														</option>
+														{divisionData?.map(
+															(l: IDivisionData, i: number) => {
+																return (
+																	<option key={i} value={l.divisionId}>
+																		{l.name}
+																	</option>
+																);
+															}
+														)}
+													</>
+												) : (
+													<option value='' disabled>
+														Data not found
+													</option>
+												)}
+											</>
 										) : (
 											<option disabled value=''>
 												Select Location First
 											</option>
 										)}
-										{divisionData?.map((l: IDivisionData, i: number) => {
-											return (
-												<option key={i} value={l.divisionId}>
-													{l.name}
-												</option>
-											);
-										})}
 									</select>
 								</div>
 								<div className='hidden lg:block'></div>

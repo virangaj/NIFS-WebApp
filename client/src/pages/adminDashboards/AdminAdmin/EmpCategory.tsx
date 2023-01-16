@@ -1,21 +1,17 @@
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { useEffect, useMemo, useState } from 'react';
 import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
+
 import Box from '@mui/material/Box';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
-import InputLabel from '@mui/material/InputLabel';
+import { toast } from 'react-toastify';
 
 import EmployeeCatService from '../../../services/admin/EmployeeCatService';
 import EmpCatAction from './shared/EmpCatAction';
-import EmpTypeAction from './shared/EmpTypeAction';
 import Ripple from '../../../components/Ripple';
 import ILocationData from '../../../types/LocationData';
 import LocationMasterService from '../../../services/admin/LocationMasterService';
 import { HiX } from 'react-icons/hi';
-import { toast } from 'react-toastify';
+import { RequestStatus } from '../../../constant/requestStatus';
 
 function EmpCategory() {
 	const [empCats, setEmpCats] = useState<Array<any>>([]);
@@ -61,8 +57,19 @@ function EmpCategory() {
 	const retreiveEmpCats = () => {
 		EmployeeCatService.getAllEmpCategories()
 			.then((res: any) => {
-				setEmpCats(res.data);
-				console.log(empCats);
+				if (res.data.status === RequestStatus.SUCCESS) {
+					setEmpCats(res.data.data);
+				} else {
+					toast.error(`${res.data.message}`, {
+						position: 'top-right',
+						autoClose: 5000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+					});
+				}
 			})
 			.catch((e: any) => {
 				console.log(e);
@@ -117,7 +124,7 @@ function EmpCategory() {
 			setLoading(true);
 			setTimeout(async () => {
 				const result = await EmployeeCatService.saveEmpCat(values);
-				if (result.data) {
+				if (result.data.status === RequestStatus.SUCCESS) {
 					toast.success('New Employee Category is added', {
 						position: 'top-right',
 						autoClose: 5000,
@@ -212,7 +219,7 @@ function EmpCategory() {
 							components={{ Toolbar: GridToolbar }}
 							rowHeight={60}
 							columns={columns}
-							rows={empCats}
+							rows={empCats && empCats}
 							getRowId={(row) => row.empCatId}
 							rowsPerPageOptions={[5, 10, 20]}
 							pageSize={pageSize}
@@ -286,6 +293,7 @@ function EmpCategory() {
 									onChange={onChange}
 									value={values.description}
 									name='description'
+									required
 								/>
 							</div>
 
@@ -300,6 +308,7 @@ function EmpCategory() {
 									onChange={onChange}
 									value={values.otRate}
 									name='otRate'
+									required
 								/>
 							</div>
 

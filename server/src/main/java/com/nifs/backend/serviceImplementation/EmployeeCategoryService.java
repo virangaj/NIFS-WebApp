@@ -24,9 +24,8 @@ public class EmployeeCategoryService implements EmployeeCatServiceInterface {
     private LocationRepository locRepo;
 
     //return all category
-    public List<EmpCatDTO> getAll() {
+    public List<EmpCatDTO> getAllEmpCategories() {
 
-        try {
             List<EmployeeCategory> empCatData = empCatRepo.findAll();
             List<EmpCatDTO> empDTO = new ArrayList<EmpCatDTO>();
             for (EmployeeCategory emp : empCatData) {
@@ -34,19 +33,10 @@ public class EmployeeCategoryService implements EmployeeCatServiceInterface {
                 empDTO.add(dtoSingle);
             }
             return empDTO;
-        } catch (Exception e) {
-            System.out.println(e.toString());
-            return null;
-        }
-
-
-
-
     }
-
     //create new category
-    public Boolean createNewCategory(EmpCatDTO e) {
-        try {
+    public boolean createNewCategory(EmpCatDTO e) {
+
             if (empCatRepo.returnEmployeeCategory(e.getEmpCatId()) == null) {
 
                 Date d = new Date();
@@ -56,15 +46,11 @@ public class EmployeeCategoryService implements EmployeeCatServiceInterface {
 
                 empCatRepo.save(empCat);
                 return true;
-
             }
             else {
                 return false;
             }
-        } catch (Exception err) {
-            System.out.println(err.toString());
-            return false;
-        }
+
     }
 
 //    return new employee category id
@@ -94,7 +80,7 @@ public class EmployeeCategoryService implements EmployeeCatServiceInterface {
 
     //update employee category
     public Boolean updateEmployeeCategory(EmpCatDTO empCatData, String empCatId) {
-        try {
+
             if (empCatRepo.returnEmployeeCategory(empCatId) != null) {
 
                 Date d = new Date();
@@ -103,15 +89,12 @@ public class EmployeeCategoryService implements EmployeeCatServiceInterface {
 
             }
             return false;
-        } catch (Exception e) {
-            System.out.println(e.toString());
-            return false;
-        }
+
     }
 
     //delete employee category
     public Boolean deleteEmployeeCategory(String empCatId) {
-        try {
+
             if (empCatRepo.returnEmployeeCategory(empCatId) != null) {
 
                 empCatRepo.deleteEmployeeCategory(empCatId);
@@ -121,15 +104,11 @@ public class EmployeeCategoryService implements EmployeeCatServiceInterface {
             else {
                 return false;
             }
-        } catch (Exception e) {
-            System.out.println(e.toString());
-            return false;
-        }
     }
 
 //get category by location id
     public List<EmpCatDTO> getCategoryByLocationId(String locId) {
-        try {
+
             if (locRepo.getLocation(locId) != null) {
 
                 List<EmployeeCategory> empCatData = empCatRepo.findCategoryByLocationId(locId);
@@ -143,9 +122,6 @@ public class EmployeeCategoryService implements EmployeeCatServiceInterface {
 
             }
             return null;
-        } catch (Exception e) {
-            System.out.println(e.toString());
-            return null;
-        }
+
      }
 }

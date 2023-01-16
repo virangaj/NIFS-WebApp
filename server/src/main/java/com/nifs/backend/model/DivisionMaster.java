@@ -1,6 +1,7 @@
 package com.nifs.backend.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
@@ -35,15 +36,16 @@ public class DivisionMaster {
 
     //relationship
     //location
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
     @JoinColumn(name = "location_id", referencedColumnName = "location_id", nullable = false)
-    @JsonIgnoreProperties("divisions")
     private Locations locationId;
 
 
     //employee
+    @JsonIgnore
+
     @OneToMany(mappedBy = "divisionId", cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
-    @JsonIgnoreProperties("division")
     private List<EmployeeMaster> employee;
 
 

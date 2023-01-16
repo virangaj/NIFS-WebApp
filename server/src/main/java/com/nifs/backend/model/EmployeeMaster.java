@@ -1,13 +1,15 @@
 package com.nifs.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "employee_master")
@@ -136,47 +138,47 @@ public class EmployeeMaster {
     //relationships
 
     //district
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
     @JoinColumn(name = "district", referencedColumnName = "district_id")
-    @JsonIgnoreProperties("employee")
     private District districtId;
 
 
     //province
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
     @JoinColumn(name = "province", referencedColumnName = "province_id")
-    @JsonIgnoreProperties("employee")
     private Province provinceId;
 
     //employee type
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
     @JoinColumn(name = "emp_type_id", referencedColumnName = "type_id")
-    @JsonIgnoreProperties("employee")
     private EmployeeTypeMaster empTypeId;
 
     //category
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
     @JoinColumn(name = "emp_category_id", referencedColumnName = "employee_category_code")
-    @JsonIgnoreProperties("employee")
     private EmployeeCategory empCatId;
 
 
     //designation
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
     @JoinColumn(name = "designation_id", referencedColumnName = "id")
-    @JsonIgnoreProperties("employee")
     private DesignationMaster designationId;
 
     //division
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
     @JoinColumn(name = "division_id", referencedColumnName = "division_id")
-    @JsonIgnoreProperties("employee")
     private DivisionMaster divisionId;
 
     //locations
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
     @JoinColumn(name = "location_id", referencedColumnName = "location_id")
-    @JsonIgnoreProperties("employee")
     private Locations locationId;
 
     public EmployeeMaster(int epfNo, String initials, String firstName, String lastName, String gender, String dob, String address, String contactNo, String personalEmail, String gsuitEmail, String nicNo, String nicIssuedDate, String passportNo, String passExpireDate, String licenseNo, String licenseIssuedDate, String licenseExpireDate, String contactPerson, String cpRelationship, String cpAddress, String cpTelephone, String cpStatus, String cpCivilStatus, String cpReligion, String appointmentDate, String contractStart, String contractEnd, Boolean isDelete, District districtId, Province provinceId, EmployeeTypeMaster empTypeId, EmployeeCategory empCatId, DesignationMaster designationId, DivisionMaster divisionId, Locations locationId) {

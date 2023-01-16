@@ -10,15 +10,14 @@ public interface DivisionMasterServiceInterface {
     //    get all divisions
     List<DivisionMasterDTO> getAll();
     //create new divisions
-    Boolean createDivision(DivisionMasterDTO d);
+    DivisionMaster createDivision(DivisionMasterDTO d);
 
     //delete division
     Boolean deleteDivision(String divisionId);
 
     // return new id
     String returnNewDivisionId();
-    //    return division by id
-    Optional<DivisionMaster> returnDivision(String divisionId);
+
 
     //    update division master
     Boolean updateDivisionMaster(DivisionMasterDTO dmData, String dvId);

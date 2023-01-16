@@ -11,6 +11,7 @@ import LocationMasterService from '../../../services/admin/LocationMasterService
 import IDivisionData from '../../../types/DivisionData';
 import DivisionMasterService from '../../../services/admin/DivisionMasterService';
 import DivisionAction from './shared/DivisionAction';
+import { RequestStatus } from '../../../constant/requestStatus';
 function Division() {
 	const [pageSize, setPageSize] = useState(10);
 	const [rowId, setRowId] = useState(0);
@@ -50,8 +51,20 @@ function Division() {
 	const retreiveDivisions = () => {
 		DivisionMasterService.getAllDivisions()
 			.then((res: any) => {
-				setDivisionData(res.data);
-				console.log(divisionData);
+				if (res.data.status === RequestStatus.SUCCESS) {
+					setDivisionData(res.data.data);
+					// console.log(divisionData);
+				} else {
+					toast.error(`${res.data.message}`, {
+						position: 'top-right',
+						autoClose: 5000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+					});
+				}
 			})
 			.catch((e: any) => {
 				console.log(e);
@@ -103,7 +116,7 @@ function Division() {
 			setLoading(true);
 			setTimeout(async () => {
 				const result = await DivisionMasterService.saveDivision(values);
-				if (result.data) {
+				if (result.data.status === RequestStatus.SUCCESS) {
 					toast.success('New Division is added', {
 						position: 'top-right',
 						autoClose: 5000,
@@ -189,7 +202,7 @@ function Division() {
 							components={{ Toolbar: GridToolbar }}
 							rowHeight={60}
 							columns={columns}
-							rows={divisionData}
+							rows={divisionData && divisionData}
 							getRowId={(row) => row.divisionId}
 							rowsPerPageOptions={[10, 20, 30]}
 							pageSize={pageSize}

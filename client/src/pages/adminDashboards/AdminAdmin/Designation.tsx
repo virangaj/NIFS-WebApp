@@ -10,6 +10,7 @@ import ILocationData from '../../../types/LocationData';
 import LocationMasterService from '../../../services/admin/LocationMasterService';
 import DesignationMasterService from '../../../services/admin/DesignationMasterService';
 import DesignationAction from './shared/DesignationAction';
+import { RequestStatus } from '../../../constant/requestStatus';
 
 function Designation() {
 	const [pageSize, setPageSize] = useState(10);
@@ -52,8 +53,19 @@ function Designation() {
 	const retreiveDesignations = () => {
 		DesignationMasterService.getAllDesignations()
 			.then((res: any) => {
-				setDesignationData(res.data);
-				console.log(designationData);
+				if (res.data.status === RequestStatus.SUCCESS) {
+					setDesignationData(res.data.data);
+				} else {
+					toast.error(`${res.data.message}`, {
+						position: 'top-right',
+						autoClose: 5000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+					});
+				}
 			})
 			.catch((e: any) => {
 				console.log(e);
@@ -64,7 +76,7 @@ function Designation() {
 		LocationMasterService.getAllLocations()
 			.then((res: any) => {
 				setLocationData(res.data);
-				console.log(locationData);
+				// console.log(locationData);
 			})
 			.catch((e: any) => {
 				console.log(e);
@@ -105,7 +117,7 @@ function Designation() {
 			setTimeout(async () => {
 				const result = await DesignationMasterService.saveDesignation(values);
 				// console.log(result)
-				if (result.data) {
+				if (result.data.status === RequestStatus.SUCCESS) {
 					toast.success('New Designation is added', {
 						position: 'top-right',
 						autoClose: 5000,
@@ -190,7 +202,7 @@ function Designation() {
 							components={{ Toolbar: GridToolbar }}
 							rowHeight={60}
 							columns={columns}
-							rows={designationData}
+							rows={designationData && designationData}
 							getRowId={(row) => row.designationId}
 							rowsPerPageOptions={[10, 20, 30]}
 							pageSize={pageSize}

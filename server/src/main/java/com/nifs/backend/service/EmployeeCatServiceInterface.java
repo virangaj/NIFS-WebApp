@@ -8,10 +8,10 @@ import java.util.Optional;
 
 public interface EmployeeCatServiceInterface {
     //return all category
-    List<EmpCatDTO> getAll();
+    List<EmpCatDTO> getAllEmpCategories();
 
     //create new category
-    Boolean createNewCategory(EmpCatDTO e);
+    boolean createNewCategory(EmpCatDTO e);
     //    return new employee category id
     String returnNewEmpCatId();
     //    return empCat by id

@@ -7,18 +7,24 @@ import { HiX } from 'react-icons/hi';
 import { toast } from 'react-toastify';
 import EmployeeService from '../../../../services/admin/EmployeeService';
 import IEmployeeData from '../../../../types/EmployeeData';
+import EmployeeAction from './EmployeeAction';
 
 function AllEmployees() {
 	const [pageSize, setPageSize] = useState(20);
 	const [rowId, setRowId] = useState(0);
 	const [loading, setLoading] = useState(false);
-	const [deleteId, setDeleteId] = useState('');
+	const [deleteId, setDeleteId] = useState(0);
 	const [empData, setEmpData] = useState<Array<IEmployeeData>>([]);
 
 	useEffect(() => {
 		retreiveEmployees();
 		// console.log(empData)
 	}, []);
+
+	useEffect(() => {
+		const filteredData = empData?.filter((emp) => emp.epfNo !== deleteId);
+		setEmpData(filteredData);
+	}, [deleteId]);
 
 	const retreiveEmployees = () => {
 		EmployeeService.getAllEmployeeData()
@@ -90,15 +96,15 @@ function AllEmployees() {
 				editable: true,
 			},
 			{
-				field: 'districtId',
-				headerName: 'District',
-				width: 100,
-				editable: true,
-			},
-			{
 				field: 'provinceId',
 				headerName: 'Province',
 				width: 150,
+				editable: true,
+			},
+			{
+				field: 'districtId',
+				headerName: 'District',
+				width: 100,
 				editable: true,
 			},
 			{
@@ -204,18 +210,6 @@ function AllEmployees() {
 				editable: true,
 			},
 			{
-				field: 'cpRelationship',
-				headerName: 'Relationship',
-				width: 150,
-				editable: true,
-			},
-			{
-				field: 'cpAddress',
-				headerName: 'Address',
-				width: 250,
-				editable: true,
-			},
-			{
 				field: 'cpAddress',
 				headerName: 'Address',
 				width: 250,
@@ -263,6 +257,15 @@ function AllEmployees() {
 				width: 150,
 				editable: true,
 			},
+			{
+				field: 'actions',
+				headerName: 'Action',
+				type: 'actions',
+				renderCell: (params: any) => (
+					<EmployeeAction {...{ params, rowId, setRowId, setDeleteId }} />
+				),
+				width: 200,
+			},
 		],
 		[rowId]
 	);
@@ -295,7 +298,7 @@ function AllEmployees() {
 					Get Employees currently not working
 				</button>
 			</div>
-			<Box sx={{ width: '100%', height: '400px' }}>
+			<Box sx={{ width: '100%', height: '1000px' }}>
 				<DataGrid
 					checkboxSelection={true}
 					components={{ Toolbar: GridToolbar }}
