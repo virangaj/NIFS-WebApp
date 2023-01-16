@@ -1,5 +1,6 @@
 package com.nifs.backend.controller;
 
+import com.nifs.backend.constant.RequestStatus;
 import com.nifs.backend.dto.DesignationMasterDTO;
 import com.nifs.backend.dto.DivisionMasterDTO;
 import com.nifs.backend.model.Charges;
@@ -35,7 +36,7 @@ public class DivisionMasterController {
             if (!d.isEmpty()) {
 
                 //return success response code
-                map.put("status", 1);
+                map.put("status", RequestStatus.SUCCESS);
                 map.put("code", 200);
                 map.put("count", d.size());
                 map.put("data", d);
@@ -43,7 +44,7 @@ public class DivisionMasterController {
             }
 
             //return error response code
-            map.put("status", 0);
+            map.put("status", RequestStatus.SUCCESS);
             map.put("code", 404);
             map.put("message", "Division data is not found. Please try again!");
             return new ResponseEntity<>(map, HttpStatus.OK);
@@ -52,7 +53,7 @@ public class DivisionMasterController {
 
             //return exception response code
             System.out.println(e.toString());
-            map.put("status", 0);
+            map.put("status",RequestStatus.ERROR);
             map.put("code", 400);
             map.put("error", e.toString());
             map.put("message", "Internal server error. Please try again!");
@@ -76,14 +77,14 @@ public class DivisionMasterController {
             List<DivisionMasterDTO> d = divMasterService.GetDivisionByLocationId(locID);
             if (d != null) {
                 //return success response code
-                map.put("status", 1);
+                map.put("status", RequestStatus.SUCCESS);
                 map.put("code", 201);
                 map.put("count", d.size());
                 map.put("data", d);
                 return new ResponseEntity<>(map, HttpStatus.OK);
             }
             //return error response code
-            map.put("status", 0);
+            map.put("status", RequestStatus.ERROR);
             map.put("code", 404);
             map.put("message", "Designation data is not found. Please Try Again!");
             return new ResponseEntity<>(map, HttpStatus.OK);
@@ -91,7 +92,7 @@ public class DivisionMasterController {
         } catch (Exception e) {
             //return exception response code
             System.out.println(e.toString());
-            map.put("status", 0);
+            map.put("status", RequestStatus.ERROR);
             map.put("code", 400);
             map.put("error", e.toString());
             map.put("message", "Internal server error. Please try again!");
@@ -107,20 +108,20 @@ public class DivisionMasterController {
             DivisionMasterDTO d = divMasterService.getDivisionById(id);
             if (d != null) {
                 //return success response code
-                map.put("status", 1);
+                map.put("status", RequestStatus.SUCCESS);
                 map.put("code", 201);
                 map.put("data", d);
                 return new ResponseEntity<>(map, HttpStatus.OK);
             }
 
-            map.put("status", 0);
+            map.put("status", RequestStatus.ERROR);
             map.put("code", 404);
             map.put("message", "Designation data is not found. Please Try Again!");
             return new ResponseEntity<>(map, HttpStatus.OK);
         } catch (Exception e) {
         //return exception response code
         System.out.println(e.toString());
-        map.put("status", 0);
+        map.put("status",RequestStatus.ERROR);
         map.put("code", 400);
         map.put("error", e.toString());
         map.put("message", "Internal server error. Please try again!");
@@ -137,13 +138,13 @@ public class DivisionMasterController {
             DivisionMaster d = divMasterService.createDivision(divMasterData);
             if (d != null) {
                 //return success response code
-                map.put("status", 1);
+                map.put("status", RequestStatus.SUCCESS);
                 map.put("code", 201);
                 map.put("data", d);
                 return new ResponseEntity<>(map, HttpStatus.OK);
             }
             //return error response code
-            map.put("status", 0);
+            map.put("status", RequestStatus.ERROR);
             map.put("code", 404);
             map.put("message", "Failed to create new Division. Please Try Again!");
             return new ResponseEntity<>(map, HttpStatus.OK);
@@ -151,7 +152,7 @@ public class DivisionMasterController {
         } catch (Exception e) {
             //return exception response code
             System.out.println(e.toString());
-            map.put("status", 0);
+            map.put("status", RequestStatus.ERROR);
             map.put("code", 400);
             map.put("error", e.toString());
             map.put("message", "Internal server error. Please try again!");
@@ -166,20 +167,20 @@ public class DivisionMasterController {
         try {
             if (divMasterService.updateDivisionMaster(dmData, dvId)) {
                 //return success response code
-                map.put("status", 1);
+                map.put("status", RequestStatus.SUCCESS);
                 map.put("code", 201);
                 map.put("message", "Update Request completed!");
                 return new ResponseEntity<>(map, HttpStatus.OK);
             }
             //return error response code
-            map.put("status", 0);
+            map.put("status", RequestStatus.ERROR);
             map.put("code", 404);
             map.put("message", "Request Failed. Please Try Again!");
             return new ResponseEntity<>(map, HttpStatus.OK);
         } catch (Exception e) {
             //return exception response code
             System.out.println(e.toString());
-            map.put("status", 0);
+            map.put("status", RequestStatus.ERROR);
             map.put("code", 400);
             map.put("error", e.toString());
             map.put("message", "Internal server error. Please try again!");
@@ -194,20 +195,20 @@ public class DivisionMasterController {
 
         try {
             if ( divMasterService.deleteDivision(divisionId)) {
-                map.put("status", 1);
+                map.put("status", RequestStatus.SUCCESS);
                 map.put("code", 201);
                 map.put("message", "Designation is successfully deleted!");
                 return new ResponseEntity<>(map, HttpStatus.OK);
             }
             //return error response code
-            map.put("status", 0);
+            map.put("status", RequestStatus.ERROR);
             map.put("code", 404);
             map.put("message", "Request cannot be completed!");
             return new ResponseEntity<>(map, HttpStatus.OK);
         } catch (Exception e) {
             //return exception response code
             System.out.println(e.toString());
-            map.put("status", 0);
+            map.put("status", RequestStatus.ERROR);
             map.put("code", 400);
             map.put("error", e.toString());
             map.put("message", "Internal server error. Please try again!");

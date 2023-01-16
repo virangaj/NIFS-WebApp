@@ -1,5 +1,6 @@
 package com.nifs.backend.controller;
 
+import com.nifs.backend.constant.RequestStatus;
 import com.nifs.backend.dto.EmpCatDTO;
 import com.nifs.backend.dto.EmployeeTypeDTO;
 import com.nifs.backend.service.EmployeeTypeServiceInterface;
@@ -32,14 +33,14 @@ public class EmployeeTypeController {
             List<EmployeeTypeDTO> emp = empTypeService.getAllTypes();
             if (emp != null) {
                 //return success response code
-                map.put("status", 1);
+                map.put("status", RequestStatus.SUCCESS);
                 map.put("code", 201);
                 map.put("count", emp.size());
                 map.put("data", emp);
                 return new ResponseEntity<>(map, HttpStatus.OK);
             }
             //return error response code
-            map.put("status", 0);
+            map.put("status", RequestStatus.ERROR);
             map.put("code", 404);
             map.put("message", "Employee Type data is not found. Please Try Again!");
             return new ResponseEntity<>(map, HttpStatus.OK);
@@ -47,7 +48,7 @@ public class EmployeeTypeController {
         } catch (Exception e) {
             //return exception response code
             System.out.println(e.toString());
-            map.put("status", 0);
+            map.put("status", RequestStatus.ERROR);
             map.put("code", 400);
             map.put("error", e.toString());
             map.put("message", "Internal server error. Please try again!");
@@ -70,14 +71,14 @@ public class EmployeeTypeController {
             List<EmployeeTypeDTO> emp = empTypeService.GetEmpTypeByLocationId(locId);
             if (emp != null) {
                 //return success response code
-                map.put("status", 1);
+                map.put("status", RequestStatus.SUCCESS);
                 map.put("code", 201);
                 map.put("count", emp.size());
                 map.put("data", emp);
                 return new ResponseEntity<>(map, HttpStatus.OK);
             }
             //return error response code
-            map.put("status", 0);
+            map.put("status", RequestStatus.ERROR);
             map.put("code", 404);
             map.put("message", "Employee Type data is not found. Please Try Again!");
             return new ResponseEntity<>(map, HttpStatus.OK);
@@ -85,7 +86,7 @@ public class EmployeeTypeController {
         } catch (Exception e) {
             //return exception response code
             System.out.println(e.toString());
-            map.put("status", 0);
+            map.put("status", RequestStatus.ERROR);
             map.put("code", 400);
             map.put("error", e.toString());
             map.put("message", "Internal server error. Please try again!");
@@ -101,12 +102,12 @@ public class EmployeeTypeController {
         try {
             if (empTypeService.createEmpType(empTypeData)) {
                 //return success response code
-                map.put("status", 1);
+                map.put("status", RequestStatus.SUCCESS);
                 map.put("code", 201);
                 return new ResponseEntity<>(map, HttpStatus.OK);
             }
             //return error response code
-            map.put("status", 0);
+            map.put("status", RequestStatus.ERROR);
             map.put("code", 404);
             map.put("message", "Failed to create new Employee Type. Please Try Again!");
             return new ResponseEntity<>(map, HttpStatus.OK);
@@ -114,7 +115,7 @@ public class EmployeeTypeController {
         } catch (Exception e) {
             //return exception response code
             System.out.println(e.toString());
-            map.put("status", 0);
+            map.put("status", RequestStatus.ERROR);
             map.put("code", 400);
             map.put("error", e.toString());
             map.put("message", "Internal server error. Please try again!");
@@ -130,20 +131,20 @@ public class EmployeeTypeController {
         try {
             if (empTypeService.updateEmployeeType(empTypeData, type_id)) {
                 //return success response code
-                map.put("status", 1);
+                map.put("status", RequestStatus.SUCCESS);
                 map.put("code", 201);
                 map.put("message", "Update Request completed!");
                 return new ResponseEntity<>(map, HttpStatus.OK);
             }
             //return error response code
-            map.put("status", 0);
+            map.put("status", RequestStatus.ERROR);
             map.put("code", 404);
             map.put("message", "Request Failed. Please Try Again!");
             return new ResponseEntity<>(map, HttpStatus.OK);
         } catch (Exception e) {
             //return exception response code
             System.out.println(e.toString());
-            map.put("status", 0);
+            map.put("status", RequestStatus.ERROR);
             map.put("code", 400);
             map.put("error", e.toString());
             map.put("message", "Internal server error. Please try again!");
@@ -160,20 +161,20 @@ public class EmployeeTypeController {
 
         try {
             if (empTypeService.deleteEmployeeType(id)){
-                map.put("status", 1);
+                map.put("status", RequestStatus.SUCCESS);
                 map.put("code", 201);
                 map.put("message", "Employee Type is successfully deleted!");
                 return new ResponseEntity<>(map, HttpStatus.OK);
             }
             //return error response code
-            map.put("status", 0);
+            map.put("status", RequestStatus.ERROR);
             map.put("code", 404);
             map.put("message", "Request cannot be completed!");
             return new ResponseEntity<>(map, HttpStatus.OK);
         } catch (Exception e) {
             //return exception response code
             System.out.println(e.toString());
-            map.put("status", 0);
+            map.put("status", RequestStatus.ERROR);
             map.put("code", 400);
             map.put("error", e.toString());
             map.put("message", "Internal server error. Please try again!");

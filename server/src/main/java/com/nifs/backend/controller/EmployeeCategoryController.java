@@ -1,6 +1,7 @@
 package com.nifs.backend.controller;
 
 
+import com.nifs.backend.constant.RequestStatus;
 import com.nifs.backend.dto.DesignationMasterDTO;
 import com.nifs.backend.model.DesignationMaster;
 import com.nifs.backend.service.EmployeeCatServiceInterface;
@@ -104,14 +105,14 @@ public class EmployeeCategoryController {
             List<EmpCatDTO> empCat = empCatService.getCategoryByLocationId(locId);
             if (empCat != null) {
                 //return success response code
-                map.put("status", 1);
+                map.put("status", RequestStatus.SUCCESS);
                 map.put("code", 201);
                 map.put("count", empCat.size());
                 map.put("data", empCat);
                 return new ResponseEntity<>(map, HttpStatus.OK);
             }
             //return error response code
-            map.put("status", 0);
+            map.put("status", RequestStatus.ERROR);
             map.put("code", 404);
             map.put("message", "Employee Category data is not found. Please Try Again!");
             return new ResponseEntity<>(map, HttpStatus.OK);
@@ -119,7 +120,7 @@ public class EmployeeCategoryController {
         } catch (Exception e) {
             //return exception response code
             System.out.println(e.toString());
-            map.put("status", 0);
+            map.put("status", RequestStatus.ERROR);
             map.put("code", 400);
             map.put("error", e.toString());
             map.put("message", "Internal server error. Please try again!");
@@ -137,12 +138,12 @@ public class EmployeeCategoryController {
 
             if (empCatService.createNewCategory(empCatData)) {
                 //return success response code
-                map.put("status", 1);
+                map.put("status", RequestStatus.SUCCESS);
                 map.put("code", 201);
                 return new ResponseEntity<>(map, HttpStatus.OK);
             }
             //return error response code
-            map.put("status", 0);
+            map.put("status", RequestStatus.ERROR);
             map.put("code", 404);
             map.put("message", "Failed to create new Employee Category. Please Try Again!");
             return new ResponseEntity<>(map, HttpStatus.OK);
@@ -150,7 +151,7 @@ public class EmployeeCategoryController {
         } catch (Exception e) {
             //return exception response code
             System.out.println(e.toString());
-            map.put("status", 0);
+            map.put("status", RequestStatus.ERROR);
             map.put("code", 400);
             map.put("error", e.toString());
             map.put("message", "Internal server error. Please try again!");
@@ -166,20 +167,20 @@ public class EmployeeCategoryController {
         try {
             if (empCatService.updateEmployeeCategory(empCatData, empCatId)) {
                 //return success response code
-                map.put("status", 1);
+                map.put("status",RequestStatus.SUCCESS);
                 map.put("code", 201);
                 map.put("message", "Update Request completed!");
                 return new ResponseEntity<>(map, HttpStatus.OK);
             }
             //return error response code
-            map.put("status", 0);
+            map.put("status", RequestStatus.ERROR);
             map.put("code", 404);
             map.put("message", "Request Failed. Please Try Again!");
             return new ResponseEntity<>(map, HttpStatus.OK);
         } catch (Exception e) {
             //return exception response code
             System.out.println(e.toString());
-            map.put("status", 0);
+            map.put("status", RequestStatus.ERROR);
             map.put("code", 400);
             map.put("error", e.toString());
             map.put("message", "Internal server error. Please try again!");
@@ -194,20 +195,20 @@ public class EmployeeCategoryController {
 
         try {
             if (empCatService.deleteEmployeeCategory(empCatId)) {
-                map.put("status", 1);
+                map.put("status", RequestStatus.SUCCESS);
                 map.put("code", 201);
                 map.put("message", "Designation is successfully deleted!");
                 return new ResponseEntity<>(map, HttpStatus.OK);
             }
             //return error response code
-            map.put("status", 0);
+            map.put("status", RequestStatus.ERROR);
             map.put("code", 404);
             map.put("message", "Request cannot be completed!");
             return new ResponseEntity<>(map, HttpStatus.OK);
         } catch (Exception e) {
             //return exception response code
             System.out.println(e.toString());
-            map.put("status", 0);
+            map.put("status", RequestStatus.ERROR;
             map.put("code", 400);
             map.put("error", e.toString());
             map.put("message", "Internal server error. Please try again!");

@@ -1,5 +1,6 @@
 package com.nifs.backend.controller;
 
+import com.nifs.backend.constant.RequestStatus;
 import com.nifs.backend.dto.DesignationMasterDTO;
 import com.nifs.backend.model.DesignationMaster;
 import com.nifs.backend.service.DesignationServiceInterface;
@@ -28,14 +29,14 @@ public class DesignationController {
             List<DesignationMasterDTO> d = desService.getAllDesignations();
             if (!d.isEmpty()) {
                 //return success response code
-                map.put("status", 1);
+                map.put("status", RequestStatus.SUCCESS);
                 map.put("code", 201);
                 map.put("count", d.size());
                 map.put("data", d);
                 return new ResponseEntity<>(map, HttpStatus.OK);
             }
             //return error response code
-            map.put("status", 0);
+            map.put("status", RequestStatus.ERROR);
             map.put("code", 404);
             map.put("message", "Designation data is not found. Please Try Again!");
             return new ResponseEntity<>(map, HttpStatus.OK);
@@ -43,7 +44,7 @@ public class DesignationController {
         } catch (Exception e) {
             //return exception response code
             System.out.println(e.toString());
-            map.put("status", 0);
+            map.put("status", RequestStatus.ERROR);
             map.put("code", 400);
             map.put("error", e.toString());
             map.put("message", "Internal server error. Please try again!");
@@ -66,14 +67,14 @@ public class DesignationController {
             List<DesignationMasterDTO> d = desService.getDesignationByLocationId(locId);
             if (d != null) {
                 //return success response code
-                map.put("status", 1);
+                map.put("status", RequestStatus.SUCCESS);
                 map.put("code", 201);
                 map.put("count", d.size());
                 map.put("data", d);
                 return new ResponseEntity<>(map, HttpStatus.OK);
             }
             //return error response code
-            map.put("status", 0);
+            map.put("status", RequestStatus.ERROR);
             map.put("code", 404);
             map.put("message", "Designation data is not found. Please Try Again!");
             return new ResponseEntity<>(map, HttpStatus.OK);
@@ -81,7 +82,7 @@ public class DesignationController {
         } catch (Exception e) {
             //return exception response code
             System.out.println(e.toString());
-            map.put("status", 0);
+            map.put("status", RequestStatus.ERROR);
             map.put("code", 400);
             map.put("error", e.toString());
             map.put("message", "Internal server error. Please try again!");
@@ -99,13 +100,13 @@ public class DesignationController {
             DesignationMasterDTO d = desService.returnDesignationById(id);
             if (d != null) {
                 //return success response code
-                map.put("status", 1);
+                map.put("status", RequestStatus.SUCCESS);
                 map.put("code", 201);
                 map.put("data", d);
                 return new ResponseEntity<>(map, HttpStatus.OK);
             }
             //return error response code
-            map.put("status", 0);
+            map.put("status", RequestStatus.ERROR);
             map.put("code", 404);
             map.put("message", "Designation data is not found. Please Try Again!");
             return new ResponseEntity<>(map, HttpStatus.OK);
@@ -113,7 +114,7 @@ public class DesignationController {
         } catch (Exception e) {
             //return exception response code
             System.out.println(e.toString());
-            map.put("status", 0);
+            map.put("status", RequestStatus.ERROR);
             map.put("code", 400);
             map.put("error", e.toString());
             map.put("message", "Internal server error. Please try again!");
@@ -130,14 +131,14 @@ public class DesignationController {
 
             if (desService.createDesignation(desData)) {
                 //return success response code
-                map.put("status", 1);
+                map.put("status", RequestStatus.SUCCESS);
                 map.put("code", 201);
                 map.put("message", "New Designation added!");
 
                 return new ResponseEntity<>(map, HttpStatus.OK);
             }
             //return error response code
-            map.put("status", 0);
+            map.put("status", RequestStatus.ERROR);
             map.put("code", 404);
             map.put("message", "Failed to create new Designation. Please Try Again!");
             return new ResponseEntity<>(map, HttpStatus.OK);
@@ -145,7 +146,7 @@ public class DesignationController {
         } catch (Exception e) {
             //return exception response code
             System.out.println(e.toString());
-            map.put("status", 0);
+            map.put("status", RequestStatus.ERROR);
             map.put("code", 400);
             map.put("error", e.toString());
             map.put("message", "Internal server error. Please try again!");
@@ -161,20 +162,20 @@ public class DesignationController {
         try {
             if (desService.updateDesignation(id, dto)) {
                 //return success response code
-                map.put("status", 1);
+                map.put("status", RequestStatus.SUCCESS);
                 map.put("code", 201);
                 map.put("message", "Update Request completed!");
                 return new ResponseEntity<>(map, HttpStatus.OK);
             }
             //return error response code
-            map.put("status", 0);
+            map.put("status", RequestStatus.ERROR);
             map.put("code", 404);
             map.put("message", "Request Failed. Please Try Again!");
             return new ResponseEntity<>(map, HttpStatus.OK);
         } catch (Exception e) {
             //return exception response code
             System.out.println(e.toString());
-            map.put("status", 0);
+            map.put("status", RequestStatus.ERROR);
             map.put("code", 400);
             map.put("error", e.toString());
             map.put("message", "Internal server error. Please try again!");
@@ -190,20 +191,20 @@ public class DesignationController {
 
         try {
             if (desService.deleteDesignation(id)) {
-                map.put("status", 1);
+                map.put("status", RequestStatus.SUCCESS);
                 map.put("code", 201);
                 map.put("message", "Designation is successfully deleted!");
                 return new ResponseEntity<>(map, HttpStatus.OK);
             }
             //return error response code
-            map.put("status", 0);
+            map.put("status", RequestStatus.ERROR);
             map.put("code", 404);
             map.put("message", "Request cannot be completed!");
             return new ResponseEntity<>(map, HttpStatus.OK);
         } catch (Exception e) {
             //return exception response code
             System.out.println(e.toString());
-            map.put("status", 0);
+            map.put("status", RequestStatus.ERROR);
             map.put("code", 400);
             map.put("error", e.toString());
             map.put("message", "Internal server error. Please try again!");

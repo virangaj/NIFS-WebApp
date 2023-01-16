@@ -37,14 +37,14 @@ public class LocationController {
 
     //    add locations
     @PostMapping
-    private Boolean createLocation(@RequestBody Locations venLocData){
+    private Boolean createLocation(@RequestBody LocationDTO venLocData){
         return locService.createLocation(venLocData);
     }
 
 
 //    update location
     @PutMapping("/update/{locationid}")
-    private Boolean updateLocationData(@PathVariable String locationid, @RequestBody Locations locData){
+    private Boolean updateLocationData(@PathVariable String locationid, @RequestBody LocationDTO locData){
         return locService.updateLocationData(locationid, locData);
     }
 
