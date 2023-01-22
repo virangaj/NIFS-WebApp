@@ -1,9 +1,8 @@
 package com.nifs.backend.controller;
 
 import com.nifs.backend.constant.RequestStatus;
-import com.nifs.backend.dto.EmpCatDTO;
 import com.nifs.backend.dto.EmployeeTypeDTO;
-import com.nifs.backend.service.EmployeeTypeServiceInterface;
+import com.nifs.backend.service.IEmployeeTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +19,7 @@ import java.util.Map;
 public class EmployeeTypeController {
 
     @Autowired
-    private EmployeeTypeServiceInterface empTypeService;
+    private IEmployeeTypeService empTypeService;
 
 
     //    get all employee types

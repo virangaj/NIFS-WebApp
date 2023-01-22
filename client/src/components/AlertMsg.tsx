@@ -1,6 +1,7 @@
 import { toast } from 'react-toastify';
 import { AlertTypes } from '../constant/alertTypes';
-
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 function AlertMsg({ type, text }: any) {
 	if (type === AlertTypes.SUCCESS) {
 		console.log(type);
@@ -54,7 +55,23 @@ function AlertMsg({ type, text }: any) {
 			theme: 'dark',
 		});
 	}
-	return <></>;
+	return (
+		<>
+			<ToastContainer
+				position='top-right'
+				autoClose={5000}
+				limit={1}
+				hideProgressBar={false}
+				newestOnTop
+				closeOnClick
+				rtl={false}
+				pauseOnFocusLoss
+				draggable
+				pauseOnHover
+				theme='dark'
+			/>
+		</>
+	);
 }
 
 export default AlertMsg;

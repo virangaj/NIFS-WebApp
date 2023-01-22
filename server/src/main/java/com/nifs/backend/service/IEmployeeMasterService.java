@@ -4,7 +4,7 @@ import com.nifs.backend.dto.EmployeeMasterDTO;
 
 import java.util.List;
 
-public interface EmployeeMasterServiceInterface {
+public interface IEmployeeMasterService {
 
     //get all employees
     List<EmployeeMasterDTO> getAllEmployees();

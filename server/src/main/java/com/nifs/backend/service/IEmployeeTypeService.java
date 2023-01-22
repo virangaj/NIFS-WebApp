@@ -1,10 +1,11 @@
 package com.nifs.backend.service;
 
 import com.nifs.backend.dto.EmployeeTypeDTO;
+import com.nifs.backend.model.EmployeeTypeMaster;
 
 import java.util.List;
 
-public interface EmployeeTypeServiceInterface {
+public interface IEmployeeTypeService {
 
     //    get all employee types
     List<EmployeeTypeDTO> getAllTypes();
@@ -23,4 +24,7 @@ public interface EmployeeTypeServiceInterface {
 
     //    delete employee type
     Boolean deleteEmployeeType(String id);
+
+    //return employee type by id
+    public EmployeeTypeMaster getEmployeeTypeById(String id);
 }

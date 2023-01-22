@@ -1,11 +1,12 @@
 package com.nifs.backend.serviceImplementation;
 
+import com.nifs.backend.common.Common;
 import com.nifs.backend.repository.LocationRepository;
 import com.nifs.backend.model.Locations;
 import com.nifs.backend.dto.EmpCatDTO;
 import com.nifs.backend.model.EmployeeCategory;
 import com.nifs.backend.repository.EmployeeCategoryRepository;
-import com.nifs.backend.service.EmployeeCatServiceInterface;
+import com.nifs.backend.service.IEmployeeCatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,13 +16,16 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class EmployeeCategoryService implements EmployeeCatServiceInterface {
+public class EmployeeCategoryService implements IEmployeeCatService {
 
     @Autowired
     private EmployeeCategoryRepository empCatRepo;
 
     @Autowired
     private LocationRepository locRepo;
+
+    private final Common common = new Common();
+
 
     //return all category
     public List<EmpCatDTO> getAllEmpCategories() {
@@ -62,10 +66,7 @@ public class EmployeeCategoryService implements EmployeeCatServiceInterface {
                 return "EPCT1001";
             }
             else {
-                String idText = lastId.replaceAll("[^A-Za-z]", "");
-                int idNum = Integer.parseInt(lastId.replaceAll("[^0-9]", ""));
-                idNum = idNum + 1;
-                return idText + idNum;
+                return common.generateNewId(lastId);
             }
         } catch (Exception e) {
             System.out.println(e.toString());
@@ -74,8 +75,9 @@ public class EmployeeCategoryService implements EmployeeCatServiceInterface {
     }
 
 //    return empCat by id
-    public Optional<EmployeeCategory> returnEmpCat(String empCatId) {
-        return empCatRepo.findById(empCatId);
+    public EmployeeCategory returnEmpCat(String empCatId) {
+
+        return empCatRepo.returnEmployeeCategory(empCatId);
     }
 
     //update employee category

@@ -21,7 +21,7 @@ import java.util.List;
 public class DesignationMaster {
 
     @Id
-    @Column(name = "id", nullable = false, length = 10)
+    @Column(name = "designation_id", nullable = false, length = 10)
     private String designationId;
 
     @Column(name = "designation_name", length = 255)

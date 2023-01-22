@@ -2,13 +2,13 @@ package com.nifs.backend.serviceImplementation;
 
 import com.nifs.backend.dto.DistrictDTO;
 import com.nifs.backend.dto.ProvinceDTO;
+import com.nifs.backend.model.District;
 import com.nifs.backend.model.Province;
 import com.nifs.backend.model.Religions;
-import com.nifs.backend.repository.ProvinceRepository;
-import com.nifs.backend.model.District;
 import com.nifs.backend.repository.DistrictRepository;
+import com.nifs.backend.repository.ProvinceRepository;
 import com.nifs.backend.repository.ReligionRepository;
-import com.nifs.backend.service.OtherDataServiceInterface;
+import com.nifs.backend.service.IOtherDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class OtherDataService implements OtherDataServiceInterface {
+public class OtherDataService implements IOtherDataService {
 
     @Autowired
     private DistrictRepository districtRepo;
@@ -28,7 +28,7 @@ public class OtherDataService implements OtherDataServiceInterface {
     @Autowired
     private ReligionRepository relRepo;
 
-//    return all districts
+    //    return all districts
     public List<DistrictDTO> returnAllDistricts() {
         try {
             List<District> districts = districtRepo.findAll();
@@ -78,8 +78,14 @@ public class OtherDataService implements OtherDataServiceInterface {
 
     }
 
+    @Override
+    public Province findProvinceById(int id) {
+        return provinceRepo.findProvinceById(id);
+    }
+
 
     //    add new district
+    @Override
     public Boolean addDistrict(District dData, int provinceId) {
         try {
             Province province = provinceRepo.findProvinceById(provinceId);
@@ -98,6 +104,7 @@ public class OtherDataService implements OtherDataServiceInterface {
     }
 
 //    edit district
+    @Override
     public Boolean editDistrict(int dId, District dData) {
 
         try {
@@ -114,9 +121,10 @@ public class OtherDataService implements OtherDataServiceInterface {
         }
     }
 //return Districts By Province Id
+    @Override
     public List<DistrictDTO> returnDistrictsByProvinceId(int id) {
         try {
-            Optional<Province> p = provinceRepo.findById(id);
+                Optional<Province> p = provinceRepo.findById(id);
             if (p.isPresent()) {
                 List<District> districts = districtRepo.findDistrictByProvinceId(id);
                 List<DistrictDTO> districtDTO = new ArrayList<>();
@@ -131,9 +139,15 @@ public class OtherDataService implements OtherDataServiceInterface {
             System.out.println(e.toString());
             return null;
         }
+}
+
+    @Override
+    public District returnDistrictById(int id) {
+        return districtRepo.returnDistrictById(id);
     }
 
     //return all religions
+    @Override
     public List<Religions> returnAllReligions() {
         try {
             return relRepo.findAll();
@@ -144,6 +158,7 @@ public class OtherDataService implements OtherDataServiceInterface {
     }
 
     //save religion
+    @Override
     public boolean addNewReligions(Religions relData) {
         try {
             if (relRepo.findByName(relData.getName()).isEmpty()) {

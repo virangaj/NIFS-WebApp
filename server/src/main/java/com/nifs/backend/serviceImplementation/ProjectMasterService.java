@@ -1,6 +1,6 @@
 package com.nifs.backend.serviceImplementation;
 
-import com.nifs.backend.service.ProjectMasterServiceInterface;
+import com.nifs.backend.service.IProjectMasterService;
 
-public class ProjectMasterService implements ProjectMasterServiceInterface {
+public class ProjectMasterService implements IProjectMasterService {
 }

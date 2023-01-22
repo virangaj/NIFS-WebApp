@@ -28,6 +28,7 @@ public interface LocationRepository extends JpaRepository<Locations, String> {
     @Query(value = "SELECT * FROM locations_master WHERE location_id =?1", nativeQuery = true)
     Locations getLocation(String id);
 
-    @Query(value = "SELECT TOP 1 location_id FROM venue_locations_master ORDER BY location_id DESC", nativeQuery = true)
+//    @Query(value = "SELECT TOP 1 location_id FROM locations_master ORDER BY location_id DESC", nativeQuery = true)
+    @Query(value = "SELECT location_id FROM locations_master ORDER BY location_id DESC LIMIT 1", nativeQuery = true)
     String returnLastId();
 }

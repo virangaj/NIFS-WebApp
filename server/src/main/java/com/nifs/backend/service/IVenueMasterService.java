@@ -8,7 +8,7 @@ import com.nifs.backend.model.VenueMaster;
 import java.util.List;
 import java.util.Optional;
 
-public interface VenueMasterServiceInterface {
+public interface IVenueMasterService {
     //get new venue id
     String returnNewVenueId();
 

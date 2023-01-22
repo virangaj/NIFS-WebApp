@@ -2,8 +2,7 @@ package com.nifs.backend.controller;
 
 import com.nifs.backend.constant.RequestStatus;
 import com.nifs.backend.dto.DesignationMasterDTO;
-import com.nifs.backend.model.DesignationMaster;
-import com.nifs.backend.service.DesignationServiceInterface;
+import com.nifs.backend.service.IDesignationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +18,7 @@ import java.util.Map;
 public class DesignationController {
 
     @Autowired
-    private DesignationServiceInterface desService;
+    private IDesignationService desService;
 
     //    get all designations
     @GetMapping

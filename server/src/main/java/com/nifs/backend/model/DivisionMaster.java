@@ -17,10 +17,6 @@ import java.util.List;
 @Table(name="division_master")
 public class DivisionMaster {
 
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "id", nullable = false)
-//    private int id;
     @Id
     @Column(name = "division_id", nullable = false, length = 50)
     private String divisionId;
@@ -44,7 +40,6 @@ public class DivisionMaster {
 
     //employee
     @JsonIgnore
-
     @OneToMany(mappedBy = "divisionId", cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
     private List<EmployeeMaster> employee;
 

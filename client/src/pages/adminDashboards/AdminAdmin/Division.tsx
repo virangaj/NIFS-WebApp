@@ -75,7 +75,7 @@ function Division() {
 		LocationMasterService.getAllLocations()
 			.then((res: any) => {
 				setLocationData(res.data);
-				console.log(locationData);
+				// console.log(locationData);
 			})
 			.catch((e: any) => {
 				console.log(e);

@@ -2,7 +2,7 @@ package com.nifs.backend.serviceImplementation;
 
 import com.nifs.backend.model.Charges;
 import com.nifs.backend.repository.ChargeRepository;
-import com.nifs.backend.service.ChargeServiceInterface;
+import com.nifs.backend.service.IChargeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ChargeService implements ChargeServiceInterface {
+public class ChargeService implements IChargeService {
 
     @Autowired
     ChargeRepository chargeRepo;

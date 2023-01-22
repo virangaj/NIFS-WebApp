@@ -1,6 +1,6 @@
 package com.nifs.backend.serviceImplementation;
 
-import com.nifs.backend.service.EmployeeMasterServiceInterface;
+import com.nifs.backend.service.*;
 import org.modelmapper.ModelMapper;
 import com.nifs.backend.dto.EmployeeMasterDTO;
 import com.nifs.backend.model.*;
@@ -15,30 +15,33 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
-public class EmployeeMasterService implements EmployeeMasterServiceInterface {
+public class EmployeeMasterService implements IEmployeeMasterService {
 
     @Autowired
     private EmployeeMasterRepository empRepo;
     @Autowired
-    private EmployeeCategoryRepository catRepo;
+    private IEmployeeCatService catService;
     @Autowired
-    private DesignationRepostory desRepo;
+    private IDesignationService desService;
     @Autowired
-    private EmployeeTypeRepository typeRepo;
+    private IEmployeeTypeService typeService;
     @Autowired
-    private LocationRepository locRepo;
-    @Autowired
-    private DivisionMasterRepository divRepo;
+    private ILocationService locService;
 
     @Autowired
-    private DistrictRepository disRepo;
+    private IDivisionMasterService divService;
+
     @Autowired
-    private ProvinceRepository proRepo;
+    private IOtherDataService otherService;
 
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+    private IEmployeeLoginService employeeLoginService;
 
     //get all employees
     public List<EmployeeMasterDTO> getAllEmployees() {
@@ -98,25 +101,67 @@ public class EmployeeMasterService implements EmployeeMasterServiceInterface {
             if (empRepo.returnEmployeeById(e.getEpfNo()) == null) {
 
                 //get designation
-                DesignationMaster d = desRepo.returnDesignation(e.getDesignationId());
+                DesignationMaster designation = desService.returnDesignationMasterById(e.getDesignationId());
                 //get emp category
-                EmployeeCategory empCat = catRepo.returnEmployeeCategory(e.getEmpCatId());
+//                EmployeeCategory empCat = catRepo.returnEmployeeCategory(e.getEmpCatId());
+                EmployeeCategory empCat = catService.returnEmpCat(e.getEmpCatId());
+
                 //get emp division
-                DivisionMaster divMaster = divRepo.returnDivision(e.getDivisionId());
+                DivisionMaster divMaster = divService.returnDivision(e.getDivisionId());
                 //get emp type
-                EmployeeTypeMaster empType = typeRepo.returnType(e.getEmpTypeId());
+                EmployeeTypeMaster empType = typeService.getEmployeeTypeById(e.getEmpTypeId());
                 //get location
-                Locations locData = locRepo.getLocation(e.getLocationId());
+                Locations locData = locService.getLocationById(e.getLocationId());
                 //get district
-                District dData = disRepo.returnDistrictById(Integer.parseInt(e.getDistrictId()));
+                District dData = otherService.returnDistrictById(Integer.parseInt(e.getDistrictId()));
                 //get province
-                Province province = proRepo.findProvinceById(Integer.parseInt(e.getProvinceId()));
+                Province province = otherService.findProvinceById(Integer.parseInt(e.getProvinceId()));
 
 //            EmployeeMaster employee = new EmployeeMaster(e.getEpfNo(), e.getInitials(), e.getFirstName(), e.getLastName(), e.getGender(), e.getContactNo(), e.getPersonalEmail(), e.getGsuitEmail(), e.getNicNo(), e.getNicIssuedDate(), e.getPassportNo(), e.getPassExpireDate(), e.getLicenseNo(), e.getLicenseIssuedDate(), e.getLicenseExpireDate(), e.getContactPerson(), e.getCpRelationship(), e.getCpAddress(), e.getCpTelephone(), e.getCpStatus(), e.getCpCivilStatus(), e.getCpReligion(), e.getAppointmentDate(), e.getContractStart(), e.getContractEnd(), dData, province, empType, empCat,d, divMaster, locData);
-                EmployeeMaster employeeMaster = new EmployeeMaster(e.getEpfNo(), e.getInitials(), e.getFirstName(), e.getLastName(), e.getGender(), e.getDob(), e.getAddress(), e.getContactNo(), e.getPersonalEmail(), e.getGsuitEmail(), e.getNicNo(), e.getNicIssuedDate(), e.getPassportNo(), e.getPassExpireDate(), e.getLicenseNo(), e.getLicenseIssuedDate(), e.getLicenseExpireDate(), e.getContactPerson(), e.getCpRelationship(), e.getCpAddress(), e.getCpTelephone(), e.getCpStatus(), e.getCpCivilStatus(), e.getCpReligion(), e.getAppointmentDate(), e.getContractStart(), e.getContractEnd(), false, dData, province, empType, empCat, d, divMaster, locData);
+                EmployeeMaster employeeMaster =
+                        new EmployeeMaster(
+                                e.getEpfNo(),
+                                e.getInitials(),
+                                e.getFirstName(),
+                                e.getLastName(),
+                                e.getGender(),
+                                e.getDob(),
+                                e.getAddress(),
+                                e.getContactNo(),
+                                e.getPersonalEmail(),
+                                e.getGsuitEmail(),
+                                e.getNicNo(),
+                                e.getNicIssuedDate(),
+                                e.getPassportNo(),
+                                e.getPassExpireDate(),
+                                e.getLicenseNo(),
+                                e.getLicenseIssuedDate(),
+                                e.getLicenseExpireDate(),
+                                e.getContactPerson(),
+                                e.getCpRelationship(),
+                                e.getCpAddress(),
+                                e.getCpTelephone(),
+                                e.getCpStatus(),
+                                e.getCpCivilStatus(),
+                                e.getCpReligion(),
+                                e.getAppointmentDate(),
+                                e.getContractStart(),
+                                e.getContractEnd(),
+                                false,
+                                dData,
+                                province,
+                                empType,
+                                empCat,
+                                designation,
+                                divMaster,
+                                locData
+                        );
+
 
                 empRepo.save(employeeMaster);
-                return true;
+
+                //create employee login
+                return employeeLoginService.createLogin(e);
 
 
             }

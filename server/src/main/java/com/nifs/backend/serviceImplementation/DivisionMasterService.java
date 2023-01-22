@@ -1,5 +1,6 @@
 package com.nifs.backend.serviceImplementation;
 
+import com.nifs.backend.common.Common;
 import com.nifs.backend.model.EmployeeMaster;
 import com.nifs.backend.repository.EmployeeMasterRepository;
 import com.nifs.backend.repository.LocationRepository;
@@ -7,17 +8,16 @@ import com.nifs.backend.model.Locations;
 import com.nifs.backend.dto.DivisionMasterDTO;
 import com.nifs.backend.model.DivisionMaster;
 import com.nifs.backend.repository.DivisionMasterRepository;
-import com.nifs.backend.service.DivisionMasterServiceInterface;
+import com.nifs.backend.service.IDivisionMasterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Service
-public class DivisionMasterService implements DivisionMasterServiceInterface {
+public class DivisionMasterService implements IDivisionMasterService {
 
     @Autowired
     private DivisionMasterRepository divMasterRepo;
@@ -27,6 +27,7 @@ public class DivisionMasterService implements DivisionMasterServiceInterface {
 
     @Autowired
     private EmployeeMasterRepository empRepo;
+    private final Common common = new Common();
 
     //    get all divisions
     @Override
@@ -49,18 +50,18 @@ public class DivisionMasterService implements DivisionMasterServiceInterface {
 
     //create new divisions
     @Override
-    public DivisionMaster createDivision(DivisionMasterDTO d) {
+    public Boolean createDivision(DivisionMasterDTO d) {
 
         if (divMasterRepo.returnDivision(d.getDivisionId()) == null) {
 
             Date date = new Date();
             Locations l = locRepo.getLocation(d.getLocationId());
             DivisionMaster dm = new DivisionMaster(d.getDivisionId(), d.getName(), date, l);
-            return divMasterRepo.save(dm);
-
+            divMasterRepo.save(dm);
+            return true;
         }
         else {
-            return null;
+            return false;
         }
 
 
@@ -98,12 +99,8 @@ public class DivisionMasterService implements DivisionMasterServiceInterface {
                 return "DI1001";
             }
             else {
-                String idText = lastId.replaceAll("[^A-Za-z]", "");
-                int idNum = Integer.parseInt(lastId.replaceAll("[^0-9]", ""));
+                return common.generateNewId(lastId);
 
-                idNum = idNum + 1;
-
-                return idText + idNum;
             }
         } catch (Exception e) {
             System.out.println(e.toString());
@@ -160,5 +157,10 @@ public class DivisionMasterService implements DivisionMasterServiceInterface {
         }
         return null;
 
+    }
+
+    @Override
+    public DivisionMaster returnDivision(String id) {
+        return divMasterRepo.returnDivision(id);
     }
 }

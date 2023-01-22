@@ -1,7 +1,7 @@
 package com.nifs.backend.controller;
 
 import com.nifs.backend.dto.EmployeeMasterDTO;
-import com.nifs.backend.service.EmployeeMasterServiceInterface;
+import com.nifs.backend.service.IEmployeeMasterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.HttpMessageNotWritableException;
 import org.springframework.web.bind.annotation.*;
@@ -14,37 +14,37 @@ import java.util.List;
 public class EmployeeMasterController {
 
     @Autowired
-    private EmployeeMasterServiceInterface empService;
+    private IEmployeeMasterService empService;
 
     //get all currently working employees
     @GetMapping
-    private List<EmployeeMasterDTO> getAllEmployees() throws HttpMessageNotWritableException {
+    private List<EmployeeMasterDTO> getAllEmployees() {
        try{
            return empService.getAllEmployees();
        }
-       catch(HttpMessageNotWritableException e){
+       catch(Exception e){
            return null;
        }
     }
 
     //return all employees worked so far
     @GetMapping("/withoutdelete")
-    private List<EmployeeMasterDTO> getAllEmployeesWithoutDeleted() throws HttpMessageNotWritableException {
+    private List<EmployeeMasterDTO> getAllEmployeesWithoutDeleted() {
         try{
             return empService.getAllEmployeesWithoutDeleted();
         }
-        catch(HttpMessageNotWritableException e){
+        catch(Exception e){
             return null;
         }
     }
 
     // return all deleted employees
     @GetMapping("/deleted")
-    private List<EmployeeMasterDTO> getAllEmployeeDataCurrentlyNotWorking() throws HttpMessageNotWritableException {
+    private List<EmployeeMasterDTO> getAllEmployeeDataCurrentlyNotWorking()  {
         try{
             return empService.getAllEmployeeDataCurrentlyNotWorking();
         }
-        catch(HttpMessageNotWritableException e){
+        catch(Exception e){
             return null;
         }
     }
@@ -56,6 +56,8 @@ public class EmployeeMasterController {
         return empService.getEmployeeById(id);
     }
 
+
+    //add new employee
     @PostMapping
     private Boolean addEmployee(@RequestBody EmployeeMasterDTO empData){
         return empService.addEmployee(empData);

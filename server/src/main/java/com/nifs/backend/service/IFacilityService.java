@@ -5,7 +5,7 @@ import com.nifs.backend.model.Facility;
 import java.util.List;
 import java.util.Optional;
 
-public interface FacilityServiceInterface {
+public interface IFacilityService {
     //return new facility id
     String returnNewFacilityId();
 
