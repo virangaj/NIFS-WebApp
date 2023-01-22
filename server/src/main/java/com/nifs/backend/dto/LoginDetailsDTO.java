@@ -12,5 +12,5 @@ public class LoginDetailsDTO {
     private int epfNo;
     private String email;
     private String password;
-    private Date lsatLogin;
+    private Date lastLogin;
 }

@@ -9,7 +9,7 @@ import { BiCheck, BiSave, BiTrash } from 'react-icons/bi';
 import EmployeeCatService from '../../../../services/admin/EmployeeCatService';
 import { toast } from 'react-toastify';
 import { RequestStatus } from '../../../../constant/requestStatus';
-import AlertMsg from '../../../../components/AlertMsg';
+
 import { AlertTypes } from '../../../../constant/alertTypes';
 
 function EmpCatAction({ params, rowId, setRowId, setDeleteId }: any) {

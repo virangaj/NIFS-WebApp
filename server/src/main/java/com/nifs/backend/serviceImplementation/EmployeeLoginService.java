@@ -26,7 +26,7 @@ public class EmployeeLoginService implements IEmployeeLoginService {
     @Override
     public boolean createLogin(EmployeeMasterDTO e) throws NoSuchAlgorithmException {
 
-        if (loginRepo.findByEpfNo(e.getEpfNo()) == null) {
+        if (loginRepo.returnLoginDetails(e.getEpfNo()) == null) {
 
             String pwd = common.encryptPassword(Integer.toString(e.getEpfNo()));
             EmployeeMaster employeeMaster = empRepo.returnEmployeeById(e.getEpfNo());

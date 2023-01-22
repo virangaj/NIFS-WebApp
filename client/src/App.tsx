@@ -25,6 +25,7 @@ import BackToTop from './components/shared/BackToTop';
 import AdminAdmin from './pages/adminDashboards/AdminAdmin';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ChangePassword from './pages/login/ChangePassword';
 function App() {
 	return (
 		<div className='flex flex-col mx-auto'>
@@ -44,6 +45,8 @@ function App() {
 			<Router>
 				<Routes>
 					<Route path={RouteName.Login} element={<Login />} />
+					<Route path={RouteName.ChangePassword} element={<ChangePassword />} />
+
 					<Route
 						path={RouteName.Home}
 						element={

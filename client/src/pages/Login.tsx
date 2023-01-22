@@ -3,6 +3,11 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import Link from '@mui/material/Link';
 
 import Logo from '../images/nifs_logo.png';
+import OAuthService from '../services/auth/OAuthService';
+import { RequestStatus } from '../constant/requestStatus';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { RouteName } from '../constant/routeNames';
 
 function Copyright(props: any) {
 	return (
@@ -18,12 +23,42 @@ function Copyright(props: any) {
 }
 
 export default function SignInSide() {
+	let navigate = useNavigate();
+
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
 	} = useForm();
+
 	const onSubmit: SubmitHandler<any> = (data) => {
+		data.epfNo = parseInt(data.epfNo);
+		setTimeout(async () => {
+			const result = await OAuthService.loginRequest(data);
+			if (result.data.status === RequestStatus.CHANGE_PASSWORD) {
+				navigate(RouteName.ChangePassword);
+				toast.warning(result.data.message, {
+					position: 'top-right',
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+				});
+			} else {
+				toast.error(result.data.message, {
+					position: 'top-right',
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+				});
+			}
+		}, 1000);
+
 		console.log(data);
 	};
 
@@ -50,11 +85,11 @@ export default function SignInSide() {
 
 					<form className='mt-6' onSubmit={handleSubmit(onSubmit)}>
 						<div>
-							<label className='input-label'>Email Address</label>
+							<label className='input-label'>EPF Number</label>
 							<input
-								type='email'
-								{...register('email')}
-								placeholder='Enter Email Address'
+								type='text'
+								{...register('epfNo')}
+								placeholder='Enter EPF Number'
 								className='tailwind-text-box w-[100%]'
 								required
 							/>

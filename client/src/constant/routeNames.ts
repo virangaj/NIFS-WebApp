@@ -2,6 +2,7 @@ export enum RouteName {
 	//  main pages
 	Home = '/',
 	Login = '/login',
+	ChangePassword = '/changepassword',
 	Common = '/common/*',
 	Account = '/account/*',
 	Admin = '/admin/*',
