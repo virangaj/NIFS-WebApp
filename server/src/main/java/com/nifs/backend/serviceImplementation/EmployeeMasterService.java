@@ -1,21 +1,15 @@
 package com.nifs.backend.serviceImplementation;
 
-import com.nifs.backend.service.*;
-import org.modelmapper.ModelMapper;
 import com.nifs.backend.dto.EmployeeMasterDTO;
 import com.nifs.backend.model.*;
-import com.nifs.backend.repository.*;
-import com.nifs.backend.model.EmployeeTypeMaster;
-import com.nifs.backend.repository.EmployeeTypeRepository;
-import com.nifs.backend.repository.LocationRepository;
-import com.nifs.backend.model.Locations;
+import com.nifs.backend.repository.EmployeeMasterRepository;
+import com.nifs.backend.service.*;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class EmployeeMasterService implements IEmployeeMasterService {
@@ -84,7 +78,42 @@ public class EmployeeMasterService implements IEmployeeMasterService {
             List<EmployeeMasterDTO> dto = new ArrayList<>();
             for (EmployeeMaster e : emp) {
                 if (e.getIsDelete()) {
-                    EmployeeMasterDTO single = new EmployeeMasterDTO(e.getEpfNo(), e.getInitials(), e.getFirstName(), e.getLastName(), e.getGender(), e.getDob(), e.getAddress(), e.getContactNo(), e.getPersonalEmail(), e.getGsuitEmail(), e.getNicNo(), e.getNicIssuedDate(), e.getPassportNo(), e.getPassExpireDate(), e.getLicenseNo(), e.getLicenseIssuedDate(), e.getLicenseExpireDate(), e.getContactPerson(), e.getCpRelationship(), e.getCpAddress(), e.getCpTelephone(), e.getCpStatus(), e.getCpCivilStatus(), e.getCpReligion(), e.getAppointmentDate(), e.getContractStart(), e.getContractEnd(), e.getProvinceId().getProvinceName(), e.getDistrictId().getDistrictName(), e.getEmpTypeId().getEmpTypeId(), e.getEmpCatId().getEmpCatId(), e.getDesignationId().getDesignationId(), e.getDivisionId().getDivisionId(), e.getLocationId().getLocationId());
+                    EmployeeMasterDTO single =
+                            new EmployeeMasterDTO(
+                                    e.getEpfNo(),
+                                    e.getInitials(),
+                                    e.getFirstName(),
+                                    e.getLastName(),
+                                    e.getGender(),
+                                    e.getDob(),
+                                    e.getAddress(),
+                                    e.getContactNo(),
+                                    e.getPersonalEmail(),
+                                    e.getGsuitEmail(),
+                                    e.getNicNo(),
+                                    e.getNicIssuedDate(),
+                                    e.getPassportNo(),
+                                    e.getPassExpireDate(),
+                                    e.getLicenseNo(),
+                                    e.getLicenseIssuedDate(),
+                                    e.getLicenseExpireDate(),
+                                    e.getContactPerson(),
+                                    e.getCpRelationship(),
+                                    e.getCpAddress(),
+                                    e.getCpTelephone(),
+                                    e.getCpStatus(),
+                                    e.getCpCivilStatus(),
+                                    e.getCpReligion(),
+                                    e.getAppointmentDate(),
+                                    e.getContractStart(),
+                                    e.getContractEnd(),
+                                    e.getProvinceId().getProvinceName(),
+                                    e.getDistrictId().getDistrictName(),
+                                    e.getEmpTypeId().getEmpTypeId(),
+                                    e.getEmpCatId().getEmpCatId(),
+                                    e.getDesignationId().getDesignationId(),
+                                    e.getDivisionId().getDivisionId(),
+                                    e.getLocationId().getLocationId());
                     dto.add(single);
                 }
             }

@@ -25,8 +25,6 @@ public class EmployeeTypeController {
     //    get all employee types
     @GetMapping
     private ResponseEntity<?> getAllTypes() {
-
-
         Map<String, Object> map = new LinkedHashMap<String, Object>();
         try {
             List<EmployeeTypeDTO> emp = empTypeService.getAllTypes();

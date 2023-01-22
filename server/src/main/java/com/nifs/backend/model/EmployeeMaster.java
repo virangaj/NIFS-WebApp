@@ -34,7 +34,7 @@ public class EmployeeMaster {
     @Column(name = "last_name", length = 100)
     private String lastName;
 
-    @Column(name = "gender", length = 5)
+    @Column(name = "gender", length = 6)
     private String gender;
     @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(pattern = "dd/MM/yyyy")

@@ -14,18 +14,23 @@ import java.util.Date;
 public class EmployeeLogin {
 
     @Id
-    @Column(name = "id", nullable = false)
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "id", nullable = false, length = 100, unique = true)
+    private String id;
 
-//    @OneToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "epf_no", referencedColumnName = "epf_no", unique = true)
-//    private EmployeeMaster employee;
+    @OneToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "epf_no", referencedColumnName = "epf_no", unique = true)
+    private EmployeeMaster employee;
+
+    @Column(name = "email", nullable = false, length = 50)
+    private String email;
 
     @Column(name = "password", nullable = false)
     private String password;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="last_login")
-    private Date lsatLogin;
+    private Date lastLogin;
+
 
 }

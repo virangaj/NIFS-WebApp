@@ -336,7 +336,7 @@ function AddEmployee() {
 			setLoading(true);
 			setTimeout(async () => {
 				const result = await EmployeeService.saveEmployee(empData);
-				if (result.data) {
+				if (result.data.status === RequestStatus.SUCCESS) {
 					toast.success('New Employee is added', {
 						position: 'top-right',
 						autoClose: 5000,

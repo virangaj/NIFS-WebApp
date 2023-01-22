@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import EmployeeService from '../../../../services/admin/EmployeeService';
 import IEmployeeData from '../../../../types/EmployeeData';
 import EmployeeAction from './EmployeeAction';
+import { RequestStatus } from '../../../../constant/requestStatus';
 
 function AllEmployees() {
 	const [pageSize, setPageSize] = useState(20);
@@ -29,7 +30,19 @@ function AllEmployees() {
 	const retreiveEmployees = () => {
 		EmployeeService.getAllEmployeeData()
 			.then((res: any) => {
-				setEmpData(res.data);
+				if (res.data.status === RequestStatus.SUCCESS) {
+					setEmpData(res.data.data);
+				} else {
+					toast.error(`${res.data.message}`, {
+						position: 'top-right',
+						autoClose: 5000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+					});
+				}
 			})
 			.catch((e: any) => {
 				console.log(e);
@@ -39,7 +52,9 @@ function AllEmployees() {
 	const allEmployeesWithoutDeleted = () => {
 		EmployeeService.getAllEmployeeDataWithoutDeleted()
 			.then((res: any) => {
-				setEmpData(res.data);
+				if (res.data.status === RequestStatus.SUCCESS) {
+					setEmpData(res.data.data);
+				}
 			})
 			.catch((e: any) => {
 				console.log(e);
@@ -49,7 +64,9 @@ function AllEmployees() {
 	const getAllEmployeeDataCurrentlyNotWorking = () => {
 		EmployeeService.getAllEmployeeDataCurrentlyNotWorking()
 			.then((res: any) => {
-				setEmpData(res.data);
+				if (res.data.status === RequestStatus.SUCCESS) {
+					setEmpData(res.data.data);
+				}
 			})
 			.catch((e: any) => {
 				console.log(e);
