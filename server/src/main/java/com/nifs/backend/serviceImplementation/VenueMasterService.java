@@ -8,7 +8,7 @@ import com.nifs.backend.model.Facility;
 import com.nifs.backend.repository.FacilityRepository;
 import com.nifs.backend.repository.VenueChargeRepository;
 import com.nifs.backend.repository.VenueMasterRepository;
-import com.nifs.backend.service.VenueMasterServiceInterface;
+import com.nifs.backend.service.IVenueMasterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.Set;
 
 @Service
-public class VenueMasterService implements VenueMasterServiceInterface {
+public class VenueMasterService implements IVenueMasterService {
 
     @Autowired
     private VenueMasterRepository venueRepo;

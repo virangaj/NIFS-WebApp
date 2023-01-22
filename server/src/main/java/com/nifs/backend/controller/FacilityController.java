@@ -1,7 +1,7 @@
 package com.nifs.backend.controller;
 
 import com.nifs.backend.model.Facility;
-import com.nifs.backend.service.FacilityServiceInterface;
+import com.nifs.backend.service.IFacilityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +14,7 @@ import java.util.Optional;
 public class FacilityController {
 
     @Autowired
-    private FacilityServiceInterface facService;
+    private IFacilityService facService;
 
 
 

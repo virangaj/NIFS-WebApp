@@ -2,7 +2,7 @@ package com.nifs.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.nifs.backend.constant.UserRole;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -34,7 +34,7 @@ public class EmployeeMaster {
     @Column(name = "last_name", length = 100)
     private String lastName;
 
-    @Column(name = "gender", length = 5)
+    @Column(name = "gender", length = 6)
     private String gender;
     @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(pattern = "dd/MM/yyyy")
@@ -87,6 +87,14 @@ public class EmployeeMaster {
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private String licenseExpireDate;
 
+
+    @Column(name = "is_delete")
+    private Boolean isDelete;
+
+    @Column(name = "status")
+    private String role = String.valueOf(UserRole.USER);
+
+
 //    emergency contract person details
     @Column(name = "contact_person", length = 255)
     private String contactPerson;
@@ -132,9 +140,6 @@ public class EmployeeMaster {
     private String contractEnd;
 
 
-    @Column(name = "is_delete")
-    private Boolean isDelete;
-
     //relationships
 
     //district
@@ -153,7 +158,7 @@ public class EmployeeMaster {
     //employee type
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
-    @JoinColumn(name = "emp_type_id", referencedColumnName = "type_id")
+    @JoinColumn(name = "emp_type_id", referencedColumnName = "emp_type_id")
     private EmployeeTypeMaster empTypeId;
 
     //category
@@ -166,7 +171,7 @@ public class EmployeeMaster {
     //designation
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
-    @JoinColumn(name = "designation_id", referencedColumnName = "id")
+    @JoinColumn(name = "designation_id", referencedColumnName = "designation_id")
     private DesignationMaster designationId;
 
     //division
@@ -180,6 +185,12 @@ public class EmployeeMaster {
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
     @JoinColumn(name = "location_id", referencedColumnName = "location_id")
     private Locations locationId;
+
+
+    //login
+    @OneToOne(mappedBy = "employee", cascade = {CascadeType.REMOVE})
+    private EmployeeLogin empLogin;
+
 
     public EmployeeMaster(int epfNo, String initials, String firstName, String lastName, String gender, String dob, String address, String contactNo, String personalEmail, String gsuitEmail, String nicNo, String nicIssuedDate, String passportNo, String passExpireDate, String licenseNo, String licenseIssuedDate, String licenseExpireDate, String contactPerson, String cpRelationship, String cpAddress, String cpTelephone, String cpStatus, String cpCivilStatus, String cpReligion, String appointmentDate, String contractStart, String contractEnd, Boolean isDelete, District districtId, Province provinceId, EmployeeTypeMaster empTypeId, EmployeeCategory empCatId, DesignationMaster designationId, DivisionMaster divisionId, Locations locationId) {
         this.epfNo = epfNo;
@@ -220,9 +231,6 @@ public class EmployeeMaster {
     }
 
 
-//login
-//    @OneToOne(mappedBy = "employee")
-//    private EmployeeLogin empLogin;
 
 
 

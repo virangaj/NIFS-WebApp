@@ -2,7 +2,7 @@ package com.nifs.backend.serviceImplementation;
 
 import com.nifs.backend.model.Facility;
 import com.nifs.backend.repository.FacilityRepository;
-import com.nifs.backend.service.FacilityServiceInterface;
+import com.nifs.backend.service.IFacilityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class FacilityService implements FacilityServiceInterface {
+public class FacilityService implements IFacilityService {
 
     @Autowired
     private FacilityRepository facRepo;

@@ -112,7 +112,7 @@ function AnnualIncrementRequest() {
 	const retreiveEmployees = () => {
 		EmployeeService.getAllEmployeeData()
 			.then((res: any) => {
-				setEmpData(res.data);
+				setEmpData(res.data.data);
 			})
 			.catch((e: any) => {
 				console.log(e);

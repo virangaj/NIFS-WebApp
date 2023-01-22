@@ -1,12 +1,17 @@
 package com.nifs.backend.controller;
 
+import com.nifs.backend.constant.RequestStatus;
+import com.nifs.backend.constant.UserRole;
 import com.nifs.backend.dto.EmployeeMasterDTO;
-import com.nifs.backend.service.EmployeeMasterServiceInterface;
+import com.nifs.backend.service.IEmployeeMasterService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.converter.HttpMessageNotWritableException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/admin/employee")
@@ -14,62 +19,227 @@ import java.util.List;
 public class EmployeeMasterController {
 
     @Autowired
-    private EmployeeMasterServiceInterface empService;
+    private IEmployeeMasterService empService;
 
     //get all currently working employees
     @GetMapping
-    private List<EmployeeMasterDTO> getAllEmployees() throws HttpMessageNotWritableException {
-       try{
-           return empService.getAllEmployees();
-       }
-       catch(HttpMessageNotWritableException e){
-           return null;
-       }
+    private ResponseEntity<?> getAllEmployees() {
+        Map<String, Object> map = new LinkedHashMap<String, Object>();
+        try {
+            List<EmployeeMasterDTO> emp = empService.getAllEmployees();
+            if (emp != null) {
+                //return success response code
+                map.put("status", RequestStatus.SUCCESS);
+                map.put("code", 201);
+                map.put("count", emp.size());
+                map.put("data", emp);
+                return new ResponseEntity<>(map, HttpStatus.OK);
+            }
+            map.put("status", RequestStatus.ERROR);
+            map.put("code", 404);
+            map.put("message", "Employee Data is not found. Please Try Again!");
+            return new ResponseEntity<>(map, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            map.put("status", RequestStatus.ERROR);
+            map.put("code", 400);
+            map.put("error", e.toString());
+            map.put("message", "Internal server error. Please try again!");
+            return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
+        }
     }
 
     //return all employees worked so far
     @GetMapping("/withoutdelete")
-    private List<EmployeeMasterDTO> getAllEmployeesWithoutDeleted() throws HttpMessageNotWritableException {
-        try{
-            return empService.getAllEmployeesWithoutDeleted();
-        }
-        catch(HttpMessageNotWritableException e){
-            return null;
+    private ResponseEntity<?> getAllEmployeesWithoutDeleted() {
+
+        Map<String, Object> map = new LinkedHashMap<String, Object>();
+        try {
+            List<EmployeeMasterDTO> emp = empService.getAllEmployeesWithoutDeleted();
+            if (emp != null) {
+                //return success response code
+                map.put("status", RequestStatus.SUCCESS);
+                map.put("code", 201);
+                map.put("count", emp.size());
+                map.put("data", emp);
+                return new ResponseEntity<>(map, HttpStatus.OK);
+            }
+            map.put("status", RequestStatus.ERROR);
+            map.put("code", 404);
+            map.put("message", "Employee Data is not found. Please Try Again!");
+            return new ResponseEntity<>(map, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            map.put("status", RequestStatus.ERROR);
+            map.put("code", 400);
+            map.put("error", e.toString());
+            map.put("message", "Internal server error. Please try again!");
+            return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
         }
     }
 
     // return all deleted employees
     @GetMapping("/deleted")
-    private List<EmployeeMasterDTO> getAllEmployeeDataCurrentlyNotWorking() throws HttpMessageNotWritableException {
-        try{
-            return empService.getAllEmployeeDataCurrentlyNotWorking();
-        }
-        catch(HttpMessageNotWritableException e){
-            return null;
+    private ResponseEntity<?> getAllEmployeeDataCurrentlyNotWorking()  {
+        Map<String, Object> map = new LinkedHashMap<String, Object>();
+        try {
+            List<EmployeeMasterDTO> emp = empService.getAllEmployeeDataCurrentlyNotWorking();
+            if (emp != null) {
+                //return success response code
+                map.put("status", RequestStatus.SUCCESS);
+                map.put("code", 201);
+                map.put("count", emp.size());
+                map.put("data", emp);
+                return new ResponseEntity<>(map, HttpStatus.OK);
+            }
+            map.put("status", RequestStatus.ERROR);
+            map.put("code", 404);
+            map.put("message", "Employee Data is not found. Please Try Again!");
+            return new ResponseEntity<>(map, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            map.put("status", RequestStatus.ERROR);
+            map.put("code", 400);
+            map.put("error", e.toString());
+            map.put("message", "Internal server error. Please try again!");
+            return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
         }
     }
 
 
     //get employee by employee id
     @GetMapping("/{id}")
-    private EmployeeMasterDTO getEmployeeById(@PathVariable int id){
-        return empService.getEmployeeById(id);
+    private ResponseEntity<?> getEmployeeById(@PathVariable int id){
+
+        Map<String, Object> map = new LinkedHashMap<String, Object>();
+        try {
+            EmployeeMasterDTO emp = empService.getEmployeeById(id);
+            if (emp != null) {
+                //return success response code
+                map.put("status", RequestStatus.SUCCESS);
+                map.put("code", 201);
+                map.put("data", emp);
+                return new ResponseEntity<>(map, HttpStatus.OK);
+            }
+            map.put("status", RequestStatus.ERROR);
+            map.put("code", 404);
+            map.put("message", "Employee Data is not found. Please Try Again!");
+            return new ResponseEntity<>(map, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            map.put("status", RequestStatus.ERROR);
+            map.put("code", 400);
+            map.put("error", e.toString());
+            map.put("message", "Internal server error. Please try again!");
+            return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
+        }
     }
 
+
+    //add new employee
     @PostMapping
-    private Boolean addEmployee(@RequestBody EmployeeMasterDTO empData){
-        return empService.addEmployee(empData);
+    private ResponseEntity<?> addEmployee(@RequestBody EmployeeMasterDTO empData){
+
+
+        Map<String, Object> map = new LinkedHashMap<String, Object>();
+        try {
+            if (empService.addEmployee(empData)) {
+                //return success response code
+                map.put("status", RequestStatus.SUCCESS);
+                map.put("code", 201);
+                map.put("message", "New Employee Successfully Created!");
+                return new ResponseEntity<>(map, HttpStatus.OK);
+            }
+            map.put("status", RequestStatus.ERROR);
+            map.put("code", 404);
+            map.put("message", "Request Failed. Please Try Again!");
+            return new ResponseEntity<>(map, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            map.put("status", RequestStatus.ERROR);
+            map.put("code", 400);
+            map.put("error", e.toString());
+            map.put("message", "Internal server error. Please try again!");
+            return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
+        }
     }
 
     //change is empty value -> true
     @PatchMapping("/delete/{id}")
-    private Boolean deleteEmployee(@PathVariable int id){
-        return empService.deleteEmployee(id);
+    private ResponseEntity<?>  deleteEmployee(@PathVariable int id){
+        Map<String, Object> map = new LinkedHashMap<String, Object>();
+        try {
+            if (empService.deleteEmployee(id)) {
+                //return success response code
+                map.put("status", RequestStatus.SUCCESS);
+                map.put("code", 201);
+                map.put("message", "Employee Daa is successfully deleted!");
+                return new ResponseEntity<>(map, HttpStatus.OK);
+            }
+            map.put("status", RequestStatus.ERROR);
+            map.put("code", 404);
+            map.put("message", "Request cannot be completed!");
+            return new ResponseEntity<>(map, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            map.put("status", RequestStatus.ERROR);
+            map.put("code", 400);
+            map.put("error", e.toString());
+            map.put("message", "Internal server error. Please try again!");
+            return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    //make user as admin
+    @PatchMapping("/update/role/{id}/{role}")
+    private ResponseEntity<?> updateRole(@PathVariable int id, @PathVariable UserRole role){
+        Map<String, Object> map = new LinkedHashMap<String, Object>();
+        try {
+            if (empService.updateRole(id, role)) {
+                //return success response code
+                map.put("status", RequestStatus.SUCCESS);
+                map.put("code", 201);
+                map.put("message", "Employee Role is changed!");
+                return new ResponseEntity<>(map, HttpStatus.OK);
+            }
+            map.put("status", RequestStatus.ERROR);
+            map.put("code", 404);
+            map.put("message", "Request cannot be completed!");
+            return new ResponseEntity<>(map, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            map.put("status", RequestStatus.ERROR);
+            map.put("code", 400);
+            map.put("error", e.toString());
+            map.put("message", "Internal server error. Please try again!");
+            return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
+        }
     }
 
     // remove employee from database
     @DeleteMapping("/harddelete/{id}")
-    private Boolean hardDeleteEmployee(@PathVariable int id){
-        return empService.hardDeleteEmployee(id);
+    private ResponseEntity<?> hardDeleteEmployee(@PathVariable int id){
+
+        Map<String, Object> map = new LinkedHashMap<String, Object>();
+        try {
+            if (empService.hardDeleteEmployee(id)) {
+                //return success response code
+                map.put("status", RequestStatus.SUCCESS);
+                map.put("code", 201);
+                map.put("message", "Employee Data is successfully deleted!");
+                return new ResponseEntity<>(map, HttpStatus.OK);
+            }
+            map.put("status", RequestStatus.ERROR);
+            map.put("code", 404);
+            map.put("message", "Request cannot be completed!");
+            return new ResponseEntity<>(map, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            map.put("status", RequestStatus.ERROR);
+            map.put("code", 400);
+            map.put("error", e.toString());
+            map.put("message", "Internal server error. Please try again!");
+            return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
+        }
     }
 }

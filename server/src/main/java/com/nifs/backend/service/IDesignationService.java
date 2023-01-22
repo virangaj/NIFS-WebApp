@@ -5,7 +5,7 @@ import com.nifs.backend.model.DesignationMaster;
 
 import java.util.List;
 
-public interface DesignationServiceInterface {
+public interface IDesignationService {
 
     //    get all designations
     List<DesignationMasterDTO> getAllDesignations();
@@ -26,5 +26,5 @@ public interface DesignationServiceInterface {
 
     //get designation by its id
     DesignationMasterDTO returnDesignationById(String id);
-
+    public DesignationMaster returnDesignationMasterById(String id);
 }

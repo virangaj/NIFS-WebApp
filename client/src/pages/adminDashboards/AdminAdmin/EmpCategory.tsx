@@ -12,6 +12,7 @@ import ILocationData from '../../../types/LocationData';
 import LocationMasterService from '../../../services/admin/LocationMasterService';
 import { HiX } from 'react-icons/hi';
 import { RequestStatus } from '../../../constant/requestStatus';
+import LocationColEdit from './shared/LocationColEdit';
 
 function EmpCategory() {
 	const [empCats, setEmpCats] = useState<Array<any>>([]);
@@ -80,7 +81,7 @@ function EmpCategory() {
 		LocationMasterService.getAllLocations()
 			.then((res: any) => {
 				setLocationData(res.data);
-				console.log(locationData);
+				// console.log(locationData);
 			})
 			.catch((e: any) => {
 				console.log(e);
@@ -177,6 +178,14 @@ function EmpCategory() {
 				editable: true,
 			},
 			{ field: 'locationId', headerName: 'Location', width: 200 },
+			// {
+			// 	field: 'locationId',
+			// 	headerName: 'Location',
+			// 	width: 200,
+			// 	renderCell: (params: any) => (
+			// 		<LocationColEdit {...{ params, setValues, locationData }} />
+			// 	),
+			// },
 			{
 				field: 'actions',
 				headerName: 'Action',

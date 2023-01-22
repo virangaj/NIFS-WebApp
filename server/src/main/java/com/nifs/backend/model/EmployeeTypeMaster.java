@@ -17,7 +17,7 @@ import java.util.List;
 public class EmployeeTypeMaster {
 
     @Id
-    @Column(name = "type_id", nullable = false, length = 10)
+    @Column(name = "emp_type_id", nullable = false, length = 10)
     private String empTypeId;
 
     @Column(name = "type_name", nullable = false, length = 100)

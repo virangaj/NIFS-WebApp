@@ -6,7 +6,7 @@ import com.nifs.backend.model.EmployeeCategory;
 import java.util.List;
 import java.util.Optional;
 
-public interface EmployeeCatServiceInterface {
+public interface IEmployeeCatService {
     //return all category
     List<EmpCatDTO> getAllEmpCategories();
 
@@ -15,7 +15,7 @@ public interface EmployeeCatServiceInterface {
     //    return new employee category id
     String returnNewEmpCatId();
     //    return empCat by id
-    Optional<EmployeeCategory> returnEmpCat(String empCatId);
+    EmployeeCategory returnEmpCat(String empCatId);
 
     //update employee category
     Boolean updateEmployeeCategory(EmpCatDTO empCatData, String empCatId);

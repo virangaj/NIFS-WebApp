@@ -1,10 +1,11 @@
 package com.nifs.backend.service;
 
+import com.nifs.backend.constant.UserRole;
 import com.nifs.backend.dto.EmployeeMasterDTO;
 
 import java.util.List;
 
-public interface EmployeeMasterServiceInterface {
+public interface IEmployeeMasterService {
 
     //get all employees
     List<EmployeeMasterDTO> getAllEmployees();
@@ -26,4 +27,5 @@ public interface EmployeeMasterServiceInterface {
     //get division by employee id
     EmployeeMasterDTO getEmployeeById(int id);
 
+    boolean updateRole(int id, UserRole role);
 }

@@ -1,12 +1,8 @@
 package com.nifs.backend.controller;
 
 import com.nifs.backend.constant.RequestStatus;
-import com.nifs.backend.dto.DesignationMasterDTO;
 import com.nifs.backend.dto.DivisionMasterDTO;
-import com.nifs.backend.model.Charges;
-import com.nifs.backend.model.DesignationMaster;
-import com.nifs.backend.model.DivisionMaster;
-import com.nifs.backend.service.DivisionMasterServiceInterface;
+import com.nifs.backend.service.IDivisionMasterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("admin/division")
@@ -23,7 +18,7 @@ import java.util.Optional;
 public class DivisionMasterController {
 
     @Autowired
-    private DivisionMasterServiceInterface divMasterService;
+    private IDivisionMasterService divMasterService;
 
     //return all divisions
     @GetMapping
@@ -44,7 +39,7 @@ public class DivisionMasterController {
             }
 
             //return error response code
-            map.put("status", RequestStatus.SUCCESS);
+            map.put("status", RequestStatus.ERROR);
             map.put("code", 404);
             map.put("message", "Division data is not found. Please try again!");
             return new ResponseEntity<>(map, HttpStatus.OK);
@@ -131,16 +126,15 @@ public class DivisionMasterController {
 
     //create division
     @PostMapping
-    private  ResponseEntity<?>  createDivision(@RequestBody DivisionMasterDTO divMasterData){
+    private  ResponseEntity<?> createDivision(@RequestBody DivisionMasterDTO divMasterData){
 
         Map<String, Object> map = new LinkedHashMap<String, Object>();
         try {
-            DivisionMaster d = divMasterService.createDivision(divMasterData);
-            if (d != null) {
+
+            if (divMasterService.createDivision(divMasterData)) {
                 //return success response code
                 map.put("status", RequestStatus.SUCCESS);
                 map.put("code", 201);
-                map.put("data", d);
                 return new ResponseEntity<>(map, HttpStatus.OK);
             }
             //return error response code

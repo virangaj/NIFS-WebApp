@@ -2,9 +2,7 @@ package com.nifs.backend.controller;
 
 
 import com.nifs.backend.constant.RequestStatus;
-import com.nifs.backend.dto.DesignationMasterDTO;
-import com.nifs.backend.model.DesignationMaster;
-import com.nifs.backend.service.EmployeeCatServiceInterface;
+import com.nifs.backend.service.IEmployeeCatService;
 import com.nifs.backend.dto.EmpCatDTO;
 import com.nifs.backend.model.EmployeeCategory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +22,7 @@ public class EmployeeCategoryController {
 
 
     @Autowired
-    private EmployeeCatServiceInterface empCatService;
+    private IEmployeeCatService empCatService;
 
 //    get all employee categories
     @GetMapping
@@ -35,14 +33,14 @@ public class EmployeeCategoryController {
             List<EmpCatDTO> emp = empCatService.getAllEmpCategories();
             if (emp != null) {
                 //return success response code
-                map.put("status", 1);
+                map.put("status",  RequestStatus.SUCCESS);
                 map.put("code", 201);
                 map.put("count", emp.size());
                 map.put("data", emp);
                 return new ResponseEntity<>(map, HttpStatus.OK);
             }
             //return error response code
-            map.put("status", 0);
+            map.put("status",  RequestStatus.ERROR);
             map.put("code", 404);
             map.put("message", "Employee Category data is not found. Please Try Again!");
             return new ResponseEntity<>(map, HttpStatus.OK);
@@ -50,7 +48,7 @@ public class EmployeeCategoryController {
         } catch (Exception e) {
             //return exception response code
             System.out.println(e.toString());
-            map.put("status", 0);
+            map.put("status",  RequestStatus.ERROR);
             map.put("code", 400);
             map.put("error", e.toString());
             map.put("message", "Internal server error. Please try again!");
@@ -71,8 +69,8 @@ public class EmployeeCategoryController {
 
         Map<String, Object> map = new LinkedHashMap<String, Object>();
         try {
-            Optional<EmployeeCategory> empCat = empCatService.returnEmpCat(empCatId);
-            if (empCat.isPresent()) {
+            EmployeeCategory empCat = empCatService.returnEmpCat(empCatId);
+            if (empCat != null) {
                 //return success response code
                 map.put("status", 1);
                 map.put("code", 201);
@@ -208,7 +206,7 @@ public class EmployeeCategoryController {
         } catch (Exception e) {
             //return exception response code
             System.out.println(e.toString());
-            map.put("status", RequestStatus.ERROR;
+            map.put("status", RequestStatus.ERROR);
             map.put("code", 400);
             map.put("error", e.toString());
             map.put("message", "Internal server error. Please try again!");

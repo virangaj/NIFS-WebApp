@@ -3,7 +3,7 @@ package com.nifs.backend.controller;
 
 
 import com.nifs.backend.model.Charges;
-import com.nifs.backend.service.ChargeServiceInterface;
+import com.nifs.backend.service.IChargeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +21,7 @@ public class ChargeController {
 
 
     @Autowired
-    ChargeServiceInterface chargeService;
+    IChargeService chargeService;
 
 
     @GetMapping("/newid")

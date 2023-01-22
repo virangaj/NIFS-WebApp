@@ -28,8 +28,11 @@ public interface EmployeeTypeRepository extends JpaRepository<EmployeeTypeMaster
     @Query("select e from EmployeeTypeMaster e where e.empTypeId = :typeId order by e.empTypeId")
     EmployeeTypeMaster returnType(@Param("typeId") String typeId);
 
-    @Query(value = "SELECT TOP 1 type_id FROM employee_type_master ORDER BY type_id DESC", nativeQuery = true)
+
+//    @Query(value = "SELECT TOP 1 emp_type_id FROM employee_type_master ORDER BY emp_type_id DESC", nativeQuery = true)
+    @Query(value = "SELECT emp_type_id FROM employee_type_master ORDER BY emp_type_id DESC LIMIT 1", nativeQuery = true)
     String returnLastId();
+
 
 
 

@@ -9,6 +9,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 public interface EmployeeMasterRepository extends JpaRepository<EmployeeMaster, Integer> {
+    @Transactional
+    @Modifying
+    @Query("update EmployeeMaster e set e.role = ?1 where e.epfNo = ?2")
+    void updateRole(String status, int epfNo);
     @Query("select e from EmployeeMaster e where e.divisionId.divisionId = ?1 order by e")
     List<EmployeeMaster> findByDivisionId(String divisionId);
 

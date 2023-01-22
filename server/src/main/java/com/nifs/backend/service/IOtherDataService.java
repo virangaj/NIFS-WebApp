@@ -8,17 +8,20 @@ import com.nifs.backend.model.Religions;
 
 import java.util.List;
 
-public interface OtherDataServiceInterface {
+public interface IOtherDataService {
     // return all districts
     List<DistrictDTO> returnAllDistricts();
 
     //return districts bt province id
     List<DistrictDTO> returnDistrictsByProvinceId(int pId);
 
+    //return district by district id
+    District returnDistrictById(int id);
+
     //    add new district
     Boolean addDistrict(District dData, int provinceId);
 
-    //    /edit district
+    //    edit district
     Boolean editDistrict(int dId, District dData);
 
     //    return all provinces
@@ -26,6 +29,9 @@ public interface OtherDataServiceInterface {
 
     //    add new province
     Boolean addProvince(Province pData);
+
+    //return province by province id
+    Province findProvinceById(int id);
 
     //return all religions
     List<Religions> returnAllReligions();

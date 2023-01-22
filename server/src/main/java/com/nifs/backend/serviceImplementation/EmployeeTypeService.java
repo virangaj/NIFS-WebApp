@@ -1,11 +1,12 @@
 package com.nifs.backend.serviceImplementation;
 
+import com.nifs.backend.common.Common;
 import com.nifs.backend.repository.LocationRepository;
 import com.nifs.backend.model.Locations;
 import com.nifs.backend.dto.EmployeeTypeDTO;
 import com.nifs.backend.model.EmployeeTypeMaster;
 import com.nifs.backend.repository.EmployeeTypeRepository;
-import com.nifs.backend.service.EmployeeTypeServiceInterface;
+import com.nifs.backend.service.IEmployeeTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,12 +16,13 @@ import java.util.List;
 
 
 @Service
-public class EmployeeTypeService implements EmployeeTypeServiceInterface {
+public class EmployeeTypeService implements IEmployeeTypeService {
 
     @Autowired
     private EmployeeTypeRepository empTypeRepo;
     @Autowired
     private LocationRepository locRepo;
+    private final Common common = new Common();
 
     //    get all types
     public List<EmployeeTypeDTO> getAllTypes() {
@@ -56,17 +58,15 @@ public class EmployeeTypeService implements EmployeeTypeServiceInterface {
     //return new id
     public String returnNewId() {
         try {
+
             String lastId = empTypeRepo.returnLastId();
+
             if (lastId == null) {
                 return "EPT1001";
             }
             else {
-                String idText = lastId.replaceAll("[^A-Za-z]", "");
-                int idNum = Integer.parseInt(lastId.replaceAll("[^0-9]", ""));
+                return common.generateNewId(lastId);
 
-                idNum = idNum + 1;
-
-                return idText + idNum;
             }
         } catch (Exception e) {
             System.out.println(e.toString());
@@ -119,6 +119,10 @@ public class EmployeeTypeService implements EmployeeTypeServiceInterface {
             return true;
         }
         return false;
+    }
+
+    public EmployeeTypeMaster getEmployeeTypeById(String id){
+        return empTypeRepo.returnType(id);
     }
 
 }

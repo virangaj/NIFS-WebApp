@@ -5,7 +5,7 @@ import com.nifs.backend.model.Locations;
 
 import java.util.List;
 
-public interface LocationServiceInterface {
+public interface ILocationService {
 
 //    get all locations
     List<LocationDTO> returnAllLocations();
@@ -16,11 +16,13 @@ public interface LocationServiceInterface {
     LocationDTO returnLocationById(String id);
 
     //    add locations
-    Boolean createLocation(Locations venLocData);
+    Boolean createLocation(LocationDTO venLocData);
 
 //    update location
-    Boolean updateLocationData(String locationid, Locations locData);
+    Boolean updateLocationData(String locationid, LocationDTO locData);
 
 //delete location
     Boolean deleteLocation(String id);
+
+    Locations getLocationById(String id);
 }

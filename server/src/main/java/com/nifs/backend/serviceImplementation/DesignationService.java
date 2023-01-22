@@ -1,13 +1,13 @@
 package com.nifs.backend.serviceImplementation;
 
+import com.nifs.backend.common.Common;
 import com.nifs.backend.repository.LocationRepository;
 import com.nifs.backend.model.Locations;
 import com.nifs.backend.dto.DesignationMasterDTO;
 import com.nifs.backend.model.DesignationMaster;
 import com.nifs.backend.repository.DesignationRepostory;
-import com.nifs.backend.service.DesignationServiceInterface;
+import com.nifs.backend.service.IDesignationService;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +16,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class DesignationService implements DesignationServiceInterface {
+public class DesignationService implements IDesignationService {
 
     @Autowired
     private DesignationRepostory desRepo;
@@ -27,11 +27,13 @@ public class DesignationService implements DesignationServiceInterface {
     @Autowired
     private ModelMapper modelMapper;
 
+    private final Common common = new Common();
     //    get all designations
     @Override
     public List<DesignationMasterDTO> getAllDesignations() {
 
-        List<DesignationMaster> dm = desRepo.findAll();
+        List<DesignationMaster> dm = new ArrayList<DesignationMaster>();
+        dm = desRepo.findAll();
         List<DesignationMasterDTO> dDTO = new ArrayList<DesignationMasterDTO>();
         for (DesignationMaster d : dm) {
             DesignationMasterDTO dDTOSingle = new DesignationMasterDTO(d.getDesignationId(), d.getDesignationName(), d.getLocationId().getLocationName());
@@ -50,8 +52,10 @@ public class DesignationService implements DesignationServiceInterface {
 
             Date date = new Date();
             Locations l = locRepo.getLocation(d.getLocationId());
-            DesignationMaster dm = new DesignationMaster(d.getDesignationId(), d.getDesignationName(), date, l);
-           // DesignationMaster dm = modelMapper.map(d, DesignationMaster.class);
+//            DesignationMaster dm = new DesignationMaster(d.getDesignationId(), d.getDesignationName(), date, l);
+            DesignationMaster dm = modelMapper.map(d, DesignationMaster.class);
+            dm.setLocationId(l);
+            dm.setDateCreated(date);
 
             desRepo.save(dm);
             return true;
@@ -95,12 +99,7 @@ public class DesignationService implements DesignationServiceInterface {
         try {
             String lastId = desRepo.returnLastId();
             if (lastId != null) {
-                String idText = lastId.replaceAll("[^A-Za-z]", "");
-                int idNum = Integer.parseInt(lastId.replaceAll("[^0-9]", ""));
-
-                idNum = idNum + 1;
-
-                return idText + idNum;
+                return common.generateNewId(lastId);
             }
             else {
                 return "ED1001";
@@ -124,7 +123,7 @@ public class DesignationService implements DesignationServiceInterface {
 
     }
 
-    //get designation by its id
+    //get designation  by its id
     public DesignationMasterDTO returnDesignationById(String id) {
 
         DesignationMaster d = desRepo.returnDesignation(id);
@@ -132,6 +131,10 @@ public class DesignationService implements DesignationServiceInterface {
             return new DesignationMasterDTO(d.getDesignationId(), d.getDesignationName(), d.getLocationId().getLocationId());
         }
         return null;
+
+    }
+    public DesignationMaster returnDesignationMasterById(String id) {
+       return desRepo.returnDesignation(id);
 
     }
 }

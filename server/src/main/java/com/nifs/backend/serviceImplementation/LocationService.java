@@ -1,32 +1,42 @@
 package com.nifs.backend.serviceImplementation;
 
+import com.nifs.backend.common.Common;
 import com.nifs.backend.dto.LocationDTO;
 import com.nifs.backend.model.Locations;
 import com.nifs.backend.repository.LocationRepository;
-import com.nifs.backend.service.LocationServiceInterface;
+import com.nifs.backend.service.ILocationService;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Service
-public class LocationService implements LocationServiceInterface {
+public class LocationService implements ILocationService {
 
     @Autowired
     private LocationRepository locRepo;
+
+    @Autowired
+    private ModelMapper modelMapper;
+    private final Common common = new Common();
 
 //    return all locations
     public List<LocationDTO> returnAllLocations() {
         try {
             List<Locations> locData = locRepo.findAll();
-            List<LocationDTO> dto = new ArrayList<>();
-            for (Locations l : locData) {
-                LocationDTO single = new LocationDTO(l.getLocationId(), l.getLocationName(), l.getAddress(), l.getTelNo(), l.getFaxNo());
-                dto.add(single);
-            }
-            return dto;
+//            List<LocationDTO> dto = new ArrayList<>();
+//            for (Locations l : locData) {
+//
+//                LocationDTO single = new LocationDTO(l.getLocationId(), l.getLocationName(), l.getAddress(), l.getTelNo(), l.getFaxNo());
+//                dto.add(single);
+//            }
+
+//            return modelMapper.map(provider, new TypeToken<ProviderDTO>() {}.getType());
+            return modelMapper.map(locData, new TypeToken<List<LocationDTO>>(){}.getType());
+//            return dto;
         } catch (Exception e) {
             System.out.println(e.toString());
             return null;
@@ -36,12 +46,16 @@ public class LocationService implements LocationServiceInterface {
     }
 
 //    add new locations
-    public Boolean createLocation(Locations venLocData) {
+    public Boolean createLocation(LocationDTO venLocData) {
         try {
             if (locRepo.findById(venLocData.getLocationId()).isEmpty()) {
                 Date d = new Date();
-                venLocData.setDateCreated(d);
-                locRepo.save(venLocData);
+                //venLocData.setDateCreated(d);
+//                Provider provider = modelMapper.map(providerdata, Provider.class);
+                Locations locData = modelMapper.map(venLocData, Locations.class);
+                locData.setDateCreated(d);
+                locRepo.save(locData);
+
                 return true;
             }
             else {
@@ -59,12 +73,8 @@ public class LocationService implements LocationServiceInterface {
         try {
             String lastId = locRepo.returnLastId();
             if (lastId != null) {
-                String idText = lastId.replaceAll("[^A-Za-z]", "");
-                int idNum = Integer.parseInt(lastId.replaceAll("[^0-9]", ""));
+                return common.generateNewId(lastId);
 
-                idNum = idNum + 1;
-
-                return idText + idNum;
             }
             else {
                 return "VLM1001";
@@ -76,7 +86,7 @@ public class LocationService implements LocationServiceInterface {
     }
 
 //    update location data
-    public Boolean updateLocationData(String locationid, Locations locData) {
+    public Boolean updateLocationData(String locationid, LocationDTO locData) {
         try {
             if (locRepo.findById(locationid).isPresent()) {
                 Date d = new Date();
@@ -106,7 +116,12 @@ public class LocationService implements LocationServiceInterface {
         }
     }
 
-//    return location by id
+    @Override
+    public Locations getLocationById(String id) {
+        return locRepo.getLocation(id);
+    }
+
+    //    return location by id
     public LocationDTO returnLocationById(String id) {
         try {
             Locations l = locRepo.getLocation(id);

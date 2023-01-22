@@ -5,7 +5,7 @@ import com.nifs.backend.model.Charges;
 import java.util.List;
 import java.util.Optional;
 
-public interface ChargeServiceInterface {
+public interface IChargeService {
 
     //create charge
     Charges createCharge(Charges chargeData);
