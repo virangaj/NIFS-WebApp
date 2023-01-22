@@ -28,6 +28,9 @@ public class EmployeeMasterDTO {
     private String licenseNo;
     private String licenseIssuedDate;
     private String licenseExpireDate;
+    private Boolean isDelete;
+
+    private String role;
 
     //    emergency contract person details
     private String contactPerson;

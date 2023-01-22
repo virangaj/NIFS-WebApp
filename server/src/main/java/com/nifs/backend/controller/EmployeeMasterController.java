@@ -1,6 +1,7 @@
 package com.nifs.backend.controller;
 
 import com.nifs.backend.constant.RequestStatus;
+import com.nifs.backend.constant.UserRole;
 import com.nifs.backend.dto.EmployeeMasterDTO;
 import com.nifs.backend.service.IEmployeeMasterService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -146,7 +147,7 @@ public class EmployeeMasterController {
                 //return success response code
                 map.put("status", RequestStatus.SUCCESS);
                 map.put("code", 201);
-                map.put("message", "Update Request completed!");
+                map.put("message", "New Employee Successfully Created!");
                 return new ResponseEntity<>(map, HttpStatus.OK);
             }
             map.put("status", RequestStatus.ERROR);
@@ -173,6 +174,32 @@ public class EmployeeMasterController {
                 map.put("status", RequestStatus.SUCCESS);
                 map.put("code", 201);
                 map.put("message", "Employee Daa is successfully deleted!");
+                return new ResponseEntity<>(map, HttpStatus.OK);
+            }
+            map.put("status", RequestStatus.ERROR);
+            map.put("code", 404);
+            map.put("message", "Request cannot be completed!");
+            return new ResponseEntity<>(map, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            map.put("status", RequestStatus.ERROR);
+            map.put("code", 400);
+            map.put("error", e.toString());
+            map.put("message", "Internal server error. Please try again!");
+            return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    //make user as admin
+    @PatchMapping("/update/role/{id}/{role}")
+    private ResponseEntity<?> updateRole(@PathVariable int id, @PathVariable UserRole role){
+        Map<String, Object> map = new LinkedHashMap<String, Object>();
+        try {
+            if (empService.updateRole(id, role)) {
+                //return success response code
+                map.put("status", RequestStatus.SUCCESS);
+                map.put("code", 201);
+                map.put("message", "Employee Role is changed!");
                 return new ResponseEntity<>(map, HttpStatus.OK);
             }
             map.put("status", RequestStatus.ERROR);

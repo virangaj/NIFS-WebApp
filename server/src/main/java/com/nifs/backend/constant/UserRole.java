@@ -1,6 +1,6 @@
 package com.nifs.backend.constant;
 
-public enum UserStatus {
+public enum UserRole {
 
     ADMIN, USER
 }

@@ -1,5 +1,6 @@
 package com.nifs.backend.serviceImplementation;
 
+import com.nifs.backend.constant.UserRole;
 import com.nifs.backend.dto.EmployeeMasterDTO;
 import com.nifs.backend.model.*;
 import com.nifs.backend.repository.EmployeeMasterRepository;
@@ -38,13 +39,52 @@ public class EmployeeMasterService implements IEmployeeMasterService {
     private IEmployeeLoginService employeeLoginService;
 
     //get all employees
+    @Override
     public List<EmployeeMasterDTO> getAllEmployees() {
         try {
             List<EmployeeMaster> emp = empRepo.findAll();
             List<EmployeeMasterDTO> dto = new ArrayList<>();
             for (EmployeeMaster e : emp) {
                 if (! e.getIsDelete()) {
-                    EmployeeMasterDTO single = new EmployeeMasterDTO(e.getEpfNo(), e.getInitials(), e.getFirstName(), e.getLastName(), e.getGender(), e.getDob(), e.getAddress(), e.getContactNo(), e.getPersonalEmail(), e.getGsuitEmail(), e.getNicNo(), e.getNicIssuedDate(), e.getPassportNo(), e.getPassExpireDate(), e.getLicenseNo(), e.getLicenseIssuedDate(), e.getLicenseExpireDate(), e.getContactPerson(), e.getCpRelationship(), e.getCpAddress(), e.getCpTelephone(), e.getCpStatus(), e.getCpCivilStatus(), e.getCpReligion(), e.getAppointmentDate(), e.getContractStart(), e.getContractEnd(), e.getProvinceId().getProvinceName(), e.getDistrictId().getDistrictName(), e.getEmpTypeId().getEmpTypeId(), e.getEmpCatId().getEmpCatId(), e.getDesignationId().getDesignationId(), e.getDivisionId().getDivisionId(), e.getLocationId().getLocationId());
+                    EmployeeMasterDTO single =
+                            new EmployeeMasterDTO(
+                                    e.getEpfNo(),
+                                    e.getInitials(),
+                                    e.getFirstName(),
+                                    e.getLastName(),
+                                    e.getGender(),
+                                    e.getDob(),
+                                    e.getAddress(),
+                                    e.getContactNo(),
+                                    e.getPersonalEmail(),
+                                    e.getGsuitEmail(),
+                                    e.getNicNo(),
+                                    e.getNicIssuedDate(),
+                                    e.getPassportNo(),
+                                    e.getPassExpireDate(),
+                                    e.getLicenseNo(),
+                                    e.getLicenseIssuedDate(),
+                                    e.getLicenseExpireDate(),
+                                    e.getIsDelete(),
+                                    e.getRole(),
+                                    e.getContactPerson(),
+                                    e.getCpRelationship(),
+                                    e.getCpAddress(),
+                                    e.getCpTelephone(),
+                                    e.getCpStatus(),
+                                    e.getCpCivilStatus(),
+                                    e.getCpReligion(),
+                                    e.getAppointmentDate(),
+                                    e.getContractStart(),
+                                    e.getContractEnd(),
+                                    e.getProvinceId().getProvinceName(),
+                                    e.getDistrictId().getDistrictName(),
+                                    e.getEmpTypeId().getEmpTypeId(),
+                                    e.getEmpCatId().getEmpCatId(),
+                                    e.getDesignationId().getDesignationId(),
+                                    e.getDivisionId().getDivisionId(),
+                                    e.getLocationId().getLocationId()
+                            );
                     dto.add(single);
                 }
             }
@@ -57,12 +97,51 @@ public class EmployeeMasterService implements IEmployeeMasterService {
 
 
     //get all employees without delete
+    @Override
     public List<EmployeeMasterDTO> getAllEmployeesWithoutDeleted() {
         try {
             List<EmployeeMaster> emp = empRepo.findAll();
             List<EmployeeMasterDTO> dto = new ArrayList<>();
             for (EmployeeMaster e : emp) {
-                EmployeeMasterDTO single = new EmployeeMasterDTO(e.getEpfNo(), e.getInitials(), e.getFirstName(), e.getLastName(), e.getGender(), e.getDob(), e.getAddress(), e.getContactNo(), e.getPersonalEmail(), e.getGsuitEmail(), e.getNicNo(), e.getNicIssuedDate(), e.getPassportNo(), e.getPassExpireDate(), e.getLicenseNo(), e.getLicenseIssuedDate(), e.getLicenseExpireDate(), e.getContactPerson(), e.getCpRelationship(), e.getCpAddress(), e.getCpTelephone(), e.getCpStatus(), e.getCpCivilStatus(), e.getCpReligion(), e.getAppointmentDate(), e.getContractStart(), e.getContractEnd(), e.getProvinceId().getProvinceName(), e.getDistrictId().getDistrictName(), e.getEmpTypeId().getEmpTypeId(), e.getEmpCatId().getEmpCatId(), e.getDesignationId().getDesignationId(), e.getDivisionId().getDivisionId(), e.getLocationId().getLocationId());
+                EmployeeMasterDTO single =
+                        new EmployeeMasterDTO(
+                                e.getEpfNo(),
+                                e.getInitials(),
+                                e.getFirstName(),
+                                e.getLastName(),
+                                e.getGender(),
+                                e.getDob(),
+                                e.getAddress(),
+                                e.getContactNo(),
+                                e.getPersonalEmail(),
+                                e.getGsuitEmail(),
+                                e.getNicNo(),
+                                e.getNicIssuedDate(),
+                                e.getPassportNo(),
+                                e.getPassExpireDate(),
+                                e.getLicenseNo(),
+                                e.getLicenseIssuedDate(),
+                                e.getLicenseExpireDate(),
+                                e.getIsDelete(),
+                                e.getRole(),
+                                e.getContactPerson(),
+                                e.getCpRelationship(),
+                                e.getCpAddress(),
+                                e.getCpTelephone(),
+                                e.getCpStatus(),
+                                e.getCpCivilStatus(),
+                                e.getCpReligion(),
+                                e.getAppointmentDate(),
+                                e.getContractStart(),
+                                e.getContractEnd(),
+                                e.getProvinceId().getProvinceName(),
+                                e.getDistrictId().getDistrictName(),
+                                e.getEmpTypeId().getEmpTypeId(),
+                                e.getEmpCatId().getEmpCatId(),
+                                e.getDesignationId().getDesignationId(),
+                                e.getDivisionId().getDivisionId(),
+                                e.getLocationId().getLocationId()
+                        );
                 dto.add(single);
             }
             return dto;
@@ -72,6 +151,7 @@ public class EmployeeMasterService implements IEmployeeMasterService {
         }
     }
     //get All Employee Data Currently Not Working
+    @Override
     public List<EmployeeMasterDTO> getAllEmployeeDataCurrentlyNotWorking() {
         try {
             List<EmployeeMaster> emp = empRepo.findAll();
@@ -97,6 +177,8 @@ public class EmployeeMasterService implements IEmployeeMasterService {
                                     e.getLicenseNo(),
                                     e.getLicenseIssuedDate(),
                                     e.getLicenseExpireDate(),
+                                    e.getIsDelete(),
+                                    e.getRole(),
                                     e.getContactPerson(),
                                     e.getCpRelationship(),
                                     e.getCpAddress(),
@@ -113,7 +195,8 @@ public class EmployeeMasterService implements IEmployeeMasterService {
                                     e.getEmpCatId().getEmpCatId(),
                                     e.getDesignationId().getDesignationId(),
                                     e.getDivisionId().getDivisionId(),
-                                    e.getLocationId().getLocationId());
+                                    e.getLocationId().getLocationId()
+                            );
                     dto.add(single);
                 }
             }
@@ -125,6 +208,7 @@ public class EmployeeMasterService implements IEmployeeMasterService {
     }
 
     //add employee
+    @Override
     public Boolean addEmployee(EmployeeMasterDTO e) {
         try {
             if (empRepo.returnEmployeeById(e.getEpfNo()) == null) {
@@ -202,6 +286,7 @@ public class EmployeeMasterService implements IEmployeeMasterService {
     }
 
     //delete employee -> update isDelete
+    @Override
     public Boolean deleteEmployee(int id) {
         try {
             if (empRepo.returnEmployeeById(id) != null) {
@@ -216,6 +301,7 @@ public class EmployeeMasterService implements IEmployeeMasterService {
     }
 
     //remove employee from database
+    @Override
     public Boolean hardDeleteEmployee(int id) {
         try {
             if (empRepo.returnEmployeeById(id) != null) {
@@ -230,18 +316,67 @@ public class EmployeeMasterService implements IEmployeeMasterService {
     }
 
     //get division by employee id
+    @Override
     public EmployeeMasterDTO getEmployeeById(int id) {
         try {
             EmployeeMaster e = empRepo.returnEmployeeById(id);
             if (e != null) {
 
 //            EmployeeMasterDTO empDto = new EmployeeMasterDTO(empData.getEpfNo(), empData.getEmpType().getTypeId(), empData.getEmpCategory().getEmployeeCategoryId(), empData.getDesignation().getId(), empData.getDivision().getDivisionId(), empData.getLocation().getLocationId());
-                return new EmployeeMasterDTO(e.getEpfNo(), e.getInitials(), e.getFirstName(), e.getLastName(), e.getGender(), e.getDob(), e.getAddress(), e.getContactNo(), e.getPersonalEmail(), e.getGsuitEmail(), e.getNicNo(), e.getNicIssuedDate(), e.getPassportNo(), e.getPassExpireDate(), e.getLicenseNo(), e.getLicenseIssuedDate(), e.getLicenseExpireDate(), e.getContactPerson(), e.getCpRelationship(), e.getCpAddress(), e.getCpTelephone(), e.getCpStatus(), e.getCpCivilStatus(), e.getCpReligion(), e.getAppointmentDate(), e.getContractStart(), e.getContractEnd(), e.getProvinceId().getProvinceName(), e.getDistrictId().getDistrictName(), e.getEmpTypeId().getEmpTypeId(), e.getEmpCatId().getEmpCatId(), e.getDesignationId().getDesignationId(), e.getDivisionId().getDivisionId(), e.getLocationId().getLocationId());
+                return new EmployeeMasterDTO(
+                        e.getEpfNo(),
+                        e.getInitials(),
+                        e.getFirstName(),
+                        e.getLastName(),
+                        e.getGender(),
+                        e.getDob(),
+                        e.getAddress(),
+                        e.getContactNo(),
+                        e.getPersonalEmail(),
+                        e.getGsuitEmail(),
+                        e.getNicNo(),
+                        e.getNicIssuedDate(),
+                        e.getPassportNo(),
+                        e.getPassExpireDate(),
+                        e.getLicenseNo(),
+                        e.getLicenseIssuedDate(),
+                        e.getLicenseExpireDate(),
+                        e.getIsDelete(),
+                        e.getRole(),
+                        e.getContactPerson(),
+                        e.getCpRelationship(),
+                        e.getCpAddress(),
+                        e.getCpTelephone(),
+                        e.getCpStatus(),
+                        e.getCpCivilStatus(),
+                        e.getCpReligion(),
+                        e.getAppointmentDate(),
+                        e.getContractStart(),
+                        e.getContractEnd(),
+                        e.getProvinceId().getProvinceName(),
+                        e.getDistrictId().getDistrictName(),
+                        e.getEmpTypeId().getEmpTypeId(),
+                        e.getEmpCatId().getEmpCatId(),
+                        e.getDesignationId().getDesignationId(),
+                        e.getDivisionId().getDivisionId(),
+                        e.getLocationId().getLocationId()
+                );
             }
             return null;
         } catch (Exception e) {
             System.out.println(e.toString());
             return null;
         }
+    }
+
+    //change role
+    @Override
+    public boolean updateRole(int id, UserRole role) {
+        if(empRepo.returnEmployeeById(id) != null){
+            empRepo.updateRole(String.valueOf(role), id);
+            return true;
+        }
+
+        return false;
     }
 }

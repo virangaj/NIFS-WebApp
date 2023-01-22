@@ -110,6 +110,7 @@ function ContractExtension() {
 	const retreiveEmployees = () => {
 		EmployeeService.getAllEmployeeData()
 			.then((res: any) => {
+				console.log(res.data);
 				setEmpData(res.data.data);
 			})
 			.catch((e: any) => {

@@ -1,5 +1,6 @@
 package com.nifs.backend.service;
 
+import com.nifs.backend.constant.UserRole;
 import com.nifs.backend.dto.EmployeeMasterDTO;
 
 import java.util.List;
@@ -26,4 +27,5 @@ public interface IEmployeeMasterService {
     //get division by employee id
     EmployeeMasterDTO getEmployeeById(int id);
 
+    boolean updateRole(int id, UserRole role);
 }

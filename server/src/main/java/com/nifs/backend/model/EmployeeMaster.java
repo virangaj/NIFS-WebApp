@@ -2,7 +2,7 @@ package com.nifs.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.nifs.backend.constant.UserRole;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -87,6 +87,14 @@ public class EmployeeMaster {
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private String licenseExpireDate;
 
+
+    @Column(name = "is_delete")
+    private Boolean isDelete;
+
+    @Column(name = "status")
+    private String role = String.valueOf(UserRole.USER);
+
+
 //    emergency contract person details
     @Column(name = "contact_person", length = 255)
     private String contactPerson;
@@ -131,9 +139,6 @@ public class EmployeeMaster {
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private String contractEnd;
 
-
-    @Column(name = "is_delete")
-    private Boolean isDelete;
 
     //relationships
 
