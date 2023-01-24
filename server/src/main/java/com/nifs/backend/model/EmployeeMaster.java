@@ -188,7 +188,7 @@ public class EmployeeMaster {
 
 
     //login
-    @OneToOne(mappedBy = "employee", cascade = {CascadeType.REMOVE})
+    @OneToOne(mappedBy = "employee", cascade = {CascadeType.MERGE})
     private User empLogin;
 
 

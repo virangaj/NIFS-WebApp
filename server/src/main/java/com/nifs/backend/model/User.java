@@ -24,7 +24,7 @@ public class User implements UserDetails {
     @Column(name = "id", nullable = false, length = 100, unique = true)
     private String id;
 
-    @OneToOne(cascade = {CascadeType.ALL})
+    @OneToOne(cascade = {CascadeType.REMOVE})
     @JoinColumn(name = "epf_no", referencedColumnName = "epf_no", unique = true)
     private EmployeeMaster employee;
 
@@ -37,6 +37,8 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
     private UserRole role;
+    @Column(name = "is_delete")
+    private Boolean isDelete;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="last_login")

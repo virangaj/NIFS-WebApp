@@ -2,6 +2,7 @@ package com.nifs.backend.dto;
 
 
 
+import com.nifs.backend.constant.UserRole;
 import lombok.Builder;
 import lombok.Data;
 
@@ -14,5 +15,7 @@ public class UserDTO {
     private int epfNo;
     private String email;
     private String password;
+    private UserRole role;
     private Date lastLogin;
+    private String division;
 }

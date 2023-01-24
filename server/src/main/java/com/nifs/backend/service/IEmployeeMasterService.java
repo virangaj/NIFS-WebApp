@@ -19,7 +19,7 @@ public interface IEmployeeMasterService {
     Boolean addEmployee(EmployeeMasterDTO e);
 
     //delete employee -> update isDelete
-    Boolean deleteEmployee(int id);
+    Boolean updateIsDelete(int id);
 
     //remove employee from database
     Boolean hardDeleteEmployee(int id);

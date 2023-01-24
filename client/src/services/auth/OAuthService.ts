@@ -10,7 +10,7 @@ const changePassword = async (favJSON: any) => {
 	console.log(favJSON);
 	const response = await axios({
 		method: 'patch',
-		url: `${process.env.REACT_APP_BACKEND_SERVER}/auth/change-password/${favJSON.epfNo}`,
+		url: `${process.env.REACT_APP_BACKEND_SERVER}/user/change-password/${favJSON.epfNo}`,
 		data: favJSON,
 		headers: { 'Content-Type': 'application/json; charset=utf-8' },
 	});

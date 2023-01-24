@@ -2,6 +2,7 @@ package com.nifs.backend.serviceImplementation;
 
 import com.nifs.backend.common.Common;
 import com.nifs.backend.constant.UserRole;
+import com.nifs.backend.dto.ChangePasswordDTO;
 import com.nifs.backend.dto.EmployeeMasterDTO;
 import com.nifs.backend.model.User;
 import com.nifs.backend.model.EmployeeMaster;
@@ -10,30 +11,31 @@ import com.nifs.backend.repository.EmployeeMasterRepository;
 import com.nifs.backend.service.IUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.Date;
 
 @Service
 @RequiredArgsConstructor
 public class UserService implements IUserService {
 
-
-    private final Common common = new Common();
     @Autowired
-    private UserRepository loginRepo;
+    private UserRepository userRepo;
     @Autowired
     private EmployeeMasterRepository empRepo;
 
-
     @Autowired
     private final PasswordEncoder passwordEncoder;
-
+    private final AuthenticationManager manager;
+    //create login for the user
     @Override
     public boolean createLogin(EmployeeMasterDTO e) throws NoSuchAlgorithmException {
 
-        if (loginRepo.returnLoginDetails(e.getEpfNo()) == null) {
+        if (userRepo.returnLoginDetails(e.getEpfNo()) == null) {
 
             String pwd =  passwordEncoder.encode(Integer.toString(e.getEpfNo()));
             EmployeeMaster employeeMaster = empRepo.returnEmployeeById(e.getEpfNo());
@@ -44,10 +46,51 @@ public class UserService implements IUserService {
             user.setEmail(e.getGsuitEmail());
             user.setPassword(pwd);
             user.setRole(UserRole.USER);
-            loginRepo.save(user);
+            user.setIsDelete(false);
+            userRepo.save(user);
             return true;
         }
 
         return false;
+    }
+
+
+    //change the role
+    @Override
+    public boolean changeRole(int id, UserRole role) {
+        if(userRepo.returnLoginDetails(id) != null) {
+            userRepo.updateUserRole(role, id);
+            return true;
+        }
+
+        return false;
+    }
+
+    //change password
+    @Override
+    public boolean changePassword(int id, ChangePasswordDTO data) {
+        manager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        data.getEpfNo(),
+                        data.getOldPassword()
+                ));
+        var user = userRepo.returnLoginDetails(id);
+        System.out.println(user.toString());
+        if(user != null && data.getNewPassword().equals(data.getConfirmPassword())){
+            System.out.println("inside the if condition");
+
+            userRepo.changePassword(passwordEncoder.encode( data.getNewPassword()), new Date(), id);
+            return true;
+        }
+
+        return false;
+    }
+
+    //update is delete
+    @Override
+    public void updateIsDelete(boolean b, int id) {
+        if(userRepo.returnLoginDetails(id) != null) {
+            userRepo.updateIsDelete(b, id);
+        }
     }
 }

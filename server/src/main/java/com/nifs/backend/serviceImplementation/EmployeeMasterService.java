@@ -291,9 +291,17 @@ public class EmployeeMasterService implements IEmployeeMasterService {
 
     //delete employee -> update isDelete
     @Override
-    public Boolean deleteEmployee(int id) {
+    public Boolean updateIsDelete(int id) {
         try {
-            if (empRepo.returnEmployeeById(id) != null) {
+            var empMaster = empRepo.returnEmployeeById(id);
+
+            if (empMaster != null) {
+                if(empMaster.getIsDelete()){
+                    userService.updateIsDelete(false, id);
+                    empRepo.updateIsDelete(false, id);
+                    return true;
+                }
+                userService.updateIsDelete(true, id);
                 empRepo.updateIsDelete(true, id);
                 return true;
             }
@@ -378,7 +386,8 @@ public class EmployeeMasterService implements IEmployeeMasterService {
     public boolean updateRole(int id, UserRole role) {
         if(empRepo.returnEmployeeById(id) != null){
             empRepo.updateRole(String.valueOf(role), id);
-            return true;
+            return userService.changeRole(id, role);
+
         }
 
         return false;
