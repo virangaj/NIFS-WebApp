@@ -26,15 +26,7 @@ function ChangePassword() {
 		console.log(data);
 
 		if (data.confirmPassword !== data.newPassword) {
-			toast.error('Password is not match!', {
-				position: 'top-right',
-				autoClose: 5000,
-				hideProgressBar: false,
-				closeOnClick: true,
-				pauseOnHover: true,
-				draggable: true,
-				progress: undefined,
-			});
+			toast.error('Password is not match!');
 			setConfirmError('Password is not match');
 			return;
 		} else {
@@ -44,25 +36,9 @@ function ChangePassword() {
 				if (result.data.status === RequestStatus.SUCCESS) {
 					//redirect to login page
 					navigate(RouteName.Login);
-					toast.success(result.data.message, {
-						position: 'top-right',
-						autoClose: 5000,
-						hideProgressBar: false,
-						closeOnClick: true,
-						pauseOnHover: true,
-						draggable: true,
-						progress: undefined,
-					});
+					toast.success(result.data.message);
 				} else {
-					toast.error(result.data.message, {
-						position: 'top-right',
-						autoClose: 5000,
-						hideProgressBar: false,
-						closeOnClick: true,
-						pauseOnHover: true,
-						draggable: true,
-						progress: undefined,
-					});
+					toast.error(result.data.message);
 				}
 			}, 1000);
 		}

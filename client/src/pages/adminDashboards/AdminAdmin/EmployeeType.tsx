@@ -60,15 +60,7 @@ function EmployeeType() {
 				if (res.data.status === RequestStatus.SUCCESS) {
 					setEmpType(res.data.data);
 				} else {
-					toast.error(`${res.data.message}`, {
-						position: 'top-right',
-						autoClose: 5000,
-						hideProgressBar: false,
-						closeOnClick: true,
-						pauseOnHover: true,
-						draggable: true,
-						progress: undefined,
-					});
+					toast.error(`${res.data.message}`);
 				}
 			})
 			.catch((e: any) => {
@@ -125,27 +117,11 @@ function EmployeeType() {
 			setTimeout(async () => {
 				const result = await EmployeeTypeService.saveEmpType(values);
 				if (result.data.status === RequestStatus.SUCCESS) {
-					toast.success('New Employee Type is added', {
-						position: 'top-right',
-						autoClose: 5000,
-						hideProgressBar: false,
-						closeOnClick: true,
-						pauseOnHover: true,
-						draggable: true,
-						progress: undefined,
-					});
+					toast.success('New Employee Type is added');
 
 					resetForm();
 				} else {
-					toast.error('Request cannot completed!', {
-						position: 'top-right',
-						autoClose: 5000,
-						hideProgressBar: false,
-						closeOnClick: true,
-						pauseOnHover: true,
-						draggable: true,
-						progress: undefined,
-					});
+					toast.error('Request cannot completed!');
 				}
 
 				setLoading(false);

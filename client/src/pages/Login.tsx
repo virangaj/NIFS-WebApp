@@ -43,53 +43,21 @@ export default function SignInSide() {
 			if (result.data.status === RequestStatus.CHANGE_PASSWORD) {
 				console.log(result.data);
 				navigate(RouteName.ChangePassword);
-				toast.warning(result.data.message, {
-					position: 'top-right',
-					autoClose: 5000,
-					hideProgressBar: false,
-					closeOnClick: true,
-					pauseOnHover: true,
-					draggable: true,
-					progress: undefined,
-				});
+				toast.warning(result.data.message);
 				setLoading(false);
 			}
 			if (result.data.status === RequestStatus.SUCCESS) {
 				console.log(result.data);
 				navigate(RouteName.Home);
-				toast.success(result.data.message, {
-					position: 'top-right',
-					autoClose: 5000,
-					hideProgressBar: false,
-					closeOnClick: true,
-					pauseOnHover: true,
-					draggable: true,
-					progress: undefined,
-				});
+				toast.success(result.data.message);
 				setLoading(false);
 			}
 			if (result.data.status === RequestStatus.UNAUTHORIZED) {
 				console.log(result.data);
-				toast.error(result.data.message, {
-					position: 'top-right',
-					autoClose: 5000,
-					hideProgressBar: false,
-					closeOnClick: true,
-					pauseOnHover: true,
-					draggable: true,
-					progress: undefined,
-				});
+				toast.error(result.data.message);
 				setLoading(false);
 			} else {
-				toast.error('Please enter valid credentials', {
-					position: 'top-right',
-					autoClose: 5000,
-					hideProgressBar: false,
-					closeOnClick: true,
-					pauseOnHover: true,
-					draggable: true,
-					progress: undefined,
-				});
+				toast.error('Please enter valid credentials');
 				setLoading(false);
 			}
 		}, 1000);

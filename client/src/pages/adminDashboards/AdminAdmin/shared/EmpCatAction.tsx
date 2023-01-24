@@ -10,8 +10,6 @@ import EmployeeCatService from '../../../../services/admin/EmployeeCatService';
 import { toast } from 'react-toastify';
 import { RequestStatus } from '../../../../constant/requestStatus';
 
-import { AlertTypes } from '../../../../constant/alertTypes';
-
 function EmpCatAction({ params, rowId, setRowId, setDeleteId }: any) {
 	const [loading, setLoading] = useState(false);
 	const [success, setSuccess] = useState(false);
