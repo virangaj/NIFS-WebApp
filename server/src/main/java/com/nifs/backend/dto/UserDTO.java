@@ -2,12 +2,14 @@ package com.nifs.backend.dto;
 
 
 
+import lombok.Builder;
 import lombok.Data;
 
 import java.util.Date;
 
 @Data
-public class LoginDetailsDTO {
+@Builder
+public class UserDTO {
     private Integer id;
     private int epfNo;
     private String email;

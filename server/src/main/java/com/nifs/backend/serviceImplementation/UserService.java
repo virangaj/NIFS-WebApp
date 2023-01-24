@@ -1,42 +1,50 @@
 package com.nifs.backend.serviceImplementation;
 
 import com.nifs.backend.common.Common;
+import com.nifs.backend.constant.UserRole;
 import com.nifs.backend.dto.EmployeeMasterDTO;
-import com.nifs.backend.model.EmployeeLogin;
+import com.nifs.backend.model.User;
 import com.nifs.backend.model.EmployeeMaster;
-import com.nifs.backend.repository.EmployeeLoginRepository;
+import com.nifs.backend.repository.UserRepository;
 import com.nifs.backend.repository.EmployeeMasterRepository;
-import com.nifs.backend.service.IEmployeeLoginService;
+import com.nifs.backend.service.IUserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.security.NoSuchAlgorithmException;
-import java.util.UUID;
 
 @Service
-public class EmployeeLoginService implements IEmployeeLoginService {
+@RequiredArgsConstructor
+public class UserService implements IUserService {
 
 
     private final Common common = new Common();
     @Autowired
-    private EmployeeLoginRepository loginRepo;
+    private UserRepository loginRepo;
     @Autowired
     private EmployeeMasterRepository empRepo;
+
+
+    @Autowired
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public boolean createLogin(EmployeeMasterDTO e) throws NoSuchAlgorithmException {
 
         if (loginRepo.returnLoginDetails(e.getEpfNo()) == null) {
 
-            String pwd = common.encryptPassword(Integer.toString(e.getEpfNo()));
+            String pwd =  passwordEncoder.encode(Integer.toString(e.getEpfNo()));
             EmployeeMaster employeeMaster = empRepo.returnEmployeeById(e.getEpfNo());
 
-            EmployeeLogin empLogin = new EmployeeLogin();
+            User user = new User();
 
-            empLogin.setEmployee(employeeMaster);
-            empLogin.setEmail(e.getGsuitEmail());
-            empLogin.setPassword(pwd);
-            loginRepo.save(empLogin);
+            user.setEmployee(employeeMaster);
+            user.setEmail(e.getGsuitEmail());
+            user.setPassword(pwd);
+            user.setRole(UserRole.USER);
+            loginRepo.save(user);
             return true;
         }
 

@@ -36,7 +36,7 @@ public class EmployeeMasterService implements IEmployeeMasterService {
     private ModelMapper modelMapper;
 
     @Autowired
-    private IEmployeeLoginService employeeLoginService;
+    private IUserService userService;
 
     //get all employees
     @Override
@@ -274,7 +274,11 @@ public class EmployeeMasterService implements IEmployeeMasterService {
                 empRepo.save(employeeMaster);
 
                 //create employee login
-                return employeeLoginService.createLogin(e);
+                if(!userService.createLogin(e)){
+                    empRepo.deleteEmployee(e.getEpfNo());
+                    return false;
+                }
+                return true;
 
 
             }

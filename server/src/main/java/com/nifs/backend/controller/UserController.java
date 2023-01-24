@@ -10,7 +10,7 @@ import java.security.Principal;
 @RestController
 @RequestMapping("/login")
 @CrossOrigin
-public class EmployeeLoginController {
+public class UserController {
 
     @GetMapping("/test")
     private String test(){

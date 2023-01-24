@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import java.security.NoSuchAlgorithmException;
 
 @Service
-public interface IEmployeeLoginService {
+public interface IUserService {
 
     boolean createLogin(EmployeeMasterDTO employee) throws NoSuchAlgorithmException;
 

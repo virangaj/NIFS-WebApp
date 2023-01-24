@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/admin/employee")
+@RequestMapping("/auth/employee")
 @CrossOrigin
 public class EmployeeMasterController {
 
