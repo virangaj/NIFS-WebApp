@@ -4,13 +4,13 @@ import { toast } from 'react-toastify';
 import Stack from '@mui/material/Stack';
 import { generateID } from '../../constant/generateId';
 import Ripple from '../../components/Ripple';
-import IContractExtension from '../../types/ContractExtension';
+import IContractExtension from '../../types/IContractExtension';
 import CustomeDataPicker from '../../components/DataPicker';
-import IEmployeeData from '../../types/EmployeeData';
+import IEmployeeData from '../../types/IEmployeeData';
 import EmployeeService from '../../services/admin/EmployeeService';
-import IDesignationData from '../../types/DesignationData';
+import IDesignationData from '../../types/IDesignationData';
 import DesignationMasterService from '../../services/admin/DesignationMasterService';
-import IDivisionData from '../../types/DivisionData';
+import IDivisionData from '../../types/IDivisionData';
 import DivisionMasterService from '../../services/admin/DivisionMasterService';
 
 function ContractExtension() {

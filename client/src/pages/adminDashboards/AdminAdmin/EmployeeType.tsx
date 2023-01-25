@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import EmployeeTypeService from '../../../services/admin/EmployeeTypeService';
 import EmpTypeAction from './shared/EmpTypeAction';
 import Ripple from '../../../components/Ripple';
-import ILocationData from '../../../types/LocationData';
+import ILocationData from '../../../types/ILocationData';
 import LocationMasterService from '../../../services/admin/LocationMasterService';
 import ImportFromXlsx from './shared/ImportFromXlsx';
 import { HiX } from 'react-icons/hi';

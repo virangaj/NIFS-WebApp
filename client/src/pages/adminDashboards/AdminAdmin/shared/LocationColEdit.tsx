@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import ILocationData from '../../../../types/LocationData';
+import ILocationData from '../../../../types/ILocationData';
 
 function LocationColEdit({ params, setValues, locationData }: any) {
 	const [loading, setLoading] = useState(false);

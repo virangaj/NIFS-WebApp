@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import http from '../../http-common';
-import IParticipantMaster from '../../types/ParticipantMaster';
+import IParticipantMaster from '../../types/IParticipantMaster';
 
 axios.defaults.baseURL = process.env.REACT_APP_BACKEND_SERVER;
 
