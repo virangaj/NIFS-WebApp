@@ -79,8 +79,8 @@ public class AuthenticationService {
             }
         }
         return AuthenticationResponse.builder()
-                .status(String.valueOf(RequestStatus.UNAUTHORIZED))
-                .code(404)
+            .status(String.valueOf(RequestStatus.UNAUTHORIZED))
+            .code(404)
                 .message("You are not AUTHORIZED to the system!")
                 .build();
 

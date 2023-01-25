@@ -1,6 +1,5 @@
 package com.nifs.backend.serviceImplementation;
 
-import com.nifs.backend.common.Common;
 import com.nifs.backend.constant.UserRole;
 import com.nifs.backend.dto.ChangePasswordDTO;
 import com.nifs.backend.dto.EmployeeMasterDTO;
