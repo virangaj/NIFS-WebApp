@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 import EmployeeCatService from '../../../services/admin/EmployeeCatService';
 import EmpCatAction from './shared/EmpCatAction';
 import Ripple from '../../../components/Ripple';
-import ILocationData from '../../../types/LocationData';
+import ILocationData from '../../../types/ILocationData';
 import LocationMasterService from '../../../services/admin/LocationMasterService';
 import { HiX } from 'react-icons/hi';
 import { RequestStatus } from '../../../constant/requestStatus';
@@ -61,15 +61,7 @@ function EmpCategory() {
 				if (res.data.status === RequestStatus.SUCCESS) {
 					setEmpCats(res.data.data);
 				} else {
-					toast.error(`${res.data.message}`, {
-						position: 'top-right',
-						autoClose: 5000,
-						hideProgressBar: false,
-						closeOnClick: true,
-						pauseOnHover: true,
-						draggable: true,
-						progress: undefined,
-					});
+					toast.error(`${res.data.message}`);
 				}
 			})
 			.catch((e: any) => {
@@ -126,26 +118,10 @@ function EmpCategory() {
 			setTimeout(async () => {
 				const result = await EmployeeCatService.saveEmpCat(values);
 				if (result.data.status === RequestStatus.SUCCESS) {
-					toast.success('New Employee Category is added', {
-						position: 'top-right',
-						autoClose: 5000,
-						hideProgressBar: false,
-						closeOnClick: true,
-						pauseOnHover: true,
-						draggable: true,
-						progress: undefined,
-					});
+					toast.success('New Employee Category is added');
 					resetForm();
 				} else {
-					toast.error('Request cannot completed!', {
-						position: 'top-right',
-						autoClose: 5000,
-						hideProgressBar: false,
-						closeOnClick: true,
-						pauseOnHover: true,
-						draggable: true,
-						progress: undefined,
-					});
+					toast.error('Request cannot completed!');
 				}
 				setLoading(false);
 			}, 1000);

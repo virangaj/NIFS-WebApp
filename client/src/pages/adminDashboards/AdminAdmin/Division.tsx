@@ -6,9 +6,9 @@ import Ripple from '../../../components/Ripple';
 import { HiX } from 'react-icons/hi';
 import { toast } from 'react-toastify';
 
-import ILocationData from '../../../types/LocationData';
+import ILocationData from '../../../types/ILocationData';
 import LocationMasterService from '../../../services/admin/LocationMasterService';
-import IDivisionData from '../../../types/DivisionData';
+import IDivisionData from '../../../types/IDivisionData';
 import DivisionMasterService from '../../../services/admin/DivisionMasterService';
 import DivisionAction from './shared/DivisionAction';
 import { RequestStatus } from '../../../constant/requestStatus';
@@ -55,15 +55,7 @@ function Division() {
 					setDivisionData(res.data.data);
 					// console.log(divisionData);
 				} else {
-					toast.error(`${res.data.message}`, {
-						position: 'top-right',
-						autoClose: 5000,
-						hideProgressBar: false,
-						closeOnClick: true,
-						pauseOnHover: true,
-						draggable: true,
-						progress: undefined,
-					});
+					toast.error(`${res.data.message}`);
 				}
 			})
 			.catch((e: any) => {
@@ -117,27 +109,11 @@ function Division() {
 			setTimeout(async () => {
 				const result = await DivisionMasterService.saveDivision(values);
 				if (result.data.status === RequestStatus.SUCCESS) {
-					toast.success('New Division is added', {
-						position: 'top-right',
-						autoClose: 5000,
-						hideProgressBar: false,
-						closeOnClick: true,
-						pauseOnHover: true,
-						draggable: true,
-						progress: undefined,
-					});
+					toast.success('New Division is added');
 
 					resetForm();
 				} else {
-					toast.error('Request cannot completed!', {
-						position: 'top-right',
-						autoClose: 5000,
-						hideProgressBar: false,
-						closeOnClick: true,
-						pauseOnHover: true,
-						draggable: true,
-						progress: undefined,
-					});
+					toast.error('Request cannot completed!');
 				}
 				setLoading(false);
 			}, 1000);

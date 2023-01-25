@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import Stack from '@mui/material/Stack';
-import IEventRequest from '../../types/EventRequest';
+import IEventRequest from '../../types/IEventRequest';
 import { generateID } from '../../constant/generateId';
 import CustomeDataPicker from '../../components/DataPicker';
 

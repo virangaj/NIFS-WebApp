@@ -8,12 +8,12 @@ import { toast } from 'react-toastify';
 
 import EmployeeCatService from '../../../../services/admin/EmployeeCatService';
 import LocationMasterService from '../../../../services/admin/LocationMasterService';
-import IDesignationData from '../../../../types/DesignationData';
-import IDivisionData from '../../../../types/DivisionData';
-import IEmpCatData from '../../../../types/EmpCatData';
-import IEmployeeData from '../../../../types/EmployeeData';
-import IEmpTypeData from '../../../../types/EmpTypeData';
-import ILocationData from '../../../../types/LocationData';
+import IDesignationData from '../../../../types/IDesignationData';
+import IDivisionData from '../../../../types/IDivisionData';
+import IEmpCatData from '../../../../types/IEmpCatData';
+import IEmployeeData from '../../../../types/IEmployeeData';
+import IEmpTypeData from '../../../../types/IEmpTypeData';
+import ILocationData from '../../../../types/ILocationData';
 import EmployeeTypeService from '../../../../services/admin/EmployeeTypeService';
 import DivisionMasterService from '../../../../services/admin/DivisionMasterService';
 import DesignationMasterService from '../../../../services/admin/DesignationMasterService';

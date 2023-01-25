@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import EmployeeTypeService from '../../../services/admin/EmployeeTypeService';
 import EmpTypeAction from './shared/EmpTypeAction';
 import Ripple from '../../../components/Ripple';
-import ILocationData from '../../../types/LocationData';
+import ILocationData from '../../../types/ILocationData';
 import LocationMasterService from '../../../services/admin/LocationMasterService';
 import ImportFromXlsx from './shared/ImportFromXlsx';
 import { HiX } from 'react-icons/hi';
@@ -60,15 +60,7 @@ function EmployeeType() {
 				if (res.data.status === RequestStatus.SUCCESS) {
 					setEmpType(res.data.data);
 				} else {
-					toast.error(`${res.data.message}`, {
-						position: 'top-right',
-						autoClose: 5000,
-						hideProgressBar: false,
-						closeOnClick: true,
-						pauseOnHover: true,
-						draggable: true,
-						progress: undefined,
-					});
+					toast.error(`${res.data.message}`);
 				}
 			})
 			.catch((e: any) => {
@@ -125,27 +117,11 @@ function EmployeeType() {
 			setTimeout(async () => {
 				const result = await EmployeeTypeService.saveEmpType(values);
 				if (result.data.status === RequestStatus.SUCCESS) {
-					toast.success('New Employee Type is added', {
-						position: 'top-right',
-						autoClose: 5000,
-						hideProgressBar: false,
-						closeOnClick: true,
-						pauseOnHover: true,
-						draggable: true,
-						progress: undefined,
-					});
+					toast.success('New Employee Type is added');
 
 					resetForm();
 				} else {
-					toast.error('Request cannot completed!', {
-						position: 'top-right',
-						autoClose: 5000,
-						hideProgressBar: false,
-						closeOnClick: true,
-						pauseOnHover: true,
-						draggable: true,
-						progress: undefined,
-					});
+					toast.error('Request cannot completed!');
 				}
 
 				setLoading(false);

@@ -6,13 +6,13 @@ import Box from '@mui/material/Box';
 import SelectFacility from './shared/SelectFacility';
 import SetChargers from './shared/SetChargers';
 import VenueMasterService from '../../services/sedu/VenueMasterService';
-import IVenueMaster from '../../types/VenueMaster';
+import IVenueMaster from '../../types/IVenueMaster';
 import Ripple from '../../components/Ripple';
 import { generateID } from '../../constant/generateId';
 
 import VenueOtherService from '../../services/sedu/VenueOtherService';
 import LocationMasterService from '../../services/admin/LocationMasterService';
-import ILocationData from '../../types/LocationData';
+import ILocationData from '../../types/ILocationData';
 
 import '../pages.css';
 function VenueMaster() {

@@ -1,7 +1,7 @@
 package com.nifs.backend.constant;
 
 public enum RequestStatus {
-    SUCCESS, ERROR;
+    SUCCESS, ERROR, CHANGE_PASSWORD,UNAUTHORIZED;
 
 
 

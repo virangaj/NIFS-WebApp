@@ -3,6 +3,13 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import Link from '@mui/material/Link';
 
 import Logo from '../images/nifs_logo.png';
+import OAuthService from '../services/auth/OAuthService';
+import { RequestStatus } from '../constant/requestStatus';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { RouteName } from '../constant/routeNames';
+import { useState } from 'react';
+import Ripple from '../components/Ripple';
 
 function Copyright(props: any) {
 	return (
@@ -18,12 +25,43 @@ function Copyright(props: any) {
 }
 
 export default function SignInSide() {
+	let navigate = useNavigate();
+
+	const [loading, setLoading] = useState(false);
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
 	} = useForm();
+
 	const onSubmit: SubmitHandler<any> = (data) => {
+		data.epfNo = parseInt(data.epfNo);
+		setLoading(true);
+		setTimeout(async () => {
+			const result = await OAuthService.loginRequest(data);
+
+			if (result.data.status === RequestStatus.CHANGE_PASSWORD) {
+				console.log(result.data);
+				navigate(RouteName.ChangePassword);
+				toast.warning(result.data.message);
+				setLoading(false);
+			}
+			if (result.data.status === RequestStatus.SUCCESS) {
+				console.log(result.data);
+				navigate(RouteName.Home);
+				toast.success(result.data.message);
+				setLoading(false);
+			}
+			if (result.data.status === RequestStatus.UNAUTHORIZED) {
+				console.log(result.data);
+				toast.error(result.data.message);
+				setLoading(false);
+			} else {
+				toast.error('Please enter valid credentials');
+				setLoading(false);
+			}
+		}, 1000);
+
 		console.log(data);
 	};
 
@@ -48,45 +86,51 @@ export default function SignInSide() {
 						Log in to your account
 					</h1>
 
-					<form className='mt-6' onSubmit={handleSubmit(onSubmit)}>
-						<div>
-							<label className='input-label'>Email Address</label>
-							<input
-								type='email'
-								{...register('email')}
-								placeholder='Enter Email Address'
-								className='tailwind-text-box w-[100%]'
-								required
-							/>
-						</div>
+					{loading ? (
+						<>
+							<Ripple />
+						</>
+					) : (
+						<form className='mt-6' onSubmit={handleSubmit(onSubmit)}>
+							<div>
+								<label className='input-label'>EPF Number</label>
+								<input
+									type='text'
+									{...register('epfNo')}
+									placeholder='Enter EPF Number'
+									className='tailwind-text-box w-[100%]'
+									required
+								/>
+							</div>
 
-						<div className='mt-4'>
-							<label className='input-label'>Password</label>
-							<input
-								type='password'
-								{...register('password')}
-								placeholder='Enter Password'
-								className='tailwind-text-box w-[100%]'
-								required
-							/>
-						</div>
+							<div className='mt-4'>
+								<label className='input-label'>Password</label>
+								<input
+									type='password'
+									{...register('password')}
+									placeholder='Enter Password'
+									className='tailwind-text-box w-[100%]'
+									required
+								/>
+							</div>
 
-						<div className='mt-2 text-right'>
-							<a
-								href='#'
-								className='text-sm font-semibold text-gray-700 hover:text-blue-700 focus:text-blue-700'
+							<div className='mt-2 text-right'>
+								<a
+									href='#'
+									className='text-sm font-semibold text-gray-700 hover:text-blue-700 focus:text-blue-700'
+								>
+									Forgot Password?
+								</a>
+							</div>
+
+							<button
+								type='submit'
+								className='block w-full px-4 py-3 mt-6 font-semibold text-white bg-indigo-500 rounded-lg hover:bg-indigo-400 focus:bg-indigo-400'
 							>
-								Forgot Password?
-							</a>
-						</div>
-
-						<button
-							type='submit'
-							className='block w-full px-4 py-3 mt-6 font-semibold text-white bg-indigo-500 rounded-lg hover:bg-indigo-400 focus:bg-indigo-400'
-						>
-							Log In
-						</button>
-					</form>
+								Log In
+							</button>
+						</form>
+					)}
 
 					<hr className='w-full my-6 border-gray-300' />
 

@@ -2,9 +2,11 @@ package com.nifs.backend.service;
 
 import com.nifs.backend.dto.DivisionMasterDTO;
 import com.nifs.backend.model.DivisionMaster;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public interface IDivisionMasterService {
     //    get all divisions
     List<DivisionMasterDTO> getAll();

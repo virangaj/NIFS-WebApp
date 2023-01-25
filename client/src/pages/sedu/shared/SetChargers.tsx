@@ -28,15 +28,7 @@ function SetChargers({ setChargers, chargers }: any) {
 				if (res.data.status === 1) {
 					setChargesData(res.data.data);
 				} else {
-					toast.error(`${res.data.message}`, {
-						position: 'top-right',
-						autoClose: 5000,
-						hideProgressBar: false,
-						closeOnClick: true,
-						pauseOnHover: true,
-						draggable: true,
-						progress: undefined,
-					});
+					toast.error(res.data.message);
 				}
 			})
 			.catch((e: any) => {

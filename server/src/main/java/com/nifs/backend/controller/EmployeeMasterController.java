@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/admin/employee")
+@RequestMapping("/auth/employee")
 @CrossOrigin
 public class EmployeeMasterController {
 
@@ -166,10 +166,10 @@ public class EmployeeMasterController {
 
     //change is empty value -> true
     @PatchMapping("/delete/{id}")
-    private ResponseEntity<?>  deleteEmployee(@PathVariable int id){
+    private ResponseEntity<?>  updateIsDelete(@PathVariable int id){
         Map<String, Object> map = new LinkedHashMap<String, Object>();
         try {
-            if (empService.deleteEmployee(id)) {
+            if (empService.updateIsDelete(id)) {
                 //return success response code
                 map.put("status", RequestStatus.SUCCESS);
                 map.put("code", 201);
