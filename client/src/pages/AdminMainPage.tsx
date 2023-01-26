@@ -1,4 +1,3 @@
-import React from 'react';
 import SecondaryNavbar from '../components/shared/SecondaryNavbar';
 import Pages from '../components/data/AdminNavData.json';
 

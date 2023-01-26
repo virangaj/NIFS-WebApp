@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 import Stack from '@mui/material/Stack';
 import IEventRequest from '../../types/IEventRequest';
@@ -32,11 +32,11 @@ const initialState: IEventRequest = {
 };
 
 function EventRequest() {
-	const [startDate, setStartDate] = React.useState<string | null>(null);
-	const [startTime, setStartTime] = React.useState<string | null>(null);
+	const [startDate, setStartDate] = useState<string | null>(null);
+	const [startTime, setStartTime] = useState<string | null>(null);
 
-	const [endDate, setEndDate] = React.useState<string | null>(null);
-	const [endTime, setEndTime] = React.useState<string | null>(null);
+	const [endDate, setEndDate] = useState<string | null>(null);
+	const [endTime, setEndTime] = useState<string | null>(null);
 
 	const [getEventId, setEventId] = useState<String | any>('');
 
