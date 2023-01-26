@@ -11,6 +11,26 @@ import EventRequestParticipants from './shared/EventRequestParticipants';
 
 import Projects from '../../components/data/Project.json';
 
+const initialState: IEventRequest = {
+	eventId: '',
+	eventType: '',
+	type: '',
+	title: '',
+	remarks: '',
+	startDate: '',
+	endDate: '',
+	startTime: '',
+	endTime: '',
+	noParticipants: 0,
+	budget: 0,
+	project: '',
+	vote: '',
+	location: '',
+	venueName: '',
+	venueType: '',
+	fundType: '',
+};
+
 function EventRequest() {
 	const [startDate, setStartDate] = React.useState<string | null>(null);
 	const [startTime, setStartTime] = React.useState<string | null>(null);
@@ -24,25 +44,7 @@ function EventRequest() {
 
 	const [eventAttachment, setEventAttachment] = useState<File | any>();
 
-	const [values, setValues] = useState<IEventRequest>({
-		eventId: '',
-		eventType: '',
-		type: '',
-		title: '',
-		remarks: '',
-		startDate: '',
-		endDate: '',
-		startTime: '',
-		endTime: '',
-		noParticipants: 0,
-		budget: 0,
-		project: '',
-		vote: '',
-		location: '',
-		venueName: '',
-		venueType: '',
-		fundType: '',
-	});
+	const [values, setValues] = useState<IEventRequest>(initialState);
 
 	useEffect(() => {
 		setValues({
@@ -78,25 +80,7 @@ function EventRequest() {
 	};
 
 	const resetForm = () => {
-		setValues({
-			eventId: '',
-			eventType: '',
-			type: '',
-			title: '',
-			remarks: '',
-			startDate: '',
-			endDate: '',
-			startTime: '',
-			endTime: '',
-			noParticipants: 0,
-			budget: 0,
-			project: '',
-			vote: '',
-			location: '',
-			venueName: '',
-			venueType: '',
-			fundType: '',
-		});
+		setValues(initialState);
 		setStartDate('');
 		setStartTime('');
 		setEndDate('');

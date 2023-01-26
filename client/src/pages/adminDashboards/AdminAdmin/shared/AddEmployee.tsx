@@ -1,8 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import Box from '@mui/material/Box';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
-import InputLabel from '@mui/material/InputLabel';
+import { useState, useEffect } from 'react';
+
 import { Stack } from '@mui/system';
 import { toast } from 'react-toastify';
 
@@ -23,6 +20,43 @@ import EmployeeService from '../../../../services/admin/EmployeeService';
 import Ripple from '../../../../components/Ripple';
 import { RequestStatus } from '../../../../constant/requestStatus';
 
+const initialState: IEmployeeData = {
+	epfNo: 0,
+	initials: '',
+	firstName: '',
+	lastName: '',
+	gender: '',
+	dob: '',
+	address: '',
+	districtId: 0,
+	provinceId: 0,
+	contactNo: '',
+	personalEmail: '',
+	gsuitEmail: '',
+	nicNo: '',
+	nicIssuedDate: '',
+	passportNo: '',
+	passExpireDate: '',
+	licenseNo: '',
+	licenseIssuedDate: '',
+	licenseExpireDate: '',
+	contactPerson: '',
+	cpRelationship: '',
+	cpAddress: '',
+	cpTelephone: '',
+	cpStatus: '',
+	cpCivilStatus: '',
+	cpReligion: '',
+	appointmentDate: '',
+	contractStart: '',
+	contractEnd: '',
+	locationId: '',
+	empTypeId: '',
+	empCatId: '',
+	designationId: '',
+	divisionId: '',
+};
+
 function AddEmployee() {
 	const [locationData, setLocationData] = useState<ILocationData[]>();
 	const [employeeTypeData, setEmployeeTypeData] = useState<IEmpTypeData[]>();
@@ -36,52 +70,17 @@ function AddEmployee() {
 	const [loading, setLoading] = useState(false);
 
 	//dates used in empData
-	const [birthDate, setBirthDate] = React.useState<string | null>(null);
-	const [NICIDate, setNICIDate] = React.useState<string | null>(null);
-	const [passExDate, setPassExDate] = React.useState<string | null>(null);
-	const [licIssueDate, setLicIssueDate] = React.useState<string | null>(null);
-	const [licExpireDate, setLicExpireDate] = React.useState<string | null>(null);
-	const [appDate, setAppDate] = React.useState<string | null>(null);
-	const [conStartDate, setConStartDate] = React.useState<string | null>(null);
-	const [conEndDate, setConEndDate] = React.useState<string | null>(null);
+	const [birthDate, setBirthDate] = useState<string | null>(null);
+	const [NICIDate, setNICIDate] = useState<string | null>(null);
+	const [passExDate, setPassExDate] = useState<string | null>(null);
+	const [licIssueDate, setLicIssueDate] = useState<string | null>(null);
+	const [licExpireDate, setLicExpireDate] = useState<string | null>(null);
+	const [appDate, setAppDate] = useState<string | null>(null);
+	const [conStartDate, setConStartDate] = useState<string | null>(null);
+	const [conEndDate, setConEndDate] = useState<string | null>(null);
 
 	//main data model
-	const [empData, setEmpData] = useState<IEmployeeData>({
-		epfNo: 0,
-		initials: '',
-		firstName: '',
-		lastName: '',
-		gender: '',
-		dob: '',
-		address: '',
-		districtId: 0,
-		provinceId: 0,
-		contactNo: '',
-		personalEmail: '',
-		gsuitEmail: '',
-		nicNo: '',
-		nicIssuedDate: '',
-		passportNo: '',
-		passExpireDate: '',
-		licenseNo: '',
-		licenseIssuedDate: '',
-		licenseExpireDate: '',
-		contactPerson: '',
-		cpRelationship: '',
-		cpAddress: '',
-		cpTelephone: '',
-		cpStatus: '',
-		cpCivilStatus: '',
-		cpReligion: '',
-		appointmentDate: '',
-		contractStart: '',
-		contractEnd: '',
-		locationId: '',
-		empTypeId: '',
-		empCatId: '',
-		designationId: '',
-		divisionId: '',
-	});
+	const [empData, setEmpData] = useState<IEmployeeData>(initialState);
 
 	useEffect(() => {
 		retreivePageLoadData();
@@ -195,15 +194,7 @@ function AddEmployee() {
 						setEmployeeCatData(res.data.data);
 						// console.log(divisionData);
 					} else {
-						toast.error(`${res.data.message}`, {
-							position: 'top-right',
-							autoClose: 5000,
-							hideProgressBar: false,
-							closeOnClick: true,
-							pauseOnHover: true,
-							draggable: true,
-							progress: undefined,
-						});
+						toast.error(`${res.data.message}`);
 					}
 				})
 				.catch((e: any) => {
@@ -216,15 +207,7 @@ function AddEmployee() {
 						setEmployeeTypeData(res.data.data);
 						// console.log(divisionData);
 					} else {
-						toast.error(`${res.data.message}`, {
-							position: 'top-right',
-							autoClose: 5000,
-							hideProgressBar: false,
-							closeOnClick: true,
-							pauseOnHover: true,
-							draggable: true,
-							progress: undefined,
-						});
+						toast.error(`${res.data.message}`);
 					}
 				})
 				.catch((e: any) => {
@@ -237,15 +220,7 @@ function AddEmployee() {
 						setDivisionData(res.data.data);
 						// console.log(divisionData);
 					} else {
-						toast.error(`${res.data.message}`, {
-							position: 'top-right',
-							autoClose: 5000,
-							hideProgressBar: false,
-							closeOnClick: true,
-							pauseOnHover: true,
-							draggable: true,
-							progress: undefined,
-						});
+						toast.error(`${res.data.message}`);
 					}
 				})
 				.catch((e: any) => {
@@ -257,15 +232,7 @@ function AddEmployee() {
 					if (res.data.status === RequestStatus.SUCCESS) {
 						setDesignationData(res.data.data);
 					} else {
-						toast.error(`${res.data.message}`, {
-							position: 'top-right',
-							autoClose: 5000,
-							hideProgressBar: false,
-							closeOnClick: true,
-							pauseOnHover: true,
-							draggable: true,
-							progress: undefined,
-						});
+						toast.error(`${res.data.message}`);
 					}
 					// console.log(designationData);
 				})
@@ -283,42 +250,7 @@ function AddEmployee() {
 	};
 
 	const resetForm = () => {
-		setEmpData({
-			epfNo: 0,
-			initials: '',
-			firstName: '',
-			lastName: '',
-			gender: '',
-			dob: '',
-			address: '',
-			districtId: 0,
-			provinceId: 0,
-			contactNo: '',
-			personalEmail: '',
-			gsuitEmail: '',
-			nicNo: '',
-			nicIssuedDate: '',
-			passportNo: '',
-			passExpireDate: '',
-			licenseNo: '',
-			licenseIssuedDate: '',
-			licenseExpireDate: '',
-			contactPerson: '',
-			cpRelationship: '',
-			cpAddress: '',
-			cpTelephone: '',
-			cpStatus: '',
-			cpCivilStatus: '',
-			cpReligion: '',
-			appointmentDate: '',
-			contractStart: '',
-			contractEnd: '',
-			locationId: '',
-			empTypeId: '',
-			empCatId: '',
-			designationId: '',
-			divisionId: '',
-		});
+		setEmpData(initialState);
 		setBirthDate('');
 		setNICIDate('');
 		setPassExDate('');
@@ -337,40 +269,16 @@ function AddEmployee() {
 			setTimeout(async () => {
 				const result = await EmployeeService.saveEmployee(empData);
 				if (result.data.status === RequestStatus.SUCCESS) {
-					toast.success('New Employee is added', {
-						position: 'top-right',
-						autoClose: 5000,
-						hideProgressBar: false,
-						closeOnClick: true,
-						pauseOnHover: true,
-						draggable: true,
-						progress: undefined,
-					});
+					toast.success('New Employee is added');
 					// resetForm();
 				} else {
-					toast.error('Request cannot completed!', {
-						position: 'top-right',
-						autoClose: 5000,
-						hideProgressBar: false,
-						closeOnClick: true,
-						pauseOnHover: true,
-						draggable: true,
-						progress: undefined,
-					});
+					toast.error('Request cannot completed!');
 					// resetForm();
 				}
 				setLoading(false);
 			}, 1000);
 		} else {
-			toast.error('Please add an EPF Number', {
-				position: 'top-right',
-				autoClose: 5000,
-				hideProgressBar: false,
-				closeOnClick: true,
-				pauseOnHover: true,
-				draggable: true,
-				progress: undefined,
-			});
+			toast.error('Please add an EPF Number');
 		}
 	};
 

@@ -15,6 +15,18 @@ import LocationMasterService from '../../services/admin/LocationMasterService';
 import ILocationData from '../../types/ILocationData';
 
 import '../pages.css';
+
+const initialState: IVenueMaster = {
+	venueId: '',
+	venueName: '',
+	type: '',
+	availability: '',
+	location: '',
+	remark: '',
+	capacity: 0,
+	dateCreated: '',
+};
+
 function VenueMaster() {
 	const [facilities, setFacilities] = useState<any[]>([]);
 	const [chargers, setChargers] = useState<any[]>([]);
@@ -27,16 +39,7 @@ function VenueMaster() {
 	const [v_id, setV_Id] = useState('');
 	const [success, setSuccess] = useState(false);
 
-	const [values, setValues] = useState<IVenueMaster>({
-		venueId: '',
-		venueName: '',
-		type: '',
-		availability: '',
-		location: '',
-		remark: '',
-		capacity: 0,
-		dateCreated: '',
-	});
+	const [values, setValues] = useState<IVenueMaster>(initialState);
 
 	// onchange function
 	const onChange = (e: any) => {
@@ -77,16 +80,7 @@ function VenueMaster() {
 	};
 
 	const resetForm = () => {
-		setValues({
-			venueId: '',
-			venueName: '',
-			type: '',
-			availability: '',
-			location: '',
-			remark: '',
-			capacity: 0,
-			dateCreated: '',
-		});
+		setValues(initialState);
 		setV_Id('');
 		setFacilities([]);
 		setChargers([]);
