@@ -13,6 +13,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
@@ -68,6 +70,7 @@ public class AuthenticationService {
                         .build();
             }
             else {
+                userRepo.updateLoginDate(new Date(), request.getEpfNo());
                 return AuthenticationResponse.builder()
                         .status(String.valueOf(RequestStatus.SUCCESS))
                         .code(200)

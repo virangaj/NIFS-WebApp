@@ -26,6 +26,7 @@ import AdminAdmin from './pages/adminDashboards/AdminAdmin';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ChangePassword from './pages/login/ChangePassword';
+import AppRouter from './router/Router';
 function App() {
 	return (
 		<div className='flex flex-col mx-auto'>
@@ -42,156 +43,8 @@ function App() {
 				pauseOnHover
 				theme='dark'
 			/>
-			<Router>
-				<Routes>
-					<Route path={RouteName.Login} element={<Login />} />
-					<Route path={RouteName.ChangePassword} element={<ChangePassword />} />
 
-					<Route
-						path={RouteName.Home}
-						element={
-							<>
-								<Navbar />
-								<BackToTop />
-								<Home />
-								<Footer />
-							</>
-						}
-					/>
-					<Route
-						path={RouteName.Common}
-						element={
-							<>
-								<Navbar />
-								<BackToTop />
-								<CommonMainPage />
-								<Footer />
-							</>
-						}
-					/>
-					<Route
-						path={RouteName.Account}
-						element={
-							<>
-								<Navbar />
-								<BackToTop />
-								<AccountMainPage />
-								<Footer />
-							</>
-						}
-					/>
-					<Route
-						path={RouteName.Admin}
-						element={
-							<>
-								<Navbar />
-								<BackToTop />
-								<AdminMainPage />
-								<Footer />
-							</>
-						}
-					/>
-					<Route
-						path={RouteName.Library}
-						element={
-							<>
-								<Navbar />
-								<BackToTop />
-								<LibraryMainPage />
-								<Footer />
-							</>
-						}
-					/>
-					<Route
-						path={RouteName.Procument}
-						element={
-							<>
-								<Navbar />
-								<BackToTop />
-								<ProcumentMainPage />
-								<Footer />
-							</>
-						}
-					/>
-					<Route
-						path={RouteName.Sedu}
-						element={
-							<>
-								<Navbar />
-								<BackToTop />
-								<SeduMainPage />
-								<Footer />
-							</>
-						}
-					/>
-					<Route
-						path={RouteName.Transport}
-						element={
-							<>
-								<Navbar />
-								<BackToTop />
-								<TransportMainPage />
-								<Footer />
-							</>
-						}
-					/>
-					<Route
-						path={RouteName.UserPermission}
-						element={
-							<>
-								<Navbar />
-								<BackToTop />
-								<UserPermissionMainPage />
-								<Footer />
-							</>
-						}
-					/>
-					<Route
-						path={RouteName.Notification}
-						element={
-							<>
-								<Navbar />
-								<BackToTop />
-								<NotificationMainPage />
-								<Footer />
-							</>
-						}
-					/>
-					<Route
-						path={RouteName.Help}
-						element={
-							<>
-								<Navbar />
-								<BackToTop />
-								<HelpMainPage />
-								<Footer />
-							</>
-						}
-					/>
-					<Route
-						path={RouteName.ErrorPage}
-						element={
-							<>
-								<Navbar />
-								<BackToTop />
-								<ErrorPage />
-								<Footer />
-							</>
-						}
-					/>
-					<Route
-						path={RouteName.AdminAdmin}
-						element={
-							<>
-								<Navbar />
-								<BackToTop />
-								<AdminAdmin />
-								<Footer />
-							</>
-						}
-					/>
-				</Routes>
-			</Router>
+			<AppRouter />
 		</div>
 	);
 }

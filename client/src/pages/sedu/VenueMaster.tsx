@@ -8,7 +8,7 @@ import SetChargers from './shared/SetChargers';
 import VenueMasterService from '../../services/sedu/VenueMasterService';
 import IVenueMaster from '../../types/IVenueMaster';
 import Ripple from '../../components/Ripple';
-import { generateID } from '../../constant/generateId';
+import { generateID } from '../../utils/generateId';
 
 import VenueOtherService from '../../services/sedu/VenueOtherService';
 import LocationMasterService from '../../services/admin/LocationMasterService';

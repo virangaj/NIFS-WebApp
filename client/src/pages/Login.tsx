@@ -1,3 +1,4 @@
+import { useContext } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 
 import Link from '@mui/material/Link';
@@ -24,7 +25,7 @@ function Copyright(props: any) {
 	);
 }
 
-export default function SignInSide() {
+export default function Login() {
 	let navigate = useNavigate();
 
 	const [loading, setLoading] = useState(false);
@@ -36,29 +37,51 @@ export default function SignInSide() {
 
 	const onSubmit: SubmitHandler<any> = (data) => {
 		data.epfNo = parseInt(data.epfNo);
+		const user = data.epfNo;
+		const password = data.password;
 		setLoading(true);
 		setTimeout(async () => {
 			const result = await OAuthService.loginRequest(data);
 
 			if (result.data.status === RequestStatus.CHANGE_PASSWORD) {
-				console.log(result.data);
 				navigate(RouteName.ChangePassword);
 				toast.warning(result.data.message);
 				setLoading(false);
+				return;
 			}
 			if (result.data.status === RequestStatus.SUCCESS) {
 				console.log(result.data);
+				//save the access token
+				const accessToken = result?.data.token;
+				localStorage.setItem(
+					'employee',
+					JSON.stringify({
+						user: result?.data.user.epfNo,
+						pwd: result?.data.user.password,
+						role: result?.data.user.role,
+						token: result?.data.token,
+						division: result?.data.user.division,
+					})
+				);
+
+				//save the role
+				const role = result?.data.user.role;
+
+				//set auth
+
 				navigate(RouteName.Home);
 				toast.success(result.data.message);
 				setLoading(false);
+				return;
 			}
 			if (result.data.status === RequestStatus.UNAUTHORIZED) {
-				console.log(result.data);
 				toast.error(result.data.message);
 				setLoading(false);
+				return;
 			} else {
 				toast.error('Please enter valid credentials');
 				setLoading(false);
+				return;
 			}
 		}, 1000);
 
