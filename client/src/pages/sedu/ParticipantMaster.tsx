@@ -1,12 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
-import InputLabel from '@mui/material/InputLabel';
 import IVenueMaster from '../../types/IVenueMaster';
 import Autocomplete from '@mui/material/Autocomplete';
 
@@ -17,7 +13,7 @@ import Ripple from '../../components/Ripple';
 
 function ParticipantMaster() {
 	const [participantCode, setParticipantsCode] = useState('');
-	const [date, setDate] = React.useState<string | null>(null);
+	const [date, setDate] = useState<string | null>(null);
 
 	const [loading, setLoading] = useState(false);
 
