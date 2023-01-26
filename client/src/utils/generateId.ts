@@ -5,11 +5,10 @@ export function generateID(key: any) {
 	// let k = Math.floor(Math.random() * 25)
 	// var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	const today = new Date();
-	
+
 	let d = today.getDate() < 10 ? '0' + today.getDate() : today.getDate();
-	let month = today.getMonth() + 1
-	let mo =
-		month < 10 ? '0' + month : month;
+	let month = today.getMonth() + 1;
+	let mo = month < 10 ? '0' + month : month;
 	let y =
 		today.getFullYear() < 10 ? '0' + today.getFullYear() : today.getFullYear();
 

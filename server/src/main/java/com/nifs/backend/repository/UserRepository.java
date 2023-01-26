@@ -14,6 +14,10 @@ import java.util.Date;
 public interface UserRepository extends JpaRepository<User, Integer> {
     @Transactional
     @Modifying
+    @Query("update User u set u.lastLogin = ?1 where u.employee.epfNo = ?2")
+    void updateLoginDate(Date lastLogin, int employee);
+    @Transactional
+    @Modifying
     @Query("update User u set u.isDelete = ?1 where u.employee.epfNo = ?2")
     void updateIsDelete(Boolean isDelete, int employee);
     @Transactional

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import { toast } from 'react-toastify';
 import Stack from '@mui/material/Stack';
-import { generateID } from '../../constant/generateId';
+import { generateID } from '../../utils/generateId';
 import Ripple from '../../components/Ripple';
 import IContractExtension from '../../types/IContractExtension';
 import CustomeDataPicker from '../../components/DataPicker';
