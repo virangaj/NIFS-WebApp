@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import http from '../../http-common';
+import http from '../../utils/http-common';
 
 const config = {
 	headers: {
@@ -49,7 +49,6 @@ const editDivision = async (favJSON: any) => {
 		url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/division/update/${favJSON.divisionId}`,
 		data: favJSON,
 		headers: { 'Content-Type': 'application/json; charset=utf-8' },
-
 	});
 
 	// const response = await axios.patch(
