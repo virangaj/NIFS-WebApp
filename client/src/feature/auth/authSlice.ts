@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { Constant } from '../../constant/constant';
 import OAuthService from '../../services/auth/OAuthService';
 import { RootState } from '../../store/store';
-import IAuth from '../../types/IAuthUser';
 
 const user = localStorage.getItem('emplpoyee');
 
@@ -14,6 +14,7 @@ const initialState: any = {
 	isError: false,
 	isSuccess: false,
 	isLoading: false,
+	tokenExpireDate: null,
 };
 
 export const login = createAsyncThunk('auth/login', async (data: any) => {
@@ -22,7 +23,6 @@ export const login = createAsyncThunk('auth/login', async (data: any) => {
 });
 
 export const logout = createAsyncThunk('auth/logout', async () => {
-	console.log('logout');
 	const response = await OAuthService.logout();
 	return response;
 });
@@ -36,6 +36,7 @@ export const authSlice = createSlice({
 			state.isSuccess = false;
 			state.isError = false;
 			state.message = '';
+			state.tokenExpireDate = null;
 		},
 	},
 
@@ -46,17 +47,23 @@ export const authSlice = createSlice({
 			})
 			.addCase(login.pending, (state) => {
 				state.isLoading = true;
+				state.tokenExpireDate = null;
 			})
 			.addCase(login.fulfilled, (state, action) => {
 				state.isLoading = false;
 				state.isSuccess = true;
+				state.tokenExpireDate = null;
 				state.user = action.payload;
+				state.tokenExpireDate = new Date().setDate(
+					new Date().getDate() + Constant.TOKEN_EXPIRY
+				);
 			})
 			.addCase(login.rejected, (state, action) => {
 				state.isLoading = false;
 				state.isError = true;
 				state.message = action.payload;
 				state.user = null;
+				state.tokenExpireDate = null;
 			});
 	},
 });
