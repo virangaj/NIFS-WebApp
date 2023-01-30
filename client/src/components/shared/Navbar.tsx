@@ -16,9 +16,12 @@ import Logo from '../../images/nifs_logo.png';
 import { Link, useLocation } from 'react-router-dom';
 import Pages from '../data/MainNavPages.json';
 import './navbar.css';
+import OAuthService from '../../services/auth/OAuthService';
 
 const Navbar = () => {
 	const [user, setUser] = useState<any>({});
+
+	const [employee, setEmployee] = useState<any>({});
 
 	useEffect(() => {
 		localStorage.setItem(
@@ -30,12 +33,26 @@ const Navbar = () => {
 				role: 'admin',
 			})
 		);
+
 		const storeData = window.localStorage.getItem('loginUser');
+
 		if (storeData) {
 			setUser(JSON.parse(storeData));
 		}
+	}, []);
 
-		// console.log(user.epfNo)
+	// check valid token
+	useEffect(() => {
+		const localEmployee = localStorage.getItem('employee');
+
+		if (localEmployee) {
+			setEmployee(JSON.parse(localEmployee));
+			// const inValidToken = new Date().getTime() > employee.expireDate;
+
+			// if (inValidToken) {
+			// 	localStorage.removeItem('employee');
+			// }
+		}
 	}, []);
 
 	const settings = [
@@ -155,6 +172,7 @@ const Navbar = () => {
 								)}
 						</Menu>
 					</Box>
+
 					{/* Responsive view ends here */}
 
 					{/* Full width starts here */}
@@ -218,6 +236,9 @@ const Navbar = () => {
 						aria-label='show 17 new notifications'
 						color='inherit'
 						sx={{ mr: 2 }}
+						onClick={() => {
+							OAuthService.logout();
+						}}
 					>
 						<Badge badgeContent={17} color='error'>
 							<HiOutlineBell />

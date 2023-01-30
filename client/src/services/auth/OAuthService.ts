@@ -31,9 +31,14 @@ const loginRequest = async (favJSON: any) => {
 	return response;
 };
 
+const logout = () => {
+	localStorage.removeItem('persist:employee');
+};
+
 const OAuthService = {
 	loginRequest,
 	changePassword,
+	logout,
 };
 
 export default OAuthService;
