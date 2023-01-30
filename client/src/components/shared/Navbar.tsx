@@ -17,10 +17,12 @@ import { Link, useLocation } from 'react-router-dom';
 import Pages from '../data/MainNavPages.json';
 import './navbar.css';
 import OAuthService from '../../services/auth/OAuthService';
+import { useAppDispatch } from '../../redux/hooks';
+import { logout, reset } from '../../feature/auth/authSlice';
 
 const Navbar = () => {
 	const [user, setUser] = useState<any>({});
-
+	const dispatch = useAppDispatch();
 	const [employee, setEmployee] = useState<any>({});
 
 	useEffect(() => {
@@ -237,7 +239,8 @@ const Navbar = () => {
 						color='inherit'
 						sx={{ mr: 2 }}
 						onClick={() => {
-							OAuthService.logout();
+							dispatch(logout());
+							dispatch(reset());
 						}}
 					>
 						<Badge badgeContent={17} color='error'>

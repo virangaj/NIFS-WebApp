@@ -22,7 +22,9 @@ export const login = createAsyncThunk('auth/login', async (data: any) => {
 });
 
 export const logout = createAsyncThunk('auth/logout', async () => {
-	await OAuthService.logout();
+	console.log('logout');
+	const response = await OAuthService.logout();
+	return response;
 });
 
 export const authSlice = createSlice({

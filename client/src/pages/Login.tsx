@@ -7,7 +7,7 @@ import { RequestStatus } from '../constant/requestStatus';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { RouteName } from '../constant/routeNames';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Ripple from '../components/Ripple';
 import { login } from '../feature/auth/authSlice';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
@@ -39,6 +39,13 @@ export default function Login() {
 		handleSubmit,
 		formState: { errors },
 	} = useForm();
+
+	//check user and redirect to home page
+	useEffect(() => {
+		if (user) {
+			navigate(RouteName.Home);
+		}
+	}, [user]);
 
 	const onSubmit: SubmitHandler<any> = (data) => {
 		data.epfNo = parseInt(data.epfNo);
