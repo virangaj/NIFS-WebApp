@@ -72,7 +72,7 @@ export default function Login() {
 				setLoading(false);
 				return;
 			} else {
-				toast.error('Please enter valid credentials');
+				toast.error('Please Enter Valid Credentials');
 				setLoading(false);
 				return;
 			}

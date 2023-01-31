@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { Constant } from '../../constant/constant';
+import { RequestStatus } from '../../constant/requestStatus';
 import OAuthService from '../../services/auth/OAuthService';
 import { RootState } from '../../store/store';
 
@@ -19,6 +20,7 @@ const initialState: any = {
 
 export const login = createAsyncThunk('auth/login', async (data: any) => {
 	const response = await OAuthService.loginRequest(data);
+
 	return response.data;
 });
 
@@ -53,7 +55,10 @@ export const authSlice = createSlice({
 				state.isLoading = false;
 				state.isSuccess = true;
 				state.tokenExpireDate = null;
-				state.user = action.payload;
+				state.user =
+					action.payload.status === RequestStatus.SUCCESS
+						? action.payload
+						: null;
 				state.tokenExpireDate = new Date().setDate(
 					new Date().getDate() + Constant.TOKEN_EXPIRY
 				);

@@ -68,7 +68,7 @@ const Navbar = () => {
 	const logoutFunc = () => {
 		dispatch(logout());
 		dispatch(reset());
-		toast.info('You are successfully logout!');
+		toast.info('You are Successfully Logout!');
 		navigate(RouteName.Login);
 	};
 

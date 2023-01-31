@@ -42,7 +42,7 @@ public class UserController {
                //return success response code
                map.put("status", RequestStatus.SUCCESS);
                map.put("code", 201);
-               map.put("message", "Password is successfully updated!");
+               map.put("message", "Password is Successfully Updated!");
                return new ResponseEntity<>(map, HttpStatus.OK);
            }
            //return error response code
@@ -57,7 +57,7 @@ public class UserController {
            map.put("status", RequestStatus.ERROR);
            map.put("code", 400);
            map.put("error", e.toString());
-           map.put("message", "Internal server error. Please try again!");
+           map.put("message", "Internal Server Error. Please Try Again!");
            return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
        }
    }
