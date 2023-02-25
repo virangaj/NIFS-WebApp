@@ -10,7 +10,7 @@ import { RouteName } from '../constant/routeNames';
 import { useEffect, useState } from 'react';
 import Ripple from '../components/Ripple';
 import { login } from '../feature/auth/authSlice';
-import { useAppDispatch, useAppSelector } from '../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../hooks/hooks';
 
 function Copyright(props: any) {
 	return (

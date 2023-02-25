@@ -20,7 +20,7 @@ import './navbar.css';
 import OAuthService from '../../services/auth/OAuthService';
 
 import { logout, reset } from '../../feature/auth/authSlice';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { RouteName } from '../../constant/routeNames';
 import { toast } from 'react-toastify';
 import { RequestStatus } from '../../constant/requestStatus';
@@ -63,7 +63,7 @@ const Navbar = () => {
 			toast.error('System timeout ERROR! Please login to the system..!');
 			navigate(RouteName.Login);
 		}
-		if (user.status === RequestStatus.CHANGE_PASSWORD) {
+		if (user?.status === RequestStatus.CHANGE_PASSWORD) {
 			navigate(RouteName.ChangePassword);
 		}
 	}, [user, isLoading, isError, isSuccess, tokenExpireDate]);
