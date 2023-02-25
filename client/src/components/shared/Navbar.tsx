@@ -23,6 +23,7 @@ import { logout, reset } from '../../feature/auth/authSlice';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { RouteName } from '../../constant/routeNames';
 import { toast } from 'react-toastify';
+import { RequestStatus } from '../../constant/requestStatus';
 
 const Navbar = () => {
 	// const [user, setUser] = useState<any>({});
@@ -62,6 +63,9 @@ const Navbar = () => {
 			toast.error('System timeout ERROR! Please login to the system..!');
 			navigate(RouteName.Login);
 		}
+		if (user.status === RequestStatus.CHANGE_PASSWORD) {
+			navigate(RouteName.ChangePassword);
+		}
 	}, [user, isLoading, isError, isSuccess, tokenExpireDate]);
 
 	//loginout funtion
@@ -72,7 +76,7 @@ const Navbar = () => {
 		navigate(RouteName.Login);
 	};
 
-	const settings = [
+	var settings = [
 		{
 			id: 0,
 			title: 'Login',
@@ -84,6 +88,7 @@ const Navbar = () => {
 			link: `/dashboard/${user?.division}/${user?.role}`,
 		},
 	];
+
 	// navbar function and variables
 	const location: any = useLocation();
 

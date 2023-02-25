@@ -3,6 +3,7 @@ package com.nifs.backend.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Date;
 import java.util.UUID;
 
 @Entity
@@ -20,5 +21,6 @@ public class JwtTokens {
 
     private int epfNo;
     private String token;
+    private Date date_created;
 
 }

@@ -56,7 +56,8 @@ export const authSlice = createSlice({
 				state.isSuccess = true;
 				state.tokenExpireDate = null;
 				state.user =
-					action.payload.status === RequestStatus.SUCCESS
+					action.payload.status === RequestStatus.SUCCESS ||
+					action.payload.status === RequestStatus.CHANGE_PASSWORD
 						? action.payload
 						: null;
 				state.tokenExpireDate = new Date().setDate(

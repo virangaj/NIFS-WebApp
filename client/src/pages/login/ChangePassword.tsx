@@ -9,6 +9,7 @@ import ErrorMessage from '../../components/shared/ErrorMessage';
 import { RequestStatus } from '../../constant/requestStatus';
 import { RouteName } from '../../constant/routeNames';
 import { da } from 'date-fns/locale';
+import { useAppSelector } from '../../redux/hooks';
 function ChangePassword() {
 	let navigate = useNavigate();
 	const {
@@ -21,11 +22,12 @@ function ChangePassword() {
 	//const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
 	const [confirmError, setConfirmError] = useState('');
-
+	const { user, isLoading, isError, isSuccess, tokenExpireDate } =
+		useAppSelector((state: any) => state.auth);
 	const onSubmit: SubmitHandler<any> = (data) => {
 		//chaeck passwords match or not
 		data.epfNo = parseInt(data.epfNo);
-		console.log(data);
+		// console.log(data);
 
 		if (data.confirmPassword !== data.newPassword) {
 			toast.error('Password is not match!');
@@ -34,7 +36,7 @@ function ChangePassword() {
 		} else {
 			setConfirmError('');
 			setTimeout(async () => {
-				const result = await OAuthService.changePassword(data);
+				const result = await OAuthService.changePassword(data, user?.token);
 				if (result.data.status === RequestStatus.SUCCESS) {
 					//redirect to login page
 					navigate(RouteName.Login);

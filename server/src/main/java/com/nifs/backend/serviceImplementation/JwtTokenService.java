@@ -6,6 +6,7 @@ import com.nifs.backend.service.IJwtTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.UUID;
 
 @Service
@@ -27,7 +28,7 @@ public class JwtTokenService implements IJwtTokenService {
 
         }
         //create new entry
-        JwtTokens jwtTokens = new JwtTokens(uuidAsString, epfNo, token);
+        JwtTokens jwtTokens = new JwtTokens(uuidAsString, epfNo, token, new Date());
         jwtRepo.save(jwtTokens);
         return uuidAsString;
     }

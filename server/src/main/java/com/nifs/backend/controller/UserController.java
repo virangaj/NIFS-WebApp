@@ -5,6 +5,7 @@ import com.nifs.backend.constant.RequestStatus;
 import com.nifs.backend.dto.ChangePasswordDTO;
 import com.nifs.backend.service.IUserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 @RestController
+@Log4j2
 @RequestMapping("/user")
 @RequiredArgsConstructor
 @CrossOrigin
@@ -33,9 +35,9 @@ public class UserController {
         return "Hello!";
     }
 
-   @PatchMapping("/change-password/{id}")
-    private ResponseEntity<?> ChangePassword(@PathVariable int id, @RequestBody ChangePasswordDTO data){
-
+    @PatchMapping("/change-password/{id}")
+    private ResponseEntity<?> changePassword(@PathVariable int id, @RequestBody ChangePasswordDTO data){
+        log.info("+-------+ Change Password +--------+");
        Map<String, Object> map = new LinkedHashMap<String, Object>();
        try {
            if (userService.changePassword(id, data)) {
