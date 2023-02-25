@@ -6,6 +6,7 @@ import com.nifs.backend.dto.UserDTO;
 import com.nifs.backend.repository.EmployeeMasterRepository;
 import com.nifs.backend.repository.UserRepository;
 import com.nifs.backend.service.IDivisionMasterService;
+import com.nifs.backend.service.IJwtTokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -29,11 +30,16 @@ public class AuthenticationService {
     private JwtService jwtService;
 
     @Autowired
+    private IJwtTokenService tokenService;
+
+    @Autowired
     private IDivisionMasterService divService;
     private final AuthenticationManager manager;
     @Autowired
     private final PasswordEncoder passwordEncoder;
 
+
+    // login requests
     public AuthenticationResponse loginRequest(LoginRequest request) {
 
         var user = userRepo.returnLoginDetails(request.getEpfNo());
@@ -49,6 +55,11 @@ public class AuthenticationService {
             var employee = empRepo.returnEmployeeById(request.getEpfNo());
             var jwtToken = jwtService.generateToken(user);
             var division = divService.getDivisionById(employee.getDivisionId().getDivisionId());
+            System.out.println("AuthenticationService : "+request.getEpfNo());
+
+            //save in the database
+            String tokenDatabase = tokenService.createToken(jwtToken, request.getEpfNo());
+
 
             UserDTO userDTO = UserDTO.builder()
                     .email(employee.getGsuitEmail())
@@ -63,8 +74,8 @@ public class AuthenticationService {
                 return AuthenticationResponse.builder()
                         .status(String.valueOf(RequestStatus.CHANGE_PASSWORD))
                         .code(200)
-                        .message("Please change your password!")
-                        .token(jwtToken)
+                        .message("Please Change Your Password!")
+                        .token(tokenDatabase)
                         .name(employee.getFirstName() + " " + employee.getLastName())
                         .user(userDTO)
                         .build();
@@ -74,8 +85,8 @@ public class AuthenticationService {
                 return AuthenticationResponse.builder()
                         .status(String.valueOf(RequestStatus.SUCCESS))
                         .code(200)
-                        .message("You are successfully login")
-                        .token(jwtToken)
+                        .message("You are Successfully Login")
+                        .token(tokenDatabase)
                         .name(employee.getFirstName() + " " + employee.getLastName())
                         .user(userDTO)
                         .build();

@@ -1,6 +1,7 @@
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import AppRouter from './router/Router';
+
+import AppRouter from '../router/Router';
 function App() {
 	return (
 		<div className='flex flex-col mx-auto'>

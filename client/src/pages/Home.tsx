@@ -1,7 +1,16 @@
+import { useEffect, useState } from 'react';
 function Home() {
+	const [user, setUser] = useState<any>({});
+	useEffect(() => {
+		const storeData = window.localStorage.getItem('employee');
+
+		if (storeData) {
+			setUser(JSON.parse(storeData));
+		}
+	}, []);
 	return (
 		<div className='body-content'>
-			<h1>Home Page</h1>
+			<h1>{user ? user.name : 'Home Page'}</h1>
 		</div>
 	);
 }

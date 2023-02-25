@@ -1,5 +1,6 @@
 package com.nifs.backend.config;
 
+import com.nifs.backend.service.IJwtTokenService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,11 +25,15 @@ public class JwtAutheticationFilter extends OncePerRequestFilter {
     @Autowired
     private final JwtService jwtService;
 
+    @Autowired
+    private IJwtTokenService tokenService;
+
     private final UserDetailsService userDetailsService;
     @Override
     protected void doFilterInternal(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull FilterChain filterChain) throws ServletException, IOException {
         //extract auth header fom request, and it placed under Authorization part
         final String authHeader = request.getHeader("Authorization");
+        final String databaseToken;
         final String jwt;
         final String epfNo;
         //check whether auth present or not
@@ -36,8 +41,13 @@ public class JwtAutheticationFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }
-        //jwt extract from authHeader and its after 7t index onward
-        jwt = authHeader.substring(7);
+
+        //databaseToken extract from authHeader and its after 7t index onward
+        databaseToken = authHeader.substring(7);
+
+        //get jwt from the databaseToken
+        jwt = tokenService.getToken(databaseToken);
+
         //extract user email from jwt
         epfNo = jwtService.extractUsername(jwt);
 

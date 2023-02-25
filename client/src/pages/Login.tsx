@@ -1,5 +1,4 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
-
 import Link from '@mui/material/Link';
 
 import Logo from '../images/nifs_logo.png';
@@ -8,8 +7,10 @@ import { RequestStatus } from '../constant/requestStatus';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { RouteName } from '../constant/routeNames';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Ripple from '../components/Ripple';
+import { login } from '../feature/auth/authSlice';
+import { useAppDispatch, useAppSelector } from '../hooks/hooks';
 
 function Copyright(props: any) {
 	return (
@@ -26,6 +27,11 @@ function Copyright(props: any) {
 
 export default function Login() {
 	let navigate = useNavigate();
+	const dispatch = useAppDispatch();
+
+	const { user, isLoading, isError, isSuccess, message } = useAppSelector(
+		(state: any) => state.auth
+	);
 
 	const [loading, setLoading] = useState(false);
 	const {
@@ -34,51 +40,39 @@ export default function Login() {
 		formState: { errors },
 	} = useForm();
 
+	//check user and redirect to home page
+	useEffect(() => {
+		if (user) {
+			navigate(RouteName.Home);
+		}
+	}, [user]);
+
 	const onSubmit: SubmitHandler<any> = (data) => {
 		data.epfNo = parseInt(data.epfNo);
-		const user = data.epfNo;
-		const password = data.password;
+
 		setLoading(true);
 		setTimeout(async () => {
-			const result = await OAuthService.loginRequest(data);
-
-			if (result.data.status === RequestStatus.CHANGE_PASSWORD) {
+			const result = await (await dispatch(login(data))).payload;
+			console.log(result);
+			// const result = await OAuthService.loginRequest(data);
+			if (result.status === RequestStatus.CHANGE_PASSWORD) {
 				navigate(RouteName.ChangePassword);
-				toast.warning(result.data.message);
+				toast.warning(result.message);
 				setLoading(false);
 				return;
 			}
-			if (result.data.status === RequestStatus.SUCCESS) {
-				console.log(result.data);
-				//save the access token
-				const accessToken = result?.data.token;
-				localStorage.setItem(
-					'employee',
-					JSON.stringify({
-						user: result?.data.user.epfNo,
-						pwd: result?.data.user.password,
-						role: result?.data.user.role,
-						token: result?.data.token,
-						division: result?.data.user.division,
-					})
-				);
-
-				//save the role
-				const role = result?.data.user.role;
-
-				//set auth
-
+			if (result.status === RequestStatus.SUCCESS) {
 				navigate(RouteName.Home);
-				toast.success(result.data.message);
+				toast.success(result.message);
 				setLoading(false);
 				return;
 			}
-			if (result.data.status === RequestStatus.UNAUTHORIZED) {
-				toast.error(result.data.message);
+			if (result.status === RequestStatus.UNAUTHORIZED) {
+				toast.error(result.message);
 				setLoading(false);
 				return;
 			} else {
-				toast.error('Please enter valid credentials');
+				toast.error('Please Enter Valid Credentials');
 				setLoading(false);
 				return;
 			}

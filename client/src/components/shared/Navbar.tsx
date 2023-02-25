@@ -13,32 +13,70 @@ import MenuItem from '@mui/material/MenuItem';
 import { HiMenuAlt2, HiOutlineBell } from 'react-icons/hi';
 import Badge from '@mui/material/Badge';
 import Logo from '../../images/nifs_logo.png';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+
 import Pages from '../data/MainNavPages.json';
 import './navbar.css';
+import OAuthService from '../../services/auth/OAuthService';
+
+import { logout, reset } from '../../feature/auth/authSlice';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
+import { RouteName } from '../../constant/routeNames';
+import { toast } from 'react-toastify';
+import { RequestStatus } from '../../constant/requestStatus';
 
 const Navbar = () => {
-	const [user, setUser] = useState<any>({});
+	// const [user, setUser] = useState<any>({});
+	const dispatch = useAppDispatch();
+	const navigate = useNavigate();
+	const [employee, setEmployee] = useState<any>({});
+	const { user, isLoading, isError, isSuccess, tokenExpireDate } =
+		useAppSelector((state: any) => state.auth);
 
+	// useEffect(() => {
+	// 	localStorage.setItem(
+	// 		'loginUser',
+	// 		JSON.stringify({
+	// 			name: 'Viranga',
+	// 			epfNo: 456,
+	// 			division: 'admin',
+	// 			role: 'admin',
+	// 		})
+	// 	);
+
+	// 	const storeData = window.localStorage.getItem('loginUser');
+
+	// 	if (storeData) {
+	// 		setUser(JSON.parse(storeData));
+	// 	}
+	// }, [user]);
+
+	// check user and send the login page
 	useEffect(() => {
-		localStorage.setItem(
-			'loginUser',
-			JSON.stringify({
-				name: 'Viranga',
-				epfNo: 456,
-				division: 'admin',
-				role: 'admin',
-			})
-		);
-		const storeData = window.localStorage.getItem('loginUser');
-		if (storeData) {
-			setUser(JSON.parse(storeData));
+		if (user === null) {
+			navigate(RouteName.Login);
 		}
 
-		// console.log(user.epfNo)
-	}, []);
+		if (tokenExpireDate && new Date().getDate() > tokenExpireDate) {
+			dispatch(logout());
+			dispatch(reset());
+			toast.error('System timeout ERROR! Please login to the system..!');
+			navigate(RouteName.Login);
+		}
+		if (user?.status === RequestStatus.CHANGE_PASSWORD) {
+			navigate(RouteName.ChangePassword);
+		}
+	}, [user, isLoading, isError, isSuccess, tokenExpireDate]);
 
-	const settings = [
+	//loginout funtion
+	const logoutFunc = () => {
+		dispatch(logout());
+		dispatch(reset());
+		toast.info('You are Successfully Logout!');
+		navigate(RouteName.Login);
+	};
+
+	var settings = [
 		{
 			id: 0,
 			title: 'Login',
@@ -47,9 +85,10 @@ const Navbar = () => {
 		{
 			id: 0,
 			title: 'Dashboard',
-			link: `/dashboard/${user.division}/${user.role}`,
+			link: `/dashboard/${user?.division}/${user?.role}`,
 		},
 	];
+
 	// navbar function and variables
 	const location: any = useLocation();
 
@@ -155,6 +194,7 @@ const Navbar = () => {
 								)}
 						</Menu>
 					</Box>
+
 					{/* Responsive view ends here */}
 
 					{/* Full width starts here */}
@@ -218,6 +258,9 @@ const Navbar = () => {
 						aria-label='show 17 new notifications'
 						color='inherit'
 						sx={{ mr: 2 }}
+						onClick={() => {
+							logoutFunc();
+						}}
 					>
 						<Badge badgeContent={17} color='error'>
 							<HiOutlineBell />
@@ -249,7 +292,7 @@ const Navbar = () => {
 								settings.map((setting, index) => (
 									<MenuItem key={index} onClick={handleCloseUserMenu}>
 										{setting.title === 'Dashboard' ? (
-											user.role === 'admin' ? (
+											user?.role === 'admin' ? (
 												<Link to={setting.link}>
 													<Typography textAlign='center'>
 														{setting.title}

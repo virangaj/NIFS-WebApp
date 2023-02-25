@@ -17,9 +17,17 @@ public class AuthenticationController {
     @Autowired
     private AuthenticationService service;
 
+    @GetMapping("/test")
+    String test(@RequestBody String msg){
+        return msg;
+    }
+
+
     @PostMapping("/login")
     public ResponseEntity<?> loginRequest(@RequestBody LoginRequest request) {
         try {
+
+
             return ResponseEntity.ok(service.loginRequest(request));
         } catch (Exception e) {
             System.out.println(e);
