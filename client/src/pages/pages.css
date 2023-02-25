@@ -1,163 +1,151 @@
 .sub-body-content {
-    width: 90%;
-    height: auto;
-    margin: auto;
-    margin-top: 20px;
-    margin-bottom: 20px;
+  width: 90%;
+  height: auto;
+  margin: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
 
-    padding: 20px;
+  padding: 20px;
 
-    border-radius: var(--border-radius);
-    background-color: var(--white);
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-
+  border-radius: var(--border-radius);
+  background-color: var(--white);
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
-
 
 /* page form */
 
-
 .form-flex {
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
 
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 .form-left-section {
-    width: 90%;
+  width: 90%;
 }
 
 .form-right-section {
-    width: 90%;
+  width: 90%;
 }
 
 .input-field {
-    width: 90%;
-    margin-bottom: 20px;
+  width: 90%;
+  margin-bottom: 20px;
 }
 
 .input-label {
-    margin-bottom: 5px;
+  margin-bottom: 5px;
 }
 
 .flex-section {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .form-icon {
-    font-size: 30px;
-    cursor: pointer;
+  font-size: 30px;
+  cursor: pointer;
 }
 
 .form-icon:hover {
-    color: var(--primary);
+  color: var(--primary);
 }
 
 .items-container {
-    width: 90%;
-    margin-bottom: 20px;
-    padding: 20px;
-    /* margin-right: 20px; */
-    background-color: var(--body-content-bg);
-    border-radius: var(--border-radius);
-
+  width: 90%;
+  margin-bottom: 20px;
+  padding: 20px;
+  /* margin-right: 20px; */
+  background-color: var(--body-content-bg);
+  border-radius: var(--border-radius);
 }
 
 .items-container-text {
-    font-size: 16px;
+  font-size: 16px;
 }
 
 .new-item-title {
-
-    font-weight: 600;
-    font-size: 20px;
+  font-weight: 600;
+  font-size: 20px;
 }
 
 .participant-form {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
-
 
 /* participant table */
 table {
+  width: 100%;
+  min-width: 700px;
+  margin-top: 30px;
 
-    width: 100%;
-    min-width: 700px;
-    margin-top: 30px;
-
-    /* border: 2px solid var(--table-border); */
-    border-collapse: collapse;
-    border-radius: var(--border-radius);
-    overflow-x: scroll;
-
+  /* border: 2px solid var(--table-border); */
+  border-collapse: collapse;
+  border-radius: var(--border-radius);
+  overflow-x: scroll;
 }
 
 th {
-    background-color: var(--body-content-bg);
+  background-color: var(--body-content-bg);
 }
 
-td, th {
-
-    text-align: left;
-    padding: 8px;
-    /* border: 1px solid var(--table-border); */
-    /* overflow: hidden; */
+td,
+th {
+  text-align: left;
+  padding: 8px;
+  /* border: 1px solid var(--table-border); */
+  /* overflow: hidden; */
 }
 
 th:first-of-type {
-    border-top-left-radius: 10px;
+  border-top-left-radius: 10px;
 }
 
 th:last-of-type {
-    border-top-right-radius: 10px;
+  border-top-right-radius: 10px;
 }
 
 tr:last-of-type td:first-of-type {
-    border-bottom-left-radius: 10px;
+  border-bottom-left-radius: 10px;
 }
 
 tr:last-of-type td:last-of-type {
-    border-bottom-right-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 
-
-
-
-
-
-
-
-
-
 @media screen and (max-width: 1024px) {
-    body .form-flex {
-        flex-direction: column;
-    }
+  body .form-flex {
+    flex-direction: column;
+  }
 
-    body .items-container-text {
-        font-size: 14px;
-    }
+  body .items-container-text {
+    font-size: 14px;
+  }
 
-    body .form-left-section, body .form-right-section {
-        width: 100%;
-    }
+  body .form-left-section,
+  body .form-right-section {
+    width: 100%;
+  }
 
-    body .input-field {
-        width: 100%;
+  body .input-field {
+    width: 100%;
+  }
 
-    }
+  body .items-container {
+    width: 100%;
+    margin-left: 0;
+  }
+}
 
-    body .items-container {
-        width: 100%;
-        margin-left: 0;
+.selection {
+  margin-top: 12px;
+}
 
-    }
-
+.datepicker {
+  margin-top: 12px;
 }
