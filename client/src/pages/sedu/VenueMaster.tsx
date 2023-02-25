@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
-import Stack from '@mui/material/Stack';
+import Stack from "@mui/material/Stack";
+
 
 import Box from '@mui/material/Box';
 import SelectFacility from './shared/SelectFacility';
@@ -27,57 +28,61 @@ const initialState: IVenueMaster = {
 	dateCreated: '',
 };
 
+
 function VenueMaster() {
-	const [facilities, setFacilities] = useState<any[]>([]);
-	const [chargers, setChargers] = useState<any[]>([]);
-	const [locationData, setLocationData] = useState<ILocationData[]>();
+  const [facilities, setFacilities] = useState<any[]>([]);
+  const [chargers, setChargers] = useState<any[]>([]);
+  const [locationData, setLocationData] = useState<ILocationData[]>();
 
-	const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-	const [venue, setVenue] = useState([]);
+  const [venue, setVenue] = useState([]);
 
-	const [v_id, setV_Id] = useState('');
-	const [success, setSuccess] = useState(false);
+  const [v_id, setV_Id] = useState("");
+  const [success, setSuccess] = useState(false);
+
 
 	const [values, setValues] = useState<IVenueMaster>(initialState);
 
-	// onchange function
-	const onChange = (e: any) => {
-		setValues((preState) => ({
-			...preState,
-			[e.target.name]: e.target.value,
-		}));
-	};
-	useEffect(() => {
-		// console.log(v_id)
-		setValues({
-			venueId: v_id,
-			venueName: values?.venueName,
-			type: values?.type,
-			availability: values?.availability,
-			location: values?.location,
-			remark: values?.remark,
-			capacity: values?.capacity,
-			dateCreated: '',
-		});
-		// console.log(values)
-	}, [v_id]);
-	// generate id on button click
-	const generateVenueID = () => {
-		// window.location.reload;
-		resetForm();
-		VenueMasterService.getNewVenueId()
-			.then((res: any) => {
-				setV_Id(res.data);
-			})
-			.catch((e: any) => {
-				console.log(e);
-			});
 
-		let id = generateID('VM');
-		// setV_Id(id)
-		// console.log(v_id)
-	};
+  // onchange function
+  const onChange = (e: any) => {
+    setValues((preState) => ({
+      ...preState,
+      [e.target.name]: e.target.value,
+    }));
+  };
+  useEffect(() => {
+    // console.log(v_id)
+    setValues({
+      venueId: v_id,
+      venueName: values?.venueName,
+      type: values?.type,
+      availability: values?.availability,
+      location: values?.location,
+      remark: values?.remark,
+      capacity: values?.capacity,
+      dateCreated: "",
+    });
+    // console.log(values)
+  }, [v_id]);
+  // generate id on button click
+  const generateVenueID = () => {
+    // window.location.reload;
+    resetForm();
+    VenueMasterService.getNewVenueId()
+      .then((res: any) => {
+        setV_Id(res.data);
+      })
+      .catch((e: any) => {
+        console.log(e);
+      });
+
+    let id = generateID("VM");
+    // setV_Id(id)
+    // console.log(v_id)
+  };
+
 
 	const resetForm = () => {
 		setValues(initialState);
@@ -86,80 +91,81 @@ function VenueMaster() {
 		setChargers([]);
 	};
 
-	useEffect(() => {
-		retreiveLocations();
-		retrieveVenue();
-		// console.log(venue);
-	}, []);
 
-	const retreiveLocations = () => {
-		LocationMasterService.getAllLocations()
-			.then((res: any) => {
-				setLocationData(res.data);
-				console.log(locationData);
-			})
-			.catch((e: any) => {
-				console.log(e);
-			});
-	};
+  useEffect(() => {
+    retreiveLocations();
+    retrieveVenue();
+    // console.log(venue);
+  }, []);
 
-	const retrieveVenue = () => {
-		VenueMasterService.getAllVenues()
-			.then((res: any) => {
-				setVenue(res.data);
-				// console.log(venue)
-			})
-			.catch((e: any) => {
-				console.log(e);
-			});
-	};
+  const retreiveLocations = () => {
+    LocationMasterService.getAllLocations()
+      .then((res: any) => {
+        setLocationData(res.data);
+        console.log(locationData);
+      })
+      .catch((e: any) => {
+        console.log(e);
+      });
+  };
 
-	const onSubmit = async (e: any) => {
-		e.preventDefault();
-		if (values.venueId !== null) {
-			try {
-				setLoading(true);
-				console.log(values);
-				const venuResult = await VenueMasterService.saveVenue(values);
-				const facCharge = await VenueOtherService.setCharges(
-					chargers,
-					values.venueId
-				);
-				const facResult = await VenueOtherService.setFacilities(
-					facilities,
-					values.venueId
-				);
-				alert('done');
-				setSuccess(true);
-				resetForm();
-			} catch (e: any) {
-				setLoading(true);
-				setSuccess(false);
-				alert(e);
-			}
+  const retrieveVenue = () => {
+    VenueMasterService.getAllVenues()
+      .then((res: any) => {
+        setVenue(res.data);
+        // console.log(venue)
+      })
+      .catch((e: any) => {
+        console.log(e);
+      });
+  };
 
-			if (success) {
-				resetForm();
-			}
-			setLoading(false);
-		} else {
-			alert('Please add a ID');
-		}
-		// console.log(values)
-	};
+  const onSubmit = async (e: any) => {
+    e.preventDefault();
+    if (values.venueId !== null) {
+      try {
+        setLoading(true);
+        console.log(values);
+        const venuResult = await VenueMasterService.saveVenue(values);
+        const facCharge = await VenueOtherService.setCharges(
+          chargers,
+          values.venueId
+        );
+        const facResult = await VenueOtherService.setFacilities(
+          facilities,
+          values.venueId
+        );
+        alert("done");
+        setSuccess(true);
+        resetForm();
+      } catch (e: any) {
+        setLoading(true);
+        setSuccess(false);
+        alert(e);
+      }
 
-	return (
-		<div className='sub-body-content xl:!w-[60%]'>
-			<h1 className='page-title'>Venue Master</h1>
-			<hr className='horizontal-line' />
+      if (success) {
+        resetForm();
+      }
+      setLoading(false);
+    } else {
+      alert("Please add a ID");
+    }
+    // console.log(values)
+  };
 
-			{!loading ? (
-				<form onSubmit={onSubmit}>
-					<div className='grid grid-cols-1 md:grid-cols-2'>
-						<div className='form-left-section'>
-							<Box className='flex items-center justify-between input-field'>
-								<p>Venue Id - {v_id ? v_id : ''}</p>
-								{/* <TextField fullWidth required
+  return (
+    <div className="sub-body-content xl:!w-[60%]">
+      <h1 className="page-title">Venue Master</h1>
+      <hr className="horizontal-line" />
+
+      {!loading ? (
+        <form onSubmit={onSubmit}>
+          <div className="grid grid-cols-1 md:grid-cols-2">
+            <div className="form-left-section">
+              <Box className="flex items-center justify-between input-field">
+                <p>Venue Id - {v_id ? v_id : ""}</p>
+                {/* <TextField fullWidth required
                                 id="outlined-basic"
                                 label="Venue ID"
                                 variant="outlined"
@@ -173,165 +179,165 @@ function VenueMaster() {
                                 }}
 
                             /> */}
-								<button
-									type='button'
-									className='rounded-outline-success-btn'
-									onClick={generateVenueID}
-									style={{ marginLeft: '20px' }}
-								>
-									New
-								</button>
-							</Box>
+                <button
+                  type="button"
+                  className="rounded-outline-success-btn"
+                  onClick={generateVenueID}
+                  style={{ marginLeft: "20px" }}
+                >
+                  New
+                </button>
+              </Box>
 
-							<div>
-								<label className='input-label' htmlFor='venueName'>
-									Venue Name
-								</label>
+              <div>
+                <label className="input-label" htmlFor="venueName">
+                  Venue Name
+                </label>
 
-								<input
-									id='outlined-basic'
-									type='search'
-									className='mr-4 tailwind-text-box w-[90%]'
-									onChange={onChange}
-									name='venueName'
-									value={values.venueName}
-									required
-								/>
-							</div>
-							<div>
-								<label className='input-label' htmlFor='type'>
-									Venue Type
-								</label>
-								<select
-									className='tailwind-text-box w-[90%]'
-									value={values.type}
-									id='outlined-basic'
-									name='type'
-									onChange={onChange}
-								>
-									<option value='' disabled>
-										Select Venue Type
-									</option>
-									<option value='Room'>Room</option>
-									<option value='Lab'>Lab</option>
-									<option value='Auditorium'>Auditorium</option>
-								</select>
-							</div>
+                <input
+                  id="outlined-basic"
+                  type="search"
+                  className="mr-4 tailwind-text-box w-[90%]"
+                  onChange={onChange}
+                  name="venueName"
+                  value={values.venueName}
+                  required
+                />
+              </div>
+              <div>
+                <label className="input-label" htmlFor="type">
+                  Venue Type
+                </label>
+                <select
+                  className="tailwind-text-box w-[90%]"
+                  value={values.type}
+                  id="outlined-basic"
+                  name="type"
+                  onChange={onChange}
+                >
+                  <option value="" disabled>
+                    Select Venue Type
+                  </option>
+                  <option value="Room">Room</option>
+                  <option value="Lab">Lab</option>
+                  <option value="Auditorium">Auditorium</option>
+                </select>
+              </div>
 
-							<SelectFacility
-								setFacilities={setFacilities}
-								facilities={facilities}
-							/>
+              <SelectFacility
+                setFacilities={setFacilities}
+                facilities={facilities}
+              />
 
-							<div>
-								<label className='input-label' htmlFor='availability'>
-									Availability
-								</label>
+              <div>
+                <label className="input-label" htmlFor="availability">
+                  Availability
+                </label>
 
-								<input
-									id='outlined-basic'
-									type='search'
-									className='mr-4 tailwind-text-box w-[90%]'
-									onChange={onChange}
-									name='availability'
-									value={values.availability}
-									required
-								/>
-							</div>
-						</div>
+                <input
+                  id="outlined-basic"
+                  type="search"
+                  className="mr-4 tailwind-text-box w-[90%]"
+                  onChange={onChange}
+                  name="availability"
+                  value={values.availability}
+                  required
+                />
+              </div>
+            </div>
 
-						{/* form right section */}
-						<div className='form-right-section'>
-							<div>
-								<label className='input-label' htmlFor='location'>
-									Location
-								</label>
-								<select
-									className='tailwind-text-box w-[90%]'
-									value={values.location}
-									id='location'
-									name='location'
-									onChange={onChange}
-								>
-									<option disabled value=''>
-										Select Location
-									</option>
-									{locationData?.map((l: ILocationData, i: number) => {
-										return (
-											<option key={i} value={l.locationId}>
-												{l.locationName}
-											</option>
-										);
-									})}
-								</select>
-							</div>
-							<div>
-								<label className='input-label' htmlFor='remark'>
-									Remark
-								</label>
+            {/* form right section */}
+            <div className="form-right-section">
+              <div>
+                <label className="input-label" htmlFor="location">
+                  Location
+                </label>
+                <select
+                  className="tailwind-text-box w-[90%]"
+                  value={values.location}
+                  id="location"
+                  name="location"
+                  onChange={onChange}
+                >
+                  <option disabled value="">
+                    Select Location
+                  </option>
+                  {locationData?.map((l: ILocationData, i: number) => {
+                    return (
+                      <option key={i} value={l.locationId}>
+                        {l.locationName}
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
+              <div>
+                <label className="input-label" htmlFor="remark">
+                  Remark
+                </label>
 
-								<input
-									id='outlined-basic'
-									type='search'
-									className='mr-4 tailwind-text-box w-[90%]'
-									onChange={onChange}
-									name='remark'
-									value={values.remark}
-									required
-								/>
-							</div>
+                <input
+                  id="outlined-basic"
+                  type="search"
+                  className="mr-4 tailwind-text-box w-[90%]"
+                  onChange={onChange}
+                  name="remark"
+                  value={values.remark}
+                  required
+                />
+              </div>
 
-							<div>
-								<label className='input-label' htmlFor='capacity'>
-									Capacity
-								</label>
-								<select
-									className='tailwind-text-box w-[90%]'
-									value={values.capacity}
-									id='capacity'
-									name='capacity'
-									onChange={onChange}
-								>
-									<option value={0} disabled>
-										Select Capacity
-									</option>
-									<option value={10}>10</option>
-									<option value={20}>20</option>
-									<option value={30}>30</option>
-									<option value={50}>50</option>
-									<option value={100}>100</option>
-								</select>
-							</div>
+              <div>
+                <label className="input-label" htmlFor="capacity">
+                  Capacity
+                </label>
+                <select
+                  className="tailwind-text-box w-[90%]"
+                  value={values.capacity}
+                  id="capacity"
+                  name="capacity"
+                  onChange={onChange}
+                >
+                  <option value={0} disabled>
+                    Select Capacity
+                  </option>
+                  <option value={10}>10</option>
+                  <option value={20}>20</option>
+                  <option value={30}>30</option>
+                  <option value={50}>50</option>
+                  <option value={100}>100</option>
+                </select>
+              </div>
 
-							<SetChargers chargers={chargers} setChargers={setChargers} />
-						</div>
-					</div>
-					{/* button stack */}
-					<Stack
-						direction='row'
-						justifyContent='flex-end'
-						alignItems='flex-end'
-						spacing={2}
-						className='admin-form-buton-stack'
-					>
-						<button
-							className='action-com-model-error-btn'
-							type='reset'
-							color='error'
-							onClick={resetForm}
-						>
-							Reset
-						</button>
-						<button className='action-com-model-sucess-btn' type='submit'>
-							Submit
-						</button>
-					</Stack>
-				</form>
-			) : (
-				<Ripple />
-			)}
-		</div>
-	);
+              <SetChargers chargers={chargers} setChargers={setChargers} />
+            </div>
+          </div>
+          {/* button stack */}
+          <Stack
+            direction="row"
+            justifyContent="flex-end"
+            alignItems="flex-end"
+            spacing={2}
+            className="admin-form-buton-stack"
+          >
+            <button
+              className="action-com-model-error-btn"
+              type="reset"
+              color="error"
+              onClick={resetForm}
+            >
+              Reset
+            </button>
+            <button className="action-com-model-sucess-btn" type="submit">
+              Submit
+            </button>
+          </Stack>
+        </form>
+      ) : (
+        <Ripple />
+      )}
+    </div>
+  );
 }
 
 export default VenueMaster;
