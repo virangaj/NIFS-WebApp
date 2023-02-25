@@ -2,7 +2,7 @@ package com.nifs.backend.serviceImplementation;
 
 import com.nifs.backend.model.Charges;
 import com.nifs.backend.repository.ChargeRepository;
-import com.nifs.backend.service.ChargeServiceInterface;
+import com.nifs.backend.service.IChargeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,41 +11,37 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ChargeService implements ChargeServiceInterface {
+public class ChargeService implements IChargeService {
 
     @Autowired
     ChargeRepository chargeRepo;
 
-//    create new charge
-    public String createCharge(Charges chargeData) {
-        try {
-            if (chargeRepo.returnCharge(chargeData.getChargeId()) == null) {
-                Date d = new Date();
-                chargeData.setDateCreated(d);
-                chargeRepo.save(chargeData);
-                return "Charge is added";
-            }
-            else {
-                return "Charges cannot added";
-            }
-        } catch (Exception e) {
-            System.out.println(e.toString());
-            return "Request Cannot be Completed";
-        }
-    }
+    //    create new charge
+    @Override
+    public Charges createCharge(Charges chargeData) {
 
-//    return all charges
-    public List<Charges> getAll() {
-        try {
-            return (List<Charges>) chargeRepo.findAll();
-        } catch (Exception e) {
-            System.out.println(e.toString());
+        if (chargeRepo.returnCharge(chargeData.getChargeId()) == null) {
+            Date d = new Date();
+            chargeData.setDateCreated(d);
+            return chargeRepo.save(chargeData);
+
+        }
+        else {
             return null;
         }
+
+    }
+
+    //    return all charges
+    @Override
+    public List<Charges> getAll() {
+        return (List<Charges>) chargeRepo.findAll();
+
     }
 
 
-//    return new charge id
+    //    return new charge id
+    @Override
     public String returnNewChargeId() {
         try {
             String lastId = chargeRepo.returnLastId();
@@ -65,50 +61,43 @@ public class ChargeService implements ChargeServiceInterface {
             return "Request cannot be completed";
         }
     }
-//    get charge by id
+
+    //    get charge by id
+    @Override
     public Optional<Charges> returnCharge(String chargeId) {
-        try {
-            return chargeRepo.findById(chargeId);
-        } catch (Exception e) {
-            System.out.println(e.toString());
-            return null;
-        }
+        return chargeRepo.findById(chargeId);
+
     }
 
-//    delete charge by id
+    //    delete charge by id
+    @Override
     public Boolean deleteCharge(String chargeId) {
 
-        try {
-            Charges charge = chargeRepo.returnCharge(chargeId);
-            if (charge != null) {
-                chargeRepo.deleteByChargeIdLike(chargeId);
-                return true;
-            }
-            else {
-                return false;
-            }
-        } catch (Exception e) {
-            System.out.println(e.toString());
+
+        Charges charge = chargeRepo.returnCharge(chargeId);
+        if (charge != null) {
+            chargeRepo.deleteByChargeIdLike(chargeId);
+            return true;
+        }
+        else {
             return false;
         }
+
     }
 
-//    update charge data
+    //    update charge data
+    @Override
     public Boolean updateCharge(String chargeId, Charges chargeData) {
-        try {
-            if (chargeRepo.returnCharge(chargeId) != null) {
-                Date d = new Date();
 
-                chargeRepo.Update(chargeData.getName(), chargeData.getCharge(), d, chargeId);
-                return true;
-            }
-            else {
-                return false;
-            }
-        } catch (Exception e) {
-            System.out.println(e.toString());
-            return false;
+        if (chargeRepo.returnCharge(chargeId) != null) {
+            Date d = new Date();
+
+            chargeRepo.Update(chargeData.getName(), chargeData.getCharge(), d, chargeId);
+            return true;
         }
+        else {
+            return false;
+            }
     }
 
 //    public Charges editCharge(String chargeId, Charges chargeData) {

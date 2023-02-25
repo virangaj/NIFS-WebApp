@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import Box from '@mui/material/Box';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
-import InputLabel from '@mui/material/InputLabel';
-import TextField from '@mui/material/TextField';
+import { toast } from 'react-toastify';
 
 import { HiPlusCircle, HiOutlineTrash } from 'react-icons/hi';
 
@@ -27,8 +24,12 @@ function SetChargers({ setChargers, chargers }: any) {
 	const retreiveCharges = () => {
 		VenueOtherService.getAllCharges()
 			.then((res: any) => {
-				setChargesData(res.data);
 				// console.log(res.data);
+				if (res.data.status === 1) {
+					setChargesData(res.data.data);
+				} else {
+					toast.error(res.data.message);
+				}
 			})
 			.catch((e: any) => {
 				console.log(e);
@@ -91,15 +92,22 @@ function SetChargers({ setChargers, chargers }: any) {
 							name='newItem'
 							onChange={(e: any) => setNewItem(e.target.value)}
 						>
-							<option value='' disabled>
-								Select a Charge
-							</option>
-							{chargesData &&
-								chargesData.map((data, index) => (
-									<option key={index} value={data.chargeId}>
-										{data.name}
+							{chargesData ? (
+								<>
+									<option value='' disabled>
+										Select a Charge
 									</option>
-								))}
+									{chargesData?.map((data, index) => (
+										<option key={index} value={data.chargeId}>
+											{data.name}
+										</option>
+									))}
+								</>
+							) : (
+								<option value='' disabled>
+									Data not found
+								</option>
+							)}
 						</select>
 					</div>
 

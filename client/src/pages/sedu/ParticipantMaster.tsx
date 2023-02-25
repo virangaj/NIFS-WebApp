@@ -1,23 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
-import InputLabel from '@mui/material/InputLabel';
-import IVenueMaster from '../../types/VenueMaster';
+import IVenueMaster from '../../types/IVenueMaster';
 import Autocomplete from '@mui/material/Autocomplete';
 
-import IParticipantMaster from '../../types/ParticipantMaster';
+import IParticipantMaster from '../../types/IParticipantMaster';
 import CustomeDataPicker from '../../components/DataPicker';
 import ParticipantMasterService from '../../services/sedu/ParticipantMasterService';
 import Ripple from '../../components/Ripple';
 
 function ParticipantMaster() {
 	const [participantCode, setParticipantsCode] = useState('');
-	const [date, setDate] = React.useState<string | null>(null);
+	const [date, setDate] = useState<string | null>(null);
 
 	const [loading, setLoading] = useState(false);
 
@@ -130,7 +126,7 @@ function ParticipantMaster() {
 						/>
 					</div>
 
-					<div className="mb-4">
+					<div className='mb-4'>
 						<label className='input-label' htmlFor='pName'>
 							Participant Name
 						</label>
@@ -147,7 +143,7 @@ function ParticipantMaster() {
 					</div>
 
 					<div className='grid grid-cols-1 gap-10 md:grid-cols-2 place-content-between'>
-						<div className="mb-4">
+						<div className='mb-4'>
 							<label className='input-label' htmlFor='nic'>
 								NIC
 							</label>
@@ -163,7 +159,7 @@ function ParticipantMaster() {
 							/>
 						</div>
 
-						<div className="mb-4">
+						<div className='mb-4'>
 							<label className='input-label' htmlFor='gender'>
 								Gender
 							</label>
@@ -183,7 +179,7 @@ function ParticipantMaster() {
 						</div>
 					</div>
 
-					<div className="mb-4">
+					<div className='mb-4'>
 						<label className='input-label' htmlFor='address'>
 							Address
 						</label>
@@ -199,7 +195,7 @@ function ParticipantMaster() {
 						/>
 					</div>
 					<div className='grid grid-cols-1 gap-10 md:grid-cols-2'>
-						<div className="mb-4">
+						<div className='mb-4'>
 							<label className='input-label' htmlFor='contactNo'>
 								Contact Number
 							</label>
@@ -215,7 +211,7 @@ function ParticipantMaster() {
 							/>
 						</div>
 
-						<div className="mb-4">
+						<div className='mb-4'>
 							<label className='input-label' htmlFor='email'>
 								Email
 							</label>
@@ -232,7 +228,7 @@ function ParticipantMaster() {
 						</div>
 					</div>
 
-					<div className="mb-4">
+					<div className='mb-4'>
 						<label className='input-label' htmlFor='instituteName'>
 							Institute Name
 						</label>

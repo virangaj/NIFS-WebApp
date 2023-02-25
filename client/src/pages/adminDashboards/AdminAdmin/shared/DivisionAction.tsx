@@ -8,6 +8,7 @@ import { BiCheck, BiSave, BiTrash } from 'react-icons/bi';
 
 import { toast } from 'react-toastify';
 import DivisionMasterService from '../../../../services/admin/DivisionMasterService';
+import { RequestStatus } from '../../../../constant/requestStatus';
 
 function DivisionAction({ params, rowId, setRowId, setDeleteId }: any) {
 	const [loading, setLoading] = useState(false);
@@ -22,17 +23,30 @@ function DivisionAction({ params, rowId, setRowId, setDeleteId }: any) {
 
 	const handleUpdate = async () => {
 		setLoading(true);
-		const { divisionId, name, location } = params.row;
+		const { divisionId, name, locationId } = params.row;
 		setTimeout(async () => {
 			const result = await DivisionMasterService.editDivision({
 				divisionId,
 				name,
-				location,
+				locationId,
 			});
-			if (result) {
+			if (result.data.status === RequestStatus.SUCCESS) {
 				setSuccess(true);
 				setRowId(null);
 				toast.success(`Division updated to ${name}`, {
+					position: 'top-right',
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					theme: 'dark',
+				});
+			} else {
+				setSuccess(false);
+				setRowId(null);
+				toast.error(`${result.data.message}`, {
 					position: 'top-right',
 					autoClose: 5000,
 					hideProgressBar: false,
@@ -52,11 +66,23 @@ function DivisionAction({ params, rowId, setRowId, setDeleteId }: any) {
 		setDeleteLoadng(true);
 		setDeleteConfirm(false);
 		setTimeout(async () => {
-			const { divisionId } = params.row;
+			const { divisionId, name } = params.row;
 			const result = await DivisionMasterService.deleteDivision(divisionId);
 			// console.log('deleted ' + typeId);
-			if (result) {
-				toast.error(`Employee Type ${params.row.name} is deleted`, {
+			if (result.data.status === RequestStatus.SUCCESS) {
+				toast.error(`${name} is deleted`, {
+					position: 'top-right',
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					theme: 'dark',
+				});
+				setDeleteId(divisionId);
+			} else {
+				toast.error(`${result.data.message}`, {
 					position: 'top-right',
 					autoClose: 5000,
 					hideProgressBar: false,
@@ -67,7 +93,6 @@ function DivisionAction({ params, rowId, setRowId, setDeleteId }: any) {
 					theme: 'dark',
 				});
 			}
-			setDeleteId(params.row.divisionId);
 
 			setDeleteLoadng(false);
 		}, 1500);
@@ -189,7 +214,7 @@ function DivisionAction({ params, rowId, setRowId, setDeleteId }: any) {
 							</svg>
 							<div className='flex flex-col ml-3'>
 								<div className='mb-2 font-medium leading-none'>
-									Do you want to delete Employee Designation named as{' '}
+									Do you want to delete Division named as{' '}
 									<code className='px-2 bg-red-200 rounded-lg'>
 										{' '}
 										{params.row.divisionId} - {params.row.name}
@@ -197,8 +222,7 @@ function DivisionAction({ params, rowId, setRowId, setDeleteId }: any) {
 									?
 								</div>
 								<p className='mt-1 text-sm leading-none text-gray-600'>
-									By deleting this Employee Designation you will lose this
-									employee type data
+									By deleting this Division you will lose this division data
 								</p>
 							</div>
 						</div>

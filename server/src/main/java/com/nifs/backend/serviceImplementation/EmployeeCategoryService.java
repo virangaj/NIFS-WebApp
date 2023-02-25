@@ -1,11 +1,12 @@
 package com.nifs.backend.serviceImplementation;
 
+import com.nifs.backend.common.Common;
 import com.nifs.backend.repository.LocationRepository;
 import com.nifs.backend.model.Locations;
 import com.nifs.backend.dto.EmpCatDTO;
 import com.nifs.backend.model.EmployeeCategory;
 import com.nifs.backend.repository.EmployeeCategoryRepository;
-import com.nifs.backend.service.EmployeeCatServiceInterface;
+import com.nifs.backend.service.IEmployeeCatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class EmployeeCategoryService implements EmployeeCatServiceInterface {
+public class EmployeeCategoryService implements IEmployeeCatService {
 
     @Autowired
     private EmployeeCategoryRepository empCatRepo;
@@ -23,10 +24,12 @@ public class EmployeeCategoryService implements EmployeeCatServiceInterface {
     @Autowired
     private LocationRepository locRepo;
 
-    //return all category
-    public List<EmpCatDTO> getAll() {
+    private final Common common = new Common();
 
-        try {
+
+    //return all category
+    public List<EmpCatDTO> getAllEmpCategories() {
+
             List<EmployeeCategory> empCatData = empCatRepo.findAll();
             List<EmpCatDTO> empDTO = new ArrayList<EmpCatDTO>();
             for (EmployeeCategory emp : empCatData) {
@@ -34,19 +37,10 @@ public class EmployeeCategoryService implements EmployeeCatServiceInterface {
                 empDTO.add(dtoSingle);
             }
             return empDTO;
-        } catch (Exception e) {
-            System.out.println(e.toString());
-            return null;
-        }
-
-
-
-
     }
-
     //create new category
-    public Boolean createNewCategory(EmpCatDTO e) {
-        try {
+    public boolean createNewCategory(EmpCatDTO e) {
+
             if (empCatRepo.returnEmployeeCategory(e.getEmpCatId()) == null) {
 
                 Date d = new Date();
@@ -56,15 +50,11 @@ public class EmployeeCategoryService implements EmployeeCatServiceInterface {
 
                 empCatRepo.save(empCat);
                 return true;
-
             }
             else {
                 return false;
             }
-        } catch (Exception err) {
-            System.out.println(err.toString());
-            return false;
-        }
+
     }
 
 //    return new employee category id
@@ -76,10 +66,7 @@ public class EmployeeCategoryService implements EmployeeCatServiceInterface {
                 return "EPCT1001";
             }
             else {
-                String idText = lastId.replaceAll("[^A-Za-z]", "");
-                int idNum = Integer.parseInt(lastId.replaceAll("[^0-9]", ""));
-                idNum = idNum + 1;
-                return idText + idNum;
+                return common.generateNewId(lastId);
             }
         } catch (Exception e) {
             System.out.println(e.toString());
@@ -88,13 +75,14 @@ public class EmployeeCategoryService implements EmployeeCatServiceInterface {
     }
 
 //    return empCat by id
-    public Optional<EmployeeCategory> returnEmpCat(String empCatId) {
-        return empCatRepo.findById(empCatId);
+    public EmployeeCategory returnEmpCat(String empCatId) {
+
+        return empCatRepo.returnEmployeeCategory(empCatId);
     }
 
     //update employee category
     public Boolean updateEmployeeCategory(EmpCatDTO empCatData, String empCatId) {
-        try {
+
             if (empCatRepo.returnEmployeeCategory(empCatId) != null) {
 
                 Date d = new Date();
@@ -103,15 +91,12 @@ public class EmployeeCategoryService implements EmployeeCatServiceInterface {
 
             }
             return false;
-        } catch (Exception e) {
-            System.out.println(e.toString());
-            return false;
-        }
+
     }
 
     //delete employee category
     public Boolean deleteEmployeeCategory(String empCatId) {
-        try {
+
             if (empCatRepo.returnEmployeeCategory(empCatId) != null) {
 
                 empCatRepo.deleteEmployeeCategory(empCatId);
@@ -121,15 +106,11 @@ public class EmployeeCategoryService implements EmployeeCatServiceInterface {
             else {
                 return false;
             }
-        } catch (Exception e) {
-            System.out.println(e.toString());
-            return false;
-        }
     }
 
 //get category by location id
     public List<EmpCatDTO> getCategoryByLocationId(String locId) {
-        try {
+
             if (locRepo.getLocation(locId) != null) {
 
                 List<EmployeeCategory> empCatData = empCatRepo.findCategoryByLocationId(locId);
@@ -143,9 +124,6 @@ public class EmployeeCategoryService implements EmployeeCatServiceInterface {
 
             }
             return null;
-        } catch (Exception e) {
-            System.out.println(e.toString());
-            return null;
-        }
+
      }
 }

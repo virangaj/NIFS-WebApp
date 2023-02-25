@@ -119,106 +119,114 @@ a {
 }
 
 @layer components {
-  body {
-    @apply bg-[#dfe7ee];
-  }
-  .admin-side-nav {
-    @apply z-20 flex-shrink-0 block w-64 mb-10 overflow-y-auto bg-white rounded-tr-lg rounded-br-lg;
-  }
-  .admin-sidebar-text {
-    @apply flex items-center text-gray-700 cursor-pointer hover:font-bold;
-  }
-  .admin-sidebar-text-active {
-    @apply flex items-center font-bold text-blue-800 cursor-pointer;
-  }
-  .active-admin-panel-marker {
-    @apply absolute left-0 w-1 bg-blue-800 rounded-tr-lg rounded-br-lg inset-y-2;
-  }
-  .admin-panel-marker {
-    @apply absolute left-0 w-1 rounded-tr-lg rounded-br-lg inset-y-2;
-  }
 
-  .admin-sub-panel-body {
-    @apply w-[80%] mx-auto rounded-lg h-auto;
-  }
-  .admin-panel-flex {
-    @apply flex flex-col justify-between xl:flex-row;
-  }
-  .admin-single-data-row {
-    @apply mt-5;
-  }
+	body {
+		@apply bg-[#dfe7ee];
+	}
+	.admin-side-nav {
+		@apply z-20 flex-shrink-0 block w-64 mb-10 overflow-y-auto bg-white rounded-tr-lg rounded-br-lg;
+	}
+	.login-logo {
+		@apply h-auto mx-auto w-44 md:w-56;
+	}
+	.admin-sidebar-text {
+		@apply flex items-center text-gray-700 cursor-pointer hover:font-bold;
+	}
+	.admin-sidebar-text-active {
+		@apply flex items-center font-bold text-blue-800 cursor-pointer;
+	}
+	.active-admin-panel-marker {
+		@apply absolute left-0 w-1 bg-blue-800 rounded-tr-lg rounded-br-lg inset-y-2;
+	}
+	.admin-panel-marker {
+		@apply absolute left-0 w-1 rounded-tr-lg rounded-br-lg inset-y-2;
+	}
 
-  .row-commit-icon {
-    @apply text-base;
-  }
-  .hint-text {
-    @apply text-sm italic text-gray-400;
-  }
+	.admin-sub-panel-body {
+		@apply w-[80%] mx-auto rounded-lg h-auto;
+	}
+	.admin-panel-flex {
+		@apply flex flex-col justify-between xl:flex-row;
+	}
+	.admin-single-data-row {
+		@apply mt-5;
+	}
 
-  .box-popup {
-    @apply w-[400px] bg-slate-600 translate-x-1/2 translate-y-1/2;
-  }
-  .delete-confirm-btn {
-    @apply float-right p-2 text-white bg-red-400 rounded-md hover:bg-red-800;
-  }
-  .tailwind-text-box {
-    @apply block w-full px-4 py-2 my-2 text-gray-700 bg-white border border-gray-300 rounded-md focus:border-blue-500 focus:outline-none focus:shadow-sm
+	.row-commit-icon {
+		@apply text-base;
+	}
+	.hint-text {
+		@apply text-sm italic text-gray-400;
+	}
+
+	.box-popup {
+		@apply w-[400px] bg-slate-600 translate-x-1/2 translate-y-1/2;
+	}
+	.delete-confirm-btn {
+		@apply float-right p-2 text-white bg-red-400 rounded-md hover:bg-red-800;
+	}
+	.tailwind-text-box {
+		@apply block w-full px-4 py-2 my-2 text-gray-700 bg-white border border-gray-300 rounded-md focus:border-blue-500 focus:outline-none focus:shadow-sm
 		/* @apply block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring */;
-  }
-  .input-label {
-    @apply mt-2 text-gray-700;
-  }
-  .action-com-model {
-    @apply flex flex-col w-[80%] p-8 duration-300 translate-y-1/2 bg-white shadow-md rounded-2xl mx-auto top-3/4 backdrop-blur-sm;
-  }
-  .action-com-model-error-btn {
-    @apply px-5 py-2 ml-4 text-sm font-medium tracking-wider text-white bg-red-500 border-2 border-red-500 rounded-full shadow-sm hover:shadow-lg;
-  }
-  .action-com-model-sucess-btn {
-    @apply px-5 py-2 ml-4 text-sm font-medium tracking-wider text-white bg-blue-500 border-2 border-blue-500 rounded-full shadow-sm hover:shadow-lg;
-  }
-  .rounded-outline-success-btn {
-    @apply px-3 py-1 ml-4 text-sm font-medium tracking-wider text-blue-500 border-2 border-blue-500 rounded-full shadow-sm hover:shadow-lg;
-  }
-  .page-title {
-    @apply p-3 mb-4 text-2xl font-bold bg-white rounded-lg;
-  }
-  .admin-page-title {
-    @apply p-3 mb-4 text-2xl font-bold bg-white rounded-lg shadow-lg;
-  }
-  .admin-horizontal-line {
-    @apply mt-2 mb-2 border border-gray-300 rounded-full;
-  }
-  .admin-table-section {
-    @apply p-4 bg-white shadow-lg rounded-xl;
-  }
-  .admin-form {
-    @apply p-4 mt-4 border rounded-lg;
-  }
-  .admin-form-section {
-    @apply p-4 mt-4 bg-white shadow-lg rounded-xl xl:w-full xl:ml-10 xl:mt-0;
-  }
-  .admin-form-buton-stack {
-    @apply mt-10;
-  }
-  .generate-id-in-form {
-    @apply flex items-center justify-between mb-4;
-  }
-  .employee-form-layout {
-    @apply grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 lg:grid-cols-3;
-  }
-  .admin-tab-menu {
-    @apply bg-white rounded-lg shadow-lg;
-  }
-  .error-text-message {
-    @apply text-sm italic text-red-500;
-  }
-  .normal-text {
-    @apply my-2 text-base;
-  }
-  .italic-sm-text {
-    @apply text-sm italic text-gray-400 font-extralight;
-  }
+	}
+	.input-label {
+		@apply mt-2 text-gray-600;
+	}
+	.action-com-model {
+		@apply flex flex-col w-[80%] p-8 duration-300 translate-y-1/2 bg-white shadow-md rounded-2xl mx-auto top-3/4 backdrop-blur-sm;
+	}
+	.action-com-model-error-btn {
+		@apply px-5 py-2 ml-4 text-sm font-medium tracking-wider text-white bg-red-500 border-2 border-red-500 rounded-full shadow-sm hover:shadow-lg;
+	}
+	.action-com-model-sucess-btn {
+		@apply px-5 py-2 ml-4 text-sm font-medium tracking-wider text-white bg-blue-500 border-2 border-blue-500 rounded-full shadow-sm hover:shadow-lg;
+	}
+	.rounded-outline-success-btn {
+		@apply px-3 py-1 ml-4 text-sm font-medium tracking-wider text-blue-500 border-2 border-blue-500 rounded-full shadow-sm hover:shadow-lg;
+	}
+	.page-title {
+		@apply p-3 mb-4 text-2xl font-bold bg-white rounded-lg;
+	}
+	.sub-page-title {
+		@apply p-3 mb-2 text-xl font-bold bg-white rounded-lg;
+	}
+	.admin-page-title {
+		@apply p-3 mb-4 text-2xl font-bold bg-white rounded-lg shadow-lg;
+	}
+	.admin-horizontal-line {
+		@apply mt-2 mb-2 border border-gray-300 rounded-full;
+	}
+	.admin-table-section {
+		@apply p-4 bg-white shadow-lg rounded-xl;
+	}
+	.admin-form {
+		@apply p-4 mt-4 border rounded-lg;
+	}
+	.admin-form-section {
+		@apply p-4 mt-4 bg-white shadow-lg rounded-xl xl:w-full xl:ml-10 xl:mt-0;
+	}
+	.admin-form-buton-stack {
+		@apply mt-10;
+	}
+	.generate-id-in-form {
+		@apply flex items-center justify-between mb-4;
+	}
+	.employee-form-layout {
+		@apply grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 lg:grid-cols-3;
+	}
+	.admin-tab-menu {
+		@apply bg-white rounded-lg shadow-lg;
+	}
+	.error-text-message {
+		@apply text-sm italic text-red-500;
+	}
+	.normal-text {
+		@apply my-2 text-base;
+	}
+	.italic-sm-text {
+		@apply text-sm italic text-gray-400 font-extralight;
+	}
+
 }
 
 /* alert box */

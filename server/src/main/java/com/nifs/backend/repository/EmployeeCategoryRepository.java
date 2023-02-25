@@ -32,7 +32,8 @@ public interface EmployeeCategoryRepository extends JpaRepository<EmployeeCatego
     @Query(value= "SELECT * FROM employee_category_master WHERE employee_category_code =?1",nativeQuery = true)
     EmployeeCategory returnEmployeeCategory(String id);
 
-    @Query(value = "SELECT TOP 1 employee_category_code FROM employee_category_master ORDER BY employee_category_code DESC", nativeQuery = true)
+//    @Query(value = "SELECT TOP 1 employee_category_code FROM employee_category_master ORDER BY employee_category_code DESC", nativeQuery = true)
+    @Query(value = "SELECT employee_category_code FROM employee_category_master ORDER BY employee_category_code DESC LIMIT 1", nativeQuery = true)
     String returnLastId();
 
 }

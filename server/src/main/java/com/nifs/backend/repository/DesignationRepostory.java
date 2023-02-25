@@ -24,6 +24,7 @@ public interface DesignationRepostory extends JpaRepository<DesignationMaster, S
     @Query("select d from DesignationMaster d where d.designationId = :id order by d.designationId")
     DesignationMaster returnDesignation(@Param("id") String id);
 
-    @Query(value = "SELECT TOP 1 id FROM designation_master ORDER BY id DESC", nativeQuery = true)
+//    @Query(value = "SELECT TOP 1 designation_id FROM designation_master ORDER BY designation_id DESC", nativeQuery = true)
+    @Query(value = "SELECT designation_id FROM designation_master ORDER BY designation_id DESC LIMIT 1", nativeQuery = true)
     String returnLastId();
 }
