@@ -1,5 +1,5 @@
 export default interface IContractExtension {
-	docNo: string;
+	documentNo: string;
 	date: string;
 	epfNo: number;
 	designationId: string;
