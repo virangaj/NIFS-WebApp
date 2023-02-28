@@ -1,80 +1,80 @@
 [
-    {
-        "section": "Transaction",
-        "only_admin": false,
-        "routes": [
-            {
-                "title": "Administrative Report",
-                "link": "/admin/administrative-report",
-                "img": "https://img.icons8.com/fluency/50/000000/administrative-tools.png",
-                "only_admin": false
-            },
-            {
-                "title": "Local Telephone Charges",
-                "link": "/admin/local-tel-charges",
-                "img": "https://img.icons8.com/fluency/50/000000/phone-office.png",
-                "only_admin": false
-            },
-            {
-                "title": "Accomodation",
-                "link": "/admin/accomodation",
-                "img": "https://img.icons8.com/fluency/50/000000/3-star-hotel.png",
-                "only_admin": false
-            },
-            {
-                "title": "Overseas Telephone Charges",
-                "link": "/admin/overseas-tel-charges",
-                "img": "https://img.icons8.com/fluency/50/000000/around-the-globe.png",
-                "only_admin": false
-            },
-            {
-                "title": "Trainers VolunteersGrant Personal Attendance",
-                "link": "/admin/trainer-volunteer-attendance",
-                "img": "https://img.icons8.com/fluency/50/000000/manager.png",
-                "only_admin": false
-            },
-            {
-                "title": "Insurance Claim",
-                "link": "/admin/insurance-claim",
-                "img": "https://img.icons8.com/fluency/50/000000/broker.png",
-                "only_admin": false
-            },
-            {
-                "title": "Annual Increment Request",
-                "link": "/admin/annual-increment-request",
-                "img": "https://img.icons8.com/fluency/50/000000/economic-improvement.png",
-                "only_admin": false
-            },
-            {
-                "title": "Promotion",
-                "link": "/admin/promotion",
-                "img": "https://img.icons8.com/fluency/50/000000/loyalty-card.png",
-                "only_admin": false
-            },
-            {
-                "title": "Contract Extension",
-                "link": "/admin/contract-extension",
-                "img": "https://img.icons8.com/fluency/50/000000/contract.png",
-                "only_admin": false
-            },
-            {
-                "title": "Resignation Request",
-                "link": "/admin/resignation-request",
-                "img": "https://img.icons8.com/fluency/50/000000/exit.png",
-                "only_admin": false
-            }
-        ]
-    },
-    {
-        "section": "Reports",
-        "only_admin": true,
-        "routes": [
-            {
-                "title": "Report Generator",
-                "link": "/admin/report-generator",
-                "img": "https://img.icons8.com/cute-clipart/50/000000/load-from-file.png",
-                "only_admin": true
-            }
-        ]
-    }
+	{
+		"section": "Transaction",
+		"only_admin": false,
+		"routes": [
+			{
+				"title": "Administrative Report",
+				"link": "/admin/administrative-report",
+				"img": "https://img.icons8.com/fluency/50/000000/administrative-tools.png",
+				"only_admin": false
+			},
+			{
+				"title": "Local Telephone Charges",
+				"link": "/admin/local-tel-charges",
+				"img": "https://img.icons8.com/fluency/50/000000/phone-office.png",
+				"only_admin": false
+			},
+			{
+				"title": "Accommodation",
+				"link": "/admin/accommodation",
+				"img": "https://img.icons8.com/fluency/50/000000/3-star-hotel.png",
+				"only_admin": false
+			},
+			{
+				"title": "Overseas Telephone Charges",
+				"link": "/admin/overseas-tel-charges",
+				"img": "https://img.icons8.com/fluency/50/000000/around-the-globe.png",
+				"only_admin": false
+			},
+			{
+				"title": "Trainers VolunteersGrant Personal Attendance",
+				"link": "/admin/trainer-volunteer-attendance",
+				"img": "https://img.icons8.com/fluency/50/000000/manager.png",
+				"only_admin": false
+			},
+			{
+				"title": "Insurance Claim",
+				"link": "/admin/insurance-claim",
+				"img": "https://img.icons8.com/fluency/50/000000/broker.png",
+				"only_admin": false
+			},
+			{
+				"title": "Annual Increment Request",
+				"link": "/admin/annual-increment-request",
+				"img": "https://img.icons8.com/fluency/50/000000/economic-improvement.png",
+				"only_admin": false
+			},
+			{
+				"title": "Promotion",
+				"link": "/admin/promotion",
+				"img": "https://img.icons8.com/fluency/50/000000/loyalty-card.png",
+				"only_admin": false
+			},
+			{
+				"title": "Contract Extension",
+				"link": "/admin/contract-extension",
+				"img": "https://img.icons8.com/fluency/50/000000/contract.png",
+				"only_admin": false
+			},
+			{
+				"title": "Resignation Request",
+				"link": "/admin/resignation-request",
+				"img": "https://img.icons8.com/fluency/50/000000/exit.png",
+				"only_admin": false
+			}
+		]
+	},
+	{
+		"section": "Reports",
+		"only_admin": true,
+		"routes": [
+			{
+				"title": "Report Generator",
+				"link": "/admin/report-generator",
+				"img": "https://img.icons8.com/cute-clipart/50/000000/load-from-file.png",
+				"only_admin": true
+			}
+		]
+	}
 ]

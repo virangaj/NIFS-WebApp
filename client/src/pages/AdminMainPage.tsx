@@ -8,6 +8,7 @@ import ContractExtension from './admin/ContractExtension';
 import ResignationRequest from './admin/ResignationRequest';
 import AnnualIncrementRequest from './admin/AnnualIncrementRequest';
 import AdministrativeReport from './admin/AdministrativeReport';
+import Accommodation from './admin/Accommodation';
 
 function AdminMainPage() {
 	return (
@@ -35,6 +36,7 @@ function AdminMainPage() {
 					path={RouteName.ResignationRequest}
 					element={<ResignationRequest />}
 				/>
+				<Route path={RouteName.Accommodation} element={<Accommodation />} />
 			</Routes>
 		</div>
 	);

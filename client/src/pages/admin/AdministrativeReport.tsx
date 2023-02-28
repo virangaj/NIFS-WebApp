@@ -13,6 +13,16 @@ import DesignationMasterService from '../../services/admin/DesignationMasterServ
 import IDivisionData from '../../types/IDivisionData';
 import DivisionMasterService from '../../services/admin/DivisionMasterService';
 
+const initialState: IContractExtension = {
+	documentNo: '',
+	date: '',
+	epfNo: 0,
+	designationId: '',
+	divisionId: '',
+	hod: '',
+	remark: '',
+};
+
 function AdministrativeReport() {
 	const [getDocNo, setDocNo] = useState<String | any>('');
 	const [requestDate, setRequestDate] = React.useState<string | null>(null);
@@ -22,19 +32,11 @@ function AdministrativeReport() {
 	const [empFoundError, setEmpFoundError] = useState<boolean>(false);
 	const [empData, setEmpData] = useState<Array<IEmployeeData>>([]);
 	const [currentEmp, setCurrentEmp] = useState<IEmployeeData>();
-	const [values, setValues] = useState<IContractExtension>({
-		docNo: '',
-		date: '',
-		epfNo: 0,
-		designationId: '',
-		divisionId: '',
-		hod: '',
-		remark: '',
-	});
+	const [values, setValues] = useState<IContractExtension>(initialState);
 
 	useEffect(() => {
 		setValues({
-			docNo: values?.docNo,
+			documentNo: values?.documentNo,
 			date: requestDate ? requestDate : '',
 			epfNo: values?.epfNo,
 			designationId: values?.designationId,
@@ -46,7 +48,7 @@ function AdministrativeReport() {
 
 	useEffect(() => {
 		setValues({
-			docNo: getDocNo && getDocNo,
+			documentNo: getDocNo && getDocNo,
 			date: requestDate ? requestDate : '',
 			epfNo: values?.epfNo,
 			designationId: values?.designationId,
@@ -73,7 +75,7 @@ function AdministrativeReport() {
 			setEmpFoundError(true);
 		}
 		setValues({
-			docNo: getDocNo && getDocNo,
+			documentNo: getDocNo && getDocNo,
 			date: requestDate ? requestDate : '',
 			epfNo: values?.epfNo,
 			designationId: employee?.designationId,
@@ -120,28 +122,12 @@ function AdministrativeReport() {
 	// generate document ID
 	const generateDocNo = () => {
 		setDocNo(generateID('CE'));
-		setValues({
-			docNo: '',
-			date: '',
-			epfNo: 0,
-			designationId: '',
-			divisionId: '',
-			hod: '',
-			remark: '',
-		});
+		setValues(initialState);
 	};
 
 	//reset form
 	const resetForm = () => {
-		setValues({
-			docNo: '',
-			date: '',
-			epfNo: 0,
-			designationId: '',
-			divisionId: '',
-			hod: '',
-			remark: '',
-		});
+		setValues(initialState);
 		setDocNo('');
 	};
 
@@ -153,6 +139,7 @@ function AdministrativeReport() {
 		}));
 	};
 
+	//onsubmit
 	const onSubmit = async (e: any) => {
 		e.preventDefault();
 		console.log(values);
