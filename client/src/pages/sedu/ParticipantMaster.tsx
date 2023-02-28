@@ -11,23 +11,25 @@ import CustomeDataPicker from '../../components/DataPicker';
 import ParticipantMasterService from '../../services/sedu/ParticipantMasterService';
 import Ripple from '../../components/Ripple';
 
+const initialState: IParticipantMaster = {
+	pCode: '',
+	date: '',
+	pName: '',
+	nic: '',
+	gender: '',
+	address: '',
+	contactNo: '',
+	email: '',
+	instituteName: '',
+};
+
 function ParticipantMaster() {
 	const [participantCode, setParticipantsCode] = useState('');
 	const [date, setDate] = useState<string | null>(null);
 
 	const [loading, setLoading] = useState(false);
 
-	const [values, setValues] = useState<IParticipantMaster>({
-		pCode: '',
-		date: '',
-		pName: '',
-		nic: '',
-		gender: '',
-		address: '',
-		contactNo: '',
-		email: '',
-		instituteName: '',
-	});
+	const [values, setValues] = useState<IParticipantMaster>(initialState);
 
 	const onChange = (e: any) => {
 		setValues((preState) => ({
@@ -51,17 +53,7 @@ function ParticipantMaster() {
 	}, [participantCode, date]);
 
 	const resetForm = () => {
-		setValues({
-			pCode: '',
-			date: '',
-			pName: '',
-			nic: '',
-			gender: '',
-			address: '',
-			contactNo: '',
-			email: '',
-			instituteName: '',
-		});
+		setValues(initialState);
 	};
 	const onSubmit = async (e: any) => {
 		e.preventDefault();

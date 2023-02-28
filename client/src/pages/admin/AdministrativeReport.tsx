@@ -23,7 +23,7 @@ const initialState: IContractExtension = {
 	remark: '',
 };
 
-function ContractExtension() {
+function AdministrativeReport() {
 	const [getDocNo, setDocNo] = useState<String | any>('');
 	const [requestDate, setRequestDate] = React.useState<string | null>(null);
 	const [designationData, setDesignationData] = useState<IDesignationData>();
@@ -112,7 +112,6 @@ function ContractExtension() {
 	const retreiveEmployees = () => {
 		EmployeeService.getAllEmployeeData()
 			.then((res: any) => {
-				console.log(res.data);
 				setEmpData(res.data.data);
 			})
 			.catch((e: any) => {
@@ -140,6 +139,7 @@ function ContractExtension() {
 		}));
 	};
 
+	//onsubmit
 	const onSubmit = async (e: any) => {
 		e.preventDefault();
 		console.log(values);
@@ -147,7 +147,7 @@ function ContractExtension() {
 
 	return (
 		<div className='sub-body-content xl:!w-[60%]'>
-			<h1 className='page-title'>Contract Extension</h1>
+			<h1 className='page-title'>Administrative Report</h1>
 			<hr className='horizontal-line' />
 			<form onSubmit={onSubmit}>
 				<div className='grid grid-cols-1 md:grid-cols-2 items-center w-[97%] mx-auto'>
@@ -267,6 +267,85 @@ function ContractExtension() {
 						value={values.remark}
 					></textarea>
 				</div>
+				<h4 className='sub-page-title'>Send To</h4>
+				<hr className='horizontal-line' />
+
+				<div className='grid grid-cols-1 md:grid-cols-2 items-center w-[97%] mx-auto'>
+					<div>
+						<div className='flex items-center'>
+							<div>
+								<label className='input-label' htmlFor='epfNo'>
+									Employee EPF No
+								</label>
+
+								<input
+									id='epfNo'
+									type='text'
+									className='tailwind-text-box w-[40%] mr-4'
+									onChange={onChange}
+									name='epfNo'
+									value={values.epfNo}
+								/>
+								{values.epfNo && empFoundError ? (
+									<p className='w-[97%] mx-auto error-text-message'>
+										User Not Found!
+									</p>
+								) : (
+									''
+								)}
+							</div>
+							<div>
+								<label className='input-label' htmlFor='epfNo'>
+									Employee Name
+								</label>
+								<select
+									className='tailwind-text-box'
+									value={values.epfNo}
+									id='epfNo'
+									name='epfNo'
+									onChange={onChange}
+								>
+									<option disabled value={0}>
+										Select Employee
+									</option>
+
+									{empData?.map((l: IEmployeeData, i: number) => {
+										return (
+											<option key={i} value={l.epfNo}>
+												{l.firstName + ' ' + l.lastName}
+											</option>
+										);
+									})}
+								</select>
+							</div>
+						</div>
+						<div className='w-[97%] mx-auto'>
+							<p className='normal-text'>
+								Designation :{' '}
+								{values.epfNo && designationData ? (
+									<span className='font-bold'>
+										{designationData.designationName}
+									</span>
+								) : (
+									<span className='italic-sm-text'>
+										Please select an employee
+									</span>
+								)}
+							</p>
+
+							<p className='normal-text'>
+								Division :{' '}
+								{values.epfNo && divisionData ? (
+									<span className='font-bold'>{divisionData.name}</span>
+								) : (
+									<span className='italic-sm-text'>
+										Please select an employee
+									</span>
+								)}
+							</p>
+						</div>
+					</div>
+				</div>
 				<Stack
 					direction='row'
 					justifyContent='flex-end'
@@ -291,4 +370,4 @@ function ContractExtension() {
 	);
 }
 
-export default ContractExtension;
+export default AdministrativeReport;

@@ -4,26 +4,26 @@ import http from '../../utils/http-common';
 axios.defaults.baseURL = process.env.REACT_APP_BACKEND_SERVER;
 
 const getAllEmployeeData = () => {
-	return http.get<Array<any>>('/admin/employee');
+	return http.get<Array<any>>('/auth/employee');
 };
 
 const getEmployeeDataById = (id: number) => {
-	return http.get<Array<any>>(`/admin/employee/${id}`);
+	return http.get<Array<any>>(`/auth/employee/${id}`);
 };
 
 const getAllEmployeeDataWithoutDeleted = () => {
-	return http.get<Array<any>>('/admin/employee/withoutdelete');
+	return http.get<Array<any>>('/auth/employee/withoutdelete');
 };
 
 const getAllEmployeeDataCurrentlyNotWorking = () => {
-	return http.get<Array<any>>('/admin/employee/deleted');
+	return http.get<Array<any>>('/auth/employee/deleted');
 };
 
 const saveEmployee = async (favJSON: any) => {
 	console.log(favJSON);
 	const response = await axios({
 		method: 'post',
-		url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/employee`,
+		url: `${process.env.REACT_APP_BACKEND_SERVER}/auth/employee`,
 		data: favJSON,
 		headers: { 'Content-Type': 'application/json; charset=utf-8' },
 	});
