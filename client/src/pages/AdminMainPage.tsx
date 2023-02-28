@@ -17,7 +17,7 @@ function AdminMainPage() {
       </div>
 
       {/* <AdministrativeReport /> */}
-      <Accomodation />
+      {/* <Accomodation /> */}
 
       <Routes>
         <Route
