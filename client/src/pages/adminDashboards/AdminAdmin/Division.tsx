@@ -6,11 +6,12 @@ import Ripple from '../../../components/Ripple';
 import { HiX } from 'react-icons/hi';
 import { toast } from 'react-toastify';
 
-import ILocationData from '../../../types/LocationData';
+import ILocationData from '../../../types/ILocationData';
 import LocationMasterService from '../../../services/admin/LocationMasterService';
-import IDivisionData from '../../../types/DivisionData';
+import IDivisionData from '../../../types/IDivisionData';
 import DivisionMasterService from '../../../services/admin/DivisionMasterService';
 import DivisionAction from './shared/DivisionAction';
+import { RequestStatus } from '../../../constant/requestStatus';
 function Division() {
 	const [pageSize, setPageSize] = useState(10);
 	const [rowId, setRowId] = useState(0);
@@ -50,8 +51,12 @@ function Division() {
 	const retreiveDivisions = () => {
 		DivisionMasterService.getAllDivisions()
 			.then((res: any) => {
-				setDivisionData(res.data);
-				console.log(divisionData);
+				if (res.data.status === RequestStatus.SUCCESS) {
+					setDivisionData(res.data.data);
+					// console.log(divisionData);
+				} else {
+					toast.error(`${res.data.message}`);
+				}
 			})
 			.catch((e: any) => {
 				console.log(e);
@@ -62,7 +67,7 @@ function Division() {
 		LocationMasterService.getAllLocations()
 			.then((res: any) => {
 				setLocationData(res.data);
-				console.log(locationData);
+				// console.log(locationData);
 			})
 			.catch((e: any) => {
 				console.log(e);
@@ -103,28 +108,12 @@ function Division() {
 			setLoading(true);
 			setTimeout(async () => {
 				const result = await DivisionMasterService.saveDivision(values);
-				if (result.data) {
-					toast.success('New Division is added', {
-						position: 'top-right',
-						autoClose: 5000,
-						hideProgressBar: false,
-						closeOnClick: true,
-						pauseOnHover: true,
-						draggable: true,
-						progress: undefined,
-					});
+				if (result.data.status === RequestStatus.SUCCESS) {
+					toast.success('New Division is added');
 
 					resetForm();
 				} else {
-					toast.error('Request cannot completed!', {
-						position: 'top-right',
-						autoClose: 5000,
-						hideProgressBar: false,
-						closeOnClick: true,
-						pauseOnHover: true,
-						draggable: true,
-						progress: undefined,
-					});
+					toast.error('Request cannot completed!');
 				}
 				setLoading(false);
 			}, 1000);
@@ -189,7 +178,7 @@ function Division() {
 							components={{ Toolbar: GridToolbar }}
 							rowHeight={60}
 							columns={columns}
-							rows={divisionData}
+							rows={divisionData && divisionData}
 							getRowId={(row) => row.divisionId}
 							rowsPerPageOptions={[10, 20, 30]}
 							pageSize={pageSize}

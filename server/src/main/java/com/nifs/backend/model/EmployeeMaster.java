@@ -1,13 +1,15 @@
 package com.nifs.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.nifs.backend.constant.UserRole;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "employee_master")
@@ -32,7 +34,7 @@ public class EmployeeMaster {
     @Column(name = "last_name", length = 100)
     private String lastName;
 
-    @Column(name = "gender", length = 5)
+    @Column(name = "gender", length = 6)
     private String gender;
     @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(pattern = "dd/MM/yyyy")
@@ -85,6 +87,14 @@ public class EmployeeMaster {
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private String licenseExpireDate;
 
+
+    @Column(name = "is_delete")
+    private Boolean isDelete;
+
+    @Column(name = "status")
+    private String role = String.valueOf(UserRole.USER);
+
+
 //    emergency contract person details
     @Column(name = "contact_person", length = 255)
     private String contactPerson;
@@ -130,54 +140,57 @@ public class EmployeeMaster {
     private String contractEnd;
 
 
-    @Column(name = "is_delete")
-    private Boolean isDelete;
-
     //relationships
 
     //district
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
     @JoinColumn(name = "district", referencedColumnName = "district_id")
-    @JsonIgnoreProperties("employee")
     private District districtId;
 
 
     //province
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
     @JoinColumn(name = "province", referencedColumnName = "province_id")
-    @JsonIgnoreProperties("employee")
     private Province provinceId;
 
     //employee type
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
-    @JoinColumn(name = "emp_type_id", referencedColumnName = "type_id")
-    @JsonIgnoreProperties("employee")
+    @JoinColumn(name = "emp_type_id", referencedColumnName = "emp_type_id")
     private EmployeeTypeMaster empTypeId;
 
     //category
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
     @JoinColumn(name = "emp_category_id", referencedColumnName = "employee_category_code")
-    @JsonIgnoreProperties("employee")
     private EmployeeCategory empCatId;
 
 
     //designation
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
-    @JoinColumn(name = "designation_id", referencedColumnName = "id")
-    @JsonIgnoreProperties("employee")
+    @JoinColumn(name = "designation_id", referencedColumnName = "designation_id")
     private DesignationMaster designationId;
 
     //division
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
     @JoinColumn(name = "division_id", referencedColumnName = "division_id")
-    @JsonIgnoreProperties("employee")
     private DivisionMaster divisionId;
 
     //locations
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
     @JoinColumn(name = "location_id", referencedColumnName = "location_id")
-    @JsonIgnoreProperties("employee")
     private Locations locationId;
+
+
+    //login
+    @OneToOne(mappedBy = "employee", cascade = {CascadeType.MERGE})
+    private User empLogin;
+
 
     public EmployeeMaster(int epfNo, String initials, String firstName, String lastName, String gender, String dob, String address, String contactNo, String personalEmail, String gsuitEmail, String nicNo, String nicIssuedDate, String passportNo, String passExpireDate, String licenseNo, String licenseIssuedDate, String licenseExpireDate, String contactPerson, String cpRelationship, String cpAddress, String cpTelephone, String cpStatus, String cpCivilStatus, String cpReligion, String appointmentDate, String contractStart, String contractEnd, Boolean isDelete, District districtId, Province provinceId, EmployeeTypeMaster empTypeId, EmployeeCategory empCatId, DesignationMaster designationId, DivisionMaster divisionId, Locations locationId) {
         this.epfNo = epfNo;
@@ -218,9 +231,6 @@ public class EmployeeMaster {
     }
 
 
-//login
-//    @OneToOne(mappedBy = "employee")
-//    private EmployeeLogin empLogin;
 
 
 

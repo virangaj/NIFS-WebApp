@@ -1,5 +1,6 @@
 package com.nifs.backend.serviceImplementation;
 
+import com.nifs.backend.common.Common;
 import com.nifs.backend.model.EmployeeMaster;
 import com.nifs.backend.repository.EmployeeMasterRepository;
 import com.nifs.backend.repository.LocationRepository;
@@ -7,17 +8,16 @@ import com.nifs.backend.model.Locations;
 import com.nifs.backend.dto.DivisionMasterDTO;
 import com.nifs.backend.model.DivisionMaster;
 import com.nifs.backend.repository.DivisionMasterRepository;
-import com.nifs.backend.service.DivisionMasterServiceInterface;
+import com.nifs.backend.service.IDivisionMasterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Service
-public class DivisionMasterService implements DivisionMasterServiceInterface {
+public class DivisionMasterService implements IDivisionMasterService {
 
     @Autowired
     private DivisionMasterRepository divMasterRepo;
@@ -27,8 +27,10 @@ public class DivisionMasterService implements DivisionMasterServiceInterface {
 
     @Autowired
     private EmployeeMasterRepository empRepo;
+    private final Common common = new Common();
 
     //    get all divisions
+    @Override
     public List<DivisionMasterDTO> getAll() {
         try {
             List<DivisionMaster> divData = divMasterRepo.findAll();
@@ -47,27 +49,26 @@ public class DivisionMasterService implements DivisionMasterServiceInterface {
 
 
     //create new divisions
+    @Override
     public Boolean createDivision(DivisionMasterDTO d) {
-        try {
-            if (divMasterRepo.returnDivision(d.getDivisionId()) == null) {
 
-                Date date = new Date();
-                Locations l = locRepo.getLocation(d.getLocationId());
-                DivisionMaster dm = new DivisionMaster(d.getDivisionId(), d.getName(), date, l);
-                divMasterRepo.save(dm);
-                return true;
-            }
-            else {
-                return false;
-            }
-        } catch (Exception e) {
-            System.out.println(e.toString());
+        if (divMasterRepo.returnDivision(d.getDivisionId()) == null) {
+
+            Date date = new Date();
+            Locations l = locRepo.getLocation(d.getLocationId());
+            DivisionMaster dm = new DivisionMaster(d.getDivisionId(), d.getName(), date, l);
+            divMasterRepo.save(dm);
+            return true;
+        }
+        else {
             return false;
         }
+
 
     }
 
     //delete division
+    @Override
     public Boolean deleteDivision(String divisionId) {
         try {
             DivisionMaster divisionMaster = divMasterRepo.returnDivision(divisionId);
@@ -89,7 +90,8 @@ public class DivisionMasterService implements DivisionMasterServiceInterface {
         }
     }
 
-// return new id
+    // return new id
+    @Override
     public String returnNewDivisionId() {
         try {
             String lastId = divMasterRepo.returnLastId();
@@ -97,12 +99,8 @@ public class DivisionMasterService implements DivisionMasterServiceInterface {
                 return "DI1001";
             }
             else {
-                String idText = lastId.replaceAll("[^A-Za-z]", "");
-                int idNum = Integer.parseInt(lastId.replaceAll("[^0-9]", ""));
+                return common.generateNewId(lastId);
 
-                idNum = idNum + 1;
-
-                return idText + idNum;
             }
         } catch (Exception e) {
             System.out.println(e.toString());
@@ -110,17 +108,9 @@ public class DivisionMasterService implements DivisionMasterServiceInterface {
         }
     }
 
-//    return division by id
-    public Optional<DivisionMaster> returnDivision(String divisionId) {
-        try {
-            return divMasterRepo.findById(divisionId);
-        } catch (Exception e) {
-            System.out.println(e.toString());
-            return Optional.empty();
-        }
-    }
 
-//    update division master
+    //    update division master
+    @Override
     public Boolean updateDivisionMaster(DivisionMasterDTO dmData, String dvId) {
         try {
             if (divMasterRepo.returnDivision(dvId) != null) {
@@ -137,7 +127,8 @@ public class DivisionMasterService implements DivisionMasterServiceInterface {
         }
     }
 
-     // get divisions by location id
+    // get divisions by location id
+    @Override
     public List<DivisionMasterDTO> GetDivisionByLocationId(String locID) {
         try {
             if (locRepo.getLocation(locID) != null) {
@@ -157,16 +148,19 @@ public class DivisionMasterService implements DivisionMasterServiceInterface {
     }
 
     //get division by id
+    @Override
     public DivisionMasterDTO getDivisionById(String id) {
-        try {
-            DivisionMaster d = divMasterRepo.returnDivision(id);
-            if (d != null) {
-                return new DivisionMasterDTO(d.getDivisionId(), d.getName(), d.getLocationId().getLocationId());
-            }
-            return null;
-        } catch (Exception e) {
-            System.out.println(e.toString());
-            return null;
+
+        DivisionMaster d = divMasterRepo.returnDivision(id);
+        if (d != null) {
+            return new DivisionMasterDTO(d.getDivisionId(), d.getName(), d.getLocationId().getLocationId());
         }
+        return null;
+
+    }
+
+    @Override
+    public DivisionMaster returnDivision(String id) {
+        return divMasterRepo.returnDivision(id);
     }
 }

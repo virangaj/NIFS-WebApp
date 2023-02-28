@@ -6,8 +6,6 @@ import Dots from "../images/dots_circle_b.png";
 import { Route, Routes } from "react-router-dom";
 import { RouteName } from "../constant/routeNames";
 import ContractExtension from "./admin/ContractExtension";
-import AdministrativeReport from "./admin/AdministrativeReport";
-import Accomodation from "./admin/Accomodation";
 
 function AdminMainPage() {
   return (

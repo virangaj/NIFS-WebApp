@@ -2,19 +2,33 @@ import { useState, useEffect } from "react";
 
 import Stack from "@mui/material/Stack";
 
-import Box from "@mui/material/Box";
-import SelectFacility from "./shared/SelectFacility";
-import SetChargers from "./shared/SetChargers";
-import VenueMasterService from "../../services/sedu/VenueMasterService";
-import IVenueMaster from "../../types/VenueMaster";
-import Ripple from "../../components/Ripple";
-import { generateID } from "../../constant/generateId";
 
-import VenueOtherService from "../../services/sedu/VenueOtherService";
-import LocationMasterService from "../../services/admin/LocationMasterService";
-import ILocationData from "../../types/LocationData";
+import Box from '@mui/material/Box';
+import SelectFacility from './shared/SelectFacility';
+import SetChargers from './shared/SetChargers';
+import VenueMasterService from '../../services/sedu/VenueMasterService';
+import IVenueMaster from '../../types/IVenueMaster';
+import Ripple from '../../components/Ripple';
+import { generateID } from '../../utils/generateId';
 
-import "../pages.css";
+import VenueOtherService from '../../services/sedu/VenueOtherService';
+import LocationMasterService from '../../services/admin/LocationMasterService';
+import ILocationData from '../../types/ILocationData';
+
+import '../pages.css';
+
+const initialState: IVenueMaster = {
+	venueId: '',
+	venueName: '',
+	type: '',
+	availability: '',
+	location: '',
+	remark: '',
+	capacity: 0,
+	dateCreated: '',
+};
+
+
 function VenueMaster() {
   const [facilities, setFacilities] = useState<any[]>([]);
   const [chargers, setChargers] = useState<any[]>([]);
@@ -27,16 +41,9 @@ function VenueMaster() {
   const [v_id, setV_Id] = useState("");
   const [success, setSuccess] = useState(false);
 
-  const [values, setValues] = useState<IVenueMaster>({
-    venueId: "",
-    venueName: "",
-    type: "",
-    availability: "",
-    location: "",
-    remark: "",
-    capacity: 0,
-    dateCreated: "",
-  });
+
+	const [values, setValues] = useState<IVenueMaster>(initialState);
+
 
   // onchange function
   const onChange = (e: any) => {
@@ -76,21 +83,14 @@ function VenueMaster() {
     // console.log(v_id)
   };
 
-  const resetForm = () => {
-    setValues({
-      venueId: "",
-      venueName: "",
-      type: "",
-      availability: "",
-      location: "",
-      remark: "",
-      capacity: 0,
-      dateCreated: "",
-    });
-    setV_Id("");
-    setFacilities([]);
-    setChargers([]);
-  };
+
+	const resetForm = () => {
+		setValues(initialState);
+		setV_Id('');
+		setFacilities([]);
+		setChargers([]);
+	};
+
 
   useEffect(() => {
     retreiveLocations();

@@ -1,5 +1,4 @@
 import axios from 'axios';
-
 import http from '../../http-common';
 
 axios.defaults.baseURL = process.env.REACT_APP_BACKEND_SERVER;
@@ -8,7 +7,7 @@ const getAllEmployeeData = () => {
 	return http.get<Array<any>>('/admin/employee');
 };
 
-const getEmployeeDataById = (id:number) => {
+const getEmployeeDataById = (id: number) => {
 	return http.get<Array<any>>(`/admin/employee/${id}`);
 };
 
@@ -32,14 +31,25 @@ const saveEmployee = async (favJSON: any) => {
 	return response;
 };
 
+//temporary delete user
+const hardDelete = async (id: any) => {
+	console.log(id);
+	const response = await axios({
+		method: 'delete',
+		url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/employee/harddelete/${id}`,
+		headers: { 'Content-Type': 'application/json; charset=utf-8' },
+	});
+	// alert("Favourite created --- "+ response);
+	return response;
+};
 
 const EmployeeService = {
 	getAllEmployeeData,
 	getEmployeeDataById,
-    saveEmployee,
+	saveEmployee,
 	getAllEmployeeDataWithoutDeleted,
-	getAllEmployeeDataCurrentlyNotWorking
-   
+	getAllEmployeeDataCurrentlyNotWorking,
+	hardDelete,
 };
 
 export default EmployeeService;

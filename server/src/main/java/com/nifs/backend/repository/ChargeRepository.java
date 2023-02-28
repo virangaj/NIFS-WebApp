@@ -24,8 +24,8 @@ public interface ChargeRepository extends CrudRepository<Charges, String> {
     @Query(value="SELECT * FROM venue_charges_master WHERE charge_id =?1", nativeQuery = true)
     Charges returnCharge(String id);
 
-//    @Query(value = "SELECT charge_id FROM venue_charges_master ORDER BY charge_id DESC LIMIT 1", nativeQuery = true)
-    @Query(value = "SELECT TOP 1 charge_id FROM venue_charges_master ORDER BY charge_id DESC", nativeQuery = true)
+    @Query(value = "SELECT charge_id FROM venue_charges_master ORDER BY charge_id DESC LIMIT 1", nativeQuery = true)
+//    @Query(value = "SELECT TOP 1 charge_id FROM venue_charges_master ORDER BY charge_id DESC", nativeQuery = true)
     String returnLastId();
 
 

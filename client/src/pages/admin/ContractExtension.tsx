@@ -2,15 +2,15 @@ import React, { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import { toast } from 'react-toastify';
 import Stack from '@mui/material/Stack';
-import { generateID } from '../../constant/generateId';
+import { generateID } from '../../utils/generateId';
 import Ripple from '../../components/Ripple';
-import IContractExtension from '../../types/ContractExtension';
+import IContractExtension from '../../types/IContractExtension';
 import CustomeDataPicker from '../../components/DataPicker';
-import IEmployeeData from '../../types/EmployeeData';
+import IEmployeeData from '../../types/IEmployeeData';
 import EmployeeService from '../../services/admin/EmployeeService';
-import IDesignationData from '../../types/DesignationData';
+import IDesignationData from '../../types/IDesignationData';
 import DesignationMasterService from '../../services/admin/DesignationMasterService';
-import IDivisionData from '../../types/DivisionData';
+import IDivisionData from '../../types/IDivisionData';
 import DivisionMasterService from '../../services/admin/DivisionMasterService';
 
 function ContractExtension() {
@@ -89,7 +89,7 @@ function ContractExtension() {
 		//get designation
 		DesignationMasterService.getDesignation(emp?.designationId)
 			.then((res: any) => {
-				setDesignationData(res.data);
+				setDesignationData(res.data.data);
 			})
 			.catch((e: any) => {
 				console.log(e);
@@ -99,7 +99,7 @@ function ContractExtension() {
 
 		DivisionMasterService.getDivision(emp?.divisionId)
 			.then((res: any) => {
-				setDivisionData(res.data);
+				setDivisionData(res.data.data);
 			})
 			.catch((e: any) => {
 				console.log(e);
@@ -110,7 +110,8 @@ function ContractExtension() {
 	const retreiveEmployees = () => {
 		EmployeeService.getAllEmployeeData()
 			.then((res: any) => {
-				setEmpData(res.data);
+				console.log(res.data);
+				setEmpData(res.data.data);
 			})
 			.catch((e: any) => {
 				console.log(e);
@@ -279,27 +280,26 @@ function ContractExtension() {
 						name='remark'
 						value={values.remark}
 					></textarea>
-
-					<Stack
-						direction='row'
-						justifyContent='flex-end'
-						alignItems='flex-end'
-						spacing={2}
-						className='admin-form-buton-stack'
-					>
-						<button
-							className='action-com-model-error-btn'
-							type='reset'
-							color='error'
-							onClick={resetForm}
-						>
-							Reset
-						</button>
-						<button className='action-com-model-sucess-btn' type='submit'>
-							Submit
-						</button>
-					</Stack>
 				</div>
+				<Stack
+					direction='row'
+					justifyContent='flex-end'
+					alignItems='flex-end'
+					spacing={2}
+					className='admin-form-buton-stack'
+				>
+					<button
+						className='action-com-model-error-btn'
+						type='reset'
+						color='error'
+						onClick={resetForm}
+					>
+						Reset
+					</button>
+					<button className='action-com-model-sucess-btn' type='submit'>
+						Submit
+					</button>
+				</Stack>
 			</form>
 		</div>
 	);

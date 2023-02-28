@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { HiPlus, HiX } from 'react-icons/hi';
 
-import { generateID } from '../../../constant/generateId';
+import { generateID } from '../../../utils/generateId';
 
 import '../../pages.css';
 

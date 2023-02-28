@@ -4,7 +4,7 @@ import com.nifs.backend.model.Charges;
 import com.nifs.backend.model.Facility;
 import com.nifs.backend.model.VenueCharge;
 import com.nifs.backend.model.VenueMaster;
-import com.nifs.backend.service.VenueMasterServiceInterface;
+import com.nifs.backend.service.IVenueMasterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +17,7 @@ import java.util.Optional;
 public class VenueMasterController {
 
     @Autowired
-    private VenueMasterServiceInterface venueService;
+    private IVenueMasterService venueService;
 
     //get new venue id
     @GetMapping("/newid")

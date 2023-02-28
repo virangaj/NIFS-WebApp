@@ -8,6 +8,7 @@ import { BiCheck, BiSave, BiTrash } from 'react-icons/bi';
 
 import { toast } from 'react-toastify';
 import DesignationMasterService from '../../../../services/admin/DesignationMasterService';
+import { RequestStatus } from '../../../../constant/requestStatus';
 
 function DesignationAction({ params, rowId, setRowId, setDeleteId }: any) {
 	const [loading, setLoading] = useState(false);
@@ -22,17 +23,31 @@ function DesignationAction({ params, rowId, setRowId, setDeleteId }: any) {
 
 	const handleUpdate = async () => {
 		setLoading(true);
-		const { designationId, designationName, location } = params.row;
+		const { designationId, designationName, locationId } = params.row;
 		setTimeout(async () => {
 			const result = await DesignationMasterService.editDesignation({
 				designationId,
 				designationName,
-				location,
+				locationId,
 			});
-			if (result) {
+
+			if (result.data.status === RequestStatus.SUCCESS) {
 				setSuccess(true);
 				setRowId(null);
-				toast.success(`Employee Type updated to ${designationName}`, {
+				toast.success(`Designation updated to ${designationName}`, {
+					position: 'top-right',
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					theme: 'dark',
+				});
+			} else {
+				setSuccess(false);
+				setRowId(null);
+				toast.error(`${result.data.message}`, {
 					position: 'top-right',
 					autoClose: 5000,
 					hideProgressBar: false,
@@ -51,22 +66,35 @@ function DesignationAction({ params, rowId, setRowId, setDeleteId }: any) {
 		setDeleteLoadng(true);
 		setDeleteConfirm(false);
 		setTimeout(async () => {
-			const { designationId } = params.row;
+			const { designationId, designationName } = params.row;
 			const result = await DesignationMasterService.deleteDesignation(
 				designationId
 			);
-			// console.log('deleted ' + typeId);
-			toast.error(`Employee Type ${params.row.designationName} is deleted`, {
-				position: 'top-right',
-				autoClose: 5000,
-				hideProgressBar: false,
-				closeOnClick: true,
-				pauseOnHover: true,
-				draggable: true,
-				progress: undefined,
-				theme: 'dark',
-			});
-			setDeleteId(params.row.designationId);
+			console.log(result);
+			if (result.data.status === RequestStatus.SUCCESS) {
+				toast.error(`${designationName} is deleted`, {
+					position: 'top-right',
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					theme: 'dark',
+				});
+				setDeleteId(designationId);
+			} else {
+				toast.error(`${result.data.message}`, {
+					position: 'top-right',
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					theme: 'dark',
+				});
+			}
 
 			setDeleteLoadng(false);
 		}, 1500);

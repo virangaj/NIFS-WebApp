@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 import Stack from '@mui/material/Stack';
-import IEventRequest from '../../types/EventRequest';
-import { generateID } from '../../constant/generateId';
+import IEventRequest from '../../types/IEventRequest';
+import { generateID } from '../../utils/generateId';
 import CustomeDataPicker from '../../components/DataPicker';
 
 import CustomeTimePicker from '../../components/TimePicker';
@@ -11,12 +11,32 @@ import EventRequestParticipants from './shared/EventRequestParticipants';
 
 import Projects from '../../components/data/Project.json';
 
-function EventRequest() {
-	const [startDate, setStartDate] = React.useState<string | null>(null);
-	const [startTime, setStartTime] = React.useState<string | null>(null);
+const initialState: IEventRequest = {
+	eventId: '',
+	eventType: '',
+	type: '',
+	title: '',
+	remarks: '',
+	startDate: '',
+	endDate: '',
+	startTime: '',
+	endTime: '',
+	noParticipants: 0,
+	budget: 0,
+	project: '',
+	vote: '',
+	location: '',
+	venueName: '',
+	venueType: '',
+	fundType: '',
+};
 
-	const [endDate, setEndDate] = React.useState<string | null>(null);
-	const [endTime, setEndTime] = React.useState<string | null>(null);
+function EventRequest() {
+	const [startDate, setStartDate] = useState<string | null>(null);
+	const [startTime, setStartTime] = useState<string | null>(null);
+
+	const [endDate, setEndDate] = useState<string | null>(null);
+	const [endTime, setEndTime] = useState<string | null>(null);
 
 	const [getEventId, setEventId] = useState<String | any>('');
 
@@ -24,25 +44,7 @@ function EventRequest() {
 
 	const [eventAttachment, setEventAttachment] = useState<File | any>();
 
-	const [values, setValues] = useState<IEventRequest>({
-		eventId: '',
-		eventType: '',
-		type: '',
-		title: '',
-		remarks: '',
-		startDate: '',
-		endDate: '',
-		startTime: '',
-		endTime: '',
-		noParticipants: 0,
-		budget: 0,
-		project: '',
-		vote: '',
-		location: '',
-		venueName: '',
-		venueType: '',
-		fundType: '',
-	});
+	const [values, setValues] = useState<IEventRequest>(initialState);
 
 	useEffect(() => {
 		setValues({
@@ -78,25 +80,7 @@ function EventRequest() {
 	};
 
 	const resetForm = () => {
-		setValues({
-			eventId: '',
-			eventType: '',
-			type: '',
-			title: '',
-			remarks: '',
-			startDate: '',
-			endDate: '',
-			startTime: '',
-			endTime: '',
-			noParticipants: 0,
-			budget: 0,
-			project: '',
-			vote: '',
-			location: '',
-			venueName: '',
-			venueType: '',
-			fundType: '',
-		});
+		setValues(initialState);
 		setStartDate('');
 		setStartTime('');
 		setEndDate('');

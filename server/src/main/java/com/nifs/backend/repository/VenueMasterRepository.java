@@ -24,8 +24,8 @@ public interface VenueMasterRepository extends JpaRepository<VenueMaster, String
             @Param("remark") String remark, @Param("location") String location,
             @Param("availability") String availability, @Param("dateUpdated") Date dateUpdated , @Param("venueId") String venueId);
 
-//    @Query(value = "SELECT venue_id FROM venue_master ORDER BY venue_id DESC LIMIT 1", nativeQuery = true)
-    @Query(value = "SELECT TOP 1 venue_id FROM venue_master ORDER BY venue_id DESC", nativeQuery = true)
+    @Query(value = "SELECT venue_id FROM venue_master ORDER BY venue_id DESC LIMIT 1", nativeQuery = true)
+//    @Query(value = "SELECT TOP 1 venue_id FROM venue_master ORDER BY venue_id DESC", nativeQuery = true)
     String returnLastId();
 
     @Query(value = "SELECT * FROM venue_master WHERE venue_id =?1", nativeQuery = true)

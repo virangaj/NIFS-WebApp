@@ -1,8 +1,7 @@
 package com.nifs.backend.controller;
 
 import com.nifs.backend.dto.LocationDTO;
-import com.nifs.backend.model.Locations;
-import com.nifs.backend.service.LocationServiceInterface;
+import com.nifs.backend.service.ILocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +13,7 @@ import java.util.List;
 public class LocationController {
 
     @Autowired
-    LocationServiceInterface locService;
+    ILocationService locService;
 
 //    get all locations
     @GetMapping
@@ -37,14 +36,14 @@ public class LocationController {
 
     //    add locations
     @PostMapping
-    private Boolean createLocation(@RequestBody Locations venLocData){
+    private Boolean createLocation(@RequestBody LocationDTO venLocData){
         return locService.createLocation(venLocData);
     }
 
 
 //    update location
     @PutMapping("/update/{locationid}")
-    private Boolean updateLocationData(@PathVariable String locationid, @RequestBody Locations locData){
+    private Boolean updateLocationData(@PathVariable String locationid, @RequestBody LocationDTO locData){
         return locService.updateLocationData(locationid, locData);
     }
 

@@ -13,7 +13,7 @@ const config = {
 axios.defaults.baseURL = process.env.REACT_APP_BACKEND_SERVER;
 
 const getAllEmpCategories = () => {
-	return http.get<Array<any>>('/admin/employeecategory');
+	return http.get<any>('/admin/employeecategory');
 };
 
 const getEmpCat = (id: any) => {

@@ -5,11 +5,12 @@ import Box from '@mui/material/Box';
 import Ripple from '../../../components/Ripple';
 import { HiX } from 'react-icons/hi';
 import { toast } from 'react-toastify';
-import IDesignationData from '../../../types/DesignationData';
-import ILocationData from '../../../types/LocationData';
+import IDesignationData from '../../../types/IDesignationData';
+import ILocationData from '../../../types/ILocationData';
 import LocationMasterService from '../../../services/admin/LocationMasterService';
 import DesignationMasterService from '../../../services/admin/DesignationMasterService';
 import DesignationAction from './shared/DesignationAction';
+import { RequestStatus } from '../../../constant/requestStatus';
 
 function Designation() {
 	const [pageSize, setPageSize] = useState(10);
@@ -52,8 +53,19 @@ function Designation() {
 	const retreiveDesignations = () => {
 		DesignationMasterService.getAllDesignations()
 			.then((res: any) => {
-				setDesignationData(res.data);
-				console.log(designationData);
+				if (res.data.status === RequestStatus.SUCCESS) {
+					setDesignationData(res.data.data);
+				} else {
+					toast.error(`${res.data.message}`, {
+						position: 'top-right',
+						autoClose: 5000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+					});
+				}
 			})
 			.catch((e: any) => {
 				console.log(e);
@@ -64,7 +76,7 @@ function Designation() {
 		LocationMasterService.getAllLocations()
 			.then((res: any) => {
 				setLocationData(res.data);
-				console.log(locationData);
+				// console.log(locationData);
 			})
 			.catch((e: any) => {
 				console.log(e);
@@ -105,41 +117,17 @@ function Designation() {
 			setTimeout(async () => {
 				const result = await DesignationMasterService.saveDesignation(values);
 				// console.log(result)
-				if (result.data) {
-					toast.success('New Designation is added', {
-						position: 'top-right',
-						autoClose: 5000,
-						hideProgressBar: false,
-						closeOnClick: true,
-						pauseOnHover: true,
-						draggable: true,
-						progress: undefined,
-					});
+				if (result.data.status === RequestStatus.SUCCESS) {
+					toast.success('New Designation is added');
 					resetForm();
 				} else {
-					toast.error('Request cannot completed!', {
-						position: 'top-right',
-						autoClose: 5000,
-						hideProgressBar: false,
-						closeOnClick: true,
-						pauseOnHover: true,
-						draggable: true,
-						progress: undefined,
-					});
+					toast.error('Request cannot completed!');
 				}
 				setLoading(false);
 			}, 1000);
 		} else {
 			// alert('Please add a ID');
-			toast.error('Please add an ID', {
-				position: 'top-right',
-				autoClose: 5000,
-				hideProgressBar: false,
-				closeOnClick: true,
-				pauseOnHover: true,
-				draggable: true,
-				progress: undefined,
-			});
+			toast.error('Please add an ID');
 		}
 	};
 
@@ -190,7 +178,7 @@ function Designation() {
 							components={{ Toolbar: GridToolbar }}
 							rowHeight={60}
 							columns={columns}
-							rows={designationData}
+							rows={designationData && designationData}
 							getRowId={(row) => row.designationId}
 							rowsPerPageOptions={[10, 20, 30]}
 							pageSize={pageSize}
