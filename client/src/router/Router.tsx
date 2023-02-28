@@ -20,6 +20,7 @@ import BackToTop from '.././components/shared/BackToTop';
 import AdminAdmin from '.././pages/adminDashboards/AdminAdmin';
 import ChangePassword from '.././pages/login/ChangePassword';
 import Login from '../pages/Login';
+import { Counter } from '../redux/Counter';
 
 const AppRouter = () => {
 	return (
@@ -35,6 +36,7 @@ const AppRouter = () => {
 							<Navbar />
 							<BackToTop />
 							<Home />
+							{/* <Counter /> */}
 							<Footer />
 						</>
 					}

@@ -58,8 +58,13 @@ public class JwtService {
 
     //validate tokem
     public boolean isTokenValid(String token, UserDetails userDetails){
-        final String username = extractUsername(token);
-        return (username.equals(userDetails.getUsername()) && !isTokenExpire(token));
+        try{
+            final String username = extractUsername(token);
+            return (username.equals(userDetails.getUsername()) && ! isTokenExpire(token));
+        }catch(Exception e){
+            System.out.println(e.toString());
+            return false;
+        }
     }
 
     // check weather token is expired
