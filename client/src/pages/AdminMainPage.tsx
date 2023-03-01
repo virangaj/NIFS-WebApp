@@ -10,6 +10,7 @@ import AnnualIncrementRequest from "./admin/AnnualIncrementRequest";
 import AdministrativeReport from "./admin/AdministrativeReport";
 import Accommodation from "./admin/Accommodation";
 import OverseasTelephoneCharges from "./admin/OverseasTelephoneCharges";
+import InsuranceClaim from "./admin/InsuranceClaim";
 
 function AdminMainPage() {
   return (
@@ -42,6 +43,7 @@ function AdminMainPage() {
           path={RouteName.OverseasTelCahrges}
           element={<OverseasTelephoneCharges />}
         />
+        <Route path={RouteName.InsuranceClaims} element={<InsuranceClaim />} />
         <Route path={RouteName.Accommodation} element={<Accommodation />} />
       </Routes>
     </div>
