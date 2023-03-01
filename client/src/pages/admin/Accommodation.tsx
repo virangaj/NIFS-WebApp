@@ -53,6 +53,8 @@ function Accommodation() {
   const [getDocumentNo, setDocumentNo] = useState<String | any>("");
   const [empData, setEmpData] = useState<Array<IEmployeeData>>([]);
   const [docDate, setDocDate] = React.useState<string | null>(null);
+  const [fromDate, setFromDate] = React.useState<string | null>(null);
+  const [toDate, setToDate] = React.useState<string | null>(null);
   const [currentEmp, setCurrentEmp] = useState<IEmployeeData>();
   const [empFoundError, setEmpFoundError] = useState<boolean>(false);
   const [designationData, setDesignationData] = useState<IDesignationData>();
@@ -408,10 +410,99 @@ function Accommodation() {
                 required
               />
             </div>
+
+            <label className="input-label basis-1/2">Duration</label>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="mx-0 mb-4 lg:ml-10 md:my-0">
+                <CustomeDataPicker
+                  date={fromDate}
+                  setDate={setFromDate}
+                  title="From"
+                />
+              </div>
+
+              <div className="mx-0 mb-4 lg:ml-10 md:my-0">
+                <CustomeDataPicker
+                  date={toDate}
+                  setDate={setToDate}
+                  title="To"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="input-label basis-1/2" htmlFor="roomRates">
+                Room Rates
+              </label>
+
+              <input
+                id="outlined-basic"
+                type="search"
+                className="mr-4 tailwind-text-box w-[100%]"
+                name="roomRates"
+                onChange={onChange}
+                value={values.roomRates}
+                required
+              />
+            </div>
           </div>
           {/* right section of the flex */}
-          <div className="flex-1 ml-4"></div>
+          <div className="flex-1 ml-4">
+            <div>
+              <label className="input-label basis-1/2" htmlFor="noOfDays">
+                No of Days
+              </label>
+
+              <input
+                id="outlined-basic"
+                type="search"
+                className="mr-4 tailwind-text-box w-[100%]"
+                name="noOfDays"
+                onChange={onChange}
+                value={values.noOfDays}
+                required
+              />
+            </div>
+
+            <div>
+              <label className="input-label basis-1/2" htmlFor="totalCharges">
+                Total Charges
+              </label>
+
+              <input
+                id="outlined-basic"
+                type="search"
+                className="mr-4 tailwind-text-box w-[100%]"
+                name="totalCharges"
+                onChange={onChange}
+                value={values.totalCharges}
+                required
+              />
+            </div>
+
+            {/* have to implement some checkboxes */}
+          </div>
         </div>
+
+        <Stack
+          direction="row"
+          justifyContent="flex-end"
+          alignItems="flex-end"
+          spacing={2}
+          className="admin-form-buton-stack"
+        >
+          <button
+            className="action-com-model-error-btn"
+            type="reset"
+            color="error"
+            onClick={resetForm}
+          >
+            Reset
+          </button>
+          <button className="action-com-model-sucess-btn" type="submit">
+            Submit
+          </button>
+        </Stack>
       </form>
     </div>
   );
