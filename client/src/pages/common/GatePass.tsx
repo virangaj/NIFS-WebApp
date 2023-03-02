@@ -1,62 +1,74 @@
 import React, { useState, useEffect } from "react";
+import IGatePass from "../../types/common/IGatePass";
 import Box from "@mui/material/Box";
-import { toast } from "react-toastify";
-import Stack from "@mui/material/Stack";
 import { generateID } from "../../utils/generateId";
-import Ripple from "../../components/Ripple";
-import IContractExtension from "../../types/IContractExtension";
 import CustomeDataPicker from "../../components/DataPicker";
 import IEmployeeData from "../../types/IEmployeeData";
-import EmployeeService from "../../services/admin/EmployeeService";
 import IDesignationData from "../../types/IDesignationData";
-import DesignationMasterService from "../../services/admin/DesignationMasterService";
 import IDivisionData from "../../types/IDivisionData";
+import Stack from "@mui/material/Stack";
+import EmployeeService from "../../services/admin/EmployeeService";
+import DesignationMasterService from "../../services/admin/DesignationMasterService";
 import DivisionMasterService from "../../services/admin/DivisionMasterService";
 
-const initialState: IContractExtension = {
+const initialState: IGatePass = {
+  // gate pass
   documentNo: "",
   date: "",
-  epfNo: 0,
-  designationId: "",
-  divisionId: "",
-  hod: "",
+  locationAfterRemoval: "",
+  purposeOfRemoval: "",
+  dateOfRemoval: "",
+  project: "",
+  attachment: "",
   remark: "",
+
+  //   generated
+  epfNo: "",
+  designation: "",
+  division: "",
 };
 
-function ContractExtension() {
+function GatePass() {
   const [getDocNo, setDocNo] = useState<String | any>("");
   const [requestDate, setRequestDate] = React.useState<string | null>(null);
+  const [values, setValues] = useState<IGatePass>(initialState);
+  const [empData, setEmpData] = useState<Array<IEmployeeData>>([]);
+  const [empFoundError, setEmpFoundError] = useState<boolean>(false);
   const [designationData, setDesignationData] = useState<IDesignationData>();
   const [divisionData, setDivisionData] = useState<IDivisionData>();
-
-  const [empFoundError, setEmpFoundError] = useState<boolean>(false);
-  const [empData, setEmpData] = useState<Array<IEmployeeData>>([]);
+  const [removalDate, setRemovalDate] = React.useState<string | null>(null);
   const [currentEmp, setCurrentEmp] = useState<IEmployeeData>();
-  const [values, setValues] = useState<IContractExtension>(initialState);
 
   useEffect(() => {
     setValues({
       documentNo: values?.documentNo,
       date: requestDate ? requestDate : "",
       epfNo: values?.epfNo,
-      designationId: values?.designationId,
-      divisionId: values?.divisionId,
-      hod: values?.hod,
+      designation: values?.designation,
+      division: values?.division,
       remark: values?.remark,
+      locationAfterRemoval: values?.locationAfterRemoval,
+      purposeOfRemoval: values?.purposeOfRemoval,
+      dateOfRemoval: values.dateOfRemoval,
+      project: values?.project,
+      attachment: values?.attachment,
     });
   }, [requestDate]);
 
   useEffect(() => {
     setValues({
-      documentNo: getDocNo && getDocNo,
+      documentNo: values?.documentNo,
       date: requestDate ? requestDate : "",
       epfNo: values?.epfNo,
-      designationId: values?.designationId,
-      divisionId: values?.divisionId,
-      hod: values?.hod,
+      designation: values?.designation,
+      division: values?.division,
       remark: values?.remark,
+      locationAfterRemoval: values?.locationAfterRemoval,
+      purposeOfRemoval: values?.purposeOfRemoval,
+      dateOfRemoval: values.dateOfRemoval,
+      project: values?.project,
+      attachment: values?.attachment,
     });
-    console.log(getDocNo);
   }, [getDocNo]);
 
   useEffect(() => {
@@ -75,13 +87,17 @@ function ContractExtension() {
       setEmpFoundError(true);
     }
     setValues({
-      documentNo: getDocNo && getDocNo,
+      documentNo: values?.documentNo,
       date: requestDate ? requestDate : "",
       epfNo: values?.epfNo,
-      designationId: employee?.designationId,
-      divisionId: employee?.divisionId,
-      hod: values?.hod,
+      designation: values?.designation,
+      division: values?.division,
       remark: values?.remark,
+      locationAfterRemoval: values?.locationAfterRemoval,
+      purposeOfRemoval: values?.purposeOfRemoval,
+      dateOfRemoval: values.dateOfRemoval,
+      project: values?.project,
+      attachment: values?.attachment,
     });
     retriveEmployeeDetails(employee);
   }, [values.epfNo]);
@@ -120,16 +136,9 @@ function ContractExtension() {
       });
   };
 
-  // generate document ID
   const generateDocNo = () => {
     setDocNo(generateID("CE"));
     setValues(initialState);
-  };
-
-  //reset form
-  const resetForm = () => {
-    setValues(initialState);
-    setDocNo("");
   };
 
   //onchange funtion
@@ -139,7 +148,13 @@ function ContractExtension() {
       [e.target.name]: e.target.value,
     }));
   };
+  //reset form
+  const resetForm = () => {
+    setValues(initialState);
+    setDocNo("");
+  };
 
+  //on Submit
   const onSubmit = async (e: any) => {
     e.preventDefault();
     console.log(values);
@@ -147,12 +162,12 @@ function ContractExtension() {
 
   return (
     <div className="sub-body-content xl:!w-[60%]">
-      <h1 className="page-title">Contract Extension</h1>
+      <h1 className="page-title">Gate Pass</h1>
       <hr className="horizontal-line" />
       <form onSubmit={onSubmit}>
         <div className="grid grid-cols-1 md:grid-cols-2 items-center w-[97%] mx-auto">
           <Box className="flex items-center justify-between input-field">
-            Document No - {getDocNo && getDocNo}
+            Document No - {getDocNo}
             <button
               type="button"
               className="rounded-outline-success-btn"
@@ -254,7 +269,90 @@ function ContractExtension() {
           </div>
         </div>
 
-        <div className="w-[97%] mx-auto">
+        <div className="flex w-[100%]">
+          {/* left section of the flex */}
+          <div className="flex-1 mr-4">
+            <div>
+              <label
+                className="input-label basis-1/2"
+                htmlFor="locationAfterRemoval"
+              >
+                Location After Removal
+              </label>
+
+              <input
+                id="outlined-basic"
+                type="search"
+                className="mr-4 tailwind-text-box w-[100%]"
+                name="locationAfterRemoval"
+                onChange={onChange}
+                value={values.locationAfterRemoval}
+                required
+              />
+            </div>
+
+            <div>
+              <label
+                className="input-label basis-1/2"
+                htmlFor="purposeOfRemoval"
+              >
+                Purpose Of Removal
+              </label>
+
+              <input
+                id="outlined-basic"
+                type="search"
+                className="mr-4 tailwind-text-box w-[100%]"
+                name="purposeOfRemoval"
+                onChange={onChange}
+                value={values.purposeOfRemoval}
+                required
+              />
+            </div>
+            <div>
+              <label className="input-label basis-1/2" htmlFor="attachment">
+                Attachment
+              </label>
+
+              <input
+                id="outlined-basic"
+                type="search"
+                className="mr-4 tailwind-text-box w-[100%]"
+                name="attachment"
+                onChange={onChange}
+                value={values.attachment}
+                required
+              />
+            </div>
+          </div>
+          {/* right section of the flex */}
+          <div className="flex-1 mr-4">
+            <div className="mx-0 mb-4 lg:mt-5 lg:mb-2 md:my-0">
+              <CustomeDataPicker
+                date={removalDate}
+                setDate={setRemovalDate}
+                title="Request Date"
+              />
+            </div>
+
+            <div>
+              <label className="input-label basis-1/2" htmlFor="project">
+                Project
+              </label>
+
+              <input
+                id="outlined-basic"
+                type="search"
+                className="mr-4 tailwind-text-box w-[100%]"
+                name="project"
+                onChange={onChange}
+                value={values.project}
+                required
+              />
+            </div>
+          </div>
+        </div>
+        <div className="w-[97%] mx-auto ml-0">
           <label className="input-label" htmlFor="remark">
             Remark
           </label>
@@ -291,4 +389,4 @@ function ContractExtension() {
   );
 }
 
-export default ContractExtension;
+export default GatePass;
