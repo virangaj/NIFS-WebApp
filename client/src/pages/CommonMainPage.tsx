@@ -8,6 +8,7 @@ import GatePass from "./common/GatePass";
 import Overtime from "./common/Overtime";
 import Srn from "./common/Srn";
 import QuotationSummary from "./common/QuotationSummary";
+import WorkRequest from "./common/WorkRequest";
 
 function CommonMainPage() {
   return (
@@ -26,6 +27,7 @@ function CommonMainPage() {
           path={RouteName.QuotationSummary}
           element={<QuotationSummary />}
         ></Route>
+        <Route path={RouteName.WorkRequest} element={<WorkRequest />}></Route>
       </Routes>
     </div>
   );

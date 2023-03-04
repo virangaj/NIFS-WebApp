@@ -357,14 +357,14 @@ function QuotationSummary() {
             </div>
 
             <div className="mx-0 input-field lg:ml-4">
-              <label className="input-label" htmlFor="fundType">
+              <label className="input-label" htmlFor="fund">
                 External /Fund Internal / Budget
               </label>
               <select
                 className="tailwind-text-box w-[90%]"
-                value={values.fundType}
-                id="fundType"
-                name="fundType"
+                value={values.fund}
+                id="fund"
+                name="fund"
                 onChange={onChange}
               >
                 <option value="" disabled>
