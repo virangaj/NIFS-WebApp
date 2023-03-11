@@ -86,7 +86,7 @@ export default function Login() {
 			<div className='hidden w-full h-screen bg-indigo-600 md:block md:w-1/2 xl:w-2/3'>
 				<img
 					src='https://source.unsplash.com/random'
-					alt=''
+					alt='random'
 					className='object-cover w-full h-full'
 				/>
 			</div>
