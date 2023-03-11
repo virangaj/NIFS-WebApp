@@ -17,7 +17,7 @@ const getAllEmpCategories = () => {
 };
 
 const getEmpCat = (id: any) => {
-	return http.get<any>(`/admin/employeecategory/${id}`);
+	return http.get<any>(`/admin/employeecategory/get/${id}`);
 };
 
 const saveEmpCat = async (favJSON: any) => {
