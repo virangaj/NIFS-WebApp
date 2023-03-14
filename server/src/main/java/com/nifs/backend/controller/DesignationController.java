@@ -122,7 +122,7 @@ public class DesignationController {
     }
 
     //    create designation
-    @PostMapping
+    @PostMapping("/add")
     private ResponseEntity<?> createDesignation(@RequestBody DesignationMasterDTO desData) {
 
         Map<String, Object> map = new LinkedHashMap<String, Object>();

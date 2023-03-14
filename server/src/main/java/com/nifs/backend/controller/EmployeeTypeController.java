@@ -14,7 +14,7 @@ import java.util.Map;
 
 
 @RestController
-@RequestMapping("admin/employeetype")
+@RequestMapping("/admin/employeetype")
 @CrossOrigin
 public class EmployeeTypeController {
 
@@ -92,7 +92,7 @@ public class EmployeeTypeController {
     }
 
     //    create new employee type
-    @PostMapping
+    @PostMapping("/add")
     private ResponseEntity<?> createEmpType(@RequestBody EmployeeTypeDTO empTypeData) {
 
         Map<String, Object> map = new LinkedHashMap<String, Object>();

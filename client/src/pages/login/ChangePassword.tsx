@@ -1,5 +1,5 @@
 import { toast } from 'react-toastify';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
@@ -24,6 +24,12 @@ function ChangePassword() {
 	const [confirmError, setConfirmError] = useState('');
 	const { user, isLoading, isError, isSuccess, tokenExpireDate } =
 		useAppSelector((state: any) => state.auth);
+
+	useEffect(() => {
+		if (user === null) {
+			navigate(RouteName.Login);
+		}
+	}, []);
 	const onSubmit: SubmitHandler<any> = (data) => {
 		//chaeck passwords match or not
 		data.epfNo = parseInt(data.epfNo);

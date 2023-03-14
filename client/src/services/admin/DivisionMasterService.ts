@@ -24,7 +24,7 @@ const saveDivision = async (favJSON: any) => {
 	console.log(favJSON);
 	const response = await axios({
 		method: 'post',
-		url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/division`,
+		url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/division/add`,
 		data: favJSON,
 		headers: { 'Content-Type': 'application/json; charset=utf-8' },
 	});

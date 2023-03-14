@@ -16,14 +16,14 @@ const getAllEmpTypes = () => {
 };
 
 const getEmpType = (id: any) => {
-	return http.get<any>(`/admin/employeetype/${id}`);
+	return http.get<any>(`/admin/employeetype/get/${id}`);
 };
 
 const saveEmpType = async (favJSON: any) => {
 	console.log(favJSON);
 	const response = await axios({
 		method: 'post',
-		url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/employeetype`,
+		url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/employeetype/add`,
 		data: favJSON,
 		headers: { 'Content-Type': 'application/json; charset=utf-8' },
 	});
