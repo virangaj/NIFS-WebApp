@@ -1,66 +1,63 @@
+import IQuotationSummary from "../../types/common/IQuotationSummary";
 import React, { useState, useEffect } from "react";
+import IOvertime from "../../types/common/IOvertime";
 import Box from "@mui/material/Box";
-import Stack from "@mui/material/Stack";
 import { generateID } from "../../utils/generateId";
 import CustomeDataPicker from "../../components/DataPicker";
 import IEmployeeData from "../../types/IEmployeeData";
 import EmployeeService from "../../services/admin/EmployeeService";
+import DesignationMasterService from "../../services/admin/DesignationMasterService";
+import DivisionMasterService from "../../services/admin/DivisionMasterService";
 import IDesignationData from "../../types/IDesignationData";
 import IDivisionData from "../../types/IDivisionData";
-import DesignationMasterService from "../../services/admin/DesignationMasterService";
-import IWorkRequest from "../../types/common/IWorkRequest";
-import DivisionMasterService from "../../services/admin/DivisionMasterService";
+import Stack from "@mui/material/Stack";
+import IQuotationRequest from "../../types/common/IQuotationRequest";
 
 import Projects from "../../components/data/Project.json";
-import FileInput from "../../components/FileInput";
 
-const initialState: IWorkRequest = {
+const initialState: IQuotationRequest = {
   documentNo: "",
   date: "",
-  epfNo: 0,
-  designationId: "",
-  divisionId: "",
-  hod: "",
+  epfNo: "",
   project: "",
-  workDetails: "",
-  type: "",
-  vote: "",
-  forwardTo: "",
-  repairRequest: "",
   fund: "",
-  attachment: "",
-  assetNo: "",
+  srnNo: "",
+  fileNo: "",
+  validityPeriodOfTheQuotation: "",
+  shippingTerms: "",
+  supplierCatergory: "",
+  bidClosingDate: "",
+  bidClosingTime: "",
+  remark: "",
 };
 
-function WorkRequest() {
+function QuotationRequest() {
+  const [values, setValues] = useState<IQuotationRequest>(initialState);
   const [getDocNo, setDocNo] = useState<String | any>("");
   const [requestDate, setRequestDate] = React.useState<string | null>(null);
+  const [empData, setEmpData] = useState<Array<IEmployeeData>>([]);
+  const [empFoundError, setEmpFoundError] = useState<boolean>(false);
+  const [currentEmp, setCurrentEmp] = useState<IEmployeeData>();
   const [designationData, setDesignationData] = useState<IDesignationData>();
   const [divisionData, setDivisionData] = useState<IDivisionData>();
-
-  const [empFoundError, setEmpFoundError] = useState<boolean>(false);
-  const [empData, setEmpData] = useState<Array<IEmployeeData>>([]);
-  const [currentEmp, setCurrentEmp] = useState<IEmployeeData>();
-  const [values, setValues] = useState<IWorkRequest>(initialState);
-  const [eventAttachment, setEventAttachment] = useState<File | any>();
+  const [startDate, setStartDate] = React.useState<string | null>(null);
+  const [endDate, setEndDate] = React.useState<string | null>(null);
 
   useEffect(() => {
     setValues({
       documentNo: values?.documentNo,
       date: requestDate ? requestDate : "",
       epfNo: values?.epfNo,
-      designationId: values?.designationId,
-      divisionId: values?.divisionId,
-      hod: values?.hod,
       project: values?.project,
-      workDetails: values?.workDetails,
-      type: values?.type,
-      vote: values?.vote,
-      forwardTo: values?.forwardTo,
-      repairRequest: values?.repairRequest,
       fund: values?.fund,
-      attachment: values?.attachment,
-      assetNo: values?.assetNo,
+      srnNo: values?.srnNo,
+      fileNo: values?.fileNo,
+      validityPeriodOfTheQuotation: values?.validityPeriodOfTheQuotation,
+      shippingTerms: values?.shippingTerms,
+      supplierCatergory: values?.supplierCatergory,
+      bidClosingDate: values?.bidClosingDate,
+      bidClosingTime: values?.bidClosingTime,
+      remark: values?.remark,
     });
   }, [requestDate]);
 
@@ -69,20 +66,17 @@ function WorkRequest() {
       documentNo: values?.documentNo,
       date: requestDate ? requestDate : "",
       epfNo: values?.epfNo,
-      designationId: values?.designationId,
-      divisionId: values?.divisionId,
-      hod: values?.hod,
       project: values?.project,
-      workDetails: values?.workDetails,
-      type: values?.type,
-      vote: values?.vote,
-      forwardTo: values?.forwardTo,
-      repairRequest: values?.repairRequest,
       fund: values?.fund,
-      attachment: values?.attachment,
-      assetNo: values?.assetNo,
+      srnNo: values?.srnNo,
+      fileNo: values?.fileNo,
+      validityPeriodOfTheQuotation: values?.validityPeriodOfTheQuotation,
+      shippingTerms: values?.shippingTerms,
+      supplierCatergory: values?.supplierCatergory,
+      bidClosingDate: values?.bidClosingDate,
+      bidClosingTime: values?.bidClosingTime,
+      remark: values?.remark,
     });
-    console.log(getDocNo);
   }, [getDocNo]);
 
   useEffect(() => {
@@ -104,18 +98,16 @@ function WorkRequest() {
       documentNo: values?.documentNo,
       date: requestDate ? requestDate : "",
       epfNo: values?.epfNo,
-      designationId: values?.designationId,
-      divisionId: values?.divisionId,
-      hod: values?.hod,
       project: values?.project,
-      workDetails: values?.workDetails,
-      type: values?.type,
-      vote: values?.vote,
-      forwardTo: values?.forwardTo,
-      repairRequest: values?.repairRequest,
       fund: values?.fund,
-      attachment: values?.attachment,
-      assetNo: values?.assetNo,
+      srnNo: values?.srnNo,
+      fileNo: values?.fileNo,
+      validityPeriodOfTheQuotation: values?.validityPeriodOfTheQuotation,
+      shippingTerms: values?.shippingTerms,
+      supplierCatergory: values?.supplierCatergory,
+      bidClosingDate: values?.bidClosingDate,
+      bidClosingTime: values?.bidClosingTime,
+      remark: values?.remark,
     });
     retriveEmployeeDetails(employee);
   }, [values.epfNo]);
@@ -154,16 +146,9 @@ function WorkRequest() {
       });
   };
 
-  // generate document ID
   const generateDocNo = () => {
     setDocNo(generateID("CE"));
     setValues(initialState);
-  };
-
-  //reset form
-  const resetForm = () => {
-    setValues(initialState);
-    setDocNo("");
   };
 
   //onchange funtion
@@ -173,20 +158,25 @@ function WorkRequest() {
       [e.target.name]: e.target.value,
     }));
   };
+  //reset form
+  const resetForm = () => {
+    setValues(initialState);
+    setDocNo("");
+  };
 
+  //on Submit
   const onSubmit = async (e: any) => {
     e.preventDefault();
     console.log(values);
   };
-
   return (
     <div className="sub-body-content xl:!w-[60%]">
-      <h1 className="page-title">Work Request</h1>
+      <h1 className="page-title">Quotation Request</h1>
       <hr className="horizontal-line" />
       <form onSubmit={onSubmit}>
         <div className="grid grid-cols-1 md:grid-cols-2 items-center w-[97%] mx-auto">
           <Box className="flex items-center justify-between input-field">
-            Document No - {getDocNo && getDocNo}
+            Quotation No - {getDocNo}
             <button
               type="button"
               className="rounded-outline-success-btn"
@@ -201,7 +191,7 @@ function WorkRequest() {
             <CustomeDataPicker
               date={requestDate}
               setDate={setRequestDate}
-              title="Request Date"
+              title="Quotation Date"
             />
           </div>
 
@@ -252,43 +242,6 @@ function WorkRequest() {
           ""
         )}
 
-        <div className="w-[97%] mx-auto">
-          <p className="normal-text">
-            Designation :{" "}
-            {values.epfNo && designationData ? (
-              <span className="font-bold">
-                {designationData.designationName}
-              </span>
-            ) : (
-              <span className="italic-sm-text">Please select an employee</span>
-            )}
-          </p>
-
-          <div className="grid items-center grid-cols-1 md:grid-cols-2">
-            <p className="normal-text">
-              Division :{" "}
-              {values.epfNo && divisionData ? (
-                <span className="font-bold">{divisionData.name}</span>
-              ) : (
-                <span className="italic-sm-text">
-                  Please select an employee
-                </span>
-              )}
-            </p>
-
-            <p className="normal-text">
-              HOD :{" "}
-              {values.epfNo && divisionData ? (
-                <span className="font-bold">{divisionData.name}</span>
-              ) : (
-                <span className="italic-sm-text">
-                  Please select an employee
-                </span>
-              )}
-            </p>
-          </div>
-        </div>
-
         <div className="flex w-[100%]">
           {/* left section of the flex */}
           <div className="flex-1 mr-4">
@@ -305,133 +258,6 @@ function WorkRequest() {
               >
                 <option value="" disabled>
                   Select a Project
-                </option>
-
-                {Projects
-                  ? Projects.map((p, index) => (
-                      <option value={p.value} key={index}>
-                        {p.value}
-                      </option>
-                    ))
-                  : ""}
-              </select>
-            </div>
-
-            <div className="mx-0 input-field lg:ml-4">
-              <label className="input-label" htmlFor="type">
-                Type
-              </label>
-              <select
-                className="tailwind-text-box w-[90%]"
-                value={values.type}
-                id="type"
-                name="type"
-                onChange={onChange}
-              >
-                <option value="" disabled>
-                  Select a Item Type
-                </option>
-
-                {Projects
-                  ? Projects.map((p, index) => (
-                      <option value={p.value} key={index}>
-                        {p.value}
-                      </option>
-                    ))
-                  : ""}
-              </select>
-            </div>
-
-            <div className="mx-0 input-field lg:ml-4">
-              <label className="input-label" htmlFor="vote">
-                Vote
-              </label>
-              <select
-                className="tailwind-text-box w-[90%]"
-                value={values.vote}
-                id="vote"
-                name="vote"
-                onChange={onChange}
-              >
-                <option value="" disabled>
-                  Select a Item Type
-                </option>
-
-                {Projects
-                  ? Projects.map((p, index) => (
-                      <option value={p.value} key={index}>
-                        {p.value}
-                      </option>
-                    ))
-                  : ""}
-              </select>
-            </div>
-
-            <div>
-              <label
-                className="input-label basis-1/2 lg:ml-2 "
-                htmlFor="assetNo"
-              >
-                Asset No
-              </label>
-
-              <input
-                id="outlined-basic"
-                type="search"
-                className="mr-4 tailwind-text-box w-[100%]"
-                name="assetNo"
-                onChange={onChange}
-                value={values.assetNo}
-                required
-              />
-            </div>
-
-            <FileInput
-              setEventAttachment={setEventAttachment}
-              eventAttachment={eventAttachment}
-              title="Upload Attachment"
-            />
-          </div>
-          {/* Right section of the flex */}
-          <div className="flex-1 mr-4">
-            <div className="mx-0 input-field lg:ml-4">
-              <label className="input-label" htmlFor="forwardTo">
-                Forward To
-              </label>
-              <select
-                className="tailwind-text-box w-[90%]"
-                value={values.forwardTo}
-                id="forwardTo"
-                name="forwardTo"
-                onChange={onChange}
-              >
-                <option value="" disabled>
-                  Select a Item Type
-                </option>
-
-                {Projects
-                  ? Projects.map((p, index) => (
-                      <option value={p.value} key={index}>
-                        {p.value}
-                      </option>
-                    ))
-                  : ""}
-              </select>
-            </div>
-
-            <div className="mx-0 input-field lg:ml-4">
-              <label className="input-label" htmlFor="repairRequest">
-                Repair Request
-              </label>
-              <select
-                className="tailwind-text-box w-[90%]"
-                value={values.repairRequest}
-                id="repairRequest"
-                name="repairRequest"
-                onChange={onChange}
-              >
-                <option value="" disabled>
-                  Select a Item Type
                 </option>
 
                 {Projects
@@ -468,7 +294,140 @@ function WorkRequest() {
                   : ""}
               </select>
             </div>
+
+            <div>
+              <label className="input-label basis-1/2" htmlFor="srnNo">
+                SRN No
+              </label>
+
+              <input
+                id="outlined-basic"
+                type="search"
+                className="mr-4 tailwind-text-box w-[100%]"
+                name="srnNo"
+                onChange={onChange}
+                value={values.srnNo}
+                required
+              />
+            </div>
+
+            <div>
+              <label className="input-label basis-1/2" htmlFor="fileNo">
+                fileNo
+              </label>
+
+              <input
+                id="outlined-basic"
+                type="search"
+                className="mr-4 tailwind-text-box w-[100%]"
+                name="fileNo"
+                onChange={onChange}
+                value={values.fileNo}
+                required
+              />
+            </div>
+
+            <div className="mx-0 mb-4 lg:ml-4 md:my-0">
+              <CustomeDataPicker
+                date={startDate}
+                setDate={setStartDate}
+                title="Start Date"
+              />
+            </div>
+
+            <div className="mx-0 mb-4  md:my-0 lg:ml-4 lg:mt-2">
+              <CustomeDataPicker
+                date={endDate}
+                setDate={setEndDate}
+                title="End Date"
+              />
+            </div>
           </div>
+          {/* Right section of the flex */}
+          <div className="flex-1 mr-4">
+            <div>
+              <label
+                className="input-label basis-1/2"
+                htmlFor="validityPeriodOfTheQuotation"
+              >
+                Validity Period Of The Quotation
+              </label>
+
+              <input
+                id="outlined-basic"
+                type="search"
+                className="mr-4 tailwind-text-box w-[100%]"
+                name="validityPeriodOfTheQuotation"
+                onChange={onChange}
+                value={values.validityPeriodOfTheQuotation}
+                required
+              />
+            </div>
+
+            <div className="mx-0 input-field lg:ml-4">
+              <label className="input-label" htmlFor="shippingTerms">
+                Shipping Terms
+              </label>
+              <select
+                className="tailwind-text-box w-[90%]"
+                value={values.shippingTerms}
+                id="shippingTerms"
+                name="shippingTerms"
+                onChange={onChange}
+              >
+                <option value="" disabled>
+                  Select a Project
+                </option>
+
+                {Projects
+                  ? Projects.map((p, index) => (
+                      <option value={p.value} key={index}>
+                        {p.value}
+                      </option>
+                    ))
+                  : ""}
+              </select>
+            </div>
+
+            <div className="mx-0 input-field lg:ml-4">
+              <label className="input-label" htmlFor="supplierCatergory">
+                Supplier Catergory
+              </label>
+              <select
+                className="tailwind-text-box w-[90%]"
+                value={values.supplierCatergory}
+                id="supplierCatergory"
+                name="supplierCatergory"
+                onChange={onChange}
+              >
+                <option value="" disabled>
+                  Select a Project
+                </option>
+
+                {Projects
+                  ? Projects.map((p, index) => (
+                      <option value={p.value} key={index}>
+                        {p.value}
+                      </option>
+                    ))
+                  : ""}
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div className="w-[97%] mx-auto ml-0">
+          <label className="input-label" htmlFor="remark">
+            Remark
+          </label>
+
+          <textarea
+            id="remark"
+            className="tailwind-text-box w-[100%] mr-4"
+            onChange={onChange}
+            name="remark"
+            value={values.remark}
+          ></textarea>
         </div>
         <Stack
           direction="row"
@@ -494,4 +453,4 @@ function WorkRequest() {
   );
 }
 
-export default WorkRequest;
+export default QuotationRequest;

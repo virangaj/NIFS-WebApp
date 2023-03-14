@@ -1,66 +1,82 @@
 import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
-import Stack from "@mui/material/Stack";
 import { generateID } from "../../utils/generateId";
 import CustomeDataPicker from "../../components/DataPicker";
 import IEmployeeData from "../../types/IEmployeeData";
-import EmployeeService from "../../services/admin/EmployeeService";
 import IDesignationData from "../../types/IDesignationData";
 import IDivisionData from "../../types/IDivisionData";
+import Stack from "@mui/material/Stack";
+import EmployeeService from "../../services/admin/EmployeeService";
 import DesignationMasterService from "../../services/admin/DesignationMasterService";
-import IWorkRequest from "../../types/common/IWorkRequest";
 import DivisionMasterService from "../../services/admin/DivisionMasterService";
+import ILeaveRequest from "../../types/common/ILeaveRequest";
 
 import Projects from "../../components/data/Project.json";
+import CustomeTimePicker from "../../components/TimePicker";
 import FileInput from "../../components/FileInput";
 
-const initialState: IWorkRequest = {
+const initialState: ILeaveRequest = {
   documentNo: "",
   date: "",
+  employee: "",
   epfNo: 0,
-  designationId: "",
   divisionId: "",
   hod: "",
-  project: "",
-  workDetails: "",
   type: "",
-  vote: "",
-  forwardTo: "",
-  repairRequest: "",
-  fund: "",
-  attachment: "",
-  assetNo: "",
+  leave: "",
+  remainingLeave: "",
+  noOfDaysTakenForTheYear: "",
+  fromDate: "",
+  toDate: "",
+  startTime: "",
+  endTime: "",
+  noOfDaysRequested: "",
+
+  leaveType: "",
+  overseasContactNumber: "",
+  acting: "",
+  attachemnt: "",
+  purpose: "",
 };
 
-function WorkRequest() {
+function LeaveRequest() {
   const [getDocNo, setDocNo] = useState<String | any>("");
   const [requestDate, setRequestDate] = React.useState<string | null>(null);
+  const [values, setValues] = useState<ILeaveRequest>(initialState);
+  const [empData, setEmpData] = useState<Array<IEmployeeData>>([]);
+  const [empFoundError, setEmpFoundError] = useState<boolean>(false);
   const [designationData, setDesignationData] = useState<IDesignationData>();
   const [divisionData, setDivisionData] = useState<IDivisionData>();
-
-  const [empFoundError, setEmpFoundError] = useState<boolean>(false);
-  const [empData, setEmpData] = useState<Array<IEmployeeData>>([]);
   const [currentEmp, setCurrentEmp] = useState<IEmployeeData>();
-  const [values, setValues] = useState<IWorkRequest>(initialState);
+  const [startDate, setStartDate] = React.useState<string | null>(null);
+  const [endDate, setEndDate] = React.useState<string | null>(null);
+  const [startTime, setStartTime] = React.useState<string | null>(null);
+  const [endTime, setEndTime] = React.useState<string | null>(null);
   const [eventAttachment, setEventAttachment] = useState<File | any>();
 
   useEffect(() => {
     setValues({
       documentNo: values?.documentNo,
       date: requestDate ? requestDate : "",
+      employee: values.employee,
       epfNo: values?.epfNo,
-      designationId: values?.designationId,
       divisionId: values?.divisionId,
       hod: values?.hod,
-      project: values?.project,
-      workDetails: values?.workDetails,
       type: values?.type,
-      vote: values?.vote,
-      forwardTo: values?.forwardTo,
-      repairRequest: values?.repairRequest,
-      fund: values?.fund,
-      attachment: values?.attachment,
-      assetNo: values?.assetNo,
+      leave: values?.leave,
+      remainingLeave: values?.remainingLeave,
+      noOfDaysTakenForTheYear: values?.noOfDaysTakenForTheYear,
+      fromDate: values?.fromDate,
+      toDate: values?.toDate,
+      startTime: values?.startTime,
+      endTime: values?.endTime,
+      noOfDaysRequested: values?.noOfDaysRequested,
+
+      leaveType: values?.leaveType,
+      overseasContactNumber: values?.overseasContactNumber,
+      acting: values?.acting,
+      attachemnt: values?.attachemnt,
+      purpose: values?.purpose,
     });
   }, [requestDate]);
 
@@ -68,21 +84,26 @@ function WorkRequest() {
     setValues({
       documentNo: values?.documentNo,
       date: requestDate ? requestDate : "",
+      employee: values.employee,
       epfNo: values?.epfNo,
-      designationId: values?.designationId,
       divisionId: values?.divisionId,
       hod: values?.hod,
-      project: values?.project,
-      workDetails: values?.workDetails,
       type: values?.type,
-      vote: values?.vote,
-      forwardTo: values?.forwardTo,
-      repairRequest: values?.repairRequest,
-      fund: values?.fund,
-      attachment: values?.attachment,
-      assetNo: values?.assetNo,
+      leave: values?.leave,
+      remainingLeave: values?.remainingLeave,
+      noOfDaysTakenForTheYear: values?.noOfDaysTakenForTheYear,
+      fromDate: values?.fromDate,
+      toDate: values?.toDate,
+      startTime: values?.startTime,
+      endTime: values?.endTime,
+      noOfDaysRequested: values?.noOfDaysRequested,
+
+      leaveType: values?.leaveType,
+      overseasContactNumber: values?.overseasContactNumber,
+      acting: values?.acting,
+      attachemnt: values?.attachemnt,
+      purpose: values?.purpose,
     });
-    console.log(getDocNo);
   }, [getDocNo]);
 
   useEffect(() => {
@@ -103,19 +124,25 @@ function WorkRequest() {
     setValues({
       documentNo: values?.documentNo,
       date: requestDate ? requestDate : "",
+      employee: values.employee,
       epfNo: values?.epfNo,
-      designationId: values?.designationId,
       divisionId: values?.divisionId,
       hod: values?.hod,
-      project: values?.project,
-      workDetails: values?.workDetails,
       type: values?.type,
-      vote: values?.vote,
-      forwardTo: values?.forwardTo,
-      repairRequest: values?.repairRequest,
-      fund: values?.fund,
-      attachment: values?.attachment,
-      assetNo: values?.assetNo,
+      leave: values?.leave,
+      remainingLeave: values?.remainingLeave,
+      noOfDaysTakenForTheYear: values?.noOfDaysTakenForTheYear,
+      fromDate: values?.fromDate,
+      toDate: values?.toDate,
+      startTime: values?.startTime,
+      endTime: values?.endTime,
+      noOfDaysRequested: values?.noOfDaysRequested,
+
+      leaveType: values?.leaveType,
+      overseasContactNumber: values?.overseasContactNumber,
+      acting: values?.acting,
+      attachemnt: values?.attachemnt,
+      purpose: values?.purpose,
     });
     retriveEmployeeDetails(employee);
   }, [values.epfNo]);
@@ -154,16 +181,9 @@ function WorkRequest() {
       });
   };
 
-  // generate document ID
   const generateDocNo = () => {
     setDocNo(generateID("CE"));
     setValues(initialState);
-  };
-
-  //reset form
-  const resetForm = () => {
-    setValues(initialState);
-    setDocNo("");
   };
 
   //onchange funtion
@@ -173,7 +193,13 @@ function WorkRequest() {
       [e.target.name]: e.target.value,
     }));
   };
+  //reset form
+  const resetForm = () => {
+    setValues(initialState);
+    setDocNo("");
+  };
 
+  //on Submit
   const onSubmit = async (e: any) => {
     e.preventDefault();
     console.log(values);
@@ -181,12 +207,12 @@ function WorkRequest() {
 
   return (
     <div className="sub-body-content xl:!w-[60%]">
-      <h1 className="page-title">Work Request</h1>
+      <h1 className="page-title">Leave Request</h1>
       <hr className="horizontal-line" />
       <form onSubmit={onSubmit}>
         <div className="grid grid-cols-1 md:grid-cols-2 items-center w-[97%] mx-auto">
           <Box className="flex items-center justify-between input-field">
-            Document No - {getDocNo && getDocNo}
+            Document No - {getDocNo}
             <button
               type="button"
               className="rounded-outline-success-btn"
@@ -196,7 +222,6 @@ function WorkRequest() {
               New
             </button>
           </Box>
-
           <div className="mx-0 mb-4 lg:ml-10 md:my-0">
             <CustomeDataPicker
               date={requestDate}
@@ -204,7 +229,6 @@ function WorkRequest() {
               title="Request Date"
             />
           </div>
-
           <div className="flex items-center">
             <div>
               <label className="input-label" htmlFor="epfNo">
@@ -251,19 +275,7 @@ function WorkRequest() {
         ) : (
           ""
         )}
-
         <div className="w-[97%] mx-auto">
-          <p className="normal-text">
-            Designation :{" "}
-            {values.epfNo && designationData ? (
-              <span className="font-bold">
-                {designationData.designationName}
-              </span>
-            ) : (
-              <span className="italic-sm-text">Please select an employee</span>
-            )}
-          </p>
-
           <div className="grid items-center grid-cols-1 md:grid-cols-2">
             <p className="normal-text">
               Division :{" "}
@@ -288,44 +300,43 @@ function WorkRequest() {
             </p>
           </div>
         </div>
+        <div className="mx-0 input-field lg:ml-4">
+          <label className="input-label" htmlFor="type">
+            Type
+          </label>
+          <select
+            className="tailwind-text-box w-[90%]"
+            value={values.type}
+            id="type"
+            name="type"
+            onChange={onChange}
+          >
+            <option value="" disabled>
+              Select a Type
+            </option>
 
+            {Projects
+              ? Projects.map((p, index) => (
+                  <option value={p.value} key={index}>
+                    {p.value}
+                  </option>
+                ))
+              : ""}
+          </select>
+        </div>
+        <hr className="horizontal-line" />
         <div className="flex w-[100%]">
           {/* left section of the flex */}
           <div className="flex-1 mr-4">
             <div className="mx-0 input-field lg:ml-4">
-              <label className="input-label" htmlFor="project">
-                Project
+              <label className="input-label" htmlFor="leaveType">
+                Leave Type
               </label>
               <select
                 className="tailwind-text-box w-[90%]"
-                value={values.project}
-                id="project"
-                name="project"
-                onChange={onChange}
-              >
-                <option value="" disabled>
-                  Select a Project
-                </option>
-
-                {Projects
-                  ? Projects.map((p, index) => (
-                      <option value={p.value} key={index}>
-                        {p.value}
-                      </option>
-                    ))
-                  : ""}
-              </select>
-            </div>
-
-            <div className="mx-0 input-field lg:ml-4">
-              <label className="input-label" htmlFor="type">
-                Type
-              </label>
-              <select
-                className="tailwind-text-box w-[90%]"
-                value={values.type}
-                id="type"
-                name="type"
+                value={values.leaveType}
+                id="leaveType"
+                name="leaveType"
                 onChange={onChange}
               >
                 <option value="" disabled>
@@ -341,49 +352,121 @@ function WorkRequest() {
                   : ""}
               </select>
             </div>
+            <div className="mx-0 mb-4 lg:ml-4 md:my-0">
+              <CustomeDataPicker
+                date={startDate}
+                setDate={setStartDate}
+                title="Start Date"
+              />
+            </div>
 
-            <div className="mx-0 input-field lg:ml-4">
-              <label className="input-label" htmlFor="vote">
-                Vote
-              </label>
-              <select
-                className="tailwind-text-box w-[90%]"
-                value={values.vote}
-                id="vote"
-                name="vote"
-                onChange={onChange}
-              >
-                <option value="" disabled>
-                  Select a Item Type
-                </option>
-
-                {Projects
-                  ? Projects.map((p, index) => (
-                      <option value={p.value} key={index}>
-                        {p.value}
-                      </option>
-                    ))
-                  : ""}
-              </select>
+            <div className="mx-0 mb-4 lg:mt-2 lg:ml-4 md:my-0">
+              <CustomeTimePicker
+                time={startTime}
+                setTime={setStartTime}
+                title="Start Time"
+              />
             </div>
 
             <div>
               <label
-                className="input-label basis-1/2 lg:ml-2 "
-                htmlFor="assetNo"
+                className="input-label basis-1/2"
+                htmlFor="noOfDaysRequested"
               >
-                Asset No
+                No of Days Requested
               </label>
 
               <input
                 id="outlined-basic"
                 type="search"
                 className="mr-4 tailwind-text-box w-[100%]"
-                name="assetNo"
+                name="noOfDaysRequested"
                 onChange={onChange}
-                value={values.assetNo}
+                value={values.noOfDaysRequested}
                 required
               />
+            </div>
+          </div>
+          {/* Right section of the flex */}
+          <div className="flex-1 mr-4">
+            <div>
+              <label className="input-label basis-1/2" htmlFor="remainingLeave">
+                Remaining Leave
+              </label>
+
+              <input
+                id="outlined-basic"
+                type="search"
+                className="mr-4 tailwind-text-box w-[100%]"
+                name="remainingLeave"
+                onChange={onChange}
+                value={values.remainingLeave}
+                required
+              />
+            </div>
+            <div className="mx-0 mb-4  md:my-0">
+              <CustomeDataPicker
+                date={endDate}
+                setDate={setEndDate}
+                title="End Date"
+              />
+            </div>
+
+            <div className="mx-0 lg:mt-2 mb-4  md:my-0">
+              <CustomeTimePicker
+                time={endTime}
+                setTime={setEndTime}
+                title="End Time"
+              />
+            </div>
+
+            <div>
+              <label
+                className="input-label basis-1/2 mt-4 "
+                htmlFor="noOfDaysTakenForTheYear"
+              >
+                No of Days taken for the year
+              </label>
+
+              <input
+                id="outlined-basic"
+                type="search"
+                className="mr-4 tailwind-text-box w-[100%] "
+                name="noOfDaysTakenForTheYear"
+                onChange={onChange}
+                value={values.noOfDaysTakenForTheYear}
+                required
+              />
+            </div>
+          </div>
+        </div>
+        <hr className="horizontal-line" />
+        <div className="flex w-[100%]">
+          {/* left section of the flex */}
+          <div className="flex-1 mr-4">
+            <div className="mx-0 input-field lg:ml-4">
+              <label className="input-label" htmlFor="leaveType">
+                Leave Type
+              </label>
+              <select
+                className="tailwind-text-box w-[90%]"
+                value={values.leaveType}
+                id="leaveType"
+                name="leaveType"
+                onChange={onChange}
+              >
+                <option value="" disabled>
+                  Select a Item Type
+                </option>
+
+                {Projects
+                  ? Projects.map((p, index) => (
+                      <option value={p.value} key={index}>
+                        {p.value}
+                      </option>
+                    ))
+                  : ""}
+              </select>
             </div>
 
             <FileInput
@@ -394,81 +477,56 @@ function WorkRequest() {
           </div>
           {/* Right section of the flex */}
           <div className="flex-1 mr-4">
-            <div className="mx-0 input-field lg:ml-4">
-              <label className="input-label" htmlFor="forwardTo">
-                Forward To
+            <div>
+              <label className="input-label basis-1/2" htmlFor="acting">
+                Acting
               </label>
-              <select
-                className="tailwind-text-box w-[90%]"
-                value={values.forwardTo}
-                id="forwardTo"
-                name="forwardTo"
-                onChange={onChange}
-              >
-                <option value="" disabled>
-                  Select a Item Type
-                </option>
 
-                {Projects
-                  ? Projects.map((p, index) => (
-                      <option value={p.value} key={index}>
-                        {p.value}
-                      </option>
-                    ))
-                  : ""}
-              </select>
+              <input
+                id="outlined-basic"
+                type="search"
+                className="mr-4 tailwind-text-box w-[100%]"
+                name="acting"
+                onChange={onChange}
+                value={values.acting}
+                required
+              />
             </div>
 
-            <div className="mx-0 input-field lg:ml-4">
-              <label className="input-label" htmlFor="repairRequest">
-                Repair Request
-              </label>
-              <select
-                className="tailwind-text-box w-[90%]"
-                value={values.repairRequest}
-                id="repairRequest"
-                name="repairRequest"
-                onChange={onChange}
+            <div>
+              <label
+                className="input-label basis-1/2"
+                htmlFor="overseasContactNumber"
               >
-                <option value="" disabled>
-                  Select a Item Type
-                </option>
-
-                {Projects
-                  ? Projects.map((p, index) => (
-                      <option value={p.value} key={index}>
-                        {p.value}
-                      </option>
-                    ))
-                  : ""}
-              </select>
-            </div>
-
-            <div className="mx-0 input-field lg:ml-4">
-              <label className="input-label" htmlFor="fund">
-                External /Fund Internal / Budget
+                Overseas Contact Number
               </label>
-              <select
-                className="tailwind-text-box w-[90%]"
-                value={values.fund}
-                id="fund"
-                name="fund"
-                onChange={onChange}
-              >
-                <option value="" disabled>
-                  Select a Fund type
-                </option>
 
-                {Projects
-                  ? Projects.map((p, index) => (
-                      <option value={p.value} key={index}>
-                        {p.value}
-                      </option>
-                    ))
-                  : ""}
-              </select>
+              <input
+                id="outlined-basic"
+                type="search"
+                className="mr-4 tailwind-text-box w-[100%]"
+                name="overseasContactNumber"
+                onChange={onChange}
+                value={values.overseasContactNumber}
+                required
+              />
             </div>
           </div>
+        </div>
+        <div>
+          <label className="input-label basis-1/2" htmlFor="purpose">
+            Purpose
+          </label>
+
+          <input
+            id="outlined-basic"
+            type="search"
+            className="mr-4 tailwind-text-box w-[100%]"
+            name="purpose"
+            onChange={onChange}
+            value={values.purpose}
+            required
+          />
         </div>
         <Stack
           direction="row"
@@ -494,4 +552,4 @@ function WorkRequest() {
   );
 }
 
-export default WorkRequest;
+export default LeaveRequest;

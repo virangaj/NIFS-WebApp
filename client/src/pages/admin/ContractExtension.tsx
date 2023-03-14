@@ -9,8 +9,8 @@ import CustomeDataPicker from "../../components/DataPicker";
 import IEmployeeData from "../../types/IEmployeeData";
 import EmployeeService from "../../services/admin/EmployeeService";
 import IDesignationData from "../../types/IDesignationData";
-import DesignationMasterService from "../../services/admin/DesignationMasterService";
 import IDivisionData from "../../types/IDivisionData";
+import DesignationMasterService from "../../services/admin/DesignationMasterService";
 import DivisionMasterService from "../../services/admin/DivisionMasterService";
 
 const initialState: IContractExtension = {
