@@ -125,7 +125,7 @@ public class DivisionMasterController {
     }
 
     //create division
-    @PostMapping
+    @PostMapping("/add")
     private  ResponseEntity<?> createDivision(@RequestBody DivisionMasterDTO divMasterData){
 
         Map<String, Object> map = new LinkedHashMap<String, Object>();

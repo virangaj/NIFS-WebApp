@@ -46,13 +46,13 @@ function TailwindNavbar() {
 	};
 
 	return (
-		<div className='navbar px-5 md:px-20 shadow-md fixed z-50 backdrop-blur-md bg-white/30'>
+		<div className='fixed z-50 px-5 shadow-md navbar md:px-20 backdrop-blur-md bg-white/30'>
 			<div className='navbar-start'>
 				<div className='dropdown'>
 					<label tabIndex={0} className='btn btn-ghost lg:hidden'>
 						<svg
 							xmlns='http://www.w3.org/2000/svg'
-							className='h-5 w-5'
+							className='w-5 h-5'
 							fill='none'
 							viewBox='0 0 24 24'
 							stroke='currentColor'
@@ -67,11 +67,11 @@ function TailwindNavbar() {
 					</label>
 					<ul
 						tabIndex={0}
-						className='menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52'
+						className='p-2 mt-3 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52'
 					>
 						{Pages.map((page, index) =>
 							location.pathname.split('/')[1] === page.link.split('/')[1] ? (
-								<li className='bg-sky-300 font-bold text-gray-800 rounded-md'>
+								<li className='font-bold text-gray-800 rounded-md bg-sky-300'>
 									<Link
 										to={page.link}
 										style={{ textDecoration: 'none' }}
@@ -98,11 +98,11 @@ function TailwindNavbar() {
 					<img src={Logo} alt='logo' className='nav-logo' />
 				</Link>
 			</div>
-			<div className='navbar-center hidden lg:flex'>
-				<ul className='menu menu-horizontal px-1'>
+			<div className='hidden navbar-center lg:flex'>
+				<ul className='px-1 menu menu-horizontal'>
 					{Pages.map((page, index) =>
 						location.pathname.split('/')[1] === page.link.split('/')[1] ? (
-							<li className='bg-sky-300 font-bold text-gray-800 rounded-md'>
+							<li className='font-bold text-gray-800 rounded-md bg-sky-300'>
 								<Link
 									to={page.link}
 									style={{ textDecoration: 'none' }}
@@ -129,17 +129,17 @@ function TailwindNavbar() {
 				<div className='dropdown dropdown-end'>
 					<label tabIndex={0} className='btn btn-ghost btn-circle'>
 						<div className='indicator'>
-							<HiOutlineBell className='h-6 w-6' />
+							<HiOutlineBell className='w-6 h-6' />
 
 							<span className='badge badge-sm indicator-item'>8</span>
 						</div>
 					</label>
 					<div
 						tabIndex={0}
-						className='mt-3 card card-compact dropdown-content w-52 bg-base-100 shadow'
+						className='mt-3 shadow card card-compact dropdown-content w-52 bg-base-100'
 					>
 						<div className='card-body'>
-							<span className='font-bold text-lg'>8 Items</span>
+							<span className='text-lg font-bold'>8 Items</span>
 							<span className='text-info'>Subtotal: $999</span>
 							<div className='card-actions'>
 								<button className='btn btn-primary btn-block'>View cart</button>
@@ -157,17 +157,15 @@ function TailwindNavbar() {
 					</label>
 					<ul
 						tabIndex={0}
-						className='menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52'
+						className='p-2 mt-3 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52'
 					>
 						<li>
-							<a className='justify-between'>
-								Profile
-								<span className='badge'>New</span>
-							</a>
+							{user && user.user.role === UserStatus.ADMIN ? (
+								<Link to={RouteName.AdminAdmin}>Dashboard</Link>
+							) : (
+								<></>
+							)}
 						</li>
-						{/* <li>
-							<a>Settings</a>
-						</li> */}
 						<li>
 							{user ? (
 								<a onClick={logoutFunc}>Logout</a>

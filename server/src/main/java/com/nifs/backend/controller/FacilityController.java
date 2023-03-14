@@ -29,7 +29,7 @@ public class FacilityController {
     Optional<Facility> returnFacility(@PathVariable String facilityId){
         return facService.returnFacility(facilityId);
     }
-    @GetMapping
+    @GetMapping("/get")
     List<Facility> getAll() {
         return facService.getAll();
     }
