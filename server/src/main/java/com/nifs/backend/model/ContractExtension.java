@@ -10,12 +10,9 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name="contract_extension")
-public class ContractEx {
+public class ContractExtension extends Base{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Integer id;
+    String name;
 
 
 }

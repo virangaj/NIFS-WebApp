@@ -27,6 +27,7 @@ const initialState: IQuotationSummary = {
   fund: "",
   project: "",
   remark: "",
+  fundType: "",
 };
 
 function QuotationSummary() {
@@ -52,6 +53,7 @@ function QuotationSummary() {
       value: values?.value,
       fund: values?.fund,
       project: values?.project,
+      fundType: values?.fundType,
     });
   }, [requestDate]);
 
@@ -68,6 +70,7 @@ function QuotationSummary() {
       value: values?.value,
       fund: values?.fund,
       project: values?.project,
+      fundType: values?.fundType,
     });
   }, [getDocNo]);
 
@@ -98,6 +101,7 @@ function QuotationSummary() {
       value: values?.value,
       fund: values?.fund,
       project: values?.project,
+      fundType: values?.fundType,
     });
     retriveEmployeeDetails(employee);
   }, [values.epfNo]);

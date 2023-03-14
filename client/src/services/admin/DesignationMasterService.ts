@@ -24,7 +24,7 @@ const saveDesignation = async (favJSON: any) => {
 	console.log(favJSON);
 	const response = await axios({
 		method: 'post',
-		url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/designation`,
+		url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/designation/add`,
 		data: favJSON,
 		headers: { 'Content-Type': 'application/json; charset=utf-8' },
 	});

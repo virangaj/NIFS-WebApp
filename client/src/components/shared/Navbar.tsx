@@ -24,6 +24,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { RouteName } from '../../constant/routeNames';
 import { toast } from 'react-toastify';
 import { RequestStatus } from '../../constant/requestStatus';
+import { UserStatus } from '../../constant/userStatus';
 
 const Navbar = () => {
 	// const [user, setUser] = useState<any>({});
@@ -32,24 +33,6 @@ const Navbar = () => {
 	const [employee, setEmployee] = useState<any>({});
 	const { user, isLoading, isError, isSuccess, tokenExpireDate } =
 		useAppSelector((state: any) => state.auth);
-
-	// useEffect(() => {
-	// 	localStorage.setItem(
-	// 		'loginUser',
-	// 		JSON.stringify({
-	// 			name: 'Viranga',
-	// 			epfNo: 456,
-	// 			division: 'admin',
-	// 			role: 'admin',
-	// 		})
-	// 	);
-
-	// 	const storeData = window.localStorage.getItem('loginUser');
-
-	// 	if (storeData) {
-	// 		setUser(JSON.parse(storeData));
-	// 	}
-	// }, [user]);
 
 	// check user and send the login page
 	useEffect(() => {
@@ -292,7 +275,7 @@ const Navbar = () => {
 								settings.map((setting, index) => (
 									<MenuItem key={index} onClick={handleCloseUserMenu}>
 										{setting.title === 'Dashboard' ? (
-											user?.role === 'admin' ? (
+											user?.role === UserStatus.ADMIN ? (
 												<Link to={setting.link}>
 													<Typography textAlign='center'>
 														{setting.title}

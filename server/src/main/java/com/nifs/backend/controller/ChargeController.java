@@ -68,7 +68,7 @@ public class ChargeController {
     }
 
     //create new charge
-    @PostMapping
+    @PostMapping("/add")
     ResponseEntity<?> createCharge(@RequestBody Charges chargeData) {
         Map<String, Object> map = new LinkedHashMap<String, Object>();
         try {

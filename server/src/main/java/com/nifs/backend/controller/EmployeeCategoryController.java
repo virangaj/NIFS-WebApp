@@ -64,7 +64,7 @@ public class EmployeeCategoryController {
         return empCatService.returnNewEmpCatId();
     }
 //    get employee cat by id
-    @GetMapping("/{empCatId}")
+    @GetMapping("/get/{empCatId}")
     ResponseEntity<?> returnEmpCat(@PathVariable String empCatId){
 
         Map<String, Object> map = new LinkedHashMap<String, Object>();

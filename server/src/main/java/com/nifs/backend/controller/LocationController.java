@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("admin/locations")
+@RequestMapping("/admin/locations")
 @CrossOrigin
 public class LocationController {
 
@@ -28,14 +28,14 @@ public class LocationController {
     }
 
     //get location by id
-    @GetMapping("/{id}")
+    @GetMapping("/get/{id}")
     private LocationDTO returnLocationById(@PathVariable String id){
         return locService.returnLocationById(id);
     }
 
 
     //    add locations
-    @PostMapping
+    @PostMapping("/add")
     private Boolean createLocation(@RequestBody LocationDTO venLocData){
         return locService.createLocation(venLocData);
     }
