@@ -9,9 +9,10 @@ import CustomeDataPicker from "../../components/DataPicker";
 import IEmployeeData from "../../types/IEmployeeData";
 import EmployeeService from "../../services/admin/EmployeeService";
 import IDesignationData from "../../types/IDesignationData";
-import IDivisionData from "../../types/IDivisionData";
 import DesignationMasterService from "../../services/admin/DesignationMasterService";
+import IDivisionData from "../../types/IDivisionData";
 import DivisionMasterService from "../../services/admin/DivisionMasterService";
+import ContractExtensionService from "../../services/admin/ContractExtensionService";
 
 const initialState: IContractExtension = {
   documentNo: "",
@@ -33,7 +34,7 @@ function ContractExtension() {
   const [empData, setEmpData] = useState<Array<IEmployeeData>>([]);
   const [currentEmp, setCurrentEmp] = useState<IEmployeeData>();
   const [values, setValues] = useState<IContractExtension>(initialState);
-
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     setValues({
       documentNo: values?.documentNo,
@@ -142,6 +143,23 @@ function ContractExtension() {
 
   const onSubmit = async (e: any) => {
     e.preventDefault();
+
+    if (values.documentNo !== "") {
+      setTimeout(async () => {
+        const result = await ContractExtensionService.saveContractExtension(
+          values
+        );
+        // console.log(result)
+        if (result?.data !== null) {
+          toast.success("Contract Extension is on preccess");
+          resetForm();
+        } else {
+          toast.error("Request cannot completed!");
+        }
+        setLoading(false);
+      }, 1000);
+    }
+
     console.log(values);
   };
 
@@ -149,91 +167,84 @@ function ContractExtension() {
     <div className="sub-body-content xl:!w-[60%]">
       <h1 className="page-title">Contract Extension</h1>
       <hr className="horizontal-line" />
-      <form onSubmit={onSubmit}>
-        <div className="grid grid-cols-1 md:grid-cols-2 items-center w-[97%] mx-auto">
-          <Box className="flex items-center justify-between input-field">
-            Document No - {getDocNo && getDocNo}
-            <button
-              type="button"
-              className="rounded-outline-success-btn"
-              onClick={generateDocNo}
-              style={{ marginLeft: "20px" }}
-            >
-              New
-            </button>
-          </Box>
-          <div className="mx-0 mb-4 lg:ml-10 md:my-0">
-            <CustomeDataPicker
-              date={requestDate}
-              setDate={setRequestDate}
-              title="Request Date"
-            />
-          </div>
-
-          <div className="flex items-center">
-            <div>
-              <label className="input-label" htmlFor="epfNo">
-                Employee EPF No
-              </label>
-
-              <input
-                id="epfNo"
-                type="text"
-                className="tailwind-text-box w-[40%] mr-4"
-                onChange={onChange}
-                name="epfNo"
-                value={values.epfNo}
+      {!loading ? (
+        <form onSubmit={onSubmit}>
+          <div className="grid grid-cols-1 md:grid-cols-2 items-center w-[97%] mx-auto">
+            <Box className="flex items-center justify-between input-field">
+              Document No - {getDocNo && getDocNo}
+              <button
+                type="button"
+                className="rounded-outline-success-btn"
+                onClick={generateDocNo}
+                style={{ marginLeft: "20px" }}
+              >
+                New
+              </button>
+            </Box>
+            <div className="mx-0 mb-4 lg:ml-10 md:my-0">
+              <CustomeDataPicker
+                date={requestDate}
+                setDate={setRequestDate}
+                title="Request Date"
               />
             </div>
-            <div>
-              <label className="input-label" htmlFor="epfNo">
-                Employee Name
-              </label>
-              <select
-                className="tailwind-text-box"
-                value={values.epfNo}
-                id="epfNo"
-                name="epfNo"
-                onChange={onChange}
-              >
-                <option disabled value={0}>
-                  Select Employee
-                </option>
 
-                {empData?.map((l: IEmployeeData, i: number) => {
-                  return (
-                    <option key={i} value={l.epfNo}>
-                      {l.firstName + " " + l.lastName}
-                    </option>
-                  );
-                })}
-              </select>
+            <div className="flex items-center">
+              <div>
+                <label className="input-label" htmlFor="epfNo">
+                  Employee EPF No
+                </label>
+
+                <input
+                  id="epfNo"
+                  type="text"
+                  className="tailwind-text-box w-[40%] mr-4"
+                  onChange={onChange}
+                  name="epfNo"
+                  value={values.epfNo}
+                />
+              </div>
+              <div>
+                <label className="input-label" htmlFor="epfNo">
+                  Employee Name
+                </label>
+                <select
+                  className="tailwind-text-box"
+                  value={values.epfNo}
+                  id="epfNo"
+                  name="epfNo"
+                  onChange={onChange}
+                >
+                  <option disabled value={0}>
+                    Select Employee
+                  </option>
+
+                  {empData?.map((l: IEmployeeData, i: number) => {
+                    return (
+                      <option key={i} value={l.epfNo}>
+                        {l.firstName + " " + l.lastName}
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
             </div>
           </div>
-        </div>
-        {values.epfNo && empFoundError ? (
-          <p className="w-[97%] mx-auto error-text-message">User Not Found!</p>
-        ) : (
-          ""
-        )}
+          {values.epfNo && empFoundError ? (
+            <p className="w-[97%] mx-auto error-text-message">
+              User Not Found!
+            </p>
+          ) : (
+            ""
+          )}
 
-        <div className="w-[97%] mx-auto">
-          <p className="normal-text">
-            Designation :{" "}
-            {values.epfNo && designationData ? (
-              <span className="font-bold">
-                {designationData.designationName}
-              </span>
-            ) : (
-              <span className="italic-sm-text">Please select an employee</span>
-            )}
-          </p>
-
-          <div className="grid items-center grid-cols-1 md:grid-cols-2">
+          <div className="w-[97%] mx-auto">
             <p className="normal-text">
-              Division :{" "}
-              {values.epfNo && divisionData ? (
-                <span className="font-bold">{divisionData.name}</span>
+              Designation :{" "}
+              {values.epfNo && designationData ? (
+                <span className="font-bold">
+                  {designationData.designationName}
+                </span>
               ) : (
                 <span className="italic-sm-text">
                   Please select an employee
@@ -241,52 +252,67 @@ function ContractExtension() {
               )}
             </p>
 
-            <p className="normal-text">
-              HOD :{" "}
-              {values.epfNo && divisionData ? (
-                <span className="font-bold">{divisionData.name}</span>
-              ) : (
-                <span className="italic-sm-text">
-                  Please select an employee
-                </span>
-              )}
-            </p>
+            <div className="grid items-center grid-cols-1 md:grid-cols-2">
+              <p className="normal-text">
+                Division :{" "}
+                {values.epfNo && divisionData ? (
+                  <span className="font-bold">{divisionData.name}</span>
+                ) : (
+                  <span className="italic-sm-text">
+                    Please select an employee
+                  </span>
+                )}
+              </p>
+
+              <p className="normal-text">
+                HOD :{" "}
+                {values.epfNo && divisionData ? (
+                  <span className="font-bold">{divisionData.name}</span>
+                ) : (
+                  <span className="italic-sm-text">
+                    Please select an employee
+                  </span>
+                )}
+              </p>
+            </div>
           </div>
-        </div>
 
-        <div className="w-[97%] mx-auto">
-          <label className="input-label" htmlFor="remark">
-            Remark
-          </label>
+          <div className="w-[97%] mx-auto">
+            <label className="input-label" htmlFor="remark">
+              Remark
+            </label>
 
-          <textarea
-            id="remark"
-            className="tailwind-text-box w-[100%] mr-4"
-            onChange={onChange}
-            name="remark"
-            value={values.remark}
-          ></textarea>
-        </div>
-        <Stack
-          direction="row"
-          justifyContent="flex-end"
-          alignItems="flex-end"
-          spacing={2}
-          className="admin-form-buton-stack"
-        >
-          <button
-            className="action-com-model-error-btn"
-            type="reset"
-            color="error"
-            onClick={resetForm}
+            <textarea
+              id="remark"
+              className="tailwind-text-box w-[100%] mr-4"
+              onChange={onChange}
+              name="remark"
+              value={values.remark}
+            ></textarea>
+          </div>
+          <Stack
+            direction="row"
+            justifyContent="flex-end"
+            alignItems="flex-end"
+            spacing={2}
+            className="admin-form-buton-stack"
           >
-            Reset
-          </button>
-          <button className="action-com-model-sucess-btn" type="submit">
-            Submit
-          </button>
-        </Stack>
-      </form>
+            <button
+              className="action-com-model-error-btn"
+              type="reset"
+              color="error"
+              onClick={resetForm}
+            >
+              Reset
+            </button>
+            <button className="action-com-model-sucess-btn" type="submit">
+              Submit
+            </button>
+          </Stack>
+        </form>
+      ) : (
+        <Ripple />
+      )}
     </div>
   );
 }

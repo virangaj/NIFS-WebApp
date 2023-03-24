@@ -2,11 +2,11 @@ package com.nifs.backend.auth;
 
 import com.nifs.backend.config.JwtService;
 import com.nifs.backend.constant.RequestStatus;
-import com.nifs.backend.dto.UserDTO;
-import com.nifs.backend.repository.EmployeeMasterRepository;
-import com.nifs.backend.repository.UserRepository;
-import com.nifs.backend.service.IDivisionMasterService;
-import com.nifs.backend.service.IJwtTokenService;
+import com.nifs.backend.dto.admin.UserDTO;
+import com.nifs.backend.repository.admin.EmployeeMasterRepository;
+import com.nifs.backend.repository.admin.UserRepository;
+import com.nifs.backend.service.admin.IDivisionMasterService;
+import com.nifs.backend.service.auth.IJwtTokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
