@@ -20,13 +20,14 @@ const getDesignation = (id: any) => {
 	return http.get<any>(`/admin/designation/get/${id}`);
 };
 
-const saveDesignation = async (favJSON: any) => {
-	console.log(favJSON);
+const saveDesignation = async (data: any) => {
 	const response = await axios({
 		method: 'post',
 		url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/designation/add`,
-		data: favJSON,
-		headers: { 'Content-Type': 'application/json; charset=utf-8' },
+		data: data,
+		headers: {
+			'Content-Type': 'application/json; charset=utf-8',
+		},
 	});
 	// alert("Favourite created --- "+ response);
 	return response;

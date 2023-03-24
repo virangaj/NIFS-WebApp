@@ -1,6 +1,6 @@
 package com.nifs.backend.config;
 
-import com.nifs.backend.service.IJwtTokenService;
+import com.nifs.backend.service.auth.IJwtTokenService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
