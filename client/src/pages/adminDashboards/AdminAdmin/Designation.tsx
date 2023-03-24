@@ -2,6 +2,7 @@ import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { useEffect, useMemo, useState } from 'react';
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
+import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 import Ripple from '../../../components/Ripple';
 import { HiX } from 'react-icons/hi';
 import { toast } from 'react-toastify';
@@ -23,11 +24,15 @@ function Designation() {
 	const [locationData, setLocationData] = useState<ILocationData[]>();
 	const [d_id, setD_Id] = useState('');
 
+	const { user, isLoading, isError, isSuccess, tokenExpireDate } =
+		useAppSelector((state: any) => state.auth);
+
 	const [values, setValues] = useState<any>({
 		designationId: '',
 		designationName: '',
 		locationId: '',
 	});
+
 	useEffect(() => {
 		const filteredData = designationData?.filter(
 			(emp) => emp.designationId !== deleteId
@@ -117,7 +122,7 @@ function Designation() {
 			setTimeout(async () => {
 				const result = await DesignationMasterService.saveDesignation(values);
 				// console.log(result)
-				if (result.data.status === RequestStatus.SUCCESS) {
+				if (result?.data.status === RequestStatus.SUCCESS) {
 					toast.success('New Designation is added');
 					resetForm();
 				} else {

@@ -20,7 +20,6 @@ import java.util.Date;
 @MappedSuperclass
 public class Base {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id", nullable = false)

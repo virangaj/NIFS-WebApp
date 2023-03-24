@@ -1,7 +1,7 @@
 package com.nifs.backend.controller;
 
-import com.nifs.backend.model.Religions;
-import com.nifs.backend.service.IOtherDataService;
+import com.nifs.backend.model.admin.Religions;
+import com.nifs.backend.service.admin.IOtherDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
