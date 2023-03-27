@@ -30,14 +30,14 @@ export enum RouteName {
   //   common
   GatePass = "/gate-pass",
   Srn = "/srn",
-  WorkRequest = "work-request",
-  QuotationRequest = "quotation-request",
-  QuotationSummary = "quotation-summary",
-  LeaveRequest = "leave-request",
-  OverTime = "over-time",
-  PaymentRequest = "payment-request",
-  DailyAttendance = "daily-attendance",
-  CommonReportGenerator = "common-report-generator",
+  WorkRequest = "/work-request",
+  QuotationRequest = "/quotation-request",
+  QuotationSummary = "/quotation-summary",
+  LeaveRequest = "/leave-request",
+  OverTime = "/over-time",
+  PaymentRequest = "/payment-request",
+  DailyAttendance = "/daily-attendance",
+  CommonReportGenerator = "/common-report-generator",
 
   // Transport
   TransportVehicleMaster = "/vehicle-master",

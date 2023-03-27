@@ -11,27 +11,28 @@ import DivisionMasterService from "../../services/admin/DivisionMasterService";
 import IDesignationData from "../../types/IDesignationData";
 import IDivisionData from "../../types/IDivisionData";
 import Stack from "@mui/material/Stack";
+import IQuotationRequest from "../../types/common/IQuotationRequest";
 
 import Projects from "../../components/data/Project.json";
 
-const initialState: IQuotationSummary = {
+const initialState: IQuotationRequest = {
   documentNo: "",
   date: "",
-  //   auto generated
   epfNo: "",
-  division: "",
-  quotationRequestNo: "",
-  fileNo: "",
-  srnNo: "",
-  value: "",
-  fund: "",
   project: "",
+  fund: "",
+  srnNo: "",
+  fileNo: "",
+  validityPeriodOfTheQuotation: "",
+  shippingTerms: "",
+  supplierCatergory: "",
+  bidClosingDate: "",
+  bidClosingTime: "",
   remark: "",
-  fundType: "",
 };
 
-function QuotationSummary() {
-  const [values, setValues] = useState<IQuotationSummary>(initialState);
+function QuotationRequest() {
+  const [values, setValues] = useState<IQuotationRequest>(initialState);
   const [getDocNo, setDocNo] = useState<String | any>("");
   const [requestDate, setRequestDate] = React.useState<string | null>(null);
   const [empData, setEmpData] = useState<Array<IEmployeeData>>([]);
@@ -39,21 +40,24 @@ function QuotationSummary() {
   const [currentEmp, setCurrentEmp] = useState<IEmployeeData>();
   const [designationData, setDesignationData] = useState<IDesignationData>();
   const [divisionData, setDivisionData] = useState<IDivisionData>();
+  const [startDate, setStartDate] = React.useState<string | null>(null);
+  const [endDate, setEndDate] = React.useState<string | null>(null);
 
   useEffect(() => {
     setValues({
       documentNo: values?.documentNo,
       date: requestDate ? requestDate : "",
       epfNo: values?.epfNo,
-      division: values?.division,
-      remark: values?.remark,
-      quotationRequestNo: values?.quotationRequestNo,
-      fileNo: values?.fileNo,
-      srnNo: values?.srnNo,
-      value: values?.value,
-      fund: values?.fund,
       project: values?.project,
-      fundType: values?.fundType,
+      fund: values?.fund,
+      srnNo: values?.srnNo,
+      fileNo: values?.fileNo,
+      validityPeriodOfTheQuotation: values?.validityPeriodOfTheQuotation,
+      shippingTerms: values?.shippingTerms,
+      supplierCatergory: values?.supplierCatergory,
+      bidClosingDate: values?.bidClosingDate,
+      bidClosingTime: values?.bidClosingTime,
+      remark: values?.remark,
     });
   }, [requestDate]);
 
@@ -62,15 +66,16 @@ function QuotationSummary() {
       documentNo: values?.documentNo,
       date: requestDate ? requestDate : "",
       epfNo: values?.epfNo,
-      division: values?.division,
-      remark: values?.remark,
-      quotationRequestNo: values?.quotationRequestNo,
-      fileNo: values?.fileNo,
-      srnNo: values?.srnNo,
-      value: values?.value,
-      fund: values?.fund,
       project: values?.project,
-      fundType: values?.fundType,
+      fund: values?.fund,
+      srnNo: values?.srnNo,
+      fileNo: values?.fileNo,
+      validityPeriodOfTheQuotation: values?.validityPeriodOfTheQuotation,
+      shippingTerms: values?.shippingTerms,
+      supplierCatergory: values?.supplierCatergory,
+      bidClosingDate: values?.bidClosingDate,
+      bidClosingTime: values?.bidClosingTime,
+      remark: values?.remark,
     });
   }, [getDocNo]);
 
@@ -93,15 +98,16 @@ function QuotationSummary() {
       documentNo: values?.documentNo,
       date: requestDate ? requestDate : "",
       epfNo: values?.epfNo,
-      division: values?.division,
-      remark: values?.remark,
-      quotationRequestNo: values?.quotationRequestNo,
-      fileNo: values?.fileNo,
-      srnNo: values?.srnNo,
-      value: values?.value,
-      fund: values?.fund,
       project: values?.project,
-      fundType: values?.fundType,
+      fund: values?.fund,
+      srnNo: values?.srnNo,
+      fileNo: values?.fileNo,
+      validityPeriodOfTheQuotation: values?.validityPeriodOfTheQuotation,
+      shippingTerms: values?.shippingTerms,
+      supplierCatergory: values?.supplierCatergory,
+      bidClosingDate: values?.bidClosingDate,
+      bidClosingTime: values?.bidClosingTime,
+      remark: values?.remark,
     });
     retriveEmployeeDetails(employee);
   }, [values.epfNo]);
@@ -165,12 +171,12 @@ function QuotationSummary() {
   };
   return (
     <div className="sub-body-content xl:!w-[60%]">
-      <h1 className="page-title">Quotation Summary</h1>
+      <h1 className="page-title">Quotation Request</h1>
       <hr className="horizontal-line" />
       <form onSubmit={onSubmit}>
         <div className="grid grid-cols-1 md:grid-cols-2 items-center w-[97%] mx-auto">
           <Box className="flex items-center justify-between input-field">
-            Document No - {getDocNo}
+            Quotation No - {getDocNo}
             <button
               type="button"
               className="rounded-outline-success-btn"
@@ -185,7 +191,7 @@ function QuotationSummary() {
             <CustomeDataPicker
               date={requestDate}
               setDate={setRequestDate}
-              title="Request Date"
+              title="Quotation Date"
             />
           </div>
 
@@ -230,111 +236,15 @@ function QuotationSummary() {
             </div>
           </div>
         </div>
-
         {values.epfNo && empFoundError ? (
           <p className="w-[97%] mx-auto error-text-message">User Not Found!</p>
         ) : (
           ""
         )}
 
-        <div className="w-[97%] mx-auto">
-          <div className="grid items-center grid-cols-1 md:grid-cols-2">
-            <p className="normal-text">
-              Division :{" "}
-              {values.epfNo && divisionData ? (
-                <span className="font-bold">{divisionData.name}</span>
-              ) : (
-                <span className="italic-sm-text">
-                  Please select an employee
-                </span>
-              )}
-            </p>
-
-            <p className="normal-text">
-              HOD :{" "}
-              {values.epfNo && divisionData ? (
-                <span className="font-bold">{divisionData.name}</span>
-              ) : (
-                <span className="italic-sm-text">
-                  Please select an employee
-                </span>
-              )}
-            </p>
-          </div>
-        </div>
-
         <div className="flex w-[100%]">
           {/* left section of the flex */}
           <div className="flex-1 mr-4">
-            <div>
-              <label
-                className="input-label basis-1/2"
-                htmlFor="quotationRequestNo"
-              >
-                Quotation Request No
-              </label>
-
-              <input
-                id="outlined-basic"
-                type="search"
-                className="mr-4 tailwind-text-box w-[100%]"
-                name="quotationRequestNo"
-                onChange={onChange}
-                value={values.quotationRequestNo}
-                required
-              />
-            </div>
-
-            <div>
-              <label className="input-label basis-1/2" htmlFor="fileNo">
-                fileNo
-              </label>
-
-              <input
-                id="outlined-basic"
-                type="search"
-                className="mr-4 tailwind-text-box w-[100%]"
-                name="fileNo"
-                onChange={onChange}
-                value={values.fileNo}
-                required
-              />
-            </div>
-
-            <div>
-              <label className="input-label basis-1/2" htmlFor="srnNo">
-                SRN No
-              </label>
-
-              <input
-                id="outlined-basic"
-                type="search"
-                className="mr-4 tailwind-text-box w-[100%]"
-                name="srnNo"
-                onChange={onChange}
-                value={values.srnNo}
-                required
-              />
-            </div>
-          </div>
-          {/* Right section of the flex */}
-          <div className="flex-1 mr-4">
-            <div>
-              <label className="input-label basis-1/2" htmlFor="value">
-                value
-              </label>
-
-              <input
-                id="outlined-basic"
-                type="search"
-                className="mr-4 tailwind-text-box w-[100%]"
-                name="value"
-                onChange={onChange}
-                value={values.value}
-                required
-              />
-            </div>
-
             <div className="mx-0 input-field lg:ml-4">
               <label className="input-label" htmlFor="project">
                 Project
@@ -373,6 +283,125 @@ function QuotationSummary() {
               >
                 <option value="" disabled>
                   Select a Fund type
+                </option>
+
+                {Projects
+                  ? Projects.map((p, index) => (
+                      <option value={p.value} key={index}>
+                        {p.value}
+                      </option>
+                    ))
+                  : ""}
+              </select>
+            </div>
+
+            <div>
+              <label className="input-label basis-1/2" htmlFor="srnNo">
+                SRN No
+              </label>
+
+              <input
+                id="outlined-basic"
+                type="search"
+                className="mr-4 tailwind-text-box w-[100%]"
+                name="srnNo"
+                onChange={onChange}
+                value={values.srnNo}
+                required
+              />
+            </div>
+
+            <div>
+              <label className="input-label basis-1/2" htmlFor="fileNo">
+                fileNo
+              </label>
+
+              <input
+                id="outlined-basic"
+                type="search"
+                className="mr-4 tailwind-text-box w-[100%]"
+                name="fileNo"
+                onChange={onChange}
+                value={values.fileNo}
+                required
+              />
+            </div>
+
+            <div className="mx-0 mb-4 lg:ml-4 md:my-0">
+              <CustomeDataPicker
+                date={startDate}
+                setDate={setStartDate}
+                title="Start Date"
+              />
+            </div>
+
+            <div className="mx-0 mb-4  md:my-0 lg:ml-4 lg:mt-2">
+              <CustomeDataPicker
+                date={endDate}
+                setDate={setEndDate}
+                title="End Date"
+              />
+            </div>
+          </div>
+          {/* Right section of the flex */}
+          <div className="flex-1 mr-4">
+            <div>
+              <label
+                className="input-label basis-1/2"
+                htmlFor="validityPeriodOfTheQuotation"
+              >
+                Validity Period Of The Quotation
+              </label>
+
+              <input
+                id="outlined-basic"
+                type="search"
+                className="mr-4 tailwind-text-box w-[100%]"
+                name="validityPeriodOfTheQuotation"
+                onChange={onChange}
+                value={values.validityPeriodOfTheQuotation}
+                required
+              />
+            </div>
+
+            <div className="mx-0 input-field lg:ml-4">
+              <label className="input-label" htmlFor="shippingTerms">
+                Shipping Terms
+              </label>
+              <select
+                className="tailwind-text-box w-[90%]"
+                value={values.shippingTerms}
+                id="shippingTerms"
+                name="shippingTerms"
+                onChange={onChange}
+              >
+                <option value="" disabled>
+                  Select a Project
+                </option>
+
+                {Projects
+                  ? Projects.map((p, index) => (
+                      <option value={p.value} key={index}>
+                        {p.value}
+                      </option>
+                    ))
+                  : ""}
+              </select>
+            </div>
+
+            <div className="mx-0 input-field lg:ml-4">
+              <label className="input-label" htmlFor="supplierCatergory">
+                Supplier Catergory
+              </label>
+              <select
+                className="tailwind-text-box w-[90%]"
+                value={values.supplierCatergory}
+                id="supplierCatergory"
+                name="supplierCatergory"
+                onChange={onChange}
+              >
+                <option value="" disabled>
+                  Select a Project
                 </option>
 
                 {Projects
@@ -424,4 +453,4 @@ function QuotationSummary() {
   );
 }
 
-export default QuotationSummary;
+export default QuotationRequest;

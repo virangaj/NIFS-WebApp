@@ -33,7 +33,9 @@ public class SecurityConfig {
                 .disable()
                 .authorizeHttpRequests()
                 .requestMatchers(
+
                         "/auth/**",
+                        "/**",
                         "/admin/otherdata/**",
                         "/sedu/charges",
 //                        designations

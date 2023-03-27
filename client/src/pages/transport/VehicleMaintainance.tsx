@@ -1,25 +1,45 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../pages.css";
 import Stack from "@mui/material/Stack";
 import CustomeDataPicker from "../../components/DataPicker";
-import IVehicleMaintainanceService from "../../types/VehicleMaintainanceService";
+import IVehicleMaintenance from "../../types/IVehicleMaintenance";
+import VehicleMaintenanceService from "../../services/transport/VehicleMaintenanceService";
+import { toast } from "react-toastify";
+
+const initialState: IVehicleMaintenance = {
+  documentNo: "",
+  invoiceNo: "",
+  vehicleNo: "",
+  meter: "",
+  workshop: "",
+  cost: "",
+  date: "",
+  invoiceDate: "",
+  location: "",
+  remark: "",
+};
 
 export default function VehicleMaintainanceService() {
-  const [values, setValues] = useState<IVehicleMaintainanceService>({
-    documentNo: "",
-    invoiceNo: "",
-    vehicleNo: "",
-    meter: "",
-    workshop: "",
-    cost: "",
-    date: "",
-    invoiceDate: "",
-    location: "",
-    remark: "",
-  });
+  const [values, setValues] = useState<IVehicleMaintenance>(initialState);
 
   const [date, setDate] = useState<string | null>(null);
   const [invoiceDate, setInvoiceDate] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setValues({
+      documentNo: values?.documentNo,
+      invoiceNo: values?.invoiceNo,
+      vehicleNo: values?.vehicleNo,
+      meter: values?.meter,
+      workshop: values?.workshop,
+      cost: values?.cost,
+      date: date ? date : "",
+      invoiceDate: invoiceDate ? invoiceDate : "",
+      location: values?.location,
+      remark: values?.remark,
+    });
+  }, [date, invoiceDate]);
 
   const resetForm = () => {
     setValues({
@@ -46,6 +66,22 @@ export default function VehicleMaintainanceService() {
   const onSubmit = async (event: any) => {
     event.preventDefault();
     console.log(values);
+
+    if (values.documentNo !== "") {
+      setTimeout(async () => {
+        const result = await VehicleMaintenanceService.saveVehicleMaintenance(
+          values
+        );
+
+        if (result?.data !== null) {
+          toast.success("Vehicle Maintenance Details Added Successfully");
+          resetForm();
+        } else {
+          toast.error("Request Cannot Complete");
+        }
+        setLoading(false);
+      }, 1000);
+    }
   };
 
   return (

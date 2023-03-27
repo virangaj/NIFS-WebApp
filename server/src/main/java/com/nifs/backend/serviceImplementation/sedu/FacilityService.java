@@ -2,7 +2,7 @@ package com.nifs.backend.serviceImplementation.sedu;
 
 import com.nifs.backend.model.sedu.Facility;
 import com.nifs.backend.repository.sedu.FacilityRepository;
-import com.nifs.backend.service.sedu.IFacilityService;
+import com.nifs.backend.serviceImplementation.admin.sedu.IFacilityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

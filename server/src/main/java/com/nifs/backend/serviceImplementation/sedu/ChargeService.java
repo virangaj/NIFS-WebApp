@@ -2,7 +2,7 @@ package com.nifs.backend.serviceImplementation.sedu;
 
 import com.nifs.backend.model.sedu.Charges;
 import com.nifs.backend.repository.sedu.ChargeRepository;
-import com.nifs.backend.service.sedu.IChargeService;
+import com.nifs.backend.serviceImplementation.admin.sedu.IChargeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

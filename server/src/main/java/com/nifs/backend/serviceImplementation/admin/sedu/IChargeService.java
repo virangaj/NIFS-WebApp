@@ -1,4 +1,4 @@
-package com.nifs.backend.service.sedu;
+package com.nifs.backend.serviceImplementation.admin.sedu;
 
 import com.nifs.backend.model.sedu.Charges;
 
