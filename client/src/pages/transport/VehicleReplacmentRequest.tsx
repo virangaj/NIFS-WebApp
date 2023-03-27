@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CustomeDataPicker from "../../components/DataPicker";
 import IVehicleReplacementRequest from "../../types/VehicleReplacementRequest";
 import Stack from "@mui/material/Stack";
@@ -20,6 +20,23 @@ export default function VehicleReplacmentRequest() {
   });
 
   const [date, setDate] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setValues({
+      DocumentNo: values?.DocumentNo,
+      vehicleNo: values?.vehicleNo,
+      driver: values?.driver,
+      category: values?.category,
+      amount: values?.amount,
+      brand: values?.brand,
+      attachment: values?.attachment,
+      date: date ? date : "",
+      startMeterReading: values?.startMeterReading,
+      endMeterReading: values?.endMeterReading,
+      remark: values?.remark,
+    });
+  }, [date]);
 
   const resetForm = () => {
     setValues({
