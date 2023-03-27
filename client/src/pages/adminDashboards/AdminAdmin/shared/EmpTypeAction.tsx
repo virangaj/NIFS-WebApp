@@ -8,12 +8,14 @@ import { BiCheck, BiSave, BiTrash } from 'react-icons/bi';
 import EmployeeTypeService from '../../../../services/admin/EmployeeTypeService';
 import { toast } from 'react-toastify';
 import { RequestStatus } from '../../../../constant/requestStatus';
+import { useAppSelector } from '../../../../hooks/hooks';
 
 function EmpTypeAction({ params, rowId, setRowId, setDeleteId }: any) {
 	const [loading, setLoading] = useState(false);
 	const [success, setSuccess] = useState(false);
 	const [deleteLoading, setDeleteLoadng] = useState(false);
 	const [deleteConfirm, setDeleteConfirm] = useState(false);
+	const { auth } = useAppSelector((state) => state.persistedReducer);
 
 	useEffect(() => {
 		if (rowId === params.id && success) {
@@ -27,11 +29,14 @@ function EmpTypeAction({ params, rowId, setRowId, setDeleteId }: any) {
 		const { empTypeId, typeName, location } = params.row;
 		console.log(params.row);
 		setTimeout(async () => {
-			const result = await EmployeeTypeService.editEmpType({
-				empTypeId,
-				typeName,
-				location,
-			});
+			const result = await EmployeeTypeService.editEmpType(
+				{
+					empTypeId,
+					typeName,
+					location,
+				},
+				auth?.user?.token
+			);
 			if (result.data.status === RequestStatus.SUCCESS) {
 				setSuccess(true);
 				setRowId(null);
@@ -70,7 +75,10 @@ function EmpTypeAction({ params, rowId, setRowId, setDeleteId }: any) {
 		setDeleteConfirm(false);
 		setTimeout(async () => {
 			const { empTypeId, typeName } = params.row;
-			const result = await EmployeeTypeService.deleteEmpType(empTypeId);
+			const result = await EmployeeTypeService.deleteEmpType(
+				empTypeId,
+				auth?.user?.token
+			);
 			// console.log('deleted ' + empTypeId);
 			if (result.data.status === RequestStatus.SUCCESS) {
 				toast.error(`${typeName} is deleted`, {

@@ -28,7 +28,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
 
-        http
+        http.cors().and()
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
@@ -37,7 +37,7 @@ public class SecurityConfig {
                         "/admin/otherdata/**",
                         "/sedu/charges",
 //                        designations
-                        "/admin/designation",
+//                        "/admin/designation",
                         "/admin/designation/newid",
                         "/admin/designation/get/**",
                         "/admin/designation/location/**",
@@ -63,10 +63,8 @@ public class SecurityConfig {
                         "/sedu/facility",
                         "/sedu/facility/newid",
 //                        contract extension
-                        "/admin/contractex",
-                        "/**"
-
-                        )
+                        "/admin/contractex"
+                                             )
                 .permitAll()
                 .anyRequest()
                 .authenticated()

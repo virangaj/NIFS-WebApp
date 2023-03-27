@@ -19,13 +19,16 @@ const getEmpType = (id: any) => {
 	return http.get<any>(`/admin/employeetype/get/${id}`);
 };
 
-const saveEmpType = async (favJSON: any) => {
+const saveEmpType = async (favJSON: any, token: string) => {
 	console.log(favJSON);
 	const response = await axios({
 		method: 'post',
 		url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/employeetype/add`,
 		data: favJSON,
-		headers: { 'Content-Type': 'application/json; charset=utf-8' },
+		headers: {
+			'Content-Type': 'application/json; charset=utf-8',
+			Authorization: `Bearer ${token}`,
+		},
 	});
 	return response;
 };
@@ -40,23 +43,29 @@ const getEmpTypeByLocationId = (id: any) => {
 	return http.get<any>(`/admin/employeetype/location/${id}`);
 };
 
-const editEmpType = async (favJSON: any) => {
+const editEmpType = async (favJSON: any, token: string) => {
 	console.log(favJSON);
 	const response = await axios({
 		method: 'patch',
 		url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/employeetype/update/${favJSON.empTypeId}`,
 		data: favJSON,
-		headers: { 'Content-Type': 'application/json; charset=utf-8' },
+		headers: {
+			'Content-Type': 'application/json; charset=utf-8',
+			Authorization: `Bearer ${token}`,
+		},
 	});
 	return response;
 };
 
-const deleteEmpType = async (id: string) => {
+const deleteEmpType = async (id: string, token: string) => {
 	console.log(id);
 	const response = await axios({
 		method: 'delete',
 		url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/employeetype/delete/${id}`,
-		headers: { 'Content-Type': 'application/json; charset=utf-8' },
+		headers: {
+			'Content-Type': 'application/json; charset=utf-8',
+			Authorization: `Bearer ${token}`,
+		},
 	});
 	// alert("Favourite created --- "+ response);
 	return response;

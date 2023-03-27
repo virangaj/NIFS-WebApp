@@ -5,6 +5,7 @@ import { Box } from '@mui/system';
 import { useState, useEffect } from 'react';
 import Modal from '@mui/material/Modal';
 import { BiCheck, BiSave, BiTrash } from 'react-icons/bi';
+import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
 
 import { toast } from 'react-toastify';
 import DesignationMasterService from '../../../../services/admin/DesignationMasterService';
@@ -15,6 +16,9 @@ function DesignationAction({ params, rowId, setRowId, setDeleteId }: any) {
 	const [success, setSuccess] = useState(false);
 	const [deleteLoading, setDeleteLoadng] = useState(false);
 	const [deleteConfirm, setDeleteConfirm] = useState(false);
+
+	const { auth } = useAppSelector((state) => state.persistedReducer);
+
 	useEffect(() => {
 		if (rowId === params.id && success) {
 			setSuccess(false);
@@ -25,11 +29,14 @@ function DesignationAction({ params, rowId, setRowId, setDeleteId }: any) {
 		setLoading(true);
 		const { designationId, designationName, locationId } = params.row;
 		setTimeout(async () => {
-			const result = await DesignationMasterService.editDesignation({
-				designationId,
-				designationName,
-				locationId,
-			});
+			const result = await DesignationMasterService.editDesignation(
+				{
+					designationId,
+					designationName,
+					locationId,
+				},
+				auth?.user?.token
+			);
 
 			if (result.data.status === RequestStatus.SUCCESS) {
 				setSuccess(true);
@@ -68,7 +75,8 @@ function DesignationAction({ params, rowId, setRowId, setDeleteId }: any) {
 		setTimeout(async () => {
 			const { designationId, designationName } = params.row;
 			const result = await DesignationMasterService.deleteDesignation(
-				designationId
+				designationId,
+				auth?.user?.token
 			);
 			console.log(result);
 			if (result.data.status === RequestStatus.SUCCESS) {

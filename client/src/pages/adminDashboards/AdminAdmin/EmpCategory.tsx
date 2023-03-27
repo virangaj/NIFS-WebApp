@@ -13,6 +13,7 @@ import LocationMasterService from '../../../services/admin/LocationMasterService
 import { HiX } from 'react-icons/hi';
 import { RequestStatus } from '../../../constant/requestStatus';
 import LocationColEdit from './shared/LocationColEdit';
+import { useAppSelector } from '../../../hooks/hooks';
 
 function EmpCategory() {
 	const [empCats, setEmpCats] = useState<Array<any>>([]);
@@ -22,6 +23,8 @@ function EmpCategory() {
 	const [cat_id, setCat_Id] = useState('');
 	const [locationData, setLocationData] = useState<ILocationData[]>();
 	const [deleteId, setDeleteId] = useState('');
+
+	const { auth } = useAppSelector((state) => state.persistedReducer);
 
 	const [values, setValues] = useState<any>({
 		empCatId: '',
@@ -116,7 +119,10 @@ function EmpCategory() {
 		if (values.empCatId !== '') {
 			setLoading(true);
 			setTimeout(async () => {
-				const result = await EmployeeCatService.saveEmpCat(values);
+				const result = await EmployeeCatService.saveEmpCat(
+					values,
+					auth?.user?.token
+				);
 				if (result.data.status === RequestStatus.SUCCESS) {
 					toast.success('New Employee Category is added');
 					resetForm();
