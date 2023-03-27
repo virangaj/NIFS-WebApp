@@ -19,6 +19,7 @@ import OtherDataServices from '../../../../services/admin/OtherDataServices';
 import EmployeeService from '../../../../services/admin/EmployeeService';
 import Ripple from '../../../../components/Ripple';
 import { RequestStatus } from '../../../../constant/requestStatus';
+import { useAppSelector } from '../../../../hooks/hooks';
 
 const initialState: IEmployeeData = {
 	epfNo: 0,
@@ -81,6 +82,8 @@ function AddEmployee() {
 
 	//main data model
 	const [empData, setEmpData] = useState<IEmployeeData>(initialState);
+
+	const { auth } = useAppSelector((state) => state.persistedReducer);
 
 	useEffect(() => {
 		retreivePageLoadData();
@@ -267,7 +270,10 @@ function AddEmployee() {
 		if (empData.epfNo) {
 			setLoading(true);
 			setTimeout(async () => {
-				const result = await EmployeeService.saveEmployee(empData);
+				const result = await EmployeeService.saveEmployee(
+					empData,
+					auth?.user?.token
+				);
 				if (result.data.status === RequestStatus.SUCCESS) {
 					toast.success('New Employee is added');
 					// resetForm();

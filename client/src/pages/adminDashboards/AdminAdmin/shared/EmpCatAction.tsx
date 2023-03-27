@@ -9,13 +9,14 @@ import { BiCheck, BiSave, BiTrash } from 'react-icons/bi';
 import EmployeeCatService from '../../../../services/admin/EmployeeCatService';
 import { toast } from 'react-toastify';
 import { RequestStatus } from '../../../../constant/requestStatus';
+import { useAppSelector } from '../../../../hooks/hooks';
 
 function EmpCatAction({ params, rowId, setRowId, setDeleteId }: any) {
 	const [loading, setLoading] = useState(false);
 	const [success, setSuccess] = useState(false);
 	const [deleteLoading, setDeleteLoadng] = useState(false);
 	const [deleteConfirm, setDeleteConfirm] = useState(false);
-
+	const { auth } = useAppSelector((state) => state.persistedReducer);
 	useEffect(() => {
 		if (rowId === params.id && success) {
 			setSuccess(false);
@@ -28,12 +29,15 @@ function EmpCatAction({ params, rowId, setRowId, setDeleteId }: any) {
 		const { empCatId, description, locationId, otRate } = params.row;
 
 		setTimeout(async () => {
-			const result = await EmployeeCatService.editEmpCat({
-				empCatId,
-				description,
-				locationId,
-				otRate,
-			});
+			const result = await EmployeeCatService.editEmpCat(
+				{
+					empCatId,
+					description,
+					locationId,
+					otRate,
+				},
+				auth?.user?.token
+			);
 			if (result.data.status === RequestStatus.SUCCESS) {
 				setSuccess(true);
 				setRowId(null);
@@ -73,7 +77,10 @@ function EmpCatAction({ params, rowId, setRowId, setDeleteId }: any) {
 
 		setTimeout(async () => {
 			const { empCatId, description } = params.row;
-			const result = await EmployeeCatService.deleteEmpCat(empCatId);
+			const result = await EmployeeCatService.deleteEmpCat(
+				empCatId,
+				auth?.user?.token
+			);
 
 			if (result.data.status === RequestStatus.SUCCESS) {
 				toast.error(`${description} is deleted`, {

@@ -9,12 +9,16 @@ import { BiCheck, BiSave, BiTrash } from 'react-icons/bi';
 import { toast } from 'react-toastify';
 import DivisionMasterService from '../../../../services/admin/DivisionMasterService';
 import { RequestStatus } from '../../../../constant/requestStatus';
+import { useAppSelector } from '../../../../hooks/hooks';
 
 function DivisionAction({ params, rowId, setRowId, setDeleteId }: any) {
 	const [loading, setLoading] = useState(false);
 	const [success, setSuccess] = useState(false);
 	const [deleteLoading, setDeleteLoadng] = useState(false);
 	const [deleteConfirm, setDeleteConfirm] = useState(false);
+
+	const { auth } = useAppSelector((state) => state.persistedReducer);
+
 	useEffect(() => {
 		if (rowId === params.id && success) {
 			setSuccess(false);
@@ -25,11 +29,14 @@ function DivisionAction({ params, rowId, setRowId, setDeleteId }: any) {
 		setLoading(true);
 		const { divisionId, name, locationId } = params.row;
 		setTimeout(async () => {
-			const result = await DivisionMasterService.editDivision({
-				divisionId,
-				name,
-				locationId,
-			});
+			const result = await DivisionMasterService.editDivision(
+				{
+					divisionId,
+					name,
+					locationId,
+				},
+				auth?.user?.token
+			);
 			if (result.data.status === RequestStatus.SUCCESS) {
 				setSuccess(true);
 				setRowId(null);
@@ -67,7 +74,10 @@ function DivisionAction({ params, rowId, setRowId, setDeleteId }: any) {
 		setDeleteConfirm(false);
 		setTimeout(async () => {
 			const { divisionId, name } = params.row;
-			const result = await DivisionMasterService.deleteDivision(divisionId);
+			const result = await DivisionMasterService.deleteDivision(
+				divisionId,
+				auth?.user?.token
+			);
 			// console.log('deleted ' + typeId);
 			if (result.data.status === RequestStatus.SUCCESS) {
 				toast.error(`${name} is deleted`, {

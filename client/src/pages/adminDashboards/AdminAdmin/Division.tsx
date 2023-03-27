@@ -12,6 +12,7 @@ import IDivisionData from '../../../types/IDivisionData';
 import DivisionMasterService from '../../../services/admin/DivisionMasterService';
 import DivisionAction from './shared/DivisionAction';
 import { RequestStatus } from '../../../constant/requestStatus';
+import { useAppSelector } from '../../../hooks/hooks';
 function Division() {
 	const [pageSize, setPageSize] = useState(10);
 	const [rowId, setRowId] = useState(0);
@@ -20,6 +21,8 @@ function Division() {
 	const [divisionData, setDivisionData] = useState<Array<IDivisionData>>([]);
 	const [locationData, setLocationData] = useState<ILocationData[]>();
 	const [d_id, setD_Id] = useState('');
+
+	const { auth } = useAppSelector((state) => state.persistedReducer);
 
 	const [values, setValues] = useState<any>({
 		divisionId: '',
@@ -107,7 +110,10 @@ function Division() {
 		if (values.divisionId !== '') {
 			setLoading(true);
 			setTimeout(async () => {
-				const result = await DivisionMasterService.saveDivision(values);
+				const result = await DivisionMasterService.saveDivision(
+					values,
+					auth?.user?.token
+				);
 				if (result.data.status === RequestStatus.SUCCESS) {
 					toast.success('New Division is added');
 

@@ -18,25 +18,34 @@ function TailwindNavbar() {
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 	const [employee, setEmployee] = useState<any>({});
-	const { user, isLoading, isError, isSuccess, tokenExpireDate } =
-		useAppSelector((state: any) => state.auth);
+	const { auth } = useAppSelector((state) => state.persistedReducer);
+
 	// navbar function and variables
 	const location: any = useLocation();
 	useEffect(() => {
-		if (user === null) {
+		if (auth?.user === null) {
 			navigate(RouteName.Login);
 		}
 
-		if (tokenExpireDate && new Date().getDate() > tokenExpireDate) {
+		if (
+			auth?.user.tokenExpireDate &&
+			new Date().getDate() > auth?.user.tokenExpireDate
+		) {
 			dispatch(logout());
 			dispatch(reset());
 			toast.error('System timeout ERROR! Please login to the system..!');
 			navigate(RouteName.Login);
 		}
-		if (user?.status === RequestStatus.CHANGE_PASSWORD) {
+		if (auth?.user?.status === RequestStatus.CHANGE_PASSWORD) {
 			navigate(RouteName.ChangePassword);
 		}
-	}, [user, isLoading, isError, isSuccess, tokenExpireDate]);
+	}, [
+		auth?.user,
+		auth?.isLoading,
+		auth?.isError,
+		auth?.isSuccess,
+		auth?.tokenExpireDate,
+	]);
 
 	const logoutFunc = () => {
 		dispatch(logout());
@@ -150,14 +159,14 @@ function TailwindNavbar() {
 						className='p-2 mt-3 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52'
 					>
 						<li>
-							{user && user.user.role === UserStatus.ADMIN ? (
+							{auth?.user && auth?.user.user.role === UserStatus.ADMIN ? (
 								<Link to={RouteName.AdminAdmin}>Dashboard</Link>
 							) : (
 								<></>
 							)}
 						</li>
 						<li>
-							{user ? (
+							{auth?.user ? (
 								<a onClick={logoutFunc}>Logout</a>
 							) : (
 								<Link to={RouteName.Login}>Login</Link>
