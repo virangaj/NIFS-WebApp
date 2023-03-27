@@ -1,11 +1,13 @@
-package com.nifs.backend.model;
+package com.nifs.backend.model.transport;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.nifs.backend.model.Base;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -13,12 +15,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@SuperBuilder
 @Table(name="vehicle_master")
-public class VehicleMaster {
+public class VehicleMaster extends Base {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "registration_no", nullable = false)
+
     private String registrationNo;
 
 
@@ -40,8 +41,8 @@ public class VehicleMaster {
     @Column(name="employee")
     private String employee;
 
-    @Column(name = "catergory")
-    private String catergory;
+    @Column(name = "category")
+    private String category;
 
     @Column(name = "brand")
     private String brand;
@@ -76,20 +77,5 @@ public class VehicleMaster {
     @Column(name = "remark")
     private String remarks;
 
-    public VehicleMaster(String chassiNo, String engineNo, String date, String pool, String employee, String catergory, String brand, String color, String availability, String insuranceCompanyName, String emissionTestDate, String insuranceExpiryDate, String licenseExpiryDate, String remarks) {
-        this.chassiNo = chassiNo;
-        this.engineNo = engineNo;
-        this.date = date;
-        this.pool = pool;
-        this.employee = employee;
-        this.catergory = catergory;
-        this.brand = brand;
-        this.color = color;
-        this.availability = availability;
-        this.insuranceCompanyName = insuranceCompanyName;
-        this.emissionTestDate = emissionTestDate;
-        this.insuranceExpiryDate = insuranceExpiryDate;
-        this.licenseExpiryDate = licenseExpiryDate;
-        this.remarks = remarks;
-    }
+
 }

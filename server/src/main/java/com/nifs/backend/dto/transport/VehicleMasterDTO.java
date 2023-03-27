@@ -1,6 +1,19 @@
-package com.nifs.backend.dto;
+package com.nifs.backend.dto.transport;
 
-public class VehicleMasterDTO {
+
+import com.nifs.backend.dto.BaseDTO;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@SuperBuilder
+public class VehicleMasterDTO extends BaseDTO {
 
     private String registrationNo;
     private String chassiNo;
@@ -13,10 +26,8 @@ public class VehicleMasterDTO {
     private String color;
     private String availability;
     private String insuranceCompanyName;
+    private String emissionTestDate;
     private String insuranceExpiryDate;
     private String licenseExpiryDate;
-    private String emissionTestDate;
     private String remarks;
-
-
 }

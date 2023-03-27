@@ -1,4 +1,4 @@
-export default interface IVehicleMaintainanceService {
+export default interface IVehicleMaintenance {
   documentNo: string;
   invoiceNo: string;
   vehicleNo: string;
