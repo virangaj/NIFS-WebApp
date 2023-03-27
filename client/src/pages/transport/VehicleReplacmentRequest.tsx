@@ -3,6 +3,8 @@ import CustomeDataPicker from "../../components/DataPicker";
 import IVehicleReplacementRequest from "../../types/VehicleReplacementRequest";
 import Stack from "@mui/material/Stack";
 import "../pages.css";
+import ReplacementRequestService from "../../services/transport/ReplacementRequestService";
+import { toast } from "react-toastify";
 
 export default function VehicleReplacmentRequest() {
   const [values, setValues] = useState<IVehicleReplacementRequest>({
@@ -64,6 +66,22 @@ export default function VehicleReplacmentRequest() {
   const onSubmit = async (event: any) => {
     event.preventDefault();
     console.log(values);
+
+    if (values.DocumentNo !== "") {
+      setTimeout(async () => {
+        const result = await ReplacementRequestService.saveReplacementRequest(
+          values
+        );
+
+        if (result?.data !== null) {
+          toast.success("Replacement Request Details added Successfully");
+          resetForm();
+        } else {
+          toast.error("Request Cannot Complete");
+        }
+        setLoading(false);
+      }, 1000);
+    }
   };
 
   return (
