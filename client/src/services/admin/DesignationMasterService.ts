@@ -20,13 +20,14 @@ const getDesignation = (id: any) => {
 	return http.get<any>(`/admin/designation/get/${id}`);
 };
 
-const saveDesignation = async (data: any) => {
+const saveDesignation = async (data: any, token: string) => {
 	const response = await axios({
 		method: 'post',
 		url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/designation/add`,
 		data: data,
 		headers: {
 			'Content-Type': 'application/json; charset=utf-8',
+			Authorization: `Bearer ${token}`,
 		},
 	});
 	// alert("Favourite created --- "+ response);
@@ -43,25 +44,31 @@ const getDesignationByLocationId = (id: any) => {
 	return http.get<any>(`/admin/designation/location/${id}`);
 };
 
-const editDesignation = async (favJSON: any) => {
+const editDesignation = async (favJSON: any, token: string) => {
 	console.log(favJSON);
 	const response = await axios({
 		method: 'patch',
 		url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/designation/update/${favJSON.designationId}`,
 		data: favJSON,
-		headers: { 'Content-Type': 'application/json; charset=utf-8' },
+		headers: {
+			'Content-Type': 'application/json; charset=utf-8',
+			Authorization: `Bearer ${token}`,
+		},
 	});
 
 	// alert("Favourite created --- "+ response);
 	return response;
 };
 
-const deleteDesignation = async (id: string) => {
+const deleteDesignation = async (id: string, token: string) => {
 	console.log(id);
 	const response = await axios({
 		method: 'delete',
 		url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/designation/delete/${id}`,
-		headers: { 'Content-Type': 'application/json; charset=utf-8' },
+		headers: {
+			'Content-Type': 'application/json; charset=utf-8',
+			Authorization: `Bearer ${token}`,
+		},
 	});
 	// alert("Favourite created --- "+ response);
 	return response;

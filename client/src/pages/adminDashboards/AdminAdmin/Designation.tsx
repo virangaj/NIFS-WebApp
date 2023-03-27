@@ -24,8 +24,7 @@ function Designation() {
 	const [locationData, setLocationData] = useState<ILocationData[]>();
 	const [d_id, setD_Id] = useState('');
 
-	const { user, isLoading, isError, isSuccess, tokenExpireDate } =
-		useAppSelector((state: any) => state.auth);
+	const { auth } = useAppSelector((state) => state.persistedReducer);
 
 	const [values, setValues] = useState<any>({
 		designationId: '',
@@ -120,7 +119,10 @@ function Designation() {
 		if (values.id !== '') {
 			setLoading(true);
 			setTimeout(async () => {
-				const result = await DesignationMasterService.saveDesignation(values);
+				const result = await DesignationMasterService.saveDesignation(
+					values,
+					auth?.user.token
+				);
 				// console.log(result)
 				if (result?.data.status === RequestStatus.SUCCESS) {
 					toast.success('New Designation is added');

@@ -7,12 +7,14 @@ import Modal from '@mui/material/Modal';
 import { BiCheck, BiSave, BiTrash } from 'react-icons/bi';
 import { toast } from 'react-toastify';
 import EmployeeService from '../../../../services/admin/EmployeeService';
+import { useAppSelector } from '../../../../hooks/hooks';
 function EmployeeAction({ params, rowId, setRowId, setDeleteId }: any) {
 	const [loading, setLoading] = useState(false);
 	const [success, setSuccess] = useState(false);
 	const [deleteLoading, setDeleteLoadng] = useState(false);
 	const [deleteConfirm, setDeleteConfirm] = useState(false);
 
+	const { auth } = useAppSelector((state) => state.persistedReducer);
 	useEffect(() => {
 		if (rowId === params.id && success) {
 			setSuccess(false);
@@ -86,7 +88,10 @@ function EmployeeAction({ params, rowId, setRowId, setDeleteId }: any) {
 		setDeleteConfirm(false);
 		setTimeout(async () => {
 			const { epfNo, firstName, lastName } = params.row;
-			const result = await EmployeeService.hardDelete(params.row.epfNo);
+			const result = await EmployeeService.hardDelete(
+				params.row.epfNo,
+				auth?.user?.token
+			);
 
 			// console.log(params.row);
 			if (result.data.status === 1) {

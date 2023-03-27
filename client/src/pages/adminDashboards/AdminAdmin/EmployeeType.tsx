@@ -11,6 +11,7 @@ import ImportFromXlsx from './shared/ImportFromXlsx';
 import { HiX } from 'react-icons/hi';
 import { toast } from 'react-toastify';
 import { RequestStatus } from '../../../constant/requestStatus';
+import { useAppSelector } from '../../../hooks/hooks';
 
 function EmployeeType() {
 	const [empTypes, setEmpType] = useState<Array<any>>([]);
@@ -21,6 +22,7 @@ function EmployeeType() {
 	const [locationData, setLocationData] = useState<ILocationData[]>();
 
 	const [deleteId, setDeleteId] = useState('');
+	const { auth } = useAppSelector((state) => state.persistedReducer);
 
 	const [values, setValues] = useState<any>({
 		empTypeId: '',
@@ -115,7 +117,10 @@ function EmployeeType() {
 		if (values.empTypeId !== '') {
 			setLoading(true);
 			setTimeout(async () => {
-				const result = await EmployeeTypeService.saveEmpType(values);
+				const result = await EmployeeTypeService.saveEmpType(
+					values,
+					auth?.user?.token
+				);
 				if (result.data.status === RequestStatus.SUCCESS) {
 					toast.success('New Employee Type is added');
 
