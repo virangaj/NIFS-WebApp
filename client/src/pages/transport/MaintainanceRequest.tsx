@@ -1,24 +1,44 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../pages.css";
 import Stack from "@mui/material/Stack";
 import CustomeDataPicker from "../../components/DataPicker";
 import IMaintainanceRequest from "../../types/MaintainanceRequest";
+import MaintenanceRequestService from "../../services/transport/MaintenanceRequestService";
+import { toast } from "react-toastify";
+
+const initialState: IMaintainanceRequest = {
+  documentNo: "",
+  date: "",
+  vehicleNo: "",
+  workshop: "",
+  cost: "",
+  description: "",
+  attachment: "",
+  startMeterReading: "",
+  endMeterReading: "",
+  remark: "",
+};
 
 export default function MaintainanceRequest() {
-  const [values, setValues] = useState<IMaintainanceRequest>({
-    documentNo: "",
-    date: "",
-    vehicleNo: "",
-    workshop: "",
-    cost: "",
-    description: "",
-    attachment: "",
-    startMeterReading: "",
-    endMeterReading: "",
-    remark: "",
-  });
+  const [values, setValues] = useState<IMaintainanceRequest>(initialState);
 
   const [date, setDate] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setValues({
+      documentNo: values?.documentNo,
+      date: date ? date : "",
+      vehicleNo: values?.vehicleNo,
+      workshop: values?.workshop,
+      cost: values?.cost,
+      description: values?.description,
+      attachment: values?.attachment,
+      startMeterReading: values?.startMeterReading,
+      endMeterReading: values?.endMeterReading,
+      remark: values?.remark,
+    });
+  }, [date]);
 
   const resetForm = () => {
     setValues({
@@ -45,6 +65,22 @@ export default function MaintainanceRequest() {
   const onSubmit = async (event: any) => {
     event.preventDefault();
     console.log(values);
+
+    if (values.documentNo !== "") {
+      setTimeout(async () => {
+        const result = await MaintenanceRequestService.saveMaintenanceRequest(
+          values
+        );
+
+        if (result?.data !== null) {
+          toast.success("Maintenance Request Added Successfully");
+          resetForm();
+        } else {
+          toast.error("Request Cannot be Completed");
+        }
+        setLoading(false);
+      }, 1000);
+    }
   };
 
   return (
