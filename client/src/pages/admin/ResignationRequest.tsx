@@ -4,14 +4,15 @@ import { toast } from 'react-toastify';
 import Stack from '@mui/material/Stack';
 import { generateID } from '../../utils/generateId';
 import Ripple from '../../components/Ripple';
-import IContractExtension from '../../types/IContractExtension';
+import IContractExtension from '../../types/admin/IContractExtension';
 import CustomeDataPicker from '../../components/DataPicker';
-import IEmployeeData from '../../types/IEmployeeData';
+import IEmployeeData from '../../types/admin/IEmployeeData';
 import EmployeeService from '../../services/admin/EmployeeService';
-import IDesignationData from '../../types/IDesignationData';
+import IDesignationData from '../../types/admin/IDesignationData';
 import DesignationMasterService from '../../services/admin/DesignationMasterService';
-import IDivisionData from '../../types/IDivisionData';
+import IDivisionData from '../../types/admin/IDivisionData';
 import DivisionMasterService from '../../services/admin/DivisionMasterService';
+import DivisionSelector from '../../components/shared/DivisionSelector';
 
 const initialState: IContractExtension = {
 	documentNo: '',
@@ -215,6 +216,9 @@ function ResignationRequest() {
 				) : (
 					''
 				)}
+				<div className='w-[97%] mx-auto'>
+					<DivisionSelector onChange={onChange} value={'asd'} name='division' />
+				</div>
 
 				<div className='w-[97%] mx-auto'>
 					<p className='normal-text'>

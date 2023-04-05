@@ -5,11 +5,11 @@ import { toast } from 'react-toastify';
 
 import EmployeeCatService from '../../../../services/admin/EmployeeCatService';
 import LocationMasterService from '../../../../services/admin/LocationMasterService';
-import IDesignationData from '../../../../types/IDesignationData';
-import IDivisionData from '../../../../types/IDivisionData';
-import IEmpCatData from '../../../../types/IEmpCatData';
-import IEmployeeData from '../../../../types/IEmployeeData';
-import IEmpTypeData from '../../../../types/IEmpTypeData';
+import IDesignationData from '../../../../types/admin/IDesignationData';
+import IDivisionData from '../../../../types/admin/IDivisionData';
+import IEmpCatData from '../../../../types/admin/IEmpCatData';
+import IEmployeeData from '../../../../types/admin/IEmployeeData';
+import IEmpTypeData from '../../../../types/admin/IEmpTypeData';
 import ILocationData from '../../../../types/ILocationData';
 import EmployeeTypeService from '../../../../services/admin/EmployeeTypeService';
 import DivisionMasterService from '../../../../services/admin/DivisionMasterService';

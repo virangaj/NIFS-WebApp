@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 import Ripple from '../../../components/Ripple';
 import { HiX } from 'react-icons/hi';
 import { toast } from 'react-toastify';
-import IDesignationData from '../../../types/IDesignationData';
+import IDesignationData from '../../../types/admin/IDesignationData';
 import ILocationData from '../../../types/ILocationData';
 import LocationMasterService from '../../../services/admin/LocationMasterService';
 import DesignationMasterService from '../../../services/admin/DesignationMasterService';

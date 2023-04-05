@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import ILocationData from '../../../types/ILocationData';
 import LocationMasterService from '../../../services/admin/LocationMasterService';
-import IDivisionData from '../../../types/IDivisionData';
+import IDivisionData from '../../../types/admin/IDivisionData';
 import DivisionMasterService from '../../../services/admin/DivisionMasterService';
 import DivisionAction from './shared/DivisionAction';
 import { RequestStatus } from '../../../constant/requestStatus';

@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import DesignationMasterService from '../../services/admin/DesignationMasterService';
-import IDesignationData from '../../types/IDesignationData';
+import IDesignationData from '../../types/admin/IDesignationData';
 
 interface DesignationState {
 	designation: IDesignationData[];

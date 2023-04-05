@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import IDivisionData from '../../types/IDivisionData';
+import IDivisionData from '../../types/admin/IDivisionData';
 import DivisionMasterService from '../../services/admin/DivisionMasterService';
 
 interface DivisionState {
