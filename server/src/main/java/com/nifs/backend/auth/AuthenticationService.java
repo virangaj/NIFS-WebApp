@@ -58,7 +58,7 @@ public class AuthenticationService {
             System.out.println("AuthenticationService : "+request.getEpfNo());
 
             //save in the database
-            String tokenDatabase = tokenService.createToken(jwtToken, request.getEpfNo());
+//            String tokenDatabase = tokenService.createToken(jwtToken, request.getEpfNo());
 
 
             UserDTO userDTO = UserDTO.builder()
@@ -75,7 +75,7 @@ public class AuthenticationService {
                         .status(String.valueOf(RequestStatus.CHANGE_PASSWORD))
                         .code(200)
                         .message("Please Change Your Password!")
-                        .token(tokenDatabase)
+                        .token(jwtToken)
                         .name(employee.getFirstName() + " " + employee.getLastName())
                         .user(userDTO)
                         .build();
@@ -86,7 +86,7 @@ public class AuthenticationService {
                         .status(String.valueOf(RequestStatus.SUCCESS))
                         .code(200)
                         .message("You are Successfully Login")
-                        .token(tokenDatabase)
+                        .token(jwtToken)
                         .name(employee.getFirstName() + " " + employee.getLastName())
                         .user(userDTO)
                         .build();

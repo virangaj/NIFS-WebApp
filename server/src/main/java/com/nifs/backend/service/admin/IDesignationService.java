@@ -22,7 +22,7 @@ public interface IDesignationService {
     //    get new id
     String returnNewId();
     //update designation
-    Boolean updateDesignation(String id, DesignationMasterDTO dto);
+    DesignationMasterDTO updateDesignation(String id, DesignationMasterDTO dto);
 
     //get designation by its id
     DesignationMasterDTO returnDesignationById(String id);

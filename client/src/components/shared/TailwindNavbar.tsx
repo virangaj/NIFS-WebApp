@@ -27,15 +27,15 @@ function TailwindNavbar() {
 			navigate(RouteName.Login);
 		}
 
-		if (
-			auth?.user.tokenExpireDate &&
-			new Date().getDate() > auth?.user.tokenExpireDate
-		) {
-			dispatch(logout());
-			dispatch(reset());
-			toast.error('System timeout ERROR! Please login to the system..!');
-			navigate(RouteName.Login);
-		}
+		// if (
+		// 	auth?.user.tokenExpireDate &&
+		// 	new Date().getDate() > auth?.user.tokenExpireDate
+		// ) {
+		// 	dispatch(logout());
+		// 	dispatch(reset());
+		// 	toast.error('System timeout ERROR! Please login to the system..!');
+		// 	navigate(RouteName.Login);
+		// }
 		if (auth?.user?.status === RequestStatus.CHANGE_PASSWORD) {
 			navigate(RouteName.ChangePassword);
 		}
@@ -44,7 +44,7 @@ function TailwindNavbar() {
 		auth?.isLoading,
 		auth?.isError,
 		auth?.isSuccess,
-		auth?.tokenExpireDate,
+		// auth?.tokenExpireDate,
 	]);
 
 	const logoutFunc = () => {

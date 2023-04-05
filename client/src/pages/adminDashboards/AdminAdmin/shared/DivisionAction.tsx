@@ -10,8 +10,14 @@ import { toast } from 'react-toastify';
 import DivisionMasterService from '../../../../services/admin/DivisionMasterService';
 import { RequestStatus } from '../../../../constant/requestStatus';
 import { useAppSelector } from '../../../../hooks/hooks';
+import { useDispatch } from 'react-redux';
+import {
+	deleteDivision,
+	editDivision,
+} from '../../../../feature/admin/DivisionSlice';
 
 function DivisionAction({ params, rowId, setRowId, setDeleteId }: any) {
+	const dispatch = useDispatch<any>();
 	const [loading, setLoading] = useState(false);
 	const [success, setSuccess] = useState(false);
 	const [deleteLoading, setDeleteLoadng] = useState(false);
@@ -29,42 +35,28 @@ function DivisionAction({ params, rowId, setRowId, setDeleteId }: any) {
 		setLoading(true);
 		const { divisionId, name, locationId } = params.row;
 		setTimeout(async () => {
-			const result = await DivisionMasterService.editDivision(
-				{
+			const data = {
+				data: {
 					divisionId,
 					name,
 					locationId,
 				},
-				auth?.user?.token
-			);
-			if (result.data.status === RequestStatus.SUCCESS) {
-				setSuccess(true);
-				setRowId(null);
-				toast.success(`Division updated to ${name}`, {
-					position: 'top-right',
-					autoClose: 5000,
-					hideProgressBar: false,
-					closeOnClick: true,
-					pauseOnHover: true,
-					draggable: true,
-					progress: undefined,
-					theme: 'dark',
+				token: auth?.user?.token,
+			};
+
+			await dispatch(editDivision(data))
+				.then((res: any) => {
+					setSuccess(true);
+					setRowId(null);
+					toast.success(`Division updated to ${name}`);
+				})
+				.catch((e: any) => {
+					console.log(e);
+					setSuccess(false);
+					setRowId(null);
+					toast.error('Error Occured!');
 				});
-			} else {
-				setSuccess(false);
-				setRowId(null);
-				toast.error(`${result.data.message}`, {
-					position: 'top-right',
-					autoClose: 5000,
-					hideProgressBar: false,
-					closeOnClick: true,
-					pauseOnHover: true,
-					draggable: true,
-					progress: undefined,
-					theme: 'dark',
-				});
-			}
-			// console.log(typeId);
+
 			setLoading(false);
 		}, 1500);
 	};
@@ -74,35 +66,32 @@ function DivisionAction({ params, rowId, setRowId, setDeleteId }: any) {
 		setDeleteConfirm(false);
 		setTimeout(async () => {
 			const { divisionId, name } = params.row;
-			const result = await DivisionMasterService.deleteDivision(
-				divisionId,
-				auth?.user?.token
-			);
-			// console.log('deleted ' + typeId);
-			if (result.data.status === RequestStatus.SUCCESS) {
-				toast.error(`${name} is deleted`, {
-					position: 'top-right',
-					autoClose: 5000,
-					hideProgressBar: false,
-					closeOnClick: true,
-					pauseOnHover: true,
-					draggable: true,
-					progress: undefined,
-					theme: 'dark',
+			const data = {
+				id: divisionId,
+				token: auth?.user?.token,
+			};
+
+			await dispatch(deleteDivision(data))
+				.then((res: any) => {
+					toast.error(`${name} is deleted`);
+					setDeleteId(divisionId);
+				})
+				.catch((e: any) => {
+					console.log(e);
+					toast.error('Error Occured!');
 				});
-				setDeleteId(divisionId);
-			} else {
-				toast.error(`${result.data.message}`, {
-					position: 'top-right',
-					autoClose: 5000,
-					hideProgressBar: false,
-					closeOnClick: true,
-					pauseOnHover: true,
-					draggable: true,
-					progress: undefined,
-					theme: 'dark',
-				});
-			}
+
+			// const result = await DivisionMasterService.deleteDivision(
+			// 	divisionId,
+			// 	auth?.user?.token
+			// );
+
+			// if (result.data.status === RequestStatus.SUCCESS) {
+			// 	toast.error(`${name} is deleted`);
+			// 	setDeleteId(divisionId);
+			// } else {
+			// 	toast.error(`${result.data.message}`);
+			// }
 
 			setDeleteLoadng(false);
 		}, 1500);

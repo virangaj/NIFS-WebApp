@@ -192,6 +192,10 @@ public class EmployeeMaster {
     private User empLogin;
 
 
+    @OneToOne(mappedBy = "hod")
+    private DivisionMaster hod;
+
+
     public EmployeeMaster(int epfNo, String initials, String firstName, String lastName, String gender, String dob, String address, String contactNo, String personalEmail, String gsuitEmail, String nicNo, String nicIssuedDate, String passportNo, String passExpireDate, String licenseNo, String licenseIssuedDate, String licenseExpireDate, String contactPerson, String cpRelationship, String cpAddress, String cpTelephone, String cpStatus, String cpCivilStatus, String cpReligion, String appointmentDate, String contractStart, String contractEnd, Boolean isDelete, District districtId, Province provinceId, EmployeeTypeMaster empTypeId, EmployeeCategory empCatId, DesignationMaster designationId, DivisionMaster divisionId, Locations locationId) {
         this.epfNo = epfNo;
         this.initials = initials;

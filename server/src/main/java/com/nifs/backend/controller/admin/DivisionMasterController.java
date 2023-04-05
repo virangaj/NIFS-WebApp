@@ -31,11 +31,11 @@ public class DivisionMasterController {
             if (!d.isEmpty()) {
 
                 //return success response code
-                map.put("status", RequestStatus.SUCCESS);
-                map.put("code", 200);
-                map.put("count", d.size());
-                map.put("data", d);
-                return new ResponseEntity<>(map, HttpStatus.OK);
+//                map.put("status", RequestStatus.SUCCESS);
+//                map.put("code", 200);
+//                map.put("count", d.size());
+//                map.put("data", d);
+                return ResponseEntity.ok(d);
             }
 
             //return error response code
@@ -131,11 +131,10 @@ public class DivisionMasterController {
         Map<String, Object> map = new LinkedHashMap<String, Object>();
         try {
 
-            if (divMasterService.createDivision(divMasterData)) {
+            DivisionMasterDTO divisionMasterDTO = divMasterService.createDivision(divMasterData);
+            if (divisionMasterDTO.getDivisionId() != null) {
                 //return success response code
-                map.put("status", RequestStatus.SUCCESS);
-                map.put("code", 201);
-                return new ResponseEntity<>(map, HttpStatus.OK);
+               return ResponseEntity.ok(divisionMasterDTO);
             }
             //return error response code
             map.put("status", RequestStatus.ERROR);
@@ -161,10 +160,8 @@ public class DivisionMasterController {
         try {
             if (divMasterService.updateDivisionMaster(dmData, dvId)) {
                 //return success response code
-                map.put("status", RequestStatus.SUCCESS);
-                map.put("code", 201);
-                map.put("message", "Update Request completed!");
-                return new ResponseEntity<>(map, HttpStatus.OK);
+
+                return ResponseEntity.ok(dmData);
             }
             //return error response code
             map.put("status", RequestStatus.ERROR);
@@ -189,10 +186,8 @@ public class DivisionMasterController {
 
         try {
             if ( divMasterService.deleteDivision(divisionId)) {
-                map.put("status", RequestStatus.SUCCESS);
-                map.put("code", 201);
-                map.put("message", "Designation is successfully deleted!");
-                return new ResponseEntity<>(map, HttpStatus.OK);
+
+                return ResponseEntity.ok(divisionId);
             }
             //return error response code
             map.put("status", RequestStatus.ERROR);

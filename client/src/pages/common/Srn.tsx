@@ -3,12 +3,12 @@ import IOvertime from '../../types/common/IOvertime';
 import Box from '@mui/material/Box';
 import { generateID } from '../../utils/generateId';
 import CustomeDataPicker from '../../components/DataPicker';
-import IEmployeeData from '../../types/IEmployeeData';
+import IEmployeeData from '../../types/admin/IEmployeeData';
 import EmployeeService from '../../services/admin/EmployeeService';
 import DesignationMasterService from '../../services/admin/DesignationMasterService';
 import DivisionMasterService from '../../services/admin/DivisionMasterService';
-import IDesignationData from '../../types/IDesignationData';
-import IDivisionData from '../../types/IDivisionData';
+import IDesignationData from '../../types/admin/IDesignationData';
+import IDivisionData from '../../types/admin/IDivisionData';
 import Stack from '@mui/material/Stack';
 import Isrn from '../../types/common/Isrn';
 

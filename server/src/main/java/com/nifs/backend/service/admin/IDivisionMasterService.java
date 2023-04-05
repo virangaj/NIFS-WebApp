@@ -11,7 +11,7 @@ public interface IDivisionMasterService {
     //    get all divisions
     List<DivisionMasterDTO> getAll();
     //create new divisions
-    Boolean createDivision(DivisionMasterDTO d);
+    DivisionMasterDTO createDivision(DivisionMasterDTO d);
 
     //delete division
     Boolean deleteDivision(String divisionId);

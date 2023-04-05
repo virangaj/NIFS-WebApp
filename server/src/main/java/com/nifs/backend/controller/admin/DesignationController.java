@@ -133,6 +133,7 @@ public class DesignationController {
                 map.put("status", RequestStatus.SUCCESS);
                 map.put("code", 201);
                 map.put("message", "New Designation added!");
+                map.put("data", desData);
 
                 return new ResponseEntity<>(map, HttpStatus.OK);
             }
@@ -159,12 +160,11 @@ public class DesignationController {
     private ResponseEntity<?> updateDesignation(@PathVariable String id, @RequestBody DesignationMasterDTO dto) {
         Map<String, Object> map = new LinkedHashMap<String, Object>();
         try {
-            if (desService.updateDesignation(id, dto)) {
+            DesignationMasterDTO updated = desService.updateDesignation(id, dto);
+            if (updated != null) {
                 //return success response code
-                map.put("status", RequestStatus.SUCCESS);
-                map.put("code", 201);
-                map.put("message", "Update Request completed!");
-                return new ResponseEntity<>(map, HttpStatus.OK);
+
+                return ResponseEntity.ok(updated);
             }
             //return error response code
             map.put("status", RequestStatus.ERROR);

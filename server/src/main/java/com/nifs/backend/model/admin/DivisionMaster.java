@@ -42,12 +42,17 @@ public class DivisionMaster {
     @OneToMany(mappedBy = "divisionId", cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
     private List<EmployeeMaster> employee;
 
+    @OneToOne
+    @JoinColumn(name = "hod", referencedColumnName = "epf_no")
+    private EmployeeMaster hod;
 
-//    constructor for create new instance
-    public DivisionMaster(String divisionId, String name, Date createdDate, Locations locationId) {
+
+    //    constructor for create new instance
+    public DivisionMaster(String divisionId, String name, Date createdDate, Locations locationId, EmployeeMaster hod) {
         this.divisionId = divisionId;
         this.name = name;
         this.createdDate = createdDate;
         this.locationId = locationId;
+        this.hod = hod;
     }
 }

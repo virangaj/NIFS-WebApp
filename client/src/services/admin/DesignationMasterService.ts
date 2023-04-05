@@ -12,8 +12,14 @@ const config = {
 };
 axios.defaults.baseURL = process.env.REACT_APP_BACKEND_SERVER;
 
-const getAllDesignations = () => {
-	return http.get<any>('/admin/designation');
+const getAllDesignations = async () => {
+	// return http.get<any>('/admin/designation');
+	const response = await axios({
+		method: 'get',
+		url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/designation`,
+	});
+	// alert("Favourite created --- "+ response);
+	return response;
 };
 
 const getDesignation = (id: any) => {
@@ -44,8 +50,8 @@ const getDesignationByLocationId = (id: any) => {
 	return http.get<any>(`/admin/designation/location/${id}`);
 };
 
-const editDesignation = async (favJSON: any, token: string) => {
-	console.log(favJSON);
+const editDesignation = async (favJSON: any, token: any) => {
+	// console.log(favJSON);
 	const response = await axios({
 		method: 'patch',
 		url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/designation/update/${favJSON.designationId}`,
@@ -55,7 +61,7 @@ const editDesignation = async (favJSON: any, token: string) => {
 			Authorization: `Bearer ${token}`,
 		},
 	});
-
+	console.log(response);
 	// alert("Favourite created --- "+ response);
 	return response;
 };

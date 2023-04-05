@@ -5,41 +5,57 @@ import Box from '@mui/material/Box';
 import Ripple from '../../../components/Ripple';
 import { HiX } from 'react-icons/hi';
 import { toast } from 'react-toastify';
-
+import { useDispatch } from 'react-redux';
 import ILocationData from '../../../types/ILocationData';
 import LocationMasterService from '../../../services/admin/LocationMasterService';
-import IDivisionData from '../../../types/IDivisionData';
+import IDivisionData from '../../../types/admin/IDivisionData';
 import DivisionMasterService from '../../../services/admin/DivisionMasterService';
 import DivisionAction from './shared/DivisionAction';
 import { RequestStatus } from '../../../constant/requestStatus';
 import { useAppSelector } from '../../../hooks/hooks';
+import {
+	createDivision,
+	getAllDivisions,
+} from '../../../feature/admin/DivisionSlice';
+import { getAllLocations } from '../../../feature/admin/LocationSlice';
 function Division() {
+	const dispatch = useDispatch<any>();
+
 	const [pageSize, setPageSize] = useState(10);
 	const [rowId, setRowId] = useState(0);
 	const [loading, setLoading] = useState(false);
 	const [deleteId, setDeleteId] = useState('');
 	const [divisionData, setDivisionData] = useState<Array<IDivisionData>>([]);
-	const [locationData, setLocationData] = useState<ILocationData[]>();
 	const [d_id, setD_Id] = useState('');
 
 	const { auth } = useAppSelector((state) => state.persistedReducer);
-
+	const { division, divisionIsLoading, divisionIsSuccess } = useAppSelector(
+		(state) => state.division
+	);
+	const { location, locationIsLoading, locationIsSuccess } = useAppSelector(
+		(state) => state.location
+	);
 	const [values, setValues] = useState<any>({
 		divisionId: '',
 		name: '',
 		locationId: '',
+		hod: '',
 	});
 	useEffect(() => {
-		const filteredData = divisionData?.filter(
-			(emp) => emp.divisionId !== deleteId
-		);
+		const filteredData = division?.filter((emp) => emp.divisionId !== deleteId);
 		setDivisionData(filteredData);
 	}, [deleteId]);
 
 	useEffect(() => {
 		retreiveDivisions();
-		retreiveLocations();
+		if (location.length === 0 || !locationIsSuccess) {
+			retreiveLocations();
+		}
 	}, []);
+
+	useEffect(() => {
+		setDivisionData(division);
+	}, [division]);
 
 	useEffect(() => {
 		// console.log(v_id)
@@ -52,29 +68,11 @@ function Division() {
 	}, [d_id]);
 
 	const retreiveDivisions = () => {
-		DivisionMasterService.getAllDivisions()
-			.then((res: any) => {
-				if (res.data.status === RequestStatus.SUCCESS) {
-					setDivisionData(res.data.data);
-					// console.log(divisionData);
-				} else {
-					toast.error(`${res.data.message}`);
-				}
-			})
-			.catch((e: any) => {
-				console.log(e);
-			});
+		dispatch(getAllDivisions());
 	};
 
 	const retreiveLocations = () => {
-		LocationMasterService.getAllLocations()
-			.then((res: any) => {
-				setLocationData(res.data);
-				// console.log(locationData);
-			})
-			.catch((e: any) => {
-				console.log(e);
-			});
+		dispatch(getAllLocations());
 	};
 
 	const resetForm = () => {
@@ -106,34 +104,29 @@ function Division() {
 
 	const onSubmit = async (e: any) => {
 		e.preventDefault();
-
-		if (values.divisionId !== '') {
+		if (values.divisionId !== '' && values.name !== null) {
 			setLoading(true);
 			setTimeout(async () => {
-				const result = await DivisionMasterService.saveDivision(
-					values,
-					auth?.user?.token
-				);
-				if (result.data.status === RequestStatus.SUCCESS) {
-					toast.success('New Division is added');
+				const req = {
+					data: values,
+					token: auth?.user.token,
+				};
 
-					resetForm();
-				} else {
-					toast.error('Request cannot completed!');
-				}
+				await dispatch(createDivision(req))
+					.then((res: any) => {
+						console.log(res);
+						toast.success('New Division is Created!');
+					})
+					.catch((e: any) => {
+						console.log(e);
+						toast.error('Error Occured!');
+					});
+
 				setLoading(false);
 			}, 1000);
 		} else {
 			// alert('Please add a ID');
-			toast.error('Please add an ID', {
-				position: 'top-right',
-				autoClose: 5000,
-				hideProgressBar: false,
-				closeOnClick: true,
-				pauseOnHover: true,
-				draggable: true,
-				progress: undefined,
-			});
+			toast.error('Please fill up all the fields');
 		}
 	};
 
@@ -238,7 +231,7 @@ function Division() {
 									<option disabled value=''>
 										Select Location
 									</option>
-									{locationData?.map((l: ILocationData, i: number) => {
+									{location?.map((l: ILocationData, i: number) => {
 										return (
 											<option key={i} value={l.locationId}>
 												{l.locationName}

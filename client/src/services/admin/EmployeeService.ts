@@ -3,8 +3,17 @@ import http from '../../utils/http-common';
 
 axios.defaults.baseURL = process.env.REACT_APP_BACKEND_SERVER;
 
-const getAllEmployeeData = () => {
-	return http.get<Array<any>>('/auth/employee');
+const getAllEmployeeData = async () => {
+	const response = await axios({
+		method: 'get',
+		url: `${process.env.REACT_APP_BACKEND_SERVER}/auth/employee`,
+
+		headers: {
+			'Content-Type': 'application/json; charset=utf-8',
+		},
+	});
+	// alert("Favourite created --- "+ response);
+	return response.data;
 };
 
 const getEmployeeDataById = (id: number) => {
