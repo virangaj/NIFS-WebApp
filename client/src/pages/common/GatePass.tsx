@@ -3,13 +3,15 @@ import IGatePass from '../../types/common/IGatePass';
 import Box from '@mui/material/Box';
 import { generateID } from '../../utils/generateId';
 import CustomeDataPicker from '../../components/DataPicker';
-import IEmployeeData from '../../types/admin/IEmployeeData';
-import IDesignationData from '../../types/admin/IDesignationData';
-import IDivisionData from '../../types/admin/IDivisionData';
+
 import Stack from '@mui/material/Stack';
 import EmployeeService from '../../services/admin/EmployeeService';
 import DesignationMasterService from '../../services/admin/DesignationMasterService';
 import DivisionMasterService from '../../services/admin/DivisionMasterService';
+import FileInput from '../../components/FileInput';
+import IEmployeeData from '../../types/admin/IEmployeeData';
+import IDesignationData from '../../types/admin/IDesignationData';
+import IDivisionData from '../../types/admin/IDivisionData';
 
 const initialState: IGatePass = {
 	// gate pass
@@ -19,9 +21,7 @@ const initialState: IGatePass = {
 	purposeOfRemoval: '',
 	dateOfRemoval: '',
 	project: '',
-	attachment: '',
 	remark: '',
-
 	//   generated
 	epfNo: '',
 	designation: '',
@@ -38,6 +38,7 @@ function GatePass() {
 	const [divisionData, setDivisionData] = useState<IDivisionData>();
 	const [removalDate, setRemovalDate] = React.useState<string | null>(null);
 	const [currentEmp, setCurrentEmp] = useState<IEmployeeData>();
+	const [eventAttachment, setEventAttachment] = useState<File | any>();
 
 	useEffect(() => {
 		setValues({
@@ -51,7 +52,6 @@ function GatePass() {
 			purposeOfRemoval: values?.purposeOfRemoval,
 			dateOfRemoval: values.dateOfRemoval,
 			project: values?.project,
-			attachment: values?.attachment,
 		});
 	}, [requestDate]);
 
@@ -67,7 +67,6 @@ function GatePass() {
 			purposeOfRemoval: values?.purposeOfRemoval,
 			dateOfRemoval: values.dateOfRemoval,
 			project: values?.project,
-			attachment: values?.attachment,
 		});
 	}, [getDocNo]);
 
@@ -97,7 +96,6 @@ function GatePass() {
 			purposeOfRemoval: values?.purposeOfRemoval,
 			dateOfRemoval: values.dateOfRemoval,
 			project: values?.project,
-			attachment: values?.attachment,
 		});
 		retriveEmployeeDetails(employee);
 	}, [values.epfNo]);
@@ -309,21 +307,12 @@ function GatePass() {
 								required
 							/>
 						</div>
-						<div>
-							<label className='input-label basis-1/2' htmlFor='attachment'>
-								Attachment
-							</label>
 
-							<input
-								id='outlined-basic'
-								type='search'
-								className='mr-4 tailwind-text-box w-[100%]'
-								name='attachment'
-								onChange={onChange}
-								value={values.attachment}
-								required
-							/>
-						</div>
+						<FileInput
+							setEventAttachment={setEventAttachment}
+							eventAttachment={eventAttachment}
+							title='Upload Attachment'
+						/>
 					</div>
 					{/* right section of the flex */}
 					<div className='flex-1 mr-4'>

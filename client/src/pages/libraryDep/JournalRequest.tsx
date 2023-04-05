@@ -1,32 +1,59 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CustomeDataPicker from "../../components/DataPicker";
 import Stack from "@mui/material/Stack";
 import "../pages.css";
+import { toast } from "react-toastify";
 import IJournalRequest from "../../types/JournalRequest";
+import JournalRequestService from "../../services/library/JournalRequestService";
+
+const initialState: IJournalRequest = {
+  documentNo: "",
+  employee: "",
+  designation: "",
+  division: "",
+  headOfLibrary: "",
+  project: "",
+  vote: "",
+  budget: "", // have to look into this again
+  journalName: "",
+  date: "",
+  periodOfRequest: "",
+  totalAmountDue: "",
+  currencyType: "",
+  ISSN_No: "",
+  type: "",
+  methodOfPayment: "",
+  attachment: "",
+  remark: "",
+};
 
 export default function JournalRequest() {
-  const [values, setValues] = useState<IJournalRequest>({
-    documentNo: "",
-    employee: "",
-    designation: "",
-    division: "",
-    headOfLibrary: "",
-    project: "",
-    vote: "",
-    budget: "", // have to look into this again
-    journalName: "",
-    date: "",
-    periodOfRequest: "",
-    totalAmountDue: "",
-    currencyType: "",
-    ISSN_No: "",
-    type: "",
-    methodOfPayment: "",
-    attachment: "",
-    remark: "",
-  });
-
+  const [values, setValues] = useState<IJournalRequest>(initialState);
   const [date, setDate] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setValues({
+      documentNo: values?.documentNo,
+      employee: values?.employee,
+      designation: values?.designation,
+      division: values?.division,
+      headOfLibrary: values?.headOfLibrary,
+      project: values?.project,
+      vote: values?.vote,
+      budget: values?.budget, // have to look into this again
+      journalName: values?.journalName,
+      date: date ? date : "",
+      currencyType: values?.currencyType,
+      periodOfRequest: values?.periodOfRequest,
+      totalAmountDue: values?.totalAmountDue,
+      ISSN_No: values?.ISSN_No,
+      type: values?.type,
+      methodOfPayment: values?.methodOfPayment,
+      attachment: values?.attachment,
+      remark: values?.remark,
+    });
+  }, [date]);
 
   const resetForm = () => {
     setValues({
@@ -61,6 +88,18 @@ export default function JournalRequest() {
   const onSubmit = async (event: any) => {
     event.preventDefault();
     console.log(values);
+
+    setTimeout(async () => {
+      const result = await JournalRequestService.saveJournalRequest(values);
+
+      if (result?.data !== null) {
+        toast.success("Journal Request Added Successfully");
+        resetForm();
+      } else {
+        toast.error("Journal Request Cannot be Completed");
+      }
+      setLoading(false);
+    }, 1000);
   };
 
   return (

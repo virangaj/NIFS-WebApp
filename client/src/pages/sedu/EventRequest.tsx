@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 
 import Stack from '@mui/material/Stack';
-import IEventRequest from '../../types/sedu/IEventRequest';
 import { generateID } from '../../utils/generateId';
 import CustomeDataPicker from '../../components/DataPicker';
 
@@ -10,6 +9,7 @@ import FileInput from '../../components/FileInput';
 import EventRequestParticipants from './shared/EventRequestParticipants';
 
 import Projects from '../../components/data/Project.json';
+import IEventRequest from '../../types/sedu/IEventRequest';
 
 const initialState: IEventRequest = {
 	eventId: '',

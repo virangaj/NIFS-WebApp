@@ -1,7 +1,7 @@
 export default interface IRepairRequest {
   documentNo: string;
   employeeNo: string;
-  designatiom: string;
+  designation: string;
   division: string;
   vehicleNo: string;
   date: string;
