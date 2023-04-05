@@ -160,7 +160,7 @@ public class DivisionMasterController {
         try {
             if (divMasterService.updateDivisionMaster(dmData, dvId)) {
                 //return success response code
-        
+
                 return ResponseEntity.ok(dmData);
             }
             //return error response code

@@ -1,4 +1,5 @@
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
+import { useDispatch } from 'react-redux';
 import { useEffect, useMemo, useState } from 'react';
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
@@ -12,8 +13,10 @@ import LocationMasterService from '../../../services/admin/LocationMasterService
 import DesignationMasterService from '../../../services/admin/DesignationMasterService';
 import DesignationAction from './shared/DesignationAction';
 import { RequestStatus } from '../../../constant/requestStatus';
-import { useDispatch } from 'react-redux';
-import { getAllDesignations } from '../../../feature/admin/DesignationSlice';
+import {
+	createDesignation,
+	getAllDesignations,
+} from '../../../feature/admin/DesignationSlice';
 
 function Designation() {
 	const dispatch = useDispatch<any>();
@@ -38,12 +41,17 @@ function Designation() {
 		locationId: '',
 	});
 
+	//update on delete
 	useEffect(() => {
 		const filteredData = designationData?.filter(
 			(emp) => emp.designationId !== deleteId
 		);
 		setDesignationData(filteredData);
 	}, [deleteId]);
+
+	useEffect(() => {
+		setDesignationData(designation);
+	}, [designation]);
 
 	useEffect(() => {
 		retreiveDesignations();
@@ -104,25 +112,29 @@ function Designation() {
 	const onSubmit = async (e: any) => {
 		e.preventDefault();
 
-		if (values.id !== '') {
+		if (values.designationId !== '' && values.designationName !== null) {
 			setLoading(true);
 			setTimeout(async () => {
-				const result = await DesignationMasterService.saveDesignation(
-					values,
-					auth?.user.token
-				);
-				// console.log(result)
-				if (result?.data.status === RequestStatus.SUCCESS) {
-					toast.success('New Designation is added');
-					resetForm();
-				} else {
-					toast.error('Request cannot completed!');
-				}
+				const req = {
+					data: values,
+					token: auth?.user.token,
+				};
+
+				await dispatch(createDesignation(req))
+					.then((res: any) => {
+						console.log(res);
+						toast.success('New Designation is Created!');
+					})
+					.catch((e: any) => {
+						console.log(e);
+						toast.error('Error Occured!');
+					});
+
 				setLoading(false);
 			}, 1000);
 		} else {
 			// alert('Please add a ID');
-			toast.error('Please add an ID');
+			toast.error('Please fill up all the fields');
 		}
 	};
 
@@ -173,7 +185,7 @@ function Designation() {
 							components={{ Toolbar: GridToolbar }}
 							rowHeight={60}
 							columns={columns}
-							rows={designation && designation}
+							rows={designationData && designationData}
 							getRowId={(row) => row.designationId}
 							rowsPerPageOptions={[10, 20, 30]}
 							pageSize={pageSize}

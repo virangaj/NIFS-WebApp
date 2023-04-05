@@ -3,7 +3,7 @@ import IDivisionData from '../../types/IDivisionData';
 import DivisionMasterService from '../../services/admin/DivisionMasterService';
 
 interface DivisionState {
-	division: any[];
+	division: IDivisionData[];
 	divisionIsLoading: boolean;
 	divisionIsSuccess: boolean;
 	divisionIsError: boolean;
@@ -16,11 +16,13 @@ const initialState: DivisionState = {
 	divisionIsError: false,
 };
 
+//get all divisions
 export const getAllDivisions = createAsyncThunk('division/getall', async () => {
 	const response = await DivisionMasterService.getAllDivisions();
 	return response.data;
 });
 
+//edit division
 export const editDivision = createAsyncThunk(
 	'division/update',
 	async ({ data, token }: any) => {
@@ -31,6 +33,7 @@ export const editDivision = createAsyncThunk(
 	}
 );
 
+//create a new division
 export const createDivision = createAsyncThunk(
 	'division/create',
 	async ({ data, token }: any) => {
@@ -41,6 +44,7 @@ export const createDivision = createAsyncThunk(
 	}
 );
 
+//delete adivision
 export const deleteDivision = createAsyncThunk(
 	'division/delete',
 	async ({ id, token }: any) => {
@@ -112,11 +116,9 @@ export const DivisionSlice = createSlice({
 				state.divisionIsLoading = false;
 				state.divisionIsSuccess = true;
 				state.divisionIsError = false;
-				state.division = state?.division?.map((d) => {
-					if (d.divisionId !== action.payload.data) {
-						return d;
-					}
-				});
+				state.division = state?.division?.filter(
+					(d) => d.divisionId !== action.payload.data
+				);
 			})
 			.addCase(deleteDivision.rejected, (state) => {
 				state.divisionIsLoading = false;

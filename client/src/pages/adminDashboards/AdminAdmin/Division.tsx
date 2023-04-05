@@ -105,7 +105,7 @@ function Division() {
 
 	const onSubmit = async (e: any) => {
 		e.preventDefault();
-		if (values.divisionId !== '') {
+		if (values.divisionId !== '' && values.name !== null) {
 			setLoading(true);
 			setTimeout(async () => {
 				const req = {
@@ -127,15 +127,7 @@ function Division() {
 			}, 1000);
 		} else {
 			// alert('Please add a ID');
-			toast.error('Please add an ID', {
-				position: 'top-right',
-				autoClose: 5000,
-				hideProgressBar: false,
-				closeOnClick: true,
-				pauseOnHover: true,
-				draggable: true,
-				progress: undefined,
-			});
+			toast.error('Please fill up all the fields');
 		}
 	};
 
