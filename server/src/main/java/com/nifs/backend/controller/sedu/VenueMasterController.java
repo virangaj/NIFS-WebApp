@@ -4,7 +4,7 @@ import com.nifs.backend.model.sedu.Charges;
 import com.nifs.backend.model.sedu.Facility;
 import com.nifs.backend.model.sedu.VenueCharge;
 import com.nifs.backend.model.sedu.VenueMaster;
-import com.nifs.backend.serviceImplementation.admin.sedu.IVenueMasterService;
+import com.nifs.backend.service.sedu.IVenueMasterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

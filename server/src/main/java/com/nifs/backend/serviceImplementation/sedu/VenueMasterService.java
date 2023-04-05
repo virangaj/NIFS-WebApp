@@ -8,7 +8,7 @@ import com.nifs.backend.model.sedu.Facility;
 import com.nifs.backend.repository.sedu.FacilityRepository;
 import com.nifs.backend.repository.sedu.VenueChargeRepository;
 import com.nifs.backend.repository.sedu.VenueMasterRepository;
-import com.nifs.backend.serviceImplementation.admin.sedu.IVenueMasterService;
+import com.nifs.backend.service.sedu.IVenueMasterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

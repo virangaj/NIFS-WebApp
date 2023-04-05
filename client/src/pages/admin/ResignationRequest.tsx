@@ -18,6 +18,7 @@ import DivisionSelector from '../../components/shared/DivisionSelector';
 import IResignationRequest from '../../types/admin/IResignationRequest';
 import DesignationSelector from '../../components/shared/DesignationSelector';
 import EmployeeSelector from '../../components/shared/EmployeeSelector';
+import ResignationService from '../../services/admin/ResignationService';
 
 const initialState: IResignationRequest = {
 	documentNo: '',
@@ -25,7 +26,7 @@ const initialState: IResignationRequest = {
 	epfNo: 0,
 	designationId: '',
 	divisionId: '',
-	hod: '',
+	hod: 0,
 	remark: '',
 	hodApproved: false,
 	dirApproved: false,
@@ -34,80 +35,50 @@ const initialState: IResignationRequest = {
 function ResignationRequest() {
 	const [getDocNo, setDocNo] = useState<String | any>('');
 	const [requestDate, setRequestDate] = React.useState<string | null>(null);
-	const [designationData, setDesignationData] = useState<IDesignationData>();
-	const [divisionData, setDivisionData] = useState<IDivisionData>();
-
 	const [empFoundError, setEmpFoundError] = useState<boolean>(false);
-	const [empData, setEmpData] = useState<Array<IEmployeeData>>([]);
-	const [currentEmp, setCurrentEmp] = useState<IEmployeeData>();
-	const [values, setValues] = useState<IContractExtension>(initialState);
-	const [hod, setHod] = useState('');
+	const [values, setValues] = useState<IResignationRequest>(initialState);
+	const [hod, setHod] = useState<IEmployeeData | null>();
+	const [loading, setLoading] = useState<boolean>(false);
 	const { employees, employeesIsLoading, employeesIsSuccess } = useAppSelector(
 		(state) => state.employees
 	);
-
+	const { division, divisionIsLoading, divisionIsSuccess } = useAppSelector(
+		(state) => state.division
+	);
+	const { auth } = useAppSelector((state) => state.persistedReducer);
 	useEffect(() => {
 		setValues({
-			documentNo: values?.documentNo,
+			...values,
 			date: requestDate ? requestDate : '',
-			epfNo: values?.epfNo,
-			designationId: values?.designationId,
-			divisionId: values?.divisionId,
-			hod: values?.hod,
-			remark: values?.remark,
 		});
 	}, [requestDate]);
 
 	useEffect(() => {
 		setValues({
+			...values,
 			documentNo: getDocNo && getDocNo,
-			date: requestDate ? requestDate : '',
-			epfNo: values?.epfNo,
-			designationId: values?.designationId,
-			divisionId: values?.divisionId,
-			hod: values?.hod,
-			remark: values?.remark,
 		});
 		console.log(getDocNo);
 	}, [getDocNo]);
 
 	useEffect(() => {
-		retreiveEmployees();
-		console.log(empData);
-	}, []);
+		const divisionData = division.find(
+			(d) => d.divisionId === values.divisionId
+		);
 
-	//get designation and division
-	const retriveEmployeeDetails = (emp: any) => {
-		//get designation
-		DesignationMasterService.getDesignation(emp?.designationId)
-			.then((res: any) => {
-				setDesignationData(res.data.data);
-			})
-			.catch((e: any) => {
-				console.log(e);
-			});
-
-		//get divions
-
-		DivisionMasterService.getDivision(emp?.divisionId)
-			.then((res: any) => {
-				setDivisionData(res.data.data);
-			})
-			.catch((e: any) => {
-				console.log(e);
-			});
-	};
-
-	//get employees
-	const retreiveEmployees = () => {
-		EmployeeService.getAllEmployeeData()
-			.then((res: any) => {
-				setEmpData(res.data.data);
-			})
-			.catch((e: any) => {
-				console.log(e);
-			});
-	};
+		if (divisionData) {
+			const employeeId = divisionData.hod;
+			const employee = employees.find((e) => e.epfNo === employeeId);
+			// console.log(employee);
+			if (employee) {
+				setHod(employee);
+				setValues({
+					...values,
+					hod: employee.epfNo,
+				});
+			}
+		}
+	}, [values.divisionId]);
 
 	// generate document ID
 	const generateDocNo = () => {
@@ -119,6 +90,7 @@ function ResignationRequest() {
 	const resetForm = () => {
 		setValues(initialState);
 		setDocNo('');
+		setHod(null);
 	};
 
 	//onchange funtion
@@ -131,6 +103,17 @@ function ResignationRequest() {
 
 	const onSubmit = async (e: any) => {
 		e.preventDefault();
+		setLoading(true);
+		setTimeout(() => {
+			ResignationService.saveResignationRequest(values, auth?.user?.token)
+				.then((res) => {
+					console.log(res);
+				})
+				.catch((e) => {
+					console.log(e);
+				});
+		}, 1000);
+
 		console.log(values);
 	};
 
@@ -171,41 +154,30 @@ function ResignationRequest() {
 					''
 				)}
 				<div className='w-[97%] mx-auto'>
-					<DivisionSelector
-						onChange={onChange}
-						value={values.divisionId}
-						name='divisionId'
-					/>
-				</div>
-				<div className='w-[97%] mx-auto'>
 					<DesignationSelector
 						onChange={onChange}
 						value={values.designationId}
 						name='designationId'
 					/>
 				</div>
+				<div className='w-[97%] mx-auto'>
+					<DivisionSelector
+						onChange={onChange}
+						value={values.divisionId}
+						name='divisionId'
+					/>
+				</div>
 
 				<div className='w-[97%] mx-auto'>
-					<p className='normal-text'>
-						Designation :{' '}
-						{values.designationId && employees ? (
-							<span className='font-bold'>
-								{/* {designationData.designationName} */}
-							</span>
-						) : (
-							<span className='italic-sm-text'>Please select an employee</span>
-						)}
-					</p>
-
 					<div className='grid items-center grid-cols-1 md:grid-cols-2'>
 						<p className='normal-text'>
 							HOD :{' '}
-							{values.epfNo && divisionData ? (
-								<span className='font-bold'>{divisionData.name}</span>
-							) : (
-								<span className='italic-sm-text'>
-									Please select an employee
+							{values.divisionId && hod ? (
+								<span className='font-bold'>
+									{hod.firstName + ' ' + hod.lastName}
 								</span>
+							) : (
+								<span className='italic-sm-text'>Please select a Division</span>
 							)}
 						</p>
 					</div>

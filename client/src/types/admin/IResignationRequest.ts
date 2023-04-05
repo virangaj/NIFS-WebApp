@@ -4,7 +4,7 @@ export default interface IResignationRequest {
 	epfNo: number;
 	designationId: string;
 	divisionId: string;
-	hod: string;
+	hod: number;
 	remark: string;
 	hodApproved: boolean;
 	dirApproved: boolean;

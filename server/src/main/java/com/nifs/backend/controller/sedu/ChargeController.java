@@ -3,7 +3,7 @@ package com.nifs.backend.controller.sedu;
 
 
 import com.nifs.backend.model.sedu.Charges;
-import com.nifs.backend.serviceImplementation.admin.sedu.IChargeService;
+import com.nifs.backend.service.sedu.IChargeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
