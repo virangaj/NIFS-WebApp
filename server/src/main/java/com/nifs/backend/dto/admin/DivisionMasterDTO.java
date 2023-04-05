@@ -1,15 +1,13 @@
 package com.nifs.backend.dto.admin;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class DivisionMasterDTO {
 
     private String divisionId;

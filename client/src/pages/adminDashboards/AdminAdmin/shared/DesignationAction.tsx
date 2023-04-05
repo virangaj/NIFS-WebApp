@@ -10,8 +10,11 @@ import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
 import { toast } from 'react-toastify';
 import DesignationMasterService from '../../../../services/admin/DesignationMasterService';
 import { RequestStatus } from '../../../../constant/requestStatus';
+import { useDispatch } from 'react-redux';
+import { editDesignation } from '../../../../feature/admin/DesignationSlice';
 
 function DesignationAction({ params, rowId, setRowId, setDeleteId }: any) {
+	const dispatch = useDispatch<any>();
 	const [loading, setLoading] = useState(false);
 	const [success, setSuccess] = useState(false);
 	const [deleteLoading, setDeleteLoadng] = useState(false);
@@ -28,43 +31,52 @@ function DesignationAction({ params, rowId, setRowId, setDeleteId }: any) {
 	const handleUpdate = async () => {
 		setLoading(true);
 		const { designationId, designationName, locationId } = params.row;
-		setTimeout(async () => {
-			const result = await DesignationMasterService.editDesignation(
-				{
-					designationId,
-					designationName,
-					locationId,
-				},
-				auth?.user?.token
-			);
 
-			if (result.data.status === RequestStatus.SUCCESS) {
-				setSuccess(true);
-				setRowId(null);
-				toast.success(`Designation updated to ${designationName}`, {
-					position: 'top-right',
-					autoClose: 5000,
-					hideProgressBar: false,
-					closeOnClick: true,
-					pauseOnHover: true,
-					draggable: true,
-					progress: undefined,
-					theme: 'dark',
-				});
-			} else {
-				setSuccess(false);
-				setRowId(null);
-				toast.error(`${result.data.message}`, {
-					position: 'top-right',
-					autoClose: 5000,
-					hideProgressBar: false,
-					closeOnClick: true,
-					pauseOnHover: true,
-					draggable: true,
-					progress: undefined,
-					theme: 'dark',
-				});
-			}
+		const data = {
+			designationId,
+			designationName,
+			locationId,
+		};
+		setTimeout(async () => {
+			// const result = await DesignationMasterService.editDesignation(
+			// 	{
+			// 		designationId,
+			// 		designationName,
+			// 		locationId,
+			// 	},
+			// 	auth?.user?.token
+			// );
+			const token = auth?.user?.token;
+
+			const result = await dispatch(editDesignation({ data, token }));
+
+			// if (result.data.status === RequestStatus.SUCCESS) {
+			// 	setSuccess(true);
+			// 	setRowId(null);
+			// 	toast.success(`Designation updated to ${designationName}`, {
+			// 		position: 'top-right',
+			// 		autoClose: 5000,
+			// 		hideProgressBar: false,
+			// 		closeOnClick: true,
+			// 		pauseOnHover: true,
+			// 		draggable: true,
+			// 		progress: undefined,
+			// 		theme: 'dark',
+			// 	});
+			// } else {
+			// 	setSuccess(false);
+			// 	setRowId(null);
+			// 	toast.error(`${result.data.message}`, {
+			// 		position: 'top-right',
+			// 		autoClose: 5000,
+			// 		hideProgressBar: false,
+			// 		closeOnClick: true,
+			// 		pauseOnHover: true,
+			// 		draggable: true,
+			// 		progress: undefined,
+			// 		theme: 'dark',
+			// 	});
+			// }
 			// console.log(typeId);
 			setLoading(false);
 		}, 1500);

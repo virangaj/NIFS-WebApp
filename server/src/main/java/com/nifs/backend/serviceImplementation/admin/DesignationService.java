@@ -111,14 +111,15 @@ public class DesignationService implements IDesignationService {
     }
 
     //update designation
-    public Boolean updateDesignation(String id, DesignationMasterDTO dto) {
+    public DesignationMasterDTO updateDesignation(String id, DesignationMasterDTO dto) {
 
         if (desRepo.returnDesignation(id) != null) {
             Date d = new Date();
             desRepo.updateDesignation(dto.getDesignationName(), d, id);
-            return true;
+            DesignationMasterDTO updated = returnDesignationById(id);
+            return updated;
         }
-        return false;
+        return null;
 
 
     }

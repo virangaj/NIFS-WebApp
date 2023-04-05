@@ -13,6 +13,8 @@ import { combineReducers } from 'redux';
 
 import authSlice from '../feature/auth/authSlice';
 import designationSlice from '../feature/admin/DesignationSlice';
+import divisionSlice from '../feature/admin/DivisionSlice';
+
 const persistConfig = {
 	key: 'employee',
 	storage,
@@ -25,6 +27,7 @@ export const store = configureStore({
 	reducer: {
 		persistedReducer,
 		designation: designationSlice,
+		division: divisionSlice,
 	},
 
 	middleware: (getDefaultMiddleware) =>

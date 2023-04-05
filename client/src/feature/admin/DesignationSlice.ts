@@ -19,9 +19,22 @@ const initialState: DesignationState = {
 
 export const getAllDesignations = createAsyncThunk(
 	'designation/getall',
-	async () => {
-		const response = await DesignationMasterService.getAllDesignations();
-		return response.data;
+	async (token: string) => {
+		const response = await DesignationMasterService.getAllDesignations(token);
+		return response.data.data;
+	}
+);
+
+export const editDesignation = createAsyncThunk(
+	'designation/update',
+	async ({ data, token }: any) => {
+		console.log(data, token);
+		const response = await DesignationMasterService.editDesignation(
+			data,
+			token
+		);
+		console.log(response.data);
+		return response.data.data;
 	}
 );
 
@@ -42,6 +55,25 @@ export const DesignationSlice = createSlice({
 				state.designation = action.payload;
 			})
 			.addCase(getAllDesignations.rejected, (state) => {
+				state.designationIsLoading = false;
+				state.designationIsSuccess = false;
+				state.designationIsError = true;
+			})
+			.addCase(editDesignation.pending, (state) => {
+				state.designationIsLoading = true;
+			})
+			.addCase(editDesignation.fulfilled, (state, action) => {
+				state.designationIsLoading = false;
+				state.designationIsSuccess = true;
+				state.designationIsError = false;
+				state.designation = state.designation.map((d) => {
+					if (d.designationId === action.payload.designationId) {
+						d = action.payload;
+					}
+					return d;
+				});
+			})
+			.addCase(editDesignation.rejected, (state) => {
 				state.designationIsLoading = false;
 				state.designationIsSuccess = false;
 				state.designationIsError = true;

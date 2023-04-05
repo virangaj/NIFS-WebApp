@@ -50,7 +50,7 @@ public class DivisionMasterService implements IDivisionMasterService {
 
     //create new divisions
     @Override
-    public Boolean createDivision(DivisionMasterDTO d) {
+    public DivisionMasterDTO createDivision(DivisionMasterDTO d) {
 
         if (divMasterRepo.returnDivision(d.getDivisionId()) == null) {
 
@@ -58,10 +58,10 @@ public class DivisionMasterService implements IDivisionMasterService {
             Locations l = locRepo.getLocation(d.getLocationId());
             DivisionMaster dm = new DivisionMaster(d.getDivisionId(), d.getName(), date, l);
             divMasterRepo.save(dm);
-            return true;
+            return d;
         }
         else {
-            return false;
+            return null;
         }
 
 

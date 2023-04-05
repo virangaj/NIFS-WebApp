@@ -12,8 +12,11 @@ import LocationMasterService from '../../../services/admin/LocationMasterService
 import DesignationMasterService from '../../../services/admin/DesignationMasterService';
 import DesignationAction from './shared/DesignationAction';
 import { RequestStatus } from '../../../constant/requestStatus';
+import { useDispatch } from 'react-redux';
+import { getAllDesignations } from '../../../feature/admin/DesignationSlice';
 
 function Designation() {
+	const dispatch = useDispatch<any>();
 	const [pageSize, setPageSize] = useState(10);
 	const [rowId, setRowId] = useState(0);
 	const [loading, setLoading] = useState(false);
@@ -21,10 +24,13 @@ function Designation() {
 	const [designationData, setDesignationData] = useState<
 		Array<IDesignationData>
 	>([]);
+
 	const [locationData, setLocationData] = useState<ILocationData[]>();
 	const [d_id, setD_Id] = useState('');
 
 	const { auth } = useAppSelector((state) => state.persistedReducer);
+	const { designation, designationIsLoading, designationIsSuccess } =
+		useAppSelector((state) => state.designation);
 
 	const [values, setValues] = useState<any>({
 		designationId: '',
@@ -55,25 +61,7 @@ function Designation() {
 	}, [d_id]);
 
 	const retreiveDesignations = () => {
-		DesignationMasterService.getAllDesignations()
-			.then((res: any) => {
-				if (res.data.status === RequestStatus.SUCCESS) {
-					setDesignationData(res.data.data);
-				} else {
-					toast.error(`${res.data.message}`, {
-						position: 'top-right',
-						autoClose: 5000,
-						hideProgressBar: false,
-						closeOnClick: true,
-						pauseOnHover: true,
-						draggable: true,
-						progress: undefined,
-					});
-				}
-			})
-			.catch((e: any) => {
-				console.log(e);
-			});
+		dispatch(getAllDesignations(auth?.user?.token));
 	};
 
 	const retreiveLocations = () => {
@@ -185,7 +173,7 @@ function Designation() {
 							components={{ Toolbar: GridToolbar }}
 							rowHeight={60}
 							columns={columns}
-							rows={designationData && designationData}
+							rows={designation && designation}
 							getRowId={(row) => row.designationId}
 							rowsPerPageOptions={[10, 20, 30]}
 							pageSize={pageSize}

@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import Ripple from '../../../components/Ripple';
 import { HiX } from 'react-icons/hi';
 import { toast } from 'react-toastify';
-
+import { useDispatch } from 'react-redux';
 import ILocationData from '../../../types/ILocationData';
 import LocationMasterService from '../../../services/admin/LocationMasterService';
 import IDivisionData from '../../../types/IDivisionData';
@@ -13,7 +13,13 @@ import DivisionMasterService from '../../../services/admin/DivisionMasterService
 import DivisionAction from './shared/DivisionAction';
 import { RequestStatus } from '../../../constant/requestStatus';
 import { useAppSelector } from '../../../hooks/hooks';
+import {
+	createDivision,
+	getAllDivisions,
+} from '../../../feature/admin/DivisionSlice';
 function Division() {
+	const dispatch = useDispatch<any>();
+
 	const [pageSize, setPageSize] = useState(10);
 	const [rowId, setRowId] = useState(0);
 	const [loading, setLoading] = useState(false);
@@ -23,16 +29,16 @@ function Division() {
 	const [d_id, setD_Id] = useState('');
 
 	const { auth } = useAppSelector((state) => state.persistedReducer);
-
+	const { division, divisionIsLoading, divisionIsSuccess } = useAppSelector(
+		(state) => state.division
+	);
 	const [values, setValues] = useState<any>({
 		divisionId: '',
 		name: '',
 		locationId: '',
 	});
 	useEffect(() => {
-		const filteredData = divisionData?.filter(
-			(emp) => emp.divisionId !== deleteId
-		);
+		const filteredData = division?.filter((emp) => emp.divisionId !== deleteId);
 		setDivisionData(filteredData);
 	}, [deleteId]);
 
@@ -40,6 +46,10 @@ function Division() {
 		retreiveDivisions();
 		retreiveLocations();
 	}, []);
+
+	useEffect(() => {
+		setDivisionData(division);
+	}, [division]);
 
 	useEffect(() => {
 		// console.log(v_id)
@@ -52,18 +62,7 @@ function Division() {
 	}, [d_id]);
 
 	const retreiveDivisions = () => {
-		DivisionMasterService.getAllDivisions()
-			.then((res: any) => {
-				if (res.data.status === RequestStatus.SUCCESS) {
-					setDivisionData(res.data.data);
-					// console.log(divisionData);
-				} else {
-					toast.error(`${res.data.message}`);
-				}
-			})
-			.catch((e: any) => {
-				console.log(e);
-			});
+		dispatch(getAllDivisions());
 	};
 
 	const retreiveLocations = () => {
@@ -106,21 +105,24 @@ function Division() {
 
 	const onSubmit = async (e: any) => {
 		e.preventDefault();
-
 		if (values.divisionId !== '') {
 			setLoading(true);
 			setTimeout(async () => {
-				const result = await DivisionMasterService.saveDivision(
-					values,
-					auth?.user?.token
-				);
-				if (result.data.status === RequestStatus.SUCCESS) {
-					toast.success('New Division is added');
+				const req = {
+					data: values,
+					token: auth?.user.token,
+				};
 
-					resetForm();
-				} else {
-					toast.error('Request cannot completed!');
-				}
+				await dispatch(createDivision(req))
+					.then((res: any) => {
+						console.log(res);
+						toast.success('New Division is Created!');
+					})
+					.catch((e: any) => {
+						console.log(e);
+						toast.error('Error Occured!');
+					});
+
 				setLoading(false);
 			}, 1000);
 		} else {
