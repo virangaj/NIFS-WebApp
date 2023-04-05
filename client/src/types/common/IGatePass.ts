@@ -6,7 +6,6 @@ export default interface IGatePass {
   purposeOfRemoval: string;
   dateOfRemoval: string;
   project: string;
-  attachment: string;
   remark: string;
 
   //   auto generated

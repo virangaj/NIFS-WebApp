@@ -88,7 +88,7 @@ export default function VehicleReplacement() {
           toast.success("Vehicle Replacement Details Added Successfully");
           resetForm();
         } else {
-          toast.error("Request Cannot Complete");
+          toast.error("Request Cannot be Complete");
         }
         setLoading(false);
       }, 1000);
