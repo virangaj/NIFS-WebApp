@@ -14,6 +14,7 @@ import { combineReducers } from 'redux';
 import authSlice from '../feature/auth/authSlice';
 import designationSlice from '../feature/admin/DesignationSlice';
 import divisionSlice from '../feature/admin/DivisionSlice';
+import locationSlice from '../feature/admin/LocationSlice';
 
 const persistConfig = {
 	key: 'employee',
@@ -28,6 +29,7 @@ export const store = configureStore({
 		persistedReducer,
 		designation: designationSlice,
 		division: divisionSlice,
+		location: locationSlice,
 	},
 
 	middleware: (getDefaultMiddleware) =>

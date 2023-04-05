@@ -17,6 +17,7 @@ import {
 	createDesignation,
 	getAllDesignations,
 } from '../../../feature/admin/DesignationSlice';
+import { getAllLocations } from '../../../feature/admin/LocationSlice';
 
 function Designation() {
 	const dispatch = useDispatch<any>();
@@ -28,12 +29,15 @@ function Designation() {
 		Array<IDesignationData>
 	>([]);
 
-	const [locationData, setLocationData] = useState<ILocationData[]>();
 	const [d_id, setD_Id] = useState('');
 
 	const { auth } = useAppSelector((state) => state.persistedReducer);
 	const { designation, designationIsLoading, designationIsSuccess } =
 		useAppSelector((state) => state.designation);
+
+	const { location, locationIsLoading, locationIsSuccess } = useAppSelector(
+		(state) => state.location
+	);
 
 	const [values, setValues] = useState<any>({
 		designationId: '',
@@ -55,7 +59,9 @@ function Designation() {
 
 	useEffect(() => {
 		retreiveDesignations();
-		retreiveLocations();
+		if (location.length === 0 || !locationIsSuccess) {
+			retreiveLocations();
+		}
 	}, []);
 
 	useEffect(() => {
@@ -73,14 +79,7 @@ function Designation() {
 	};
 
 	const retreiveLocations = () => {
-		LocationMasterService.getAllLocations()
-			.then((res: any) => {
-				setLocationData(res.data);
-				// console.log(locationData);
-			})
-			.catch((e: any) => {
-				console.log(e);
-			});
+		dispatch(getAllLocations());
 	};
 	const resetForm = () => {
 		setValues({
@@ -239,7 +238,7 @@ function Designation() {
 									<option disabled value=''>
 										Select Location
 									</option>
-									{locationData?.map((l: ILocationData, i: number) => {
+									{location?.map((l: ILocationData, i: number) => {
 										return (
 											<option key={i} value={l.locationId}>
 												{l.locationName}

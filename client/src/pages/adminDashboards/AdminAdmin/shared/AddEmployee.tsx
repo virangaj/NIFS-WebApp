@@ -20,6 +20,8 @@ import EmployeeService from '../../../../services/admin/EmployeeService';
 import Ripple from '../../../../components/Ripple';
 import { RequestStatus } from '../../../../constant/requestStatus';
 import { useAppSelector } from '../../../../hooks/hooks';
+import { useDispatch } from 'react-redux';
+import { getAllLocations } from '../../../../feature/admin/LocationSlice';
 
 const initialState: IEmployeeData = {
 	epfNo: 0,
@@ -59,6 +61,7 @@ const initialState: IEmployeeData = {
 };
 
 function AddEmployee() {
+	const dispatch = useDispatch<any>();
 	const [locationData, setLocationData] = useState<ILocationData[]>();
 	const [employeeTypeData, setEmployeeTypeData] = useState<IEmpTypeData[]>();
 	const [employeeCatData, setEmployeeCatData] = useState<IEmpCatData[]>();
@@ -84,7 +87,9 @@ function AddEmployee() {
 	const [empData, setEmpData] = useState<IEmployeeData>(initialState);
 
 	const { auth } = useAppSelector((state) => state.persistedReducer);
-
+	const { location, locationIsLoading, locationIsSuccess } = useAppSelector(
+		(state) => state.location
+	);
 	useEffect(() => {
 		retreivePageLoadData();
 	}, []);
@@ -139,14 +144,9 @@ function AddEmployee() {
 
 	// get location data
 	const retreivePageLoadData = () => {
-		LocationMasterService.getAllLocations()
-			.then((res: any) => {
-				setLocationData(res.data);
-				// console.log(locationData);
-			})
-			.catch((e: any) => {
-				console.log(e);
-			});
+		if (location.length === 0 || !locationIsSuccess) {
+			dispatch(getAllLocations());
+		}
 
 		OtherDataServices.getAllProvinces()
 			.then((res: any) => {
@@ -717,7 +717,7 @@ function AddEmployee() {
 										<option disabled value=''>
 											Select Location
 										</option>
-										{locationData?.map((l: ILocationData, i: number) => {
+										{location?.map((l: ILocationData, i: number) => {
 											return (
 												<option key={i} value={l.locationId}>
 													{l.locationName}
