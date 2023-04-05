@@ -1,6 +1,7 @@
 package com.nifs.backend.dto.admin;
 
 
+
 import lombok.*;
 
 @Getter
@@ -13,6 +14,8 @@ public class DivisionMasterDTO {
     private String divisionId;
     private String name;
     private String locationId;
+    private int hod;
+
 
 
 

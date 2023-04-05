@@ -39,6 +39,7 @@ function Division() {
 		divisionId: '',
 		name: '',
 		locationId: '',
+		hod: '',
 	});
 	useEffect(() => {
 		const filteredData = division?.filter((emp) => emp.divisionId !== deleteId);

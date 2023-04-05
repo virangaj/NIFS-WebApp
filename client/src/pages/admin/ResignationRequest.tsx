@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import { toast } from 'react-toastify';
 import Stack from '@mui/material/Stack';
+import { useAppSelector } from '../../hooks/hooks';
+
 import { generateID } from '../../utils/generateId';
 import Ripple from '../../components/Ripple';
 import IContractExtension from '../../types/admin/IContractExtension';
@@ -13,8 +15,11 @@ import DesignationMasterService from '../../services/admin/DesignationMasterServ
 import IDivisionData from '../../types/admin/IDivisionData';
 import DivisionMasterService from '../../services/admin/DivisionMasterService';
 import DivisionSelector from '../../components/shared/DivisionSelector';
+import IResignationRequest from '../../types/admin/IResignationRequest';
+import DesignationSelector from '../../components/shared/DesignationSelector';
+import EmployeeSelector from '../../components/shared/EmployeeSelector';
 
-const initialState: IContractExtension = {
+const initialState: IResignationRequest = {
 	documentNo: '',
 	date: '',
 	epfNo: 0,
@@ -22,6 +27,8 @@ const initialState: IContractExtension = {
 	divisionId: '',
 	hod: '',
 	remark: '',
+	hodApproved: false,
+	dirApproved: false,
 };
 
 function ResignationRequest() {
@@ -34,6 +41,10 @@ function ResignationRequest() {
 	const [empData, setEmpData] = useState<Array<IEmployeeData>>([]);
 	const [currentEmp, setCurrentEmp] = useState<IEmployeeData>();
 	const [values, setValues] = useState<IContractExtension>(initialState);
+	const [hod, setHod] = useState('');
+	const { employees, employeesIsLoading, employeesIsSuccess } = useAppSelector(
+		(state) => state.employees
+	);
 
 	useEffect(() => {
 		setValues({
@@ -64,28 +75,6 @@ function ResignationRequest() {
 		retreiveEmployees();
 		console.log(empData);
 	}, []);
-
-	useEffect(() => {
-		let employee = empData.find(
-			(emp: IEmployeeData) => emp.epfNo.toString() === values.epfNo.toString()
-		);
-		setCurrentEmp(employee);
-		if (employee) {
-			setEmpFoundError(false);
-		} else {
-			setEmpFoundError(true);
-		}
-		setValues({
-			documentNo: getDocNo && getDocNo,
-			date: requestDate ? requestDate : '',
-			epfNo: values?.epfNo,
-			designationId: employee?.designationId,
-			divisionId: employee?.divisionId,
-			hod: values?.hod,
-			remark: values?.remark,
-		});
-		retriveEmployeeDetails(employee);
-	}, [values.epfNo]);
 
 	//get designation and division
 	const retriveEmployeeDetails = (emp: any) => {
@@ -170,46 +159,11 @@ function ResignationRequest() {
 						/>
 					</div>
 
-					<div className='flex items-center'>
-						<div>
-							<label className='input-label' htmlFor='epfNo'>
-								Employee EPF No
-							</label>
-
-							<input
-								id='epfNo'
-								type='text'
-								className='tailwind-text-box w-[40%] mr-4'
-								onChange={onChange}
-								name='epfNo'
-								value={values.epfNo}
-							/>
-						</div>
-						<div>
-							<label className='input-label' htmlFor='epfNo'>
-								Employee Name
-							</label>
-							<select
-								className='tailwind-text-box'
-								value={values.epfNo}
-								id='epfNo'
-								name='epfNo'
-								onChange={onChange}
-							>
-								<option disabled value={0}>
-									Select Employee
-								</option>
-
-								{empData?.map((l: IEmployeeData, i: number) => {
-									return (
-										<option key={i} value={l.epfNo}>
-											{l.firstName + ' ' + l.lastName}
-										</option>
-									);
-								})}
-							</select>
-						</div>
-					</div>
+					<EmployeeSelector
+						onChange={onChange}
+						value={values.epfNo}
+						name='epfNo'
+					/>
 				</div>
 				{values.epfNo && empFoundError ? (
 					<p className='w-[97%] mx-auto error-text-message'>User Not Found!</p>
@@ -217,15 +171,26 @@ function ResignationRequest() {
 					''
 				)}
 				<div className='w-[97%] mx-auto'>
-					<DivisionSelector onChange={onChange} value={'asd'} name='division' />
+					<DivisionSelector
+						onChange={onChange}
+						value={values.divisionId}
+						name='divisionId'
+					/>
+				</div>
+				<div className='w-[97%] mx-auto'>
+					<DesignationSelector
+						onChange={onChange}
+						value={values.designationId}
+						name='designationId'
+					/>
 				</div>
 
 				<div className='w-[97%] mx-auto'>
 					<p className='normal-text'>
 						Designation :{' '}
-						{values.epfNo && designationData ? (
+						{values.designationId && employees ? (
 							<span className='font-bold'>
-								{designationData.designationName}
+								{/* {designationData.designationName} */}
 							</span>
 						) : (
 							<span className='italic-sm-text'>Please select an employee</span>
@@ -233,17 +198,6 @@ function ResignationRequest() {
 					</p>
 
 					<div className='grid items-center grid-cols-1 md:grid-cols-2'>
-						<p className='normal-text'>
-							Division :{' '}
-							{values.epfNo && divisionData ? (
-								<span className='font-bold'>{divisionData.name}</span>
-							) : (
-								<span className='italic-sm-text'>
-									Please select an employee
-								</span>
-							)}
-						</p>
-
 						<p className='normal-text'>
 							HOD :{' '}
 							{values.epfNo && divisionData ? (

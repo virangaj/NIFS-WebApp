@@ -15,6 +15,7 @@ import authSlice from '../feature/auth/authSlice';
 import designationSlice from '../feature/admin/DesignationSlice';
 import divisionSlice from '../feature/admin/DivisionSlice';
 import locationSlice from '../feature/admin/LocationSlice';
+import employeeSlice from '../feature/admin/EmployeeSlice';
 
 const persistConfig = {
 	key: 'employee',
@@ -30,6 +31,7 @@ export const store = configureStore({
 		designation: designationSlice,
 		division: divisionSlice,
 		location: locationSlice,
+		employees: employeeSlice,
 	},
 
 	middleware: (getDefaultMiddleware) =>

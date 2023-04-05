@@ -26,7 +26,7 @@ function DivisionSelector({ onChange, tenant, name }: any) {
 				value={tenant}
 				name={name}
 			>
-				<option defaultValue=''>Select {name}</option>
+				<option defaultValue=''>Select Division</option>
 
 				{division &&
 					division.map((d: IDivisionData, i: number) => (

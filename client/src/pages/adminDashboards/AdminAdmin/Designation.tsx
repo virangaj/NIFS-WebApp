@@ -75,7 +75,7 @@ function Designation() {
 	}, [d_id]);
 
 	const retreiveDesignations = () => {
-		dispatch(getAllDesignations(auth?.user?.token));
+		dispatch(getAllDesignations());
 	};
 
 	const retreiveLocations = () => {

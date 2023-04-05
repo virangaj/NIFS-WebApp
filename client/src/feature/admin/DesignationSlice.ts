@@ -20,8 +20,8 @@ const initialState: DesignationState = {
 //get designations
 export const getAllDesignations = createAsyncThunk(
 	'designation/getall',
-	async (token: string) => {
-		const response = await DesignationMasterService.getAllDesignations(token);
+	async () => {
+		const response = await DesignationMasterService.getAllDesignations();
 		return response.data.data;
 	}
 );

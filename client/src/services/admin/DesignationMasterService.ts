@@ -12,14 +12,11 @@ const config = {
 };
 axios.defaults.baseURL = process.env.REACT_APP_BACKEND_SERVER;
 
-const getAllDesignations = async (token: string) => {
+const getAllDesignations = async () => {
 	// return http.get<any>('/admin/designation');
 	const response = await axios({
 		method: 'get',
 		url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/designation`,
-		headers: {
-			Authorization: `Bearer ${token}`,
-		},
 	});
 	// alert("Favourite created --- "+ response);
 	return response;
