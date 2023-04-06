@@ -10,7 +10,9 @@ function DivisionSelector({ onChange, tenant, name }: any) {
 		(state) => state.division
 	);
 	useEffect(() => {
-		retreiveDivisions();
+		if (division.length == 0 || !divisionIsSuccess) {
+			retreiveDivisions();
+		}
 	}, []);
 
 	//get all divisions

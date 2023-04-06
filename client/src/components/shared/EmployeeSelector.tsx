@@ -14,7 +14,9 @@ function EmployeeSelector({ onChange, value, name }: any) {
 	);
 
 	useEffect(() => {
-		retreiveEmployees();
+		if (employees.length == 0 || !employeesIsSuccess) {
+			retreiveEmployees();
+		}
 	}, []);
 	useEffect(() => {
 		let employee = employees.find(

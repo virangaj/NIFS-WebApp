@@ -12,7 +12,9 @@ function DesignationSelector({ onChange, tenant, name }: any) {
 	const { designation, designationIsLoading, designationIsSuccess } =
 		useAppSelector((state) => state.designation);
 	useEffect(() => {
-		retreiveDesignations();
+		if (designation.length == 0 || !designationIsSuccess) {
+			retreiveDesignations();
+		}
 	}, []);
 
 	//get all designations
