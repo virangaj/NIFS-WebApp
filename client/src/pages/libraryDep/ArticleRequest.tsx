@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import CustomeDataPicker from "../../components/DataPicker";
 import Stack from "@mui/material/Stack";
-import IArticleRequest from "../../types/ArticleRequest";
+import IArticleRequest from "../../types/library/IArticleRequest";
 import "../pages.css";
 import { toast } from "react-toastify";
 import ArticleRequestService from "../../services/library/ArticleRequestService";
