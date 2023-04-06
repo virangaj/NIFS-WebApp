@@ -82,7 +82,7 @@ function ResignationRequest() {
 
 	// generate document ID
 	const generateDocNo = () => {
-		setDocNo(generateID('CE'));
+		setDocNo(generateID('RR'));
 		setValues(initialState);
 	};
 

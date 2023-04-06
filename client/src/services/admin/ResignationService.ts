@@ -4,8 +4,18 @@ import http from '../../utils/http-common';
 
 axios.defaults.baseURL = process.env.REACT_APP_BACKEND_SERVER;
 
-const getAllResignationRequest = () => {
-	return http.get<any>('/admin/resignation');
+const getAllResignationRequest = async (token: any) => {
+	// console.log(token);
+	const response = await axios({
+		method: 'get',
+		url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/resignation`,
+		headers: {
+			'Content-Type': 'application/json; charset=utf-8',
+			Authorization: `Bearer ${token}`,
+		},
+	});
+	// alert("Favourite created --- "+ response);
+	return response;
 };
 
 const getResignationRequest = (id: any) => {

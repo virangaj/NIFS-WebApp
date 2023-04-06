@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ResignationReqService implements IResignationReqService {
@@ -19,10 +21,10 @@ public class ResignationReqService implements IResignationReqService {
 
     @Autowired
     private ModelMapper modelMapper;
+
+    //add new resignation request
     @Override
     public ResignationRequestDTO createResignationRequest(ResignationRequestDTO data) {
-
-
 
         ResignationRequest employee = modelMapper.map(data, ResignationRequest.class);
 
@@ -31,4 +33,15 @@ public class ResignationReqService implements IResignationReqService {
         ResignationRequest resignationRequest = resignationReqRepository.save(employee);
         return modelMapper.map(resignationRequest, ResignationRequestDTO.class);
     }
+
+    //get all resignation request
+    @Override
+    public List<ResignationRequestDTO> getAllResignationRequests() {
+        List<ResignationRequest> resignationRequests = resignationReqRepository.findAll();
+        return resignationRequests.stream()
+                .map(employee -> modelMapper.map(employee, ResignationRequestDTO.class))
+                .collect(Collectors.toList());
+    }
+
+
 }
