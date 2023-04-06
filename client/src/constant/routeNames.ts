@@ -28,11 +28,8 @@ export enum RouteName {
 	SeduReportGenerator = '/report-generator',
 
 	//   common
-	GatePass = '/gate-pass',
-	Srn = '/srn',
+
 	WorkRequest = '/work-request',
-	QuotationRequest = '/quotation-request',
-	QuotationSummary = '/quotation-summary',
 	LeaveRequest = '/leave-request',
 	OverTime = '/over-time',
 	PaymentRequest = '/payment-request',
@@ -85,5 +82,9 @@ export enum RouteName {
 	Divisions = '/divisions',
 	AdminResignationReq = '/resignation-request',
 
-	//director pages
+	//procument pages
+	GatePass = '/gate-pass',
+	Srn = '/srn',
+	QuotationRequest = '/quotation-request',
+	QuotationSummary = '/quotation-summary',
 }
