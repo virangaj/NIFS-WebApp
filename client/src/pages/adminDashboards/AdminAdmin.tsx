@@ -9,6 +9,7 @@ import Dots from '../../images/dots_circle_b.png';
 import EmpCategory from './AdminAdmin/EmpCategory';
 import Designation from './AdminAdmin/Designation';
 import Division from './AdminAdmin/Division';
+import AdminResignationReq from './AdminAdmin/AdminResignationReq';
 
 function AdminAdmin() {
 	return (
@@ -29,6 +30,10 @@ function AdminAdmin() {
 						<Route path={RouteName.Employee} element={<Employees />} />
 						<Route path={RouteName.Designation} element={<Designation />} />
 						<Route path={RouteName.Divisions} element={<Division />} />
+						<Route
+							path={RouteName.ResignationRequest}
+							element={<AdminResignationReq />}
+						/>
 					</Routes>
 				</div>
 			</div>

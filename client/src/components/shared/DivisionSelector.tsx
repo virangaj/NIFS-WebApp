@@ -15,7 +15,9 @@ function DivisionSelector({ onChange, tenant, name }: any) {
 
 	//get all divisions
 	const retreiveDivisions = () => {
-		dispatch(getAllDivisions());
+		if (division.length == 0 || !divisionIsSuccess) {
+			dispatch(getAllDivisions());
+		}
 	};
 	return (
 		<div>
@@ -26,7 +28,9 @@ function DivisionSelector({ onChange, tenant, name }: any) {
 				value={tenant}
 				name={name}
 			>
-				<option defaultValue=''>Select Division</option>
+				<option value='' disabled>
+					Select Division
+				</option>
 
 				{division &&
 					division.map((d: IDivisionData, i: number) => (

@@ -1,6 +1,6 @@
 package com.nifs.backend.serviceImplementation.sedu;
 
-import com.nifs.backend.serviceImplementation.admin.sedu.IEventRequestService;
+import com.nifs.backend.service.sedu.IEventRequestService;
 import org.springframework.stereotype.Service;
 
 @Service

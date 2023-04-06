@@ -1,12 +1,11 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../../hooks/hooks';
-import { getAllDivisions } from '../../feature/admin/DivisionSlice';
-import IDivisionData from '../../types/admin/IDivisionData';
 import TextBoxLabel from './TextBoxLabel';
 import IDesignationData from '../../types/admin/IDesignationData';
 import { getAllDesignations } from '../../feature/admin/DesignationSlice';
 import Ripple from '../Ripple';
+
 function DesignationSelector({ onChange, tenant, name }: any) {
 	const dispatch = useDispatch<any>();
 
@@ -30,7 +29,9 @@ function DesignationSelector({ onChange, tenant, name }: any) {
 				value={tenant}
 				name={name}
 			>
-				<option defaultValue=''>Select Designation</option>
+				<option value='' disabled>
+					Select Designation
+				</option>
 
 				{designation ? (
 					designation.map((d: IDesignationData, i: number) => (

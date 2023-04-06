@@ -117,7 +117,7 @@ a {
 	}
 	/* ------------------------- alingments and positionings -------------------------*/
 	.admin-side-nav {
-		@apply z-20 flex-shrink-0 block w-64 mb-10 overflow-y-auto bg-white rounded-tr-lg rounded-br-lg;
+		@apply fixed z-20 flex-shrink-0 block w-64 h-screen mb-10 overflow-y-auto bg-white rounded-tr-lg rounded-br-lg;
 	}
 	.tailwind-text-box {
 		@apply block w-full px-4 py-2 my-2 text-gray-700 bg-white border border-gray-300 rounded-md focus:border-blue-500 focus:outline-none focus:shadow-sm
@@ -159,10 +159,10 @@ a {
 		@apply flex items-center text-gray-700 cursor-pointer hover:font-bold;
 	}
 	.admin-sidebar-text-active {
-		@apply flex items-center font-bold text-blue-800 cursor-pointer;
+		@apply font-bold text-blue-800 admin-sidebar-text;
 	}
 	.admin-sub-panel-body {
-		@apply w-[80%] mx-auto rounded-lg h-auto;
+		@apply w-[80%] mx-auto rounded-lg h-auto ml-72;
 	}
 	.admin-panel-flex {
 		@apply flex flex-col justify-between xl:flex-row;

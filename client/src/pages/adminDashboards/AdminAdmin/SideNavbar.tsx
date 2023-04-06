@@ -1,139 +1,75 @@
 import React from 'react';
 import { BiCategoryAlt, BiUserPin } from 'react-icons/bi';
 import { HiOutlineUserGroup, HiOutlineOfficeBuilding } from 'react-icons/hi';
-import { RiUserStarLine } from "react-icons/ri";
+import { RiUserStarLine } from 'react-icons/ri';
 import { Link, useLocation } from 'react-router-dom';
 import { RouteName } from '../../../constant/routeNames';
+
+const navdata = [
+	{
+		title: 'Employees',
+		link: RouteName.Employee,
+		icon: HiOutlineUserGroup,
+	},
+	{
+		title: 'Employee Types',
+		link: RouteName.EmployeeType,
+		icon: BiUserPin,
+	},
+	{
+		title: 'Employees Category',
+		link: RouteName.EmployeeCategory,
+		icon: BiCategoryAlt,
+	},
+	{
+		title: 'Designations',
+		link: RouteName.Designation,
+		icon: RiUserStarLine,
+	},
+	{
+		title: 'Divisions',
+		link: RouteName.Divisions,
+		icon: HiOutlineOfficeBuilding,
+	},
+	{
+		title: 'Resignation Request',
+		link: RouteName.AdminResignationReq,
+		icon: HiOutlineOfficeBuilding,
+	},
+];
+
 function SideNavbar() {
 	const location: any = useLocation();
 	console.log(location.pathname);
 
 	return (
-		<aside className="admin-side-nav">
-			<div className="py-2 text-gray-500">
-				<ul className="mt-3">
-					<li className="relative px-6 py-3">
-						<span
-							className={
-								location.pathname ===
-								`/dashboard/admin/admin${RouteName.Employee}`
-									? 'active-admin-panel-marker'
-									: 'admin-panel-marker'
-							}
-							aria-hidden="true"
-						></span>
-						<Link to={`/dashboard/admin/admin${RouteName.Employee}`}>
-							<p
+		<aside className='admin-side-nav'>
+			<div className='py-2 text-gray-500'>
+				<ul className='mt-3'>
+					{navdata.map((data: any, i: number) => (
+						<li className='relative px-6 py-3' key={i}>
+							<span
 								className={
-									location.pathname ===
-									`/dashboard/admin/admin${RouteName.Employee}`
-										? 'admin-sidebar-text-active'
-										: 'admin-sidebar-text'
+									location.pathname === `/dashboard/admin/admin${data.link}`
+										? 'active-admin-panel-marker'
+										: 'admin-panel-marker'
 								}
-							>
-								<HiOutlineUserGroup className="w-5 h-5" />
-								<span className="ml-4">Employees</span>
-							</p>
-						</Link>
-					</li>
-					<li className="relative px-6 py-3">
-						<span
-							className={
-								location.pathname ===
-								`/dashboard/admin/admin${RouteName.EmployeeType}`
-									? 'active-admin-panel-marker'
-									: 'admin-panel-marker'
-							}
-							aria-hidden="true"
-						></span>
-						<Link to={`/dashboard/admin/admin${RouteName.EmployeeType}`}>
-							<p
-								className={
-									location.pathname ===
-									`/dashboard/admin/admin${RouteName.EmployeeType}`
-										? 'admin-sidebar-text-active'
-										: 'admin-sidebar-text'
-								}
-							>
-								<BiUserPin className="w-5 h-5" />
-								<span className="ml-4">Employee Types</span>
-							</p>
-						</Link>
-					</li>
-					<li className="relative px-6 py-3">
-						<span
-							className={
-								location.pathname ===
-								`/dashboard/admin/admin${RouteName.EmployeeCategory}`
-									? 'active-admin-panel-marker'
-									: 'admin-panel-marker'
-							}
-							aria-hidden="true"
-						></span>
-						<Link to={`/dashboard/admin/admin${RouteName.EmployeeCategory}`}>
-							<p
-								className={
-									location.pathname ===
-									`/dashboard/admin/admin${RouteName.EmployeeCategory}`
-										? 'admin-sidebar-text-active'
-										: 'admin-sidebar-text'
-								}
-							>
-								<BiCategoryAlt className="w-5 h-5" />
-								<span className="ml-4">Employee Category</span>
-							</p>
-						</Link>
-					</li>
-
-					<li className="relative px-6 py-3">
-						<span
-							className={
-								location.pathname ===
-								`/dashboard/admin/admin${RouteName.Designation}`
-									? 'active-admin-panel-marker'
-									: 'admin-panel-marker'
-							}
-							aria-hidden="true"
-						></span>
-						<Link to={`/dashboard/admin/admin${RouteName.Designation}`}>
-							<p
-								className={
-									location.pathname ===
-									`/dashboard/admin/admin${RouteName.Designation}`
-										? 'admin-sidebar-text-active'
-										: 'admin-sidebar-text'
-								}
-							>
-								<RiUserStarLine className="w-5 h-5" />
-								<span className="ml-4">Designations</span>
-							</p>
-						</Link>
-					</li>
-
-					<li className="relative px-6 py-3">
-						<span
-							className={
-								location.pathname ===
-								`/dashboard/admin/admin${RouteName.Divisions}`
-									? 'active-admin-panel-marker'
-									: 'admin-panel-marker'
-							}
-							aria-hidden="true"
-						></span>
-						<Link to={`/dashboard/admin/admin${RouteName.Divisions}`}>
-							<p
-								className={
-									location.pathname ===
-									`/dashboard/admin/admin${RouteName.Divisions}`
-										? 'admin-sidebar-text-active'
-										: 'admin-sidebar-text'
-								}
-							>
-								<HiOutlineOfficeBuilding className="w-5 h-5" />
-								<span className="ml-4">Divisions</span>
-							</p>
-						</Link>
-					</li>
+								aria-hidden='true'
+							></span>
+							<Link to={`/dashboard/admin/admin${data.link}`}>
+								<p
+									className={
+										location.pathname === `/dashboard/admin/admin${data.link}`
+											? 'admin-sidebar-text-active'
+											: 'admin-sidebar-text'
+									}
+								>
+									<data.icon className='w-5 h-5' />
+									<span className='ml-4'>{data.title}</span>
+								</p>
+							</Link>
+						</li>
+					))}
 				</ul>
 			</div>
 		</aside>

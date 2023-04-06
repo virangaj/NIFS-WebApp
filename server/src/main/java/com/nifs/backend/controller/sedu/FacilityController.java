@@ -1,7 +1,7 @@
 package com.nifs.backend.controller.sedu;
 
 import com.nifs.backend.model.sedu.Facility;
-import com.nifs.backend.serviceImplementation.admin.sedu.IFacilityService;
+import com.nifs.backend.service.sedu.IFacilityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
