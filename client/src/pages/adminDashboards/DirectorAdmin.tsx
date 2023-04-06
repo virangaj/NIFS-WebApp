@@ -1,9 +1,20 @@
-import React from 'react'
+import { Route, Routes } from 'react-router-dom';
+import { RouteName } from '../../constant/routeNames';
+import AdminResignationReq from './AdminAdmin/AdminResignationReq';
 
-function DirectorAdmin() {
-  return (
-    <div>DirectorAdmin</div>
-  )
+export function PageRoutes() {
+	return (
+		<Routes>
+			<Route
+				path={RouteName.ResignationRequest}
+				element={<AdminResignationReq />}
+			/>
+		</Routes>
+	);
 }
 
-export default DirectorAdmin
+function DirectorAdmin() {
+	return <div>DirectorAdmin</div>;
+}
+
+export default DirectorAdmin;

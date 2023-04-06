@@ -22,6 +22,7 @@ import ChangePassword from '.././pages/login/ChangePassword';
 import Login from '../pages/Login';
 import { Counter } from '../redux/Counter';
 import TailwindNavbar from '../components/shared/TailwindNavbar';
+import MainPages from '../layout/MainPages';
 
 const AppRouter = () => {
 	return (
@@ -34,11 +35,7 @@ const AppRouter = () => {
 					path={RouteName.Home}
 					element={
 						<>
-							<TailwindNavbar />
-							<BackToTop />
-							<Home />
-							{/* <Counter /> */}
-							<Footer />
+							<MainPages Content={Home} />
 						</>
 					}
 				/>
@@ -46,32 +43,23 @@ const AppRouter = () => {
 					path={RouteName.Common}
 					element={
 						<>
-							<TailwindNavbar />
-							<BackToTop />
-							<CommonMainPage />
-							<Footer />
+							<MainPages Content={CommonMainPage} />
 						</>
 					}
 				/>
-				<Route
+				{/* <Route
 					path={RouteName.Account}
 					element={
 						<>
-							<TailwindNavbar />
-							<BackToTop />
-							<AccountMainPage />
-							<Footer />
+							<MainPages Content={AccountMainPage} />
 						</>
 					}
-				/>
+				/> */}
 				<Route
 					path={RouteName.Admin}
 					element={
 						<>
-							<TailwindNavbar />
-							<BackToTop />
-							<AdminMainPage />
-							<Footer />
+							<MainPages Content={AdminMainPage} />
 						</>
 					}
 				/>
@@ -79,10 +67,7 @@ const AppRouter = () => {
 					path={RouteName.Library}
 					element={
 						<>
-							<TailwindNavbar />
-							<BackToTop />
-							<LibraryMainPage />
-							<Footer />
+							<MainPages Content={LibraryMainPage} />
 						</>
 					}
 				/>
@@ -90,10 +75,7 @@ const AppRouter = () => {
 					path={RouteName.Procument}
 					element={
 						<>
-							<TailwindNavbar />
-							<BackToTop />
-							<ProcumentMainPage />
-							<Footer />
+							<MainPages Content={ProcumentMainPage} />
 						</>
 					}
 				/>
@@ -101,10 +83,7 @@ const AppRouter = () => {
 					path={RouteName.Sedu}
 					element={
 						<>
-							<TailwindNavbar />
-							<BackToTop />
-							<SeduMainPage />
-							<Footer />
+							<MainPages Content={SeduMainPage} />
 						</>
 					}
 				/>
@@ -112,54 +91,39 @@ const AppRouter = () => {
 					path={RouteName.Transport}
 					element={
 						<>
-							<TailwindNavbar />
-							<BackToTop />
-							<TransportMainPage />
-							<Footer />
+							<MainPages Content={TransportMainPage} />
 						</>
 					}
 				/>
-				<Route
+				{/* <Route
 					path={RouteName.UserPermission}
 					element={
 						<>
-							<TailwindNavbar />
-							<BackToTop />
-							<UserPermissionMainPage />
-							<Footer />
+							<MainPages Content={UserPermissionMainPage} />
 						</>
 					}
-				/>
-				<Route
+				/> */}
+				{/* <Route
 					path={RouteName.Notification}
 					element={
 						<>
-							<TailwindNavbar />
-							<BackToTop />
-							<NotificationMainPage />
-							<Footer />
+							<MainPages Content={NotificationMainPage} />
 						</>
 					}
-				/>
-				<Route
+				/> */}
+				{/* <Route
 					path={RouteName.Help}
 					element={
 						<>
-							<TailwindNavbar />
-							<BackToTop />
-							<HelpMainPage />
-							<Footer />
+							<MainPages Content={HelpMainPage} />
 						</>
 					}
-				/>
+				/> */}
 				<Route
 					path={RouteName.ErrorPage}
 					element={
 						<>
-							<TailwindNavbar />
-							<BackToTop />
-							<ErrorPage />
-							<Footer />
+							<MainPages Content={ErrorPage} />
 						</>
 					}
 				/>
@@ -167,10 +131,7 @@ const AppRouter = () => {
 					path={RouteName.AdminAdmin}
 					element={
 						<>
-							<TailwindNavbar />
-							<BackToTop />
-							<AdminAdmin />
-							<Footer />
+							<MainPages Content={AdminAdmin} />
 						</>
 					}
 				/>

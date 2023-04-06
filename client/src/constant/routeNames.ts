@@ -84,4 +84,6 @@ export enum RouteName {
 	Designation = '/designations',
 	Divisions = '/divisions',
 	AdminResignationReq = '/resignation-request',
+
+	//director pages
 }

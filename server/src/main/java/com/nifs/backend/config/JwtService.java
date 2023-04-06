@@ -5,6 +5,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 @Service
+@Log4j2
 public class JwtService {
 
     //create secret key from https://www.allkeysgenerator.com/ and minimum 256-bit
@@ -77,7 +79,13 @@ public class JwtService {
     }
 
     private Date extractExpiration(String token) {
-        return extractClaims(token, Claims::getExpiration);
+        try{
+            return extractClaims(token, Claims::getExpiration);
+        }
+        catch(Exception e){
+            log.info(e.toString());
+            return null;
+        }
     }
 
     //extract all claims
