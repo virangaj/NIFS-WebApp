@@ -4,15 +4,18 @@ import com.nifs.backend.dto.admin.ResignationRequestDTO;
 import com.nifs.backend.model.admin.ResignationRequest;
 import com.nifs.backend.repository.admin.ResignationReqRepository;
 import com.nifs.backend.service.admin.IResignationReqService;
+import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Log4j2
 public class ResignationReqService implements IResignationReqService {
 
 
@@ -36,11 +39,39 @@ public class ResignationReqService implements IResignationReqService {
 
     //get all resignation request
     @Override
-    public List<ResignationRequestDTO> getAllResignationRequests() {
-        List<ResignationRequest> resignationRequests = resignationReqRepository.findAll();
-        return resignationRequests.stream()
-                .map(employee -> modelMapper.map(employee, ResignationRequestDTO.class))
-                .collect(Collectors.toList());
+    public List<ResignationRequestDTO> getAllResignationRequests(String division) {
+
+        try{
+            List<ResignationRequest> resignationRequests = new ArrayList<ResignationRequest>();
+
+            if (division == null) {
+                resignationRequests = resignationReqRepository.findAllByOrderByCreatedOnDesc();
+
+            }
+            else {
+                resignationRequests = resignationReqRepository.findByDivisionIdOrderByCreatedOnDesc(division);
+
+            }
+            return resignationRequests.stream()
+                    .map(employee -> modelMapper.map(employee, ResignationRequestDTO.class))
+                    .collect(Collectors.toList());
+        }catch(Exception e){
+            log.info(e.toString());
+            return null;
+        }
+    }
+
+    @Override
+    public boolean putHodApproval(boolean approval, List<String> resId, String user) {
+        try {
+            resId.forEach(id -> {
+                resignationReqRepository.updateHodApproveAndModifiedFields(approval, user, new Date(), id);
+            });
+            return true;
+        }catch (Exception e){
+            log.info(e.toString());
+            return false;
+        }
     }
 
 

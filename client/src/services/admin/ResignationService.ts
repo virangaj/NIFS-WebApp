@@ -37,10 +37,25 @@ const saveResignationRequest = async (data: any, token: string) => {
 	return response;
 };
 
+const sendHodApproval = async (id: any, token: string, approval: boolean) => {
+	const response = await axios({
+		method: 'put',
+		url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/resignation/hod?approval=${approval}`,
+		data: id,
+		headers: {
+			'Content-Type': 'application/json; charset=utf-8',
+			Authorization: `Bearer ${token}`,
+		},
+	});
+
+	return response;
+};
+
 const ResignationService = {
 	getAllResignationRequest,
 	getResignationRequest,
 	saveResignationRequest,
+	sendHodApproval,
 };
 
 export default ResignationService;

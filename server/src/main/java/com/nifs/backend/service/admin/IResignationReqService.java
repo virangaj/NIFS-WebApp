@@ -9,5 +9,7 @@ import java.util.List;
 public interface IResignationReqService {
     ResignationRequestDTO createResignationRequest(ResignationRequestDTO data);
 
-    List<ResignationRequestDTO> getAllResignationRequests();
+    List<ResignationRequestDTO> getAllResignationRequests(String division);
+
+    boolean putHodApproval(boolean approval, List<String> resId, String user);
 }

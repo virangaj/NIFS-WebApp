@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useAppSelector } from '../../../hooks/hooks';
 import ResignationService from '../../../services/admin/ResignationService';
 import ResignationRequestTable from '../../shared/ResignationRequestTable';
+import { toast } from 'react-toastify';
 
 function AdminResignationReq() {
 	const { auth } = useAppSelector((state) => state.persistedReducer);
@@ -10,6 +11,7 @@ function AdminResignationReq() {
 	const [selectedData, setSelectedData] = useState<Array<string>>([]);
 	const [pageSize, setPageSize] = useState(10);
 	const [loading, setLoading] = useState(false);
+	const [getData, setGetData] = useState(false);
 
 	useEffect(() => {
 		setLoading(true);
@@ -25,8 +27,47 @@ function AdminResignationReq() {
 		}, 500);
 	}, []);
 
-	const sendApprove = () => {};
-	const sendReject = () => {};
+	//send approval request
+	const sendApprove = () => {
+		console.log(selectedData);
+		setLoading(true);
+		setTimeout(() => {
+			ResignationService.sendHodApproval(selectedData, auth?.user?.token, true)
+				.then((res) => {
+					if (res.data) {
+						toast.success('Resignation is Confirmed');
+					} else {
+						toast.error('Request cannot be performed');
+					}
+				})
+				.then((e) => {
+					console.log(e);
+					toast.error('Request cannot be performed');
+				});
+			setLoading(false);
+			setGetData((val) => !val);
+		}, 500);
+	};
+	//send reject request
+	const sendReject = () => {
+		setLoading(true);
+		setTimeout(() => {
+			ResignationService.sendHodApproval(selectedData, auth?.user?.token, false)
+				.then((res) => {
+					if (res.data) {
+						toast.success('Resignation is Declined');
+					} else {
+						toast.error('Request cannot be performed');
+					}
+				})
+				.then((e) => {
+					console.log(e);
+					toast.error('Request cannot be performed');
+				});
+			setGetData((val) => !val);
+			setLoading(false);
+		}, 500);
+	};
 
 	return (
 		<>
@@ -38,6 +79,9 @@ function AdminResignationReq() {
 
 			<div className='admin-table-section'>
 				<div className='flex justify-end mb-4'>
+					<button className='action-com-model-sucess-btn' onClick={sendApprove}>
+						Approve Selected
+					</button>
 					<button
 						className='action-com-model-error-btn'
 						type='reset'
@@ -46,14 +90,10 @@ function AdminResignationReq() {
 					>
 						Reject Selected
 					</button>
-					<button className='action-com-model-sucess-btn' onClick={sendApprove}>
-						Approve Selected
-					</button>
 				</div>
 				<ResignationRequestTable
 					setSelectedData={setSelectedData}
-					sendReject={sendReject}
-					sendApprove={sendApprove}
+					getData={getData}
 				/>
 			</div>
 		</>

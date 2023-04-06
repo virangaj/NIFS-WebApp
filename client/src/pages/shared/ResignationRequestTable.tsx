@@ -4,11 +4,7 @@ import ResignationService from '../../services/admin/ResignationService';
 import { useAppSelector } from '../../hooks/hooks';
 import Ripple from '../../components/Ripple';
 
-function ResignationRequestTable({
-	setSelectedData,
-	sendReject,
-	sendApprove,
-}: any) {
+function ResignationRequestTable({ setSelectedData, getData }: any) {
 	const [requests, setRequests] = useState<any>([]);
 	const [pageSize, setPageSize] = useState(10);
 	const [loading, setLoading] = useState(false);
@@ -18,6 +14,10 @@ function ResignationRequestTable({
 	useEffect(() => {
 		retriveData();
 	}, []);
+
+	useEffect(() => {
+		retriveData();
+	}, [getData]);
 
 	const retriveData = () => {
 		setLoading(true);
