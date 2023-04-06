@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import CustomeDataPicker from "../../components/DataPicker";
-import IVehicleReplacementRequest from "../../types/VehicleReplacementRequest";
+import IVehicleReplacementRequest from "../../types/transport/IVehicleReplacementRequest";
 import Stack from "@mui/material/Stack";
 import "../pages.css";
 import ReplacementRequestService from "../../services/transport/ReplacementRequestService";

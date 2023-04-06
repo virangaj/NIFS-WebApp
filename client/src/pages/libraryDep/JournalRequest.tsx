@@ -3,7 +3,7 @@ import CustomeDataPicker from "../../components/DataPicker";
 import Stack from "@mui/material/Stack";
 import "../pages.css";
 import { toast } from "react-toastify";
-import IJournalRequest from "../../types/JournalRequest";
+import IJournalRequest from "../../types/library/IJournalRequest";
 import JournalRequestService from "../../services/library/JournalRequestService";
 
 const initialState: IJournalRequest = {

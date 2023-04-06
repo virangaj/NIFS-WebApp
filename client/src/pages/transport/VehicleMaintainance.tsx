@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../pages.css";
 import Stack from "@mui/material/Stack";
 import CustomeDataPicker from "../../components/DataPicker";
-import IVehicleMaintenance from "../../types/IVehicleMaintenance";
+import IVehicleMaintenance from "../../types/transport/IVehicleMaintenance";
 import VehicleMaintenanceService from "../../services/transport/VehicleMaintenanceService";
 import { toast } from "react-toastify";
 
