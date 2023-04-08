@@ -169,6 +169,11 @@ function TailwindNavbar() {
 							)}
 						</li>
 						<li>
+							{auth?.user && auth?.user.user.role === UserStatus.ADMIN && (
+								<Link to={RouteName.SeduAdmin}>Sedu Dashoard</Link>
+							)}
+						</li>
+						<li>
 							{auth?.user ? (
 								<a onClick={logoutFunc}>Logout</a>
 							) : (
