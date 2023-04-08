@@ -14,6 +14,11 @@ import Stack from "@mui/material/Stack";
 
 import Projects from "../../components/data/Project.json";
 import { useAppSelector } from "../../hooks/hooks";
+import QotationSummaryService from "../../services/procument/QuotationSummaryService";
+import { toast } from "react-toastify";
+import EmployeeSelector from "../../components/shared/EmployeeSelector";
+import DesignationSelector from "../../components/shared/DesignationSelector";
+import DivisionSelector from "../../components/shared/DivisionSelector";
 
 const initialState: IQuotationSummary = {
   fundType: "",
@@ -44,6 +49,7 @@ function QuotationSummary() {
   const [designationData, setDesignationData] = useState<IDesignationData>();
   const [divisionData, setDivisionData] = useState<IDivisionData>();
   const [hod, setHod] = useState<IEmployeeData | null>();
+  const [loading, setLoading] = useState<boolean>(false);
 
   const { employees, employeesIsLoading, employeesIsSuccess } = useAppSelector(
     (state) => state.employees
@@ -127,6 +133,28 @@ function QuotationSummary() {
   const onSubmit = async (e: any) => {
     e.preventDefault();
     console.log(values);
+
+    setLoading(true);
+    setTimeout(() => {
+      const result = QotationSummaryService.saveQuotationSummary(
+        values,
+        auth?.user?.token
+      )
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+
+      if (result !== null) {
+        toast.success("Quotation Summary Added Successfully");
+        resetForm();
+      } else {
+        toast.error("Request Cannot be Completed");
+      }
+      setLoading(false);
+    }, 1000);
   };
   return (
     <div className="sub-body-content xl:!w-[60%]">
@@ -135,7 +163,7 @@ function QuotationSummary() {
       <form onSubmit={onSubmit}>
         <div className="grid grid-cols-1 md:grid-cols-2 items-center w-[97%] mx-auto">
           <Box className="flex items-center justify-between input-field">
-            Document No - {getDocNo}
+            Document No - {getDocNo && getDocNo}
             <button
               type="button"
               className="rounded-outline-success-btn"
@@ -145,87 +173,51 @@ function QuotationSummary() {
               New
             </button>
           </Box>
-
-          <div className="mx-0 mb-4 lg:ml-10 md:my-0">
-            <CustomeDataPicker
-              date={requestDate}
-              setDate={setRequestDate}
-              title="Request Date"
-            />
-          </div>
-
-          <div className="flex items-center">
-            <div>
-              <label className="input-label" htmlFor="epfNo">
-                Employee EPF No
-              </label>
-
-              <input
-                id="epfNo"
-                type="text"
-                className="tailwind-text-box w-[40%] mr-4"
-                onChange={onChange}
-                name="epfNo"
-                value={values.epfNo}
-              />
-            </div>
-            <div>
-              <label className="input-label" htmlFor="epfNo">
-                Employee Name
-              </label>
-              <select
-                className="tailwind-text-box"
-                value={values.epfNo}
-                id="epfNo"
-                name="epfNo"
-                onChange={onChange}
-              >
-                <option disabled value={0}>
-                  Select Employee
-                </option>
-
-                {empData?.map((l: IEmployeeData, i: number) => {
-                  return (
-                    <option key={i} value={l.epfNo}>
-                      {l.firstName + " " + l.lastName}
-                    </option>
-                  );
-                })}
-              </select>
-            </div>
-          </div>
         </div>
 
-        {values.epfNo && empFoundError ? (
-          <p className="w-[97%] mx-auto error-text-message">User Not Found!</p>
-        ) : (
-          ""
-        )}
+        <EmployeeSelector
+          onChange={onChange}
+          value={values.epfNo}
+          name="epfNo"
+        />
+
+        <div className="w-[97%] mx-auto">
+          <DesignationSelector
+            onChange={onChange}
+            value={values.designationId}
+            name="designationId"
+          />
+        </div>
+
+        <div className="w-[97%] mx-auto">
+          <DivisionSelector
+            onChange={onChange}
+            value={values.divisionId}
+            name="divisionId"
+          />
+        </div>
 
         <div className="w-[97%] mx-auto">
           <div className="grid items-center grid-cols-1 md:grid-cols-2">
             <p className="normal-text">
-              Division :{" "}
-              {values.epfNo && divisionData ? (
-                <span className="font-bold">{divisionData.name}</span>
-              ) : (
-                <span className="italic-sm-text">
-                  Please select an employee
-                </span>
-              )}
-            </p>
-
-            <p className="normal-text">
               HOD :{" "}
-              {values.epfNo && divisionData ? (
-                <span className="font-bold">{divisionData.name}</span>
-              ) : (
-                <span className="italic-sm-text">
-                  Please select an employee
+              {values.divisionId && hod ? (
+                <span className="font-bold">
+                  {hod.firstName + " " + hod.lastName}
                 </span>
+              ) : (
+                <span className="italic-sm-text">Please select a Division</span>
               )}
             </p>
           </div>
+        </div>
+
+        <div className="mx-0 mb-4 lg:ml-10 md:my-0">
+          <CustomeDataPicker
+            date={requestDate}
+            setDate={setRequestDate}
+            title="Request Date"
+          />
         </div>
 
         <div className="flex w-[100%]">

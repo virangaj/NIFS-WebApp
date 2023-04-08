@@ -1,24 +1,21 @@
-import IQuotationSummary from "../../types/procument/IQuotationSummary";
 import React, { useState, useEffect } from "react";
-import IOvertime from "../../types/common/IOvertime";
 import Box from "@mui/material/Box";
 import { generateID } from "../../utils/generateId";
 import CustomeDataPicker from "../../components/DataPicker";
 import IEmployeeData from "../../types/admin/IEmployeeData";
-import EmployeeService from "../../services/admin/EmployeeService";
-import DesignationMasterService from "../../services/admin/DesignationMasterService";
-import DivisionMasterService from "../../services/admin/DivisionMasterService";
-import IDesignationData from "../../types/admin/IDesignationData";
-import IDivisionData from "../../types/admin/IDivisionData";
 import Stack from "@mui/material/Stack";
 import IQuotationRequest from "../../types/procument/IQuotationRequest";
 
 import Projects from "../../components/data/Project.json";
+import { useAppSelector } from "../../hooks/hooks";
+import { toast } from "react-toastify";
+import QuotationRequestService from "../../services/procument/QuotationRequestService";
+import EmployeeSelector from "../../components/shared/EmployeeSelector";
 
 const initialState: IQuotationRequest = {
   documentNo: "",
   date: "",
-  epfNo: "",
+  epfNo: 0,
   project: "",
   fund: "",
   srnNo: "",
@@ -27,7 +24,7 @@ const initialState: IQuotationRequest = {
   shippingTerms: "",
   supplierCatergory: "",
   bidClosingDate: "",
-  bidClosingTime: "",
+  bidStartingDate: "",
   remark: "",
 };
 
@@ -37,11 +34,18 @@ function QuotationRequest() {
   const [requestDate, setRequestDate] = React.useState<string | null>(null);
   const [empData, setEmpData] = useState<Array<IEmployeeData>>([]);
   const [empFoundError, setEmpFoundError] = useState<boolean>(false);
-  const [currentEmp, setCurrentEmp] = useState<IEmployeeData>();
-  const [designationData, setDesignationData] = useState<IDesignationData>();
-  const [divisionData, setDivisionData] = useState<IDivisionData>();
   const [startDate, setStartDate] = React.useState<string | null>(null);
   const [endDate, setEndDate] = React.useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const { employees, employeesIsLoading, employeesIsSuccess } = useAppSelector(
+    (state) => state.employees
+  );
+  const { division, divisionIsLoading, divisionIsSuccess } = useAppSelector(
+    (state) => state.division
+  );
+
+  const { auth } = useAppSelector((state) => state.persistedReducer);
 
   useEffect(() => {
     setValues({
@@ -55,109 +59,34 @@ function QuotationRequest() {
       validityPeriodOfTheQuotation: values?.validityPeriodOfTheQuotation,
       shippingTerms: values?.shippingTerms,
       supplierCatergory: values?.supplierCatergory,
-      bidClosingDate: values?.bidClosingDate,
-      bidClosingTime: values?.bidClosingTime,
+      bidClosingDate: endDate ? endDate : "",
+      bidStartingDate: startDate ? startDate : "",
       remark: values?.remark,
     });
-  }, [requestDate]);
+  }, [requestDate, startDate, endDate]);
 
   useEffect(() => {
     setValues({
-      documentNo: values?.documentNo,
-      date: requestDate ? requestDate : "",
-      epfNo: values?.epfNo,
-      project: values?.project,
-      fund: values?.fund,
-      srnNo: values?.srnNo,
-      fileNo: values?.fileNo,
-      validityPeriodOfTheQuotation: values?.validityPeriodOfTheQuotation,
-      shippingTerms: values?.shippingTerms,
-      supplierCatergory: values?.supplierCatergory,
-      bidClosingDate: values?.bidClosingDate,
-      bidClosingTime: values?.bidClosingTime,
-      remark: values?.remark,
+      ...values,
+      documentNo: getDocNo && getDocNo,
     });
+    console.log(getDocNo);
   }, [getDocNo]);
 
-  useEffect(() => {
-    retreiveEmployees();
-    console.log(empData);
-  }, []);
-
-  useEffect(() => {
-    let employee = empData.find(
-      (emp: IEmployeeData) => emp.epfNo.toString() === values.epfNo.toString()
-    );
-    setCurrentEmp(employee);
-    if (employee) {
-      setEmpFoundError(false);
-    } else {
-      setEmpFoundError(true);
-    }
-    setValues({
-      documentNo: values?.documentNo,
-      date: requestDate ? requestDate : "",
-      epfNo: values?.epfNo,
-      project: values?.project,
-      fund: values?.fund,
-      srnNo: values?.srnNo,
-      fileNo: values?.fileNo,
-      validityPeriodOfTheQuotation: values?.validityPeriodOfTheQuotation,
-      shippingTerms: values?.shippingTerms,
-      supplierCatergory: values?.supplierCatergory,
-      bidClosingDate: values?.bidClosingDate,
-      bidClosingTime: values?.bidClosingTime,
-      remark: values?.remark,
-    });
-    retriveEmployeeDetails(employee);
-  }, [values.epfNo]);
-
-  //get designation and division
-  const retriveEmployeeDetails = (emp: any) => {
-    //get designation
-    DesignationMasterService.getDesignation(emp?.designationId)
-      .then((res: any) => {
-        setDesignationData(res.data.data);
-      })
-      .catch((e: any) => {
-        console.log(e);
-      });
-
-    //get divisions
-
-    DivisionMasterService.getDivision(emp?.divisionId)
-      .then((res: any) => {
-        setDivisionData(res.data.data);
-      })
-      .catch((e: any) => {
-        console.log(e);
-      });
-  };
-
-  //get employees
-  const retreiveEmployees = () => {
-    EmployeeService.getAllEmployeeData()
-      .then((res: any) => {
-        console.log(res.data);
-        setEmpData(res.data.data);
-      })
-      .catch((e: any) => {
-        console.log(e);
-      });
-  };
-
+  // generate Doc number ID
   const generateDocNo = () => {
-    setDocNo(generateID("CE"));
+    setDocNo(generateID("RR"));
     setValues(initialState);
   };
 
-  //onchange funtion
+  //  onChange Function
   const onChange = (e: any) => {
-    setValues((preState) => ({
-      ...preState,
+    setValues((prevState) => ({
+      ...prevState,
       [e.target.name]: e.target.value,
     }));
   };
+
   //reset form
   const resetForm = () => {
     setValues(initialState);
@@ -168,6 +97,28 @@ function QuotationRequest() {
   const onSubmit = async (e: any) => {
     e.preventDefault();
     console.log(values);
+
+    setLoading(true);
+    setTimeout(() => {
+      const result = QuotationRequestService.saveQuotationRequest(
+        values,
+        auth?.user?.token
+      )
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+
+      if (result !== null) {
+        toast.success("Quotation Summary Added Successfully");
+        resetForm();
+      } else {
+        toast.error("Request Cannot be Completed");
+      }
+      setLoading(false);
+    }, 1000);
   };
   return (
     <div className="sub-body-content xl:!w-[60%]">
@@ -195,52 +146,12 @@ function QuotationRequest() {
             />
           </div>
 
-          <div className="flex items-center">
-            <div>
-              <label className="input-label" htmlFor="epfNo">
-                Employee EPF No
-              </label>
-
-              <input
-                id="epfNo"
-                type="text"
-                className="tailwind-text-box w-[40%] mr-4"
-                onChange={onChange}
-                name="epfNo"
-                value={values.epfNo}
-              />
-            </div>
-            <div>
-              <label className="input-label" htmlFor="epfNo">
-                Employee Name
-              </label>
-              <select
-                className="tailwind-text-box"
-                value={values.epfNo}
-                id="epfNo"
-                name="epfNo"
-                onChange={onChange}
-              >
-                <option disabled value={0}>
-                  Select Employee
-                </option>
-
-                {empData?.map((l: IEmployeeData, i: number) => {
-                  return (
-                    <option key={i} value={l.epfNo}>
-                      {l.firstName + " " + l.lastName}
-                    </option>
-                  );
-                })}
-              </select>
-            </div>
-          </div>
+          <EmployeeSelector
+            onChange={onChange}
+            value={values.epfNo}
+            name="epfNo"
+          />
         </div>
-        {values.epfNo && empFoundError ? (
-          <p className="w-[97%] mx-auto error-text-message">User Not Found!</p>
-        ) : (
-          ""
-        )}
 
         <div className="flex w-[100%]">
           {/* left section of the flex */}
