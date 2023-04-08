@@ -40,4 +40,10 @@ public class ResignationReqController {
         String user = userDetails.getUsername();
         return ResponseEntity.ok(resignationReqService.putHodApproval(approval, resId, user));
     }
+
+    @PutMapping("/director")
+    public ResponseEntity<?> putDirectorApproval(@RequestParam boolean approval, @RequestBody List<String> resId, @AuthenticationPrincipal UserDetails userDetails){
+        String user = userDetails.getUsername();
+        return ResponseEntity.ok(resignationReqService.putDirectorApproval(approval, resId, user));
+    }
 }

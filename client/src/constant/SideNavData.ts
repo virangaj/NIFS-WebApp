@@ -38,33 +38,21 @@ export const AdministrationSidenav = [
 
 export const DirectorSideNavbar = [
 	{
-		title: 'Employees',
-		link: RouteName.Employee,
-		icon: HiOutlineUserGroup,
+		title: 'Resignation Request',
+		link: RouteName.DirectorResignationReq,
+		icon: HiOutlineOfficeBuilding,
 	},
+];
+
+export const SeduAdminSideNavbar = [
 	{
-		title: 'Employee Types',
-		link: RouteName.EmployeeType,
-		icon: BiUserPin,
-	},
-	{
-		title: 'Employees Category',
-		link: RouteName.EmployeeCategory,
-		icon: BiCategoryAlt,
-	},
-	{
-		title: 'Designations',
-		link: RouteName.Designation,
-		icon: RiUserStarLine,
-	},
-	{
-		title: 'Divisions',
-		link: RouteName.Divisions,
+		title: 'Charges',
+		link: RouteName.Charges,
 		icon: HiOutlineOfficeBuilding,
 	},
 	{
-		title: 'Resignation Request',
-		link: RouteName.AdminResignationReq,
+		title: 'Facilities',
+		link: RouteName.Facilities,
 		icon: HiOutlineOfficeBuilding,
 	},
 ];

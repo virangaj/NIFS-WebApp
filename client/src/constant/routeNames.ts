@@ -84,9 +84,18 @@ export enum RouteName {
   Divisions = "/divisions",
   AdminResignationReq = "/resignation-request",
 
-  //procument pages
-  GatePass = "/gate-pass",
-  Srn = "/srn",
-  QuotationRequest = "/quotation-request",
-  QuotationSummary = "/quotation-summary",
+
+	//procument pages
+	GatePass = '/gate-pass',
+	Srn = '/srn',
+	QuotationRequest = '/quotation-request',
+	QuotationSummary = '/quotation-summary',
+
+	//director pages
+	DirectorResignationReq = '/resignation-request',
+
+	//sedu admin pages
+	Charges = '/charges',
+	Facilities = '/facilities',
+
 }

@@ -12,4 +12,6 @@ public interface IResignationReqService {
     List<ResignationRequestDTO> getAllResignationRequests(String division);
 
     boolean putHodApproval(boolean approval, List<String> resId, String user);
+
+    Object putDirectorApproval(boolean approval, List<String> resId, String user);
 }

@@ -24,6 +24,14 @@ export const login = createAsyncThunk('auth/login', async (data: any) => {
 	return response.data;
 });
 
+export const changePassword = createAsyncThunk(
+	'auth/change-password',
+	async ({ data, token }: any) => {
+		const response = await OAuthService.changePassword(data, token);
+		console.log(response);
+		return response.data;
+	}
+);
 export const logout = createAsyncThunk('auth/logout', async () => {
 	const response = await OAuthService.logout();
 	return response;
@@ -45,6 +53,9 @@ export const authSlice = createSlice({
 	extraReducers: (builder) => {
 		builder
 			.addCase(logout.fulfilled, (state) => {
+				state.user = null;
+			})
+			.addCase(changePassword.fulfilled, (state) => {
 				state.user = null;
 			})
 			.addCase(login.pending, (state) => {

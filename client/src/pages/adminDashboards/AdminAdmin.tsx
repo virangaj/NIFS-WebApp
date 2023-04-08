@@ -30,7 +30,11 @@ function AdminAdmin() {
 	return (
 		<>
 			{/* layout */}
-			<AdminPages Sidebardata={AdministrationSidenav} Content={PageRoutes} />
+			<AdminPages
+				Sidebardata={AdministrationSidenav}
+				Content={PageRoutes}
+				Route='admin'
+			/>
 		</>
 	);
 }

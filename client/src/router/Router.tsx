@@ -20,9 +20,10 @@ import BackToTop from '.././components/shared/BackToTop';
 import AdminAdmin from '.././pages/adminDashboards/AdminAdmin';
 import ChangePassword from '.././pages/login/ChangePassword';
 import Login from '../pages/Login';
-import { Counter } from '../redux/Counter';
 import TailwindNavbar from '../components/shared/TailwindNavbar';
 import MainPages from '../layout/MainPages';
+import DirectorAdmin from '../pages/adminDashboards/DirectorAdmin';
+import SeduAdmin from '../pages/adminDashboards/SeduAdmin';
 
 const AppRouter = () => {
 	return (
@@ -95,30 +96,7 @@ const AppRouter = () => {
 						</>
 					}
 				/>
-				{/* <Route
-					path={RouteName.UserPermission}
-					element={
-						<>
-							<MainPages Content={UserPermissionMainPage} />
-						</>
-					}
-				/> */}
-				{/* <Route
-					path={RouteName.Notification}
-					element={
-						<>
-							<MainPages Content={NotificationMainPage} />
-						</>
-					}
-				/> */}
-				{/* <Route
-					path={RouteName.Help}
-					element={
-						<>
-							<MainPages Content={HelpMainPage} />
-						</>
-					}
-				/> */}
+
 				<Route
 					path={RouteName.ErrorPage}
 					element={
@@ -132,6 +110,23 @@ const AppRouter = () => {
 					element={
 						<>
 							<MainPages Content={AdminAdmin} />
+						</>
+					}
+				/>
+
+				<Route
+					path={RouteName.Director}
+					element={
+						<>
+							<MainPages Content={DirectorAdmin} />
+						</>
+					}
+				/>
+				<Route
+					path={RouteName.SeduAdmin}
+					element={
+						<>
+							<MainPages Content={SeduAdmin} />
 						</>
 					}
 				/>

@@ -17,12 +17,12 @@ public interface VenueMasterRepository extends JpaRepository<VenueMaster, String
     @Transactional
     @Modifying
     @Query("""
-            UPDATE VenueMaster v set v.venueName = :venueName, v.type = :type, v.capacity = :capacity, v.remark = :remark, v.location = :location, v.availability = :availability, v.dateUpdated =:dateUpdated
+            UPDATE VenueMaster v set v.venueName = :venueName, v.type = :type, v.capacity = :capacity, v.remark = :remark, v.location = :location, v.availability = :availability, v.modifiedOn =:modifiedOn
             WHERE v.venueId LIKE :venueId""")
     void updateVenueMaster(
             @Param("venueName") String venueName, @Param("type") String type, @Param("capacity") int capacity,
             @Param("remark") String remark, @Param("location") String location,
-            @Param("availability") String availability, @Param("dateUpdated") Date dateUpdated , @Param("venueId") String venueId);
+            @Param("availability") String availability, @Param("modifiedOn") Date modifiedOn , @Param("venueId") String venueId);
 
     @Query(value = "SELECT venue_id FROM venue_master ORDER BY venue_id DESC LIMIT 1", nativeQuery = true)
 //    @Query(value = "SELECT TOP 1 venue_id FROM venue_master ORDER BY venue_id DESC", nativeQuery = true)

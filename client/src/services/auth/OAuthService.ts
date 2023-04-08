@@ -38,11 +38,6 @@ const changePassword = async (favJSON: any, token: string) => {
 		url: `${process.env.REACT_APP_BACKEND_SERVER}/user/change-password/${favJSON.epfNo}`,
 		data: favJSON,
 		headers: {
-			'Content-Type': 'application/json; charset=utf-8',
-			'Access-Control-Allow-Credentials': true,
-			'Access-Control-Allow-Origin': '*',
-			'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-			'Access-Control-Allow-Headers': 'application/json',
 			Authorization: `Bearer ${token}`,
 		},
 	});

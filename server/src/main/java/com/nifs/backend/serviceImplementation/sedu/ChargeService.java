@@ -1,14 +1,14 @@
 package com.nifs.backend.serviceImplementation.sedu;
 
+import com.nifs.backend.dto.sedu.ChargeDTO;
 import com.nifs.backend.model.sedu.Charges;
 import com.nifs.backend.repository.sedu.ChargeRepository;
 import com.nifs.backend.service.sedu.IChargeService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class ChargeService implements IChargeService {
@@ -16,14 +16,19 @@ public class ChargeService implements IChargeService {
     @Autowired
     ChargeRepository chargeRepo;
 
+    @Autowired
+    private ModelMapper modelMapper;
     //    create new charge
     @Override
-    public Charges createCharge(Charges chargeData) {
+    public ChargeDTO createCharge(ChargeDTO chargeData, String user) {
 
         if (chargeRepo.returnCharge(chargeData.getChargeId()) == null) {
-            Date d = new Date();
-            chargeData.setDateCreated(d);
-            return chargeRepo.save(chargeData);
+
+            Charges charges = modelMapper.map(chargeData, Charges.class);
+
+            charges.setCreatedOn(new Date());
+            charges.setCreatedBy(Integer.valueOf(user));
+            return modelMapper.map(chargeRepo.save(charges), ChargeDTO.class);
 
         }
         else {
@@ -34,8 +39,15 @@ public class ChargeService implements IChargeService {
 
     //    return all charges
     @Override
-    public List<Charges> getAll() {
-        return (List<Charges>) chargeRepo.findAll();
+    public List<ChargeDTO> getAll() {
+        List<Charges> chargesList = (List<Charges>) chargeRepo.findAll();
+
+        List<ChargeDTO> chargeDTOList = new ArrayList<>();
+        chargesList.forEach(charges -> {
+            chargeDTOList.add(modelMapper.map(charges, ChargeDTO.class));
+        });
+        return chargeDTOList;
+
 
     }
 
@@ -87,12 +99,12 @@ public class ChargeService implements IChargeService {
 
     //    update charge data
     @Override
-    public Boolean updateCharge(String chargeId, Charges chargeData) {
+    public Boolean updateCharge(String chargeId, ChargeDTO chargeData, String user) {
 
         if (chargeRepo.returnCharge(chargeId) != null) {
             Date d = new Date();
 
-            chargeRepo.Update(chargeData.getName(), chargeData.getCharge(), d, chargeId);
+            chargeRepo.Update(chargeData.getName(), chargeData.getCharge(), d, chargeId, Integer.parseInt(user));
             return true;
         }
         else {

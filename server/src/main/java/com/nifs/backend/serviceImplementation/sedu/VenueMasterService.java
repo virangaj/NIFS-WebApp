@@ -34,7 +34,7 @@ public class VenueMasterService implements IVenueMasterService {
         try {
             if (venueRepo.getVenue(venueData.getVenueId()) == null) {
                 Date d = new Date();
-                venueData.setDateCreated(d);
+                venueData.setCreatedOn(d);
                 venueRepo.save(venueData);
                 return true;
             }
