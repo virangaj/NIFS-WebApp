@@ -1,11 +1,14 @@
 package com.nifs.backend.serviceImplementation.sedu;
 
+import com.nifs.backend.dto.sedu.FacilityDTO;
 import com.nifs.backend.model.sedu.Facility;
 import com.nifs.backend.repository.sedu.FacilityRepository;
 import com.nifs.backend.service.sedu.IFacilityService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -15,30 +18,40 @@ public class FacilityService implements IFacilityService {
 
     @Autowired
     private FacilityRepository facRepo;
-
+    @Autowired
+    private ModelMapper modelMapper;
     //create facility
-    public String createFacility(Facility facData) {
+    public FacilityDTO createFacility(FacilityDTO facData, String user) {
         try {
             if (facRepo.returnFacility(facData.getFacilityId()) == null) {
-                Date d = new Date();
-                facData.setCreatedOn(d);
-                facRepo.save(facData);
-                return "Facility Added";
+
+                Facility facility = modelMapper.map(facData, Facility.class);
+
+                facility.setCreatedOn(new Date());
+                facility.setCreatedBy(Integer.valueOf(user));
+                return modelMapper.map(facRepo.save(facility), FacilityDTO.class);
 
             }
             else {
-                return "Facility cannot Added";
+                return null;
             }
         } catch (Exception e) {
             System.out.println(e.toString());
-            return "Request cannot be completed";
+            return null;
         }
     }
 
     //get all facilities
-    public List<Facility> getAll() {
+    public List<FacilityDTO> getAll() {
         try {
-            return facRepo.findAll();
+            List<Facility> facilityList = (List<Facility>) facRepo.findAll();
+
+            List<FacilityDTO> facilityDTOList = new ArrayList<>();
+
+            facilityList.forEach(facility -> {
+                facilityDTOList.add(modelMapper.map(facility, FacilityDTO.class));
+            });
+            return facilityDTOList;
         } catch (Exception e) {
             System.out.println(e.toString());
             return null;
@@ -77,7 +90,7 @@ public class FacilityService implements IFacilityService {
         }
     }
 
-    public Boolean updateFacility(String facilityId, Facility facData) {
+    public Boolean updateFacility(String facilityId, FacilityDTO facData, String user) {
         try {
             if (facRepo.returnFacility(facilityId) != null) {
                 facRepo.update(facData.getName(), facilityId);

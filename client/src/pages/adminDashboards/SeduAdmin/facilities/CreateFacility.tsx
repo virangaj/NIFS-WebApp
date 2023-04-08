@@ -51,7 +51,19 @@ function CreateFacility() {
 			toast.error('Please fill up the fields');
 			return;
 		}
+
 		setLoading(true);
+		VenueOtherService.saveFacility(values, auth?.user.token)
+			.then((res) => {
+				if (res.facilityId != null) {
+					toast.success('New charge has been created!');
+				} else {
+					toast.error('Request cannot be completed');
+				}
+			})
+			.catch((e) => {
+				toast.error('Request cannot be completed');
+			});
 		setLoading(false);
 	};
 	return (

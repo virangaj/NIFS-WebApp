@@ -13,7 +13,7 @@ const getNewChargeId = () => {
 	return http.get('/sedu/charges/newid');
 };
 
-// set charge
+// create charge
 const saveCharge = async (data: any, token: string) => {
 	// console.log(data, token);
 	const response = await axios({
@@ -62,6 +62,36 @@ const getAllFacilities = () => {
 const getNewFacilityId = () => {
 	return http.get('/sedu/facility/newid');
 };
+
+// create charge
+const saveFacility = async (data: any, token: string) => {
+	// console.log(data, token);
+	const response = await axios({
+		method: 'post',
+		url: `${process.env.REACT_APP_BACKEND_SERVER}/sedu/facility/add`,
+		data: data,
+		headers: {
+			'Content-Type': 'application/json; charset=utf-8',
+			Authorization: `Bearer ${token}`,
+		},
+	});
+	return response.data;
+};
+//update charge
+const updateFacility = async (data: any, token: any) => {
+	console.log(data);
+	const response = await axios({
+		method: 'put',
+		url: `${process.env.REACT_APP_BACKEND_SERVER}/sedu/facility/update/${data?.chargeId}`,
+		data: data,
+		headers: {
+			'Content-Type': 'application/json; charset=utf-8',
+			Authorization: `Bearer ${token}`,
+		},
+	});
+	return response.data;
+};
+
 // set facility
 const setFacilities = async (objArr: any, id: any) => {
 	console.log(objArr);
@@ -82,6 +112,7 @@ const VenueOtherService = {
 	setCharges,
 	getNewChargeId,
 	getAllFacilities,
+	saveFacility,
 	getNewFacilityId,
 	setFacilities,
 };

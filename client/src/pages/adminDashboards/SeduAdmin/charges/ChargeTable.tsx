@@ -38,12 +38,36 @@ function ChargeTable() {
 			{
 				field: 'name',
 				headerName: 'Charge Name',
-				width: 250,
+				width: 200,
 				editable: true,
 			},
 			{
 				field: 'charge',
 				headerName: 'Charge amount',
+				width: 150,
+				editable: true,
+			},
+			{
+				field: 'createdBy',
+				headerName: 'Created By',
+				width: 100,
+				editable: true,
+			},
+			{
+				field: 'createdOn',
+				headerName: 'Created on',
+				width: 200,
+				editable: true,
+			},
+			{
+				field: 'modifiedBy',
+				headerName: 'Modified By',
+				width: 100,
+				editable: true,
+			},
+			{
+				field: 'modifiedOn',
+				headerName: 'Modified on',
 				width: 200,
 				editable: true,
 			},
