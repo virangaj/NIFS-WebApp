@@ -17,9 +17,9 @@ public interface ChargeRepository extends CrudRepository<Charges, String> {
     void deleteByChargeIdLike(String chargeId);
     @Transactional
     @Modifying
-    @Query("UPDATE Charges c set c.name = :name, c.charge = :charge, c.dateUpdated = :update WHERE c.chargeId LIKE :chargeId")
+    @Query("UPDATE Charges c set c.name = :name, c.charge = :charge, c.modifiedOn = :update, c.modifiedBy = :modifiedBy WHERE c.chargeId LIKE :chargeId")
     void Update(@Param("name") String name, @Param("charge") double charge, @Param("update") Date d,
-                @Param("chargeId") String chargeId);
+                @Param("chargeId") String chargeId, @Param("modifiedBy") int user);
 
     @Query(value="SELECT * FROM venue_charges_master WHERE charge_id =?1", nativeQuery = true)
     Charges returnCharge(String id);

@@ -2,11 +2,14 @@ package com.nifs.backend.controller.sedu;
 
 
 
+import com.nifs.backend.dto.sedu.ChargeDTO;
 import com.nifs.backend.model.sedu.Charges;
 import com.nifs.backend.service.sedu.IChargeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.LinkedHashMap;
@@ -39,7 +42,7 @@ public class ChargeController {
     ResponseEntity<?> returnData() {
         Map<String, Object> map = new LinkedHashMap<String, Object>();
         try {
-            List<Charges> c = chargeService.getAll();
+            List<ChargeDTO> c = chargeService.getAll();
             if (!c.isEmpty()) {
 
                 //return success response code
@@ -69,10 +72,11 @@ public class ChargeController {
 
     //create new charge
     @PostMapping("/add")
-    ResponseEntity<?> createCharge(@RequestBody Charges chargeData) {
+    ResponseEntity<?> createCharge(@RequestBody ChargeDTO chargeData, @AuthenticationPrincipal UserDetails userDetails) {
+        String user = userDetails.getUsername();
         Map<String, Object> map = new LinkedHashMap<String, Object>();
         try {
-            Charges c = chargeService.createCharge(chargeData);
+            ChargeDTO c = chargeService.createCharge(chargeData, user);
             if (c != null) {
                 //return success response code
                 map.put("status", 1);
@@ -100,10 +104,11 @@ public class ChargeController {
 
     //    update charge
     @PutMapping("/update/{chargeId}")
-    ResponseEntity<?> updateCharge(@PathVariable String chargeId, @RequestBody Charges chargeData) {
+    ResponseEntity<?> updateCharge(@PathVariable String chargeId, @RequestBody ChargeDTO chargeData, @AuthenticationPrincipal UserDetails userDetails) {
+        String user = userDetails.getUsername();
         Map<String, Object> map = new LinkedHashMap<String, Object>();
         try{
-           if(chargeService.updateCharge(chargeId, chargeData)){
+           if(chargeService.updateCharge(chargeId, chargeData, user)){
                //return success response code
                map.put("status", 1);
                map.put("code", 201);

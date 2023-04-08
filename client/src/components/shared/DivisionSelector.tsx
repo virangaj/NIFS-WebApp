@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../../hooks/hooks';
 import { getAllDivisions } from '../../feature/admin/DivisionSlice';

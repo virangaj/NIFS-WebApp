@@ -20,4 +20,13 @@ public interface ResignationReqRepository extends JpaRepository<ResignationReque
     @Modifying
     @Query("UPDATE ResignationRequest r SET r.hodApprove = :hodApprove, r.modifiedBy = :modifiedBy, r.modifiedOn = :modifiedOn WHERE r.documentNo = :documentNo")
     void updateHodApproveAndModifiedFields(@Param("hodApprove") boolean hodApprove, @Param("modifiedBy") String modifiedBy, @Param("modifiedOn") Date modifiedOn, @Param("documentNo") String documentNo);
+
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE ResignationRequest r SET r.dirApproved = :dirApproved, r.modifiedBy = :modifiedBy, r.modifiedOn = :modifiedOn WHERE r.documentNo = :documentNo")
+    void updateDirApproveAndModifiedFields(@Param("dirApproved") boolean dirApproved, @Param("modifiedBy") String modifiedBy, @Param("modifiedOn") Date modifiedOn, @Param("documentNo") String documentNo);
+
+
+
 }

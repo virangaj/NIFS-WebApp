@@ -1,11 +1,14 @@
 package com.nifs.backend.model.sedu;
 
 
+import com.nifs.backend.model.Base;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.Date;
 import java.util.List;
@@ -19,10 +22,6 @@ import java.util.List;
 public class Charges {
 
 
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "id", nullable = false)
-//    private int id;
 
     @Id
     @Column(name="charge_id", length = 10, nullable = false)
@@ -34,13 +33,19 @@ public class Charges {
     @Column(name="charge")
     private double charge;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="date_created")
-    private Date dateCreated;
+    @Column(name = "CreatedOn", nullable = false)
+    @CreationTimestamp
+    private Date createdOn;
+    @Column(name = "ModifiedOn")
+    @UpdateTimestamp
+    private Date modifiedOn;
+    @Column(name = "IsDeleted")
+    private boolean isDeleted;
+    @Column(name = "CreatedBy", nullable = false)
+    private Integer createdBy;
+    @Column(name = "ModifiedBy")
+    private Integer modifiedBy;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="date_updated")
-    private Date dateUpdated;
 
 //    relationships
 //    @ManyToMany(mappedBy = "charges", fetch = FetchType.LAZY)
