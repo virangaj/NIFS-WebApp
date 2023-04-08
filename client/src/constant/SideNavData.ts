@@ -43,3 +43,16 @@ export const DirectorSideNavbar = [
 		icon: HiOutlineOfficeBuilding,
 	},
 ];
+
+export const SeduAdminSideNavbar = [
+	{
+		title: 'Charges',
+		link: RouteName.Charges,
+		icon: HiOutlineOfficeBuilding,
+	},
+	{
+		title: 'Facilities',
+		link: RouteName.Facilities,
+		icon: HiOutlineOfficeBuilding,
+	},
+];

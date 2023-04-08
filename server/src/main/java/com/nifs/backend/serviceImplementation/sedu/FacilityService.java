@@ -21,7 +21,7 @@ public class FacilityService implements IFacilityService {
         try {
             if (facRepo.returnFacility(facData.getFacilityId()) == null) {
                 Date d = new Date();
-                facData.setDateCreated(d);
+                facData.setCreatedOn(d);
                 facRepo.save(facData);
                 return "Facility Added";
 
@@ -49,11 +49,19 @@ public class FacilityService implements IFacilityService {
     public String returnNewFacilityId() {
         try {
             String lastId = facRepo.returnLastId();
-            String idText = lastId.replaceAll("[^A-Za-z]", "");
-            int idNum = Integer.parseInt(lastId.replaceAll("[^0-9]", ""));
-            idNum = idNum + 1;
 
-            return idText + idNum;
+
+            if (lastId == null) {
+                return "VMF001";
+            }
+            else {
+                String idText = lastId.replaceAll("[^A-Za-z]", "");
+                int idNum = Integer.parseInt(lastId.replaceAll("[^0-9]", ""));
+                idNum = idNum + 1;
+                return idText + idNum;
+
+            }
+
         } catch (Exception e) {
             System.out.println(e.toString());
             return "Request Cannot be completed";

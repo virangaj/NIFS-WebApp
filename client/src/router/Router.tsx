@@ -23,6 +23,7 @@ import Login from '../pages/Login';
 import TailwindNavbar from '../components/shared/TailwindNavbar';
 import MainPages from '../layout/MainPages';
 import DirectorAdmin from '../pages/adminDashboards/DirectorAdmin';
+import SeduAdmin from '../pages/adminDashboards/SeduAdmin';
 
 const AppRouter = () => {
 	return (
@@ -118,6 +119,14 @@ const AppRouter = () => {
 					element={
 						<>
 							<MainPages Content={DirectorAdmin} />
+						</>
+					}
+				/>
+				<Route
+					path={RouteName.SeduAdmin}
+					element={
+						<>
+							<MainPages Content={SeduAdmin} />
 						</>
 					}
 				/>

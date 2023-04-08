@@ -38,46 +38,10 @@ function DesignationAction({ params, rowId, setRowId, setDeleteId }: any) {
 			locationId,
 		};
 		setTimeout(async () => {
-			// const result = await DesignationMasterService.editDesignation(
-			// 	{
-			// 		designationId,
-			// 		designationName,
-			// 		locationId,
-			// 	},
-			// 	auth?.user?.token
-			// );
 			const token = auth?.user?.token;
 
 			const result = await dispatch(editDesignation({ data, token }));
 
-			// if (result.data.status === RequestStatus.SUCCESS) {
-			// 	setSuccess(true);
-			// 	setRowId(null);
-			// 	toast.success(`Designation updated to ${designationName}`, {
-			// 		position: 'top-right',
-			// 		autoClose: 5000,
-			// 		hideProgressBar: false,
-			// 		closeOnClick: true,
-			// 		pauseOnHover: true,
-			// 		draggable: true,
-			// 		progress: undefined,
-			// 		theme: 'dark',
-			// 	});
-			// } else {
-			// 	setSuccess(false);
-			// 	setRowId(null);
-			// 	toast.error(`${result.data.message}`, {
-			// 		position: 'top-right',
-			// 		autoClose: 5000,
-			// 		hideProgressBar: false,
-			// 		closeOnClick: true,
-			// 		pauseOnHover: true,
-			// 		draggable: true,
-			// 		progress: undefined,
-			// 		theme: 'dark',
-			// 	});
-			// }
-			// console.log(typeId);
 			setLoading(false);
 		}, 1500);
 	};
@@ -92,28 +56,10 @@ function DesignationAction({ params, rowId, setRowId, setDeleteId }: any) {
 			);
 			console.log(result);
 			if (result.data.status === RequestStatus.SUCCESS) {
-				toast.error(`${designationName} is deleted`, {
-					position: 'top-right',
-					autoClose: 5000,
-					hideProgressBar: false,
-					closeOnClick: true,
-					pauseOnHover: true,
-					draggable: true,
-					progress: undefined,
-					theme: 'dark',
-				});
+				toast.error(`${designationName} is deleted`);
 				setDeleteId(designationId);
 			} else {
-				toast.error(`${result.data.message}`, {
-					position: 'top-right',
-					autoClose: 5000,
-					hideProgressBar: false,
-					closeOnClick: true,
-					pauseOnHover: true,
-					draggable: true,
-					progress: undefined,
-					theme: 'dark',
-				});
+				toast.error(`${result.data.message}`);
 			}
 
 			setDeleteLoadng(false);
