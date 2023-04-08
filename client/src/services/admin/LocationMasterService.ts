@@ -9,16 +9,18 @@ const getAllLocations = () => {
 };
 
 const getLocationById = (id: any) => {
-	return http.get<any>(`/admin/locations/${id}`);
+	return http.get<any>(`/admin/locations/get/${id}`);
 };
 
 const saveLocations = async (favJSON: any) => {
 	console.log(favJSON);
 	const response = await axios({
 		method: 'post',
-		url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/locations`,
+		url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/locations/add`,
 		data: favJSON,
-		headers: { 'Content-Type': 'application/json; charset=utf-8' },
+		headers: {
+			'Content-Type': 'application/json; charset=utf-8',
+		},
 	});
 	// alert("Favourite created --- "+ response);
 	return response;

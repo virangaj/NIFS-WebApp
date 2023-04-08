@@ -13,16 +13,24 @@ import LocationMasterService from '../../../services/admin/LocationMasterService
 import { HiX } from 'react-icons/hi';
 import { RequestStatus } from '../../../constant/requestStatus';
 import LocationColEdit from './shared/LocationColEdit';
+import { useAppSelector } from '../../../hooks/hooks';
+import { getAllLocations } from '../../../feature/admin/LocationSlice';
+import { useDispatch } from 'react-redux';
 
 function EmpCategory() {
+	const dispatch = useDispatch<any>();
+
 	const [empCats, setEmpCats] = useState<Array<any>>([]);
 	const [pageSize, setPageSize] = useState(5);
 	const [rowId, setRowId] = useState(0);
 	const [loading, setLoading] = useState(false);
 	const [cat_id, setCat_Id] = useState('');
-	const [locationData, setLocationData] = useState<ILocationData[]>();
 	const [deleteId, setDeleteId] = useState('');
 
+	const { auth } = useAppSelector((state) => state.persistedReducer);
+	const { location, locationIsLoading, locationIsSuccess } = useAppSelector(
+		(state) => state.location
+	);
 	const [values, setValues] = useState<any>({
 		empCatId: '',
 		description: '',
@@ -32,7 +40,9 @@ function EmpCategory() {
 
 	useEffect(() => {
 		retreiveEmpCats();
-		retreiveLocations();
+		if (location.length === 0 || !locationIsSuccess) {
+			retreiveLocations();
+		}
 	}, []);
 	useEffect(() => {
 		const filteredData = empCats.filter((emp) => emp.empCatId !== deleteId);
@@ -70,14 +80,7 @@ function EmpCategory() {
 	};
 
 	const retreiveLocations = () => {
-		LocationMasterService.getAllLocations()
-			.then((res: any) => {
-				setLocationData(res.data);
-				// console.log(locationData);
-			})
-			.catch((e: any) => {
-				console.log(e);
-			});
+		dispatch(getAllLocations());
 	};
 	const resetForm = () => {
 		setValues({
@@ -116,7 +119,10 @@ function EmpCategory() {
 		if (values.empCatId !== '') {
 			setLoading(true);
 			setTimeout(async () => {
-				const result = await EmployeeCatService.saveEmpCat(values);
+				const result = await EmployeeCatService.saveEmpCat(
+					values,
+					auth?.user?.token
+				);
 				if (result.data.status === RequestStatus.SUCCESS) {
 					toast.success('New Employee Category is added');
 					resetForm();
@@ -258,7 +264,7 @@ function EmpCategory() {
 									<option disabled value=''>
 										Select Location
 									</option>
-									{locationData?.map((l: ILocationData, i: number) => {
+									{location?.map((l: ILocationData, i: number) => {
 										return (
 											<option key={i} value={l.locationId}>
 												{l.locationName}

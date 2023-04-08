@@ -1,32 +1,58 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CustomeDataPicker from "../../components/DataPicker";
 import Stack from "@mui/material/Stack";
 import IVehicleReplacement from "../../types/VehicleRepair";
 import "../pages.css";
+import IVehicleRepair from "../../types/VehicleRepair";
+import VehicleRepairService from "../../services/transport/VehicleRepairService";
+import { toast } from "react-toastify";
+
+const initialState: IVehicleRepair = {
+  documentNo: "",
+  vehicleNo: "",
+  invoiceNo: "",
+  vehicleType: "",
+  workshop: "",
+  description: "",
+  date: "",
+  invoiceDate: "",
+  repairStartDate: "",
+  repairEndDate: "",
+  meterReading: "",
+  repairType: "",
+  repairCost: "",
+  location: "",
+  remark: "",
+};
 
 export default function VehicleRepair() {
-  const [values, setValues] = useState<IVehicleReplacement>({
-    documentNo: "",
-    vehicleNo: "",
-    invoiceNo: "",
-    vehicleType: "",
-    workshop: "",
-    description: "",
-    date: "",
-    invoiceDate: "",
-    repairStartDate: "",
-    repairEndDate: "",
-    meterReading: "",
-    repairType: "",
-    repairCost: "",
-    location: "",
-    remark: "",
-  });
+  const [values, setValues] = useState<IVehicleReplacement>(initialState);
 
   const [date, setDate] = useState<string | null>(null);
   const [invoiceDate, setInvoiceDate] = useState<string | null>(null);
   const [repairStartDate, setRepairStartDate] = useState<string | null>(null);
   const [repairEndDate, setRepairEndDate] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setValues({
+      documentNo: values?.documentNo,
+      vehicleNo: values?.vehicleNo,
+      invoiceNo: values?.invoiceNo,
+      vehicleType: values?.vehicleType,
+      workshop: values?.workshop,
+      description: values?.description,
+      date: date ? date : "",
+      invoiceDate: invoiceDate ? invoiceDate : "",
+      repairStartDate: repairStartDate ? repairStartDate : "",
+      repairEndDate: repairEndDate ? repairEndDate : "",
+      meterReading: values?.meterReading,
+      repairType: values?.repairType,
+      repairCost: values?.repairCost,
+      location: values?.location,
+      remark: values?.remark,
+    });
+  }, [date, invoiceDate, repairStartDate, repairEndDate]);
 
   const resetForm = () => {
     setValues({
@@ -58,6 +84,20 @@ export default function VehicleRepair() {
   const onSubmit = async (event: any) => {
     event.preventDefault();
     console.log(values);
+
+    if (values.documentNo !== "") {
+      setTimeout(async () => {
+        const result = await VehicleRepairService.saveVehicleRepair(values);
+
+        if (result?.data !== null) {
+          toast.success("Vehicle Repair Details Added Successfully");
+          resetForm();
+        } else {
+          toast.error("Request Cannot Complete");
+        }
+        setLoading(false);
+      }, 1000);
+    }
   };
 
   return (

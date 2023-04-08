@@ -1,5 +1,5 @@
 import { toast } from 'react-toastify';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
@@ -9,9 +9,14 @@ import ErrorMessage from '../../components/shared/ErrorMessage';
 import { RequestStatus } from '../../constant/requestStatus';
 import { RouteName } from '../../constant/routeNames';
 import { da } from 'date-fns/locale';
-import { useAppSelector } from '../../redux/hooks';
+import { useAppSelector } from '../../hooks/hooks';
+import { useDispatch } from 'react-redux';
+import { changePassword } from '../../feature/auth/authSlice';
+
 function ChangePassword() {
 	let navigate = useNavigate();
+	let dispatch = useDispatch<any>();
+
 	const {
 		register,
 		handleSubmit,
@@ -22,8 +27,13 @@ function ChangePassword() {
 	//const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
 	const [confirmError, setConfirmError] = useState('');
-	const { user, isLoading, isError, isSuccess, tokenExpireDate } =
-		useAppSelector((state: any) => state.auth);
+	const { auth } = useAppSelector((state) => state.persistedReducer);
+
+	useEffect(() => {
+		if (auth?.user === null) {
+			navigate(RouteName.Login);
+		}
+	}, []);
 	const onSubmit: SubmitHandler<any> = (data) => {
 		//chaeck passwords match or not
 		data.epfNo = parseInt(data.epfNo);
@@ -35,10 +45,16 @@ function ChangePassword() {
 			return;
 		} else {
 			setConfirmError('');
+			const reqData = {
+				data: data,
+				token: auth?.user?.token,
+			};
+
 			setTimeout(async () => {
-				const result = await OAuthService.changePassword(data, user?.token);
+				const result = await dispatch(changePassword(reqData));
 				if (result.data.status === RequestStatus.SUCCESS) {
 					//redirect to login page
+					localStorage.removeItem('persist:employee');
 					navigate(RouteName.Login);
 					toast.success(result.data.message);
 				} else {

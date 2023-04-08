@@ -9,30 +9,14 @@
 				"img": "https://img.icons8.com/fluency/50/000000/administrative-tools.png",
 				"only_admin": false
 			},
-			{
-				"title": "Local Telephone Charges",
-				"link": "/admin/local-tel-charges",
-				"img": "https://img.icons8.com/fluency/50/000000/phone-office.png",
-				"only_admin": false
-			},
+
 			{
 				"title": "Accommodation",
 				"link": "/admin/accommodation",
 				"img": "https://img.icons8.com/fluency/50/000000/3-star-hotel.png",
 				"only_admin": false
 			},
-			{
-				"title": "Overseas Telephone Charges",
-				"link": "/admin/overseas-tel-charges",
-				"img": "https://img.icons8.com/fluency/50/000000/around-the-globe.png",
-				"only_admin": false
-			},
-			{
-				"title": "Trainers VolunteersGrant Personal Attendance",
-				"link": "/admin/trainer-volunteer-attendance",
-				"img": "https://img.icons8.com/fluency/50/000000/manager.png",
-				"only_admin": false
-			},
+
 			{
 				"title": "Insurance Claim",
 				"link": "/admin/insurance-claim",

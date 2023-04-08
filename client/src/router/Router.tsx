@@ -14,13 +14,16 @@ import UserPermissionMainPage from '.././pages/UserPermissionMainPage';
 import NotificationMainPage from '.././pages/NotificationMainPage';
 import HelpMainPage from '.././pages/HelpMainPage';
 import ErrorPage from '.././pages/ErrorPage';
-import Navbar from '.././components/shared/Navbar';
+// import Navbar from '.././components/shared/Navbar';
 import Footer from '.././components/shared/Footer';
 import BackToTop from '.././components/shared/BackToTop';
 import AdminAdmin from '.././pages/adminDashboards/AdminAdmin';
 import ChangePassword from '.././pages/login/ChangePassword';
 import Login from '../pages/Login';
-import { Counter } from '../redux/Counter';
+import TailwindNavbar from '../components/shared/TailwindNavbar';
+import MainPages from '../layout/MainPages';
+import DirectorAdmin from '../pages/adminDashboards/DirectorAdmin';
+import SeduAdmin from '../pages/adminDashboards/SeduAdmin';
 
 const AppRouter = () => {
 	return (
@@ -33,11 +36,7 @@ const AppRouter = () => {
 					path={RouteName.Home}
 					element={
 						<>
-							<Navbar />
-							<BackToTop />
-							<Home />
-							{/* <Counter /> */}
-							<Footer />
+							<MainPages Content={Home} />
 						</>
 					}
 				/>
@@ -45,32 +44,23 @@ const AppRouter = () => {
 					path={RouteName.Common}
 					element={
 						<>
-							<Navbar />
-							<BackToTop />
-							<CommonMainPage />
-							<Footer />
+							<MainPages Content={CommonMainPage} />
 						</>
 					}
 				/>
-				<Route
+				{/* <Route
 					path={RouteName.Account}
 					element={
 						<>
-							<Navbar />
-							<BackToTop />
-							<AccountMainPage />
-							<Footer />
+							<MainPages Content={AccountMainPage} />
 						</>
 					}
-				/>
+				/> */}
 				<Route
 					path={RouteName.Admin}
 					element={
 						<>
-							<Navbar />
-							<BackToTop />
-							<AdminMainPage />
-							<Footer />
+							<MainPages Content={AdminMainPage} />
 						</>
 					}
 				/>
@@ -78,10 +68,7 @@ const AppRouter = () => {
 					path={RouteName.Library}
 					element={
 						<>
-							<Navbar />
-							<BackToTop />
-							<LibraryMainPage />
-							<Footer />
+							<MainPages Content={LibraryMainPage} />
 						</>
 					}
 				/>
@@ -89,10 +76,7 @@ const AppRouter = () => {
 					path={RouteName.Procument}
 					element={
 						<>
-							<Navbar />
-							<BackToTop />
-							<ProcumentMainPage />
-							<Footer />
+							<MainPages Content={ProcumentMainPage} />
 						</>
 					}
 				/>
@@ -100,10 +84,7 @@ const AppRouter = () => {
 					path={RouteName.Sedu}
 					element={
 						<>
-							<Navbar />
-							<BackToTop />
-							<SeduMainPage />
-							<Footer />
+							<MainPages Content={SeduMainPage} />
 						</>
 					}
 				/>
@@ -111,54 +92,16 @@ const AppRouter = () => {
 					path={RouteName.Transport}
 					element={
 						<>
-							<Navbar />
-							<BackToTop />
-							<TransportMainPage />
-							<Footer />
+							<MainPages Content={TransportMainPage} />
 						</>
 					}
 				/>
-				<Route
-					path={RouteName.UserPermission}
-					element={
-						<>
-							<Navbar />
-							<BackToTop />
-							<UserPermissionMainPage />
-							<Footer />
-						</>
-					}
-				/>
-				<Route
-					path={RouteName.Notification}
-					element={
-						<>
-							<Navbar />
-							<BackToTop />
-							<NotificationMainPage />
-							<Footer />
-						</>
-					}
-				/>
-				<Route
-					path={RouteName.Help}
-					element={
-						<>
-							<Navbar />
-							<BackToTop />
-							<HelpMainPage />
-							<Footer />
-						</>
-					}
-				/>
+
 				<Route
 					path={RouteName.ErrorPage}
 					element={
 						<>
-							<Navbar />
-							<BackToTop />
-							<ErrorPage />
-							<Footer />
+							<MainPages Content={ErrorPage} />
 						</>
 					}
 				/>
@@ -166,10 +109,24 @@ const AppRouter = () => {
 					path={RouteName.AdminAdmin}
 					element={
 						<>
-							<Navbar />
-							<BackToTop />
-							<AdminAdmin />
-							<Footer />
+							<MainPages Content={AdminAdmin} />
+						</>
+					}
+				/>
+
+				<Route
+					path={RouteName.Director}
+					element={
+						<>
+							<MainPages Content={DirectorAdmin} />
+						</>
+					}
+				/>
+				<Route
+					path={RouteName.SeduAdmin}
+					element={
+						<>
+							<MainPages Content={SeduAdmin} />
 						</>
 					}
 				/>

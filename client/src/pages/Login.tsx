@@ -29,9 +29,7 @@ export default function Login() {
 	let navigate = useNavigate();
 	const dispatch = useAppDispatch();
 
-	const { user, isLoading, isError, isSuccess, message } = useAppSelector(
-		(state: any) => state.auth
-	);
+	const { auth } = useAppSelector((state) => state.persistedReducer);
 
 	const [loading, setLoading] = useState(false);
 	const {
@@ -42,10 +40,10 @@ export default function Login() {
 
 	//check user and redirect to home page
 	useEffect(() => {
-		if (user) {
+		if (auth?.user) {
 			navigate(RouteName.Home);
 		}
-	}, [user]);
+	}, [auth?.user]);
 
 	const onSubmit: SubmitHandler<any> = (data) => {
 		data.epfNo = parseInt(data.epfNo);
@@ -86,7 +84,7 @@ export default function Login() {
 			<div className='hidden w-full h-screen bg-indigo-600 md:block md:w-1/2 xl:w-2/3'>
 				<img
 					src='https://source.unsplash.com/random'
-					alt=''
+					alt='random'
 					className='object-cover w-full h-full'
 				/>
 			</div>

@@ -2,11 +2,11 @@ package com.nifs.backend.auth;
 
 import com.nifs.backend.config.JwtService;
 import com.nifs.backend.constant.RequestStatus;
-import com.nifs.backend.dto.UserDTO;
-import com.nifs.backend.repository.EmployeeMasterRepository;
-import com.nifs.backend.repository.UserRepository;
-import com.nifs.backend.service.IDivisionMasterService;
-import com.nifs.backend.service.IJwtTokenService;
+import com.nifs.backend.dto.admin.UserDTO;
+import com.nifs.backend.repository.admin.EmployeeMasterRepository;
+import com.nifs.backend.repository.admin.UserRepository;
+import com.nifs.backend.service.admin.IDivisionMasterService;
+import com.nifs.backend.service.auth.IJwtTokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -58,7 +58,7 @@ public class AuthenticationService {
             System.out.println("AuthenticationService : "+request.getEpfNo());
 
             //save in the database
-            String tokenDatabase = tokenService.createToken(jwtToken, request.getEpfNo());
+//            String tokenDatabase = tokenService.createToken(jwtToken, request.getEpfNo());
 
 
             UserDTO userDTO = UserDTO.builder()
@@ -75,7 +75,7 @@ public class AuthenticationService {
                         .status(String.valueOf(RequestStatus.CHANGE_PASSWORD))
                         .code(200)
                         .message("Please Change Your Password!")
-                        .token(tokenDatabase)
+                        .token(jwtToken)
                         .name(employee.getFirstName() + " " + employee.getLastName())
                         .user(userDTO)
                         .build();
@@ -86,7 +86,7 @@ public class AuthenticationService {
                         .status(String.valueOf(RequestStatus.SUCCESS))
                         .code(200)
                         .message("You are Successfully Login")
-                        .token(tokenDatabase)
+                        .token(jwtToken)
                         .name(employee.getFirstName() + " " + employee.getLastName())
                         .user(userDTO)
                         .build();

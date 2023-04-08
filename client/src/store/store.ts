@@ -11,8 +11,11 @@ import {
 import storage from 'redux-persist/lib/storage';
 import { combineReducers } from 'redux';
 
-import authReducer from '../feature/auth/authSlice';
 import authSlice from '../feature/auth/authSlice';
+import designationSlice from '../feature/admin/DesignationSlice';
+import divisionSlice from '../feature/admin/DivisionSlice';
+import locationSlice from '../feature/admin/LocationSlice';
+import employeeSlice from '../feature/admin/EmployeeSlice';
 
 const persistConfig = {
 	key: 'employee',
@@ -23,7 +26,14 @@ const reducers = combineReducers({ auth: authSlice });
 const persistedReducer = persistReducer(persistConfig, reducers);
 
 export const store = configureStore({
-	reducer: persistedReducer,
+	reducer: {
+		persistedReducer,
+		designation: designationSlice,
+		division: divisionSlice,
+		location: locationSlice,
+		employees: employeeSlice,
+	},
+
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware({
 			serializableCheck: {

@@ -3,10 +3,10 @@ import { useState, useEffect } from 'react';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
-import IVenueMaster from '../../types/IVenueMaster';
+import IVenueMaster from '../../types/sedu/IVenueMaster';
 import Autocomplete from '@mui/material/Autocomplete';
 
-import IParticipantMaster from '../../types/IParticipantMaster';
+import IParticipantMaster from '../../types/sedu/IParticipantMaster';
 import CustomeDataPicker from '../../components/DataPicker';
 import ParticipantMasterService from '../../services/sedu/ParticipantMasterService';
 import Ripple from '../../components/Ripple';

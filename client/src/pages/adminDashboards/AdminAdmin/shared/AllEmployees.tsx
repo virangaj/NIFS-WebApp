@@ -6,7 +6,7 @@ import Ripple from '../../../../components/Ripple';
 import { HiX } from 'react-icons/hi';
 import { toast } from 'react-toastify';
 import EmployeeService from '../../../../services/admin/EmployeeService';
-import IEmployeeData from '../../../../types/IEmployeeData';
+import IEmployeeData from '../../../../types/admin/IEmployeeData';
 import EmployeeAction from './EmployeeAction';
 import { RequestStatus } from '../../../../constant/requestStatus';
 

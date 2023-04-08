@@ -12,21 +12,29 @@ const config = {
 };
 axios.defaults.baseURL = process.env.REACT_APP_BACKEND_SERVER;
 
-const getAllDesignations = () => {
-	return http.get<any>('/admin/designation');
+const getAllDesignations = async () => {
+	// return http.get<any>('/admin/designation');
+	const response = await axios({
+		method: 'get',
+		url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/designation`,
+	});
+	// alert("Favourite created --- "+ response);
+	return response;
 };
 
 const getDesignation = (id: any) => {
 	return http.get<any>(`/admin/designation/get/${id}`);
 };
 
-const saveDesignation = async (favJSON: any) => {
-	console.log(favJSON);
+const saveDesignation = async (data: any, token: string) => {
 	const response = await axios({
 		method: 'post',
-		url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/designation`,
-		data: favJSON,
-		headers: { 'Content-Type': 'application/json; charset=utf-8' },
+		url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/designation/add`,
+		data: data,
+		headers: {
+			'Content-Type': 'application/json; charset=utf-8',
+			Authorization: `Bearer ${token}`,
+		},
 	});
 	// alert("Favourite created --- "+ response);
 	return response;
@@ -42,25 +50,31 @@ const getDesignationByLocationId = (id: any) => {
 	return http.get<any>(`/admin/designation/location/${id}`);
 };
 
-const editDesignation = async (favJSON: any) => {
-	console.log(favJSON);
+const editDesignation = async (favJSON: any, token: any) => {
+	// console.log(favJSON);
 	const response = await axios({
 		method: 'patch',
 		url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/designation/update/${favJSON.designationId}`,
 		data: favJSON,
-		headers: { 'Content-Type': 'application/json; charset=utf-8' },
+		headers: {
+			'Content-Type': 'application/json; charset=utf-8',
+			Authorization: `Bearer ${token}`,
+		},
 	});
-
+	console.log(response);
 	// alert("Favourite created --- "+ response);
 	return response;
 };
 
-const deleteDesignation = async (id: string) => {
+const deleteDesignation = async (id: string, token: string) => {
 	console.log(id);
 	const response = await axios({
 		method: 'delete',
 		url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/designation/delete/${id}`,
-		headers: { 'Content-Type': 'application/json; charset=utf-8' },
+		headers: {
+			'Content-Type': 'application/json; charset=utf-8',
+			Authorization: `Bearer ${token}`,
+		},
 	});
 	// alert("Favourite created --- "+ response);
 	return response;

@@ -28,11 +28,45 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
 
-        http
+        http.cors().and()
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/auth/**","/**")
+                .requestMatchers(
+
+                        "/auth/**",
+                        "/**",
+                        "/admin/otherdata/**",
+                        "/sedu/charges",
+//                        designations
+//                        "/admin/designation",
+                        "/admin/designation/newid",
+                        "/admin/designation/get/**",
+                        "/admin/designation/location/**",
+//                        divisions
+                        "/admin/division",
+                        "/admin/division/newid",
+                        "/admin/division/get/**",
+                        "/admin/division/location/**",
+//                        empoyee category
+                        "/admin/employeecategory",
+                        "/admin/employeecategory/newid",
+                        "/admin/employeecategory/get/**",
+                        "/admin/employeecategory/location/**",
+//                         employee types
+                        "/admin/employeetype",
+                        "/admin/employeetype/location/**",
+                        "/admin/employeetype/newid",
+                        "/admin/employeetype/get/**",
+//                      location
+                        "/admin/locations",
+                        "/admin/locations/get/**",
+//                        facility
+                        "/sedu/facility",
+                        "/sedu/facility/newid",
+//                        contract extension
+                        "/admin/contractex"
+                                             )
                 .permitAll()
                 .anyRequest()
                 .authenticated()

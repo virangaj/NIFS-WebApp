@@ -1,13 +1,11 @@
 package com.nifs.backend.auth;
 
 
-import com.nifs.backend.dto.UserDTO;
+import com.nifs.backend.dto.admin.UserDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.Date;
 
 @Data
 @Builder

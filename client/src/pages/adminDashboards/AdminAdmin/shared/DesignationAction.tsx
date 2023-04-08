@@ -5,16 +5,23 @@ import { Box } from '@mui/system';
 import { useState, useEffect } from 'react';
 import Modal from '@mui/material/Modal';
 import { BiCheck, BiSave, BiTrash } from 'react-icons/bi';
+import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
 
 import { toast } from 'react-toastify';
 import DesignationMasterService from '../../../../services/admin/DesignationMasterService';
 import { RequestStatus } from '../../../../constant/requestStatus';
+import { useDispatch } from 'react-redux';
+import { editDesignation } from '../../../../feature/admin/DesignationSlice';
 
 function DesignationAction({ params, rowId, setRowId, setDeleteId }: any) {
+	const dispatch = useDispatch<any>();
 	const [loading, setLoading] = useState(false);
 	const [success, setSuccess] = useState(false);
 	const [deleteLoading, setDeleteLoadng] = useState(false);
 	const [deleteConfirm, setDeleteConfirm] = useState(false);
+
+	const { auth } = useAppSelector((state) => state.persistedReducer);
+
 	useEffect(() => {
 		if (rowId === params.id && success) {
 			setSuccess(false);
@@ -24,41 +31,17 @@ function DesignationAction({ params, rowId, setRowId, setDeleteId }: any) {
 	const handleUpdate = async () => {
 		setLoading(true);
 		const { designationId, designationName, locationId } = params.row;
-		setTimeout(async () => {
-			const result = await DesignationMasterService.editDesignation({
-				designationId,
-				designationName,
-				locationId,
-			});
 
-			if (result.data.status === RequestStatus.SUCCESS) {
-				setSuccess(true);
-				setRowId(null);
-				toast.success(`Designation updated to ${designationName}`, {
-					position: 'top-right',
-					autoClose: 5000,
-					hideProgressBar: false,
-					closeOnClick: true,
-					pauseOnHover: true,
-					draggable: true,
-					progress: undefined,
-					theme: 'dark',
-				});
-			} else {
-				setSuccess(false);
-				setRowId(null);
-				toast.error(`${result.data.message}`, {
-					position: 'top-right',
-					autoClose: 5000,
-					hideProgressBar: false,
-					closeOnClick: true,
-					pauseOnHover: true,
-					draggable: true,
-					progress: undefined,
-					theme: 'dark',
-				});
-			}
-			// console.log(typeId);
+		const data = {
+			designationId,
+			designationName,
+			locationId,
+		};
+		setTimeout(async () => {
+			const token = auth?.user?.token;
+
+			const result = await dispatch(editDesignation({ data, token }));
+
 			setLoading(false);
 		}, 1500);
 	};
@@ -68,32 +51,15 @@ function DesignationAction({ params, rowId, setRowId, setDeleteId }: any) {
 		setTimeout(async () => {
 			const { designationId, designationName } = params.row;
 			const result = await DesignationMasterService.deleteDesignation(
-				designationId
+				designationId,
+				auth?.user?.token
 			);
 			console.log(result);
 			if (result.data.status === RequestStatus.SUCCESS) {
-				toast.error(`${designationName} is deleted`, {
-					position: 'top-right',
-					autoClose: 5000,
-					hideProgressBar: false,
-					closeOnClick: true,
-					pauseOnHover: true,
-					draggable: true,
-					progress: undefined,
-					theme: 'dark',
-				});
+				toast.error(`${designationName} is deleted`);
 				setDeleteId(designationId);
 			} else {
-				toast.error(`${result.data.message}`, {
-					position: 'top-right',
-					autoClose: 5000,
-					hideProgressBar: false,
-					closeOnClick: true,
-					pauseOnHover: true,
-					draggable: true,
-					progress: undefined,
-					theme: 'dark',
-				});
+				toast.error(`${result.data.message}`);
 			}
 
 			setDeleteLoadng(false);
