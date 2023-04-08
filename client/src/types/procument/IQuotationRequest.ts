@@ -1,7 +1,7 @@
 export default interface IQuotationRequest {
   documentNo: string;
   date: string;
-  epfNo: string;
+  epfNo: number;
   project: string;
   fund: string;
   srnNo: string;
@@ -9,7 +9,7 @@ export default interface IQuotationRequest {
   validityPeriodOfTheQuotation: string;
   shippingTerms: string;
   supplierCatergory: string;
+  bidStartingDate: string;
   bidClosingDate: string;
-  bidClosingTime: string;
   remark: string;
 }

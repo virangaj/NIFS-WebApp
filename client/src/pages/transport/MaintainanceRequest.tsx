@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../pages.css";
 import Stack from "@mui/material/Stack";
 import CustomeDataPicker from "../../components/DataPicker";
-import IMaintainanceRequest from "../../types/MaintainanceRequest";
+import IMaintainanceRequest from "../../types/transport/IMaintainanceRequest";
 import MaintenanceRequestService from "../../services/transport/MaintenanceRequestService";
 import { toast } from "react-toastify";
 

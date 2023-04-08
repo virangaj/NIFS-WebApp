@@ -30,6 +30,24 @@
     ]
   },
   {
+    "section": "Transaction",
+    "only_admin": true,
+    "routes": [
+      {
+        "title": "Travel Request",
+        "link": "/transport/travel-request",
+        "img": "https://img.icons8.com/color/256/taxi.png",
+        "only_admin": true
+      },
+      {
+        "title": "Transport Cost",
+        "link": "/transport/transport-cost",
+        "img": "https://img.icons8.com/external-flaticons-lineal-color-flat-icons/256/external-cost-car-wash-flaticons-lineal-color-flat-icons.png",
+        "only_admin": true
+      }
+    ]
+  },
+  {
     "section": "Request",
     "only_admin": true,
     "routes": [

@@ -15,6 +15,7 @@ import java.util.Date;
 @Slf4j
 public class JournalRequestService implements IJournalRequestService {
 
+
     final
     JournalRequestRepository journalRequestRepository;
 
@@ -22,34 +23,31 @@ public class JournalRequestService implements IJournalRequestService {
         this.journalRequestRepository = journalRequestRepository;
     }
 
-
     @Override
     public ResponseEntity<?> createNewJournalRequest(JournalRequestDTO data) {
 
-        log.info("Data from the client " + data.getDocumentNo());
+        log.info("Data from the Client " + data.getDocumentNo());
 
-        if(journalRequestRepository.findByDocumentNoEquals(data.getDocumentNo())==null){
+        if(journalRequestRepository.findByDocumentNoEquals(data.getDocumentNo())== null){
 
             JournalRequest journalRequest = JournalRequest
                     .builder()
                     .documentNo(data.getDocumentNo())
-                    .employee(data.getEmployee())
-                    .designation(data.getDesignation())
-                    .division(data.getDivision())
-                    .headOfLibrary(data.getHeadOfLibrary())
+                    .epfNo(data.getEpfNo())
+                    .designationId(data.getDesignationId())
+                    .divisionId(data.getDivisionId())
+                    .hod(data.getHod())
                     .project(data.getProject())
                     .vote(data.getVote())
-                    .budget(data.getBudget())
                     .journalName(data.getJournalName())
-                    .remarks(data.getRemarks())
                     .date(data.getDate())
                     .periodOfRequest(data.getPeriodOfRequest())
                     .totalAmountDue(data.getTotalAmountDue())
                     .currencyType(data.getCurrencyType())
-                    .ISSNNo(data.getISSNNo())
+                    .ISSN_No(data.getISSN_No())
                     .type(data.getType())
                     .methodOfPayment(data.getMethodOfPayment())
-                    .attachment(data.getAttachment())
+                    .remark(data.getRemark())
                     .createdBy(data.getId())
                     .createdOn(new Date())
                     .build();

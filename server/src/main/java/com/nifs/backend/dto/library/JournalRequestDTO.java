@@ -7,30 +7,33 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-@Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 @SuperBuilder
 public class JournalRequestDTO extends BaseDTO {
 
     private String documentNo;
-    private String employee;
-    private String designation;
-    private String division;
-    private String headOfLibrary;
+    private int epfNo;
+    private String designationId;
+    private String divisionId;
+    private int hod;
+
     private String project;
     private String vote;
-    private String budget;
     private String journalName;
-    private String remarks;
+
     private String date;
     private String periodOfRequest;
     private String totalAmountDue;
     private String currencyType;
-    private String ISSNNo;
+    private String ISSN_No;
     private String type;
     private String methodOfPayment;
-    private String attachment;
+    private String remark;
+
+
+
 
 }
