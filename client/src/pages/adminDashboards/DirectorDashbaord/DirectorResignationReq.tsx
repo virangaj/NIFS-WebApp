@@ -32,7 +32,7 @@ function DirectorResignationReq() {
 		console.log(selectedData);
 		setLoading(true);
 		setTimeout(() => {
-			ResignationService.sendHodApproval(selectedData, auth?.user?.token, true)
+			ResignationService.sendDirApproval(selectedData, auth?.user?.token, true)
 				.then((res) => {
 					if (res.data) {
 						toast.success('Resignation is Confirmed');
@@ -52,7 +52,7 @@ function DirectorResignationReq() {
 	const sendReject = () => {
 		setLoading(true);
 		setTimeout(() => {
-			ResignationService.sendHodApproval(selectedData, auth?.user?.token, false)
+			ResignationService.sendDirApproval(selectedData, auth?.user?.token, false)
 				.then((res) => {
 					if (res.data) {
 						toast.success('Resignation is Declined');

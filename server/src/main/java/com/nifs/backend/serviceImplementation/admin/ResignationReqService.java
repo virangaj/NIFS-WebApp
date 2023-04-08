@@ -65,6 +65,7 @@ public class ResignationReqService implements IResignationReqService {
     @Override
     public boolean putHodApproval(boolean approval, List<String> resId, String user) {
         try {
+            log.info("HOD Resignation Request : requested");
             resId.forEach(id -> {
                 resignationReqRepository.updateHodApproveAndModifiedFields(approval, user, new Date(), id);
             });
@@ -79,6 +80,7 @@ public class ResignationReqService implements IResignationReqService {
     @Override
     public Object putDirectorApproval(boolean approval, List<String> resId, String user) {
         try {
+            log.info("Director Resignation Request : requested");
             resId.forEach(id -> {
                 resignationReqRepository.updateDirApproveAndModifiedFields(approval, user, new Date(), id);
             });
