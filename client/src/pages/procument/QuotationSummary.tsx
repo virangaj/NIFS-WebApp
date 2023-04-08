@@ -13,13 +13,18 @@ import IDivisionData from "../../types/admin/IDivisionData";
 import Stack from "@mui/material/Stack";
 
 import Projects from "../../components/data/Project.json";
+import { useAppSelector } from "../../hooks/hooks";
 
 const initialState: IQuotationSummary = {
+  fundType: "",
   documentNo: "",
   date: "",
+
   //   auto generated
-  epfNo: "",
-  division: "",
+  epfNo: 0,
+  designationId: "",
+  divisionId: "",
+  hod: 0,
   quotationRequestNo: "",
   fileNo: "",
   srnNo: "",
@@ -27,7 +32,6 @@ const initialState: IQuotationSummary = {
   fund: "",
   project: "",
   remark: "",
-  fundType: "",
 };
 
 function QuotationSummary() {
@@ -39,123 +43,84 @@ function QuotationSummary() {
   const [currentEmp, setCurrentEmp] = useState<IEmployeeData>();
   const [designationData, setDesignationData] = useState<IDesignationData>();
   const [divisionData, setDivisionData] = useState<IDivisionData>();
+  const [hod, setHod] = useState<IEmployeeData | null>();
+
+  const { employees, employeesIsLoading, employeesIsSuccess } = useAppSelector(
+    (state) => state.employees
+  );
+  const { division, divisionIsLoading, divisionIsSuccess } = useAppSelector(
+    (state) => state.division
+  );
+
+  const { auth } = useAppSelector((state) => state.persistedReducer);
 
   useEffect(() => {
     setValues({
-      documentNo: values?.documentNo,
       date: requestDate ? requestDate : "",
+      fundType: values?.fundType,
+      documentNo: values?.documentNo,
+
+      //   auto generated
       epfNo: values?.epfNo,
-      division: values?.division,
-      remark: values?.remark,
+      designationId: values?.designationId,
+      divisionId: values?.divisionId,
+      hod: values?.hod,
       quotationRequestNo: values?.quotationRequestNo,
       fileNo: values?.fileNo,
       srnNo: values?.srnNo,
       value: values?.value,
       fund: values?.fund,
       project: values?.project,
-      fundType: values?.fundType,
+      remark: values?.remark,
     });
   }, [requestDate]);
 
   useEffect(() => {
     setValues({
-      documentNo: values?.documentNo,
-      date: requestDate ? requestDate : "",
-      epfNo: values?.epfNo,
-      division: values?.division,
-      remark: values?.remark,
-      quotationRequestNo: values?.quotationRequestNo,
-      fileNo: values?.fileNo,
-      srnNo: values?.srnNo,
-      value: values?.value,
-      fund: values?.fund,
-      project: values?.project,
-      fundType: values?.fundType,
+      ...values,
+      documentNo: getDocNo && getDocNo,
     });
+    console.log(getDocNo);
   }, [getDocNo]);
 
   useEffect(() => {
-    retreiveEmployees();
-    console.log(empData);
-  }, []);
-
-  useEffect(() => {
-    let employee = empData.find(
-      (emp: IEmployeeData) => emp.epfNo.toString() === values.epfNo.toString()
+    const divisionData = division.find(
+      (d) => d.divisionId === values.divisionId
     );
-    setCurrentEmp(employee);
-    if (employee) {
-      setEmpFoundError(false);
-    } else {
-      setEmpFoundError(true);
+
+    if (divisionData) {
+      const employeeId = divisionData.hod;
+      const employee = employees.find((e) => e.epfNo === employeeId);
+      // console.log(employee);
+      if (employee) {
+        setHod(employee);
+        setValues({
+          ...values,
+          hod: employee.epfNo,
+        });
+      }
     }
-    setValues({
-      documentNo: values?.documentNo,
-      date: requestDate ? requestDate : "",
-      epfNo: values?.epfNo,
-      division: values?.division,
-      remark: values?.remark,
-      quotationRequestNo: values?.quotationRequestNo,
-      fileNo: values?.fileNo,
-      srnNo: values?.srnNo,
-      value: values?.value,
-      fund: values?.fund,
-      project: values?.project,
-      fundType: values?.fundType,
-    });
-    retriveEmployeeDetails(employee);
-  }, [values.epfNo]);
+  }, [values.divisionId]);
 
-  //get designation and division
-  const retriveEmployeeDetails = (emp: any) => {
-    //get designation
-    DesignationMasterService.getDesignation(emp?.designationId)
-      .then((res: any) => {
-        setDesignationData(res.data.data);
-      })
-      .catch((e: any) => {
-        console.log(e);
-      });
-
-    //get divisions
-
-    DivisionMasterService.getDivision(emp?.divisionId)
-      .then((res: any) => {
-        setDivisionData(res.data.data);
-      })
-      .catch((e: any) => {
-        console.log(e);
-      });
-  };
-
-  //get employees
-  const retreiveEmployees = () => {
-    EmployeeService.getAllEmployeeData()
-      .then((res: any) => {
-        console.log(res.data);
-        setEmpData(res.data.data);
-      })
-      .catch((e: any) => {
-        console.log(e);
-      });
-  };
-
+  // generate Doc number ID
   const generateDocNo = () => {
-    setDocNo(generateID("CE"));
+    setDocNo(generateID("RR"));
     setValues(initialState);
   };
 
-  //onchange funtion
-  const onChange = (e: any) => {
-    setValues((preState) => ({
-      ...preState,
-      [e.target.name]: e.target.value,
-    }));
-  };
   //reset form
   const resetForm = () => {
     setValues(initialState);
     setDocNo("");
+    setHod(null);
+  };
+
+  //  onChange Function
+  const onChange = (e: any) => {
+    setValues((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
   };
 
   //on Submit

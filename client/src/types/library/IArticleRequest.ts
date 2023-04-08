@@ -1,16 +1,15 @@
 export default interface IArticleRequest {
   documentNo: string;
-  employee: string;
-  designation: string;
-  division: string;
-  headOfLibrary: string;
+  epfNo: number;
+  designationId: string;
+  divisionId: string;
+  hod: number;
   date: string;
   nameOfJournal: string;
-  year: string;
+  publishYear: string;
   volume: string;
   issue: string;
   pages: string;
   webLink: string;
-  attachment: string;
   remark: string;
 }

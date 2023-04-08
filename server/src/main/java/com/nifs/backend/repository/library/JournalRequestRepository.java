@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface JournalRequestRepository extends JpaRepository<JournalRequest,String> {
 
+
     @Query("select c from JournalRequest c where c.documentNo = ?1")
     JournalRequest findByDocumentNoEquals(String documentNo);
-
 }

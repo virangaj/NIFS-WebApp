@@ -121,12 +121,12 @@ const TravelRequest = () => {
           console.log(e);
         });
 
-      // if (result !== null) {
-      //   toast.success("Travel Request Added Successfully");
-      //   resetForm();
-      // } else {
-      //   toast.error("Request Cannot be Completed");
-      // }
+      if (result !== null) {
+        toast.success("Travel Request Added Successfully");
+        resetForm();
+      } else {
+        toast.error("Request Cannot be Completed");
+      }
       setLoading(false);
     }, 1000);
 
