@@ -1,42 +1,42 @@
 import React, { useEffect, useState } from "react";
-import ITravelRequest from "../../types/transport/ITravelReqest";
-import Box from "@mui/material/Box";
+import ITransportCost from "../../types/transport/ITransportCost";
+import { useAppSelector } from "../../hooks/hooks";
 import IEmployeeData from "../../types/admin/IEmployeeData";
 import { generateID } from "../../utils/generateId";
-import { useAppSelector } from "../../hooks/hooks";
-import CustomeDataPicker from "../../components/DataPicker";
-import CustomeTimePicker from "../../components/TimePicker";
+import { Box, Stack } from "@mui/material";
 import EmployeeSelector from "../../components/shared/EmployeeSelector";
 import DesignationSelector from "../../components/shared/DesignationSelector";
 import DivisionSelector from "../../components/shared/DivisionSelector";
-import { Stack } from "@mui/material";
-import TravelRequestService from "../../services/transport/TravelRequestService";
+import CustomeDataPicker from "../../components/DataPicker";
+import TransportCostSerice from "../../services/transport/TransportCostService";
 import { toast } from "react-toastify";
 
-const initialState: ITravelRequest = {
+const initialState: ITransportCost = {
   documentNo: "",
   epfNo: 0,
   hod: 0,
   designationId: "",
   divisionId: "",
+  project: "",
+  tourDate: "",
   sourceOfFunding: "",
-  purpose: "",
-  locationAndRoute: "",
-  requestDate: "",
-  arrivalDate: "",
-  time: "",
-  otherPassengers: "",
   modeOfTravel: "",
   vehicleType: "",
+  driverName: "",
+  vehicleNo: "",
+  estimatedKM: 0,
+  ratePerKM: 0,
+  totalCost: 0,
+  startReading: 0,
+  endReading: 0,
+  remark: "",
 };
 
-const TravelRequest = () => {
-  const [values, setValues] = useState<ITravelRequest>(initialState);
-  const [hod, setHod] = useState<IEmployeeData | null>();
+const TransportCost = () => {
+  const [tourDate, setTourDate] = React.useState<string | null>(null);
   const [getDocNo, setDocNo] = useState<String | any>("");
-  const [requestDate, setRequestDate] = React.useState<string | null>(null);
-  const [arrivalDate, setArrivalDate] = React.useState<string | null>(null);
-  const [time, setTime] = React.useState<string | null>(null);
+  const [values, setValues] = useState<ITransportCost>(initialState);
+  const [hod, setHod] = useState<IEmployeeData | null>();
   const [loading, setLoading] = useState<boolean>(false);
 
   const { employees, employeesIsLoading, employeesIsSuccess } = useAppSelector(
@@ -51,11 +51,9 @@ const TravelRequest = () => {
   useEffect(() => {
     setValues({
       ...values,
-      requestDate: requestDate ? requestDate : "",
-      arrivalDate: arrivalDate ? arrivalDate : "",
-      time: time ? time : "",
+      tourDate: tourDate ? tourDate : "",
     });
-  }, [requestDate, arrivalDate, time]);
+  }, [tourDate]);
 
   useEffect(() => {
     setValues({
@@ -108,9 +106,10 @@ const TravelRequest = () => {
   const onSubmit = async (e: any) => {
     e.preventDefault();
     console.log(values);
+
     setLoading(true);
     setTimeout(() => {
-      const result = TravelRequestService.saveTravelRequest(
+      const result = TransportCostSerice.saveTransportCost(
         values,
         auth?.user?.token
       )
@@ -121,12 +120,12 @@ const TravelRequest = () => {
           console.log(e);
         });
 
-      // if (result !== null) {
-      //   toast.success("Travel Request Added Successfully");
-      //   resetForm();
-      // } else {
-      //   toast.error("Request Cannot be Completed");
-      // }
+      if (result !== null) {
+        toast.success("Travel Request Added Successfully");
+        resetForm();
+      } else {
+        toast.error("Request Cannot be Completed");
+      }
       setLoading(false);
     }, 1000);
 
@@ -135,7 +134,7 @@ const TravelRequest = () => {
 
   return (
     <div className="sub-body-content xl:!w-[60%]">
-      <h1 className="page-title">Travel Request</h1>
+      <h1 className="page-title">Travel Cost</h1>
       <hr className="horizontal-line" />
       <form onSubmit={onSubmit}>
         <div className="grid grid-cols-1 md:grid-cols-2 items-center w-[97%] mx-auto">
@@ -193,60 +192,22 @@ const TravelRequest = () => {
           {/* left section */}
           <div className="form-left-section">
             <div className="selection">
-              <label className="input-label" htmlFor="modeOfTravel">
-                Mode Of Travel:
+              <label className="input-label" htmlFor="project">
+                Project:
               </label>
               <select
                 className="tailwind-text-box w-[90%]"
                 id="outlined-basic"
-                name="modeOfTravel"
+                name="project"
                 onChange={onChange}
-                value={values.modeOfTravel}
+                value={values.project}
               >
                 <option value="" disabled>
-                  Select source Of Funding:
+                  Select Project:
                 </option>
-                <option value="Van">local</option>
-                <option value="Car">foreign</option>
+                <option value="Van">kandawala</option>
+                <option value="Car">kegalle</option>
               </select>
-            </div>
-
-            <div className="flex">
-              <label
-                className="input-label basis-1/2"
-                htmlFor="locationAndRoute"
-              >
-                Location And Route :
-              </label>
-
-              <input
-                id="outlined-basic"
-                type="search"
-                className="mr-4 tailwind-text-box w-[90%]"
-                name="locationAndRoute"
-                onChange={onChange}
-                value={values.locationAndRoute}
-                required
-              />
-            </div>
-
-            <div className="flex">
-              <label
-                className="input-label basis-1/2"
-                htmlFor="otherPassengers"
-              >
-                Other Passengers:
-              </label>
-
-              <input
-                id="outlined-basic"
-                type="search"
-                className="mr-4 tailwind-text-box w-[90%]"
-                name="otherPassengers"
-                onChange={onChange}
-                value={values.otherPassengers}
-                required
-              />
             </div>
 
             <div className="selection">
@@ -269,6 +230,25 @@ const TravelRequest = () => {
             </div>
 
             <div className="selection">
+              <label className="input-label" htmlFor="modeOfTravel">
+                Mode Of Travel:
+              </label>
+              <select
+                className="tailwind-text-box w-[90%]"
+                id="outlined-basic"
+                name="modeOfTravel"
+                onChange={onChange}
+                value={values.modeOfTravel}
+              >
+                <option value="" disabled>
+                  Select source Of Funding:
+                </option>
+                <option value="Van">local</option>
+                <option value="Car">foreign</option>
+              </select>
+            </div>
+
+            <div className="selection">
               <label className="input-label" htmlFor="vehicleType">
                 Vehicle Type:
               </label>
@@ -286,49 +266,148 @@ const TravelRequest = () => {
                 <option value="Car">Van</option>
               </select>
             </div>
-          </div>
-          {/* right section */}
-          <div className="form-right-section">
+
             <div className="flex">
-              <label className="input-label basis-1/2" htmlFor="purpose">
-                Purpose:
+              <label className="input-label basis-1/2" htmlFor="driverName">
+                Driver Name:
               </label>
 
               <input
                 id="outlined-basic"
                 type="search"
                 className="mr-4 tailwind-text-box w-[90%]"
-                name="purpose"
+                name="driverName"
                 onChange={onChange}
-                value={values.purpose}
+                value={values.driverName}
+                required
+              />
+            </div>
+          </div>
+
+          {/* right section */}
+          <div className="form-right-section">
+            <div className="mx-0 mb-4 lg:mt-5 md:my-0">
+              <CustomeDataPicker
+                date={tourDate}
+                setDate={setTourDate}
+                title="Arrival Date"
+              />
+            </div>
+
+            <div className="flex">
+              <label className="input-label basis-1/2" htmlFor="vehicleNo">
+                Vehicle Number:
+              </label>
+
+              <input
+                id="outlined-basic"
+                type="search"
+                className="mr-4 tailwind-text-box w-[90%]"
+                name="vehicleNo"
+                onChange={onChange}
+                value={values.vehicleNo}
                 required
               />
             </div>
 
-            <div className="mx-0 mb-4 lg:mt-5 md:my-0">
-              <CustomeDataPicker
-                date={requestDate}
-                setDate={setRequestDate}
-                title="Request Date"
-              />
-            </div>
+            <div className="form-right-section">
+              <div className="flex">
+                <label className="input-label basis-1/2" htmlFor="estimatedKM">
+                  Estimated KM:
+                </label>
 
-            <div className="mx-0 mb-4 lg:mt-4  md:my-0">
-              <CustomeTimePicker
-                time={time}
-                setTime={setTime}
-                title="Start Time"
-              />
-            </div>
+                <input
+                  id="outlined-basic"
+                  type="search"
+                  className="mr-4 tailwind-text-box w-[90%]"
+                  name="estimatedKM"
+                  onChange={onChange}
+                  value={values.estimatedKM}
+                  required
+                />
+              </div>
 
-            <div className="mx-0 mb-4 lg:mt-5 md:my-0">
-              <CustomeDataPicker
-                date={arrivalDate}
-                setDate={setArrivalDate}
-                title="Arrival Date"
-              />
+              <div className="flex">
+                <label className="input-label basis-1/2" htmlFor="ratePerKM">
+                  Rate Per KM:
+                </label>
+
+                <input
+                  id="outlined-basic"
+                  type="search"
+                  className="mr-4 tailwind-text-box w-[90%]"
+                  name="ratePerKM"
+                  onChange={onChange}
+                  value={values.ratePerKM}
+                  required
+                />
+              </div>
+
+              <div className="flex">
+                <label className="input-label basis-1/2" htmlFor="totalCost">
+                  Total Cost:
+                </label>
+
+                <input
+                  id="outlined-basic"
+                  type="search"
+                  className="mr-4 tailwind-text-box w-[90%]"
+                  name="totalCost"
+                  onChange={onChange}
+                  value={values.totalCost}
+                  required
+                />
+              </div>
+
+              <div className="flex">
+                <label className="input-label basis-1/2" htmlFor="startReading">
+                  Start Reading:
+                </label>
+
+                <input
+                  id="outlined-basic"
+                  type="search"
+                  className="mr-4 tailwind-text-box w-[90%]"
+                  name="startReading"
+                  onChange={onChange}
+                  value={values.startReading}
+                  required
+                />
+              </div>
+
+              <div className="flex">
+                <label className="input-label basis-1/2" htmlFor="endReading">
+                  End Reading:
+                </label>
+
+                <input
+                  id="outlined-basic"
+                  type="search"
+                  className="mr-4 tailwind-text-box w-[90%]"
+                  name="endReading"
+                  onChange={onChange}
+                  value={values.endReading}
+                  required
+                />
+              </div>
             </div>
           </div>
+        </div>
+
+        <div className="flex ">
+          <label className="input-label basis-1/2" htmlFor="remark">
+            Remarks:
+          </label>
+
+          <input
+            id="outlined-basic"
+            type="text"
+            className="mr-4 tailwind-text-box w-[90%]"
+            name="remark"
+            onChange={onChange}
+            value={values.remark}
+            required
+          />
         </div>
 
         <Stack
@@ -355,4 +434,4 @@ const TravelRequest = () => {
   );
 };
 
-export default TravelRequest;
+export default TransportCost;

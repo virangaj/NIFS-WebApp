@@ -1,17 +1,16 @@
 export default interface ITravelRequest {
   documentNo: string;
-  name: string;
-  designation: string;
-  applicantEmail: string;
+  epfNo: 0;
+  designationId: string;
+  divisionId: string;
+  hod: number;
   sourceOfFunding: string;
-  Purpose: string;
-  division: string;
+  purpose: string;
   locationAndRoute: string;
-  date: string;
-  time: string;
+  requestDate: string;
   arrivalDate: string;
+  time: string;
   otherPassengers: string;
   modeOfTravel: string;
   vehicleType: string;
-  HODEmail: string;
 }
