@@ -159,10 +159,13 @@ function TailwindNavbar() {
 						className='p-2 mt-3 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52'
 					>
 						<li>
-							{auth?.user && auth?.user.user.role === UserStatus.ADMIN ? (
+							{auth?.user && auth?.user.user.role === UserStatus.ADMIN && (
 								<Link to={RouteName.AdminAdmin}>Dashboard</Link>
-							) : (
-								<></>
+							)}
+						</li>
+						<li>
+							{auth?.user && auth?.user.user.role === UserStatus.ADMIN && (
+								<Link to={RouteName.Director}>Director</Link>
 							)}
 						</li>
 						<li>

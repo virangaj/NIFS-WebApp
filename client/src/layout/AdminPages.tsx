@@ -2,7 +2,7 @@ import React from 'react';
 import Dots from '../images/dots_circle_b.png';
 import SideNavbar from '../pages/adminDashboards/AdminAdmin/SideNavbar';
 
-function AdminPages({ Sidebardata, Content }: any) {
+function AdminPages({ Sidebardata, Content, Route }: any) {
 	return (
 		<div className='body-content'>
 			<div className='fixed w-[400px] top-[-100px] right-[-100px] -z-10'>
@@ -10,7 +10,7 @@ function AdminPages({ Sidebardata, Content }: any) {
 			</div>
 			<div className='flex items-start mb-20'>
 				{/* side nav bar */}
-				<SideNavbar navdata={Sidebardata} />
+				<SideNavbar navdata={Sidebardata} Route={Route} />
 				<div className='admin-sub-panel-body'>
 					{/* routes */}
 					<Content />

@@ -38,33 +38,8 @@ export const AdministrationSidenav = [
 
 export const DirectorSideNavbar = [
 	{
-		title: 'Employees',
-		link: RouteName.Employee,
-		icon: HiOutlineUserGroup,
-	},
-	{
-		title: 'Employee Types',
-		link: RouteName.EmployeeType,
-		icon: BiUserPin,
-	},
-	{
-		title: 'Employees Category',
-		link: RouteName.EmployeeCategory,
-		icon: BiCategoryAlt,
-	},
-	{
-		title: 'Designations',
-		link: RouteName.Designation,
-		icon: RiUserStarLine,
-	},
-	{
-		title: 'Divisions',
-		link: RouteName.Divisions,
-		icon: HiOutlineOfficeBuilding,
-	},
-	{
 		title: 'Resignation Request',
-		link: RouteName.AdminResignationReq,
+		link: RouteName.DirectorResignationReq,
 		icon: HiOutlineOfficeBuilding,
 	},
 ];

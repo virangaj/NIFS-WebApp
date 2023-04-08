@@ -4,7 +4,7 @@ import ResignationService from '../../../services/admin/ResignationService';
 import ResignationRequestTable from '../../shared/ResignationRequestTable';
 import { toast } from 'react-toastify';
 
-function AdminResignationReq() {
+function DirectorResignationReq() {
 	const { auth } = useAppSelector((state) => state.persistedReducer);
 	const [requests, setRequests] = useState<any>([]);
 	const [rowId, setRowId] = useState(0);
@@ -100,4 +100,4 @@ function AdminResignationReq() {
 	);
 }
 
-export default AdminResignationReq;
+export default DirectorResignationReq;
