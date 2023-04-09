@@ -6,7 +6,10 @@ export default interface IVenueMaster {
 	location: string;
 	remark: string;
 	capacity: number;
-	dateCreated: string;
+	createdOn: string;
+	modifiedOn: string;
+	createdBy: number;
+	modifiedBy: number;
 	charges: any[];
 	facilities: any[];
 }

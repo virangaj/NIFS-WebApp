@@ -15,6 +15,7 @@ import ILocationData from '../../types/ILocationData';
 import '../pages.css';
 import LocationSelector from '../../components/shared/LocationSelector';
 import { useAppSelector } from '../../hooks/hooks';
+import { toast } from 'react-toastify';
 
 const initialState: IVenueMaster = {
 	venueId: '',
@@ -24,7 +25,10 @@ const initialState: IVenueMaster = {
 	location: '',
 	remark: '',
 	capacity: 0,
-	dateCreated: '',
+	createdOn: '',
+	modifiedOn: '',
+	createdBy: 0,
+	modifiedBy: 0,
 	charges: [],
 	facilities: [],
 };
@@ -93,14 +97,17 @@ function VenueMaster() {
 			try {
 				setLoading(true);
 				console.log(values);
-				// const venuResult = await VenueMasterService.saveVenue(
-				// 	values,
-				// 	auth?.user?.token
-				// );
-
-				setSuccess(true);
-				resetForm();
+				await VenueMasterService.saveVenue(values, auth?.user?.token).then(
+					(res) => {
+						if (res.data) {
+							toast.success('New Venue is Added!');
+							setSuccess(true);
+							resetForm();
+						}
+					}
+				);
 			} catch (e: any) {
+				toast.error('Request cannot be completed');
 				setLoading(true);
 				setSuccess(false);
 				alert(e);
