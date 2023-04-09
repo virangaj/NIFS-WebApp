@@ -1,555 +1,363 @@
-import React, { useState, useEffect } from 'react';
-import Box from '@mui/material/Box';
-import { generateID } from '../../utils/generateId';
-import CustomeDataPicker from '../../components/DataPicker';
-import IEmployeeData from '../../types/admin/IEmployeeData';
-import IDesignationData from '../../types/admin/IDesignationData';
-import IDivisionData from '../../types/admin/IDivisionData';
-import Stack from '@mui/material/Stack';
-import EmployeeService from '../../services/admin/EmployeeService';
-import DesignationMasterService from '../../services/admin/DesignationMasterService';
-import DivisionMasterService from '../../services/admin/DivisionMasterService';
-import ILeaveRequest from '../../types/common/ILeaveRequest';
+import React, { useState, useEffect } from "react";
+import Box from "@mui/material/Box";
+import { generateID } from "../../utils/generateId";
+import CustomeDataPicker from "../../components/DataPicker";
+import IEmployeeData from "../../types/admin/IEmployeeData";
+import Stack from "@mui/material/Stack";
+import ILeaveRequest from "../../types/common/ILeaveRequest";
 
-import Projects from '../../components/data/Project.json';
-import CustomeTimePicker from '../../components/TimePicker';
-import FileInput from '../../components/FileInput';
+import Projects from "../../components/data/Project.json";
+import CustomeTimePicker from "../../components/TimePicker";
+import { useAppSelector } from "../../hooks/hooks";
+import LeaveRequestService from "../../services/common/LeaveRequestService";
+import { toast } from "react-toastify";
+import EmployeeSelector from "../../components/shared/EmployeeSelector";
+import DesignationSelector from "../../components/shared/DesignationSelector";
+import DivisionSelector from "../../components/shared/DivisionSelector";
 
 const initialState: ILeaveRequest = {
-	documentNo: '',
-	date: '',
-	employee: '',
-	epfNo: 0,
-	divisionId: '',
-	hod: '',
-	type: '',
-	leave: '',
-	remainingLeave: '',
-	noOfDaysTakenForTheYear: '',
-	fromDate: '',
-	toDate: '',
-	startTime: '',
-	endTime: '',
-	noOfDaysRequested: '',
+  // generated
+  documentNo: "",
+  epfNo: 0,
+  hod: 0,
+  designationId: "",
+  divisionId: "",
 
-	leaveType: '',
-	overseasContactNumber: '',
-	acting: '',
-	attachemnt: '',
-	purpose: '',
+  leaveType: "",
+  startDate: "",
+  startTime: "",
+  durationInDays: "",
+
+  requestDateOptional: "",
+  jobCategory: "",
+  evidence: "",
 };
 
 function LeaveRequest() {
-	const [getDocNo, setDocNo] = useState<String | any>('');
-	const [requestDate, setRequestDate] = React.useState<string | null>(null);
-	const [values, setValues] = useState<ILeaveRequest>(initialState);
-	const [empData, setEmpData] = useState<Array<IEmployeeData>>([]);
-	const [empFoundError, setEmpFoundError] = useState<boolean>(false);
-	const [designationData, setDesignationData] = useState<IDesignationData>();
-	const [divisionData, setDivisionData] = useState<IDivisionData>();
-	const [currentEmp, setCurrentEmp] = useState<IEmployeeData>();
-	const [startDate, setStartDate] = React.useState<string | null>(null);
-	const [endDate, setEndDate] = React.useState<string | null>(null);
-	const [startTime, setStartTime] = React.useState<string | null>(null);
-	const [endTime, setEndTime] = React.useState<string | null>(null);
-	const [eventAttachment, setEventAttachment] = useState<File | any>();
+  const [getDocNo, setDocNo] = useState<String | any>("");
+  const [requestDate, setRequestDate] = React.useState<string | null>(null);
+  const [values, setValues] = useState<ILeaveRequest>(initialState);
+  const [startDate, setStartDate] = React.useState<string | null>(null);
+  const [startTime, setStartTime] = React.useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [hod, setHod] = useState<IEmployeeData | null>();
 
-	useEffect(() => {
-		setValues({
-			documentNo: values?.documentNo,
-			date: requestDate ? requestDate : '',
-			employee: values.employee,
-			epfNo: values?.epfNo,
-			divisionId: values?.divisionId,
-			hod: values?.hod,
-			type: values?.type,
-			leave: values?.leave,
-			remainingLeave: values?.remainingLeave,
-			noOfDaysTakenForTheYear: values?.noOfDaysTakenForTheYear,
-			fromDate: values?.fromDate,
-			toDate: values?.toDate,
-			startTime: values?.startTime,
-			endTime: values?.endTime,
-			noOfDaysRequested: values?.noOfDaysRequested,
+  const { employees, employeesIsLoading, employeesIsSuccess } = useAppSelector(
+    (state) => state.employees
+  );
+  const { division, divisionIsLoading, divisionIsSuccess } = useAppSelector(
+    (state) => state.division
+  );
 
-			leaveType: values?.leaveType,
-			overseasContactNumber: values?.overseasContactNumber,
-			acting: values?.acting,
-			attachemnt: values?.attachemnt,
-			purpose: values?.purpose,
-		});
-	}, [requestDate]);
+  const { auth } = useAppSelector((state) => state.persistedReducer);
 
-	useEffect(() => {
-		setValues({
-			documentNo: values?.documentNo,
-			date: requestDate ? requestDate : '',
-			employee: values.employee,
-			epfNo: values?.epfNo,
-			divisionId: values?.divisionId,
-			hod: values?.hod,
-			type: values?.type,
-			leave: values?.leave,
-			remainingLeave: values?.remainingLeave,
-			noOfDaysTakenForTheYear: values?.noOfDaysTakenForTheYear,
-			fromDate: values?.fromDate,
-			toDate: values?.toDate,
-			startTime: values?.startTime,
-			endTime: values?.endTime,
-			noOfDaysRequested: values?.noOfDaysRequested,
+  useEffect(() => {
+    setValues({
+      requestDateOptional: requestDate ? requestDate : "",
 
-			leaveType: values?.leaveType,
-			overseasContactNumber: values?.overseasContactNumber,
-			acting: values?.acting,
-			attachemnt: values?.attachemnt,
-			purpose: values?.purpose,
-		});
-	}, [getDocNo]);
+      // generated
+      documentNo: values?.documentNo,
+      epfNo: values?.epfNo,
+      hod: values?.hod,
+      designationId: values?.designationId,
+      divisionId: values?.divisionId,
 
-	useEffect(() => {
-		retreiveEmployees();
-		console.log(empData);
-	}, []);
+      leaveType: values?.leaveType,
+      startDate: startDate ? startDate : "",
+      startTime: startTime ? startTime : "",
+      durationInDays: values?.durationInDays,
 
-	useEffect(() => {
-		let employee = empData.find(
-			(emp: IEmployeeData) => emp.epfNo.toString() === values.epfNo.toString()
-		);
-		setCurrentEmp(employee);
-		if (employee) {
-			setEmpFoundError(false);
-		} else {
-			setEmpFoundError(true);
-		}
-		setValues({
-			documentNo: values?.documentNo,
-			date: requestDate ? requestDate : '',
-			employee: values.employee,
-			epfNo: values?.epfNo,
-			divisionId: values?.divisionId,
-			hod: values?.hod,
-			type: values?.type,
-			leave: values?.leave,
-			remainingLeave: values?.remainingLeave,
-			noOfDaysTakenForTheYear: values?.noOfDaysTakenForTheYear,
-			fromDate: values?.fromDate,
-			toDate: values?.toDate,
-			startTime: values?.startTime,
-			endTime: values?.endTime,
-			noOfDaysRequested: values?.noOfDaysRequested,
+      jobCategory: values?.jobCategory,
+      evidence: values?.evidence,
+    });
+  }, [requestDate, startDate, startTime]);
 
-			leaveType: values?.leaveType,
-			overseasContactNumber: values?.overseasContactNumber,
-			acting: values?.acting,
-			attachemnt: values?.attachemnt,
-			purpose: values?.purpose,
-		});
-		retriveEmployeeDetails(employee);
-	}, [values.epfNo]);
+  useEffect(() => {
+    setValues({
+      ...values,
+      documentNo: getDocNo && getDocNo,
+    });
+    console.log(getDocNo);
+  }, [getDocNo]);
 
-	//get designation and division
-	const retriveEmployeeDetails = (emp: any) => {
-		//get designation
-		DesignationMasterService.getDesignation(emp?.designationId)
-			.then((res: any) => {
-				setDesignationData(res.data.data);
-			})
-			.catch((e: any) => {
-				console.log(e);
-			});
+  useEffect(() => {
+    const divisionData = division.find(
+      (d) => d.divisionId === values.divisionId
+    );
 
-		//get divisions
+    if (divisionData) {
+      const employeeId = divisionData.hod;
+      const employee = employees.find((e) => e.epfNo === employeeId);
+      // console.log(employee);
+      if (employee) {
+        setHod(employee);
+        setValues({
+          ...values,
+          hod: employee.epfNo,
+        });
+      }
+    }
+  }, [values.divisionId]);
 
-		DivisionMasterService.getDivision(emp?.divisionId)
-			.then((res: any) => {
-				setDivisionData(res.data.data);
-			})
-			.catch((e: any) => {
-				console.log(e);
-			});
-	};
+  // generate Doc number ID
+  const generateDocNo = () => {
+    setDocNo(generateID("RR"));
+    setValues(initialState);
+  };
 
-	//get employees
-	const retreiveEmployees = () => {
-		EmployeeService.getAllEmployeeData()
-			.then((res: any) => {
-				console.log(res.data);
-				setEmpData(res.data.data);
-			})
-			.catch((e: any) => {
-				console.log(e);
-			});
-	};
+  //reset form
+  const resetForm = () => {
+    setValues(initialState);
+    setDocNo("");
+    setHod(null);
+  };
 
-	const generateDocNo = () => {
-		setDocNo(generateID('CE'));
-		setValues(initialState);
-	};
+  //  onChange Function
+  const onChange = (e: any) => {
+    setValues((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
 
-	//onchange funtion
-	const onChange = (e: any) => {
-		setValues((preState) => ({
-			...preState,
-			[e.target.name]: e.target.value,
-		}));
-	};
-	//reset form
-	const resetForm = () => {
-		setValues(initialState);
-		setDocNo('');
-	};
+  const onSubmit = async (e: any) => {
+    e.preventDefault();
+    console.log(values);
 
-	//on Submit
-	const onSubmit = async (e: any) => {
-		e.preventDefault();
-		console.log(values);
-	};
+    setLoading(true);
+    setTimeout(() => {
+      const result = LeaveRequestService.saveLeaveRequest(
+        values,
+        auth?.user?.token
+      )
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
 
-	return (
-		<div className='sub-body-content xl:!w-[60%]'>
-			<h1 className='page-title'>Leave Request</h1>
-			<hr className='horizontal-line' />
-			<form onSubmit={onSubmit}>
-				<div className='grid grid-cols-1 md:grid-cols-2 items-center w-[97%] mx-auto'>
-					<Box className='flex items-center justify-between input-field'>
-						Document No - {getDocNo}
-						<button
-							type='button'
-							className='rounded-outline-success-btn'
-							onClick={generateDocNo}
-							style={{ marginLeft: '20px' }}
-						>
-							New
-						</button>
-					</Box>
-					<div className='mx-0 mb-4 lg:ml-10 md:my-0'>
-						<CustomeDataPicker
-							date={requestDate}
-							setDate={setRequestDate}
-							title='Request Date'
-						/>
-					</div>
-					<div className='flex items-center'>
-						<div>
-							<label className='input-label' htmlFor='epfNo'>
-								Employee EPF No
-							</label>
+      if (result !== null) {
+        toast.success("Leave Request Added Successfully");
+        resetForm();
+      } else {
+        toast.error("Request Cannot be Completed");
+      }
+      setLoading(false);
+    }, 1000);
+  };
 
-							<input
-								id='epfNo'
-								type='text'
-								className='tailwind-text-box w-[40%] mr-4'
-								onChange={onChange}
-								name='epfNo'
-								value={values.epfNo}
-							/>
-						</div>
-						<div>
-							<label className='input-label' htmlFor='epfNo'>
-								Employee Name
-							</label>
-							<select
-								className='tailwind-text-box'
-								value={values.epfNo}
-								id='epfNo'
-								name='epfNo'
-								onChange={onChange}
-							>
-								<option disabled value={0}>
-									Select Employee
-								</option>
+  return (
+    <div className="sub-body-content xl:!w-[60%]">
+      <h1 className="page-title">Leave Request</h1>
+      <hr className="horizontal-line" />
+      <form onSubmit={onSubmit}>
+        <div className="grid grid-cols-1 md:grid-cols-2 items-center w-[97%] mx-auto">
+          <Box className="flex items-center justify-between input-field">
+            Document No - {getDocNo && getDocNo}
+            <button
+              type="button"
+              className="rounded-outline-success-btn"
+              onClick={generateDocNo}
+              style={{ marginLeft: "20px" }}
+            >
+              New
+            </button>
+          </Box>
+        </div>
 
-								{empData?.map((l: IEmployeeData, i: number) => {
-									return (
-										<option key={i} value={l.epfNo}>
-											{l.firstName + ' ' + l.lastName}
-										</option>
-									);
-								})}
-							</select>
-						</div>
-					</div>
-				</div>
-				{values.epfNo && empFoundError ? (
-					<p className='w-[97%] mx-auto error-text-message'>User Not Found!</p>
-				) : (
-					''
-				)}
-				<div className='w-[97%] mx-auto'>
-					<div className='grid items-center grid-cols-1 md:grid-cols-2'>
-						<p className='normal-text'>
-							Division :{' '}
-							{values.epfNo && divisionData ? (
-								<span className='font-bold'>{divisionData.name}</span>
-							) : (
-								<span className='italic-sm-text'>
-									Please select an employee
-								</span>
-							)}
-						</p>
+        <div className="w-[97%] mx-auto">
+          <EmployeeSelector
+            onChange={onChange}
+            value={values.epfNo}
+            name="epfNo"
+          />
+        </div>
 
-						<p className='normal-text'>
-							HOD :{' '}
-							{values.epfNo && divisionData ? (
-								<span className='font-bold'>{divisionData.name}</span>
-							) : (
-								<span className='italic-sm-text'>
-									Please select an employee
-								</span>
-							)}
-						</p>
-					</div>
-				</div>
-				<div className='mx-0 input-field lg:ml-4'>
-					<label className='input-label' htmlFor='type'>
-						Type
-					</label>
-					<select
-						className='tailwind-text-box w-[90%]'
-						value={values.type}
-						id='type'
-						name='type'
-						onChange={onChange}
-					>
-						<option value='' disabled>
-							Select a Type
-						</option>
+        <div className="w-[97%] mx-auto">
+          <DesignationSelector
+            onChange={onChange}
+            value={values.designationId}
+            name="designationId"
+          />
+        </div>
 
-						{Projects
-							? Projects.map((p, index) => (
-									<option value={p.value} key={index}>
-										{p.value}
-									</option>
-							  ))
-							: ''}
-					</select>
-				</div>
-				<hr className='horizontal-line' />
-				<div className='flex w-[100%]'>
-					{/* left section of the flex */}
-					<div className='flex-1 mr-4'>
-						<div className='mx-0 input-field lg:ml-4'>
-							<label className='input-label' htmlFor='leaveType'>
-								Leave Type
-							</label>
-							<select
-								className='tailwind-text-box w-[90%]'
-								value={values.leaveType}
-								id='leaveType'
-								name='leaveType'
-								onChange={onChange}
-							>
-								<option value='' disabled>
-									Select a Item Type
-								</option>
+        <div className="w-[97%] mx-auto">
+          <DivisionSelector
+            onChange={onChange}
+            value={values.divisionId}
+            name="divisionId"
+          />
+        </div>
 
-								{Projects
-									? Projects.map((p, index) => (
-											<option value={p.value} key={index}>
-												{p.value}
-											</option>
-									  ))
-									: ''}
-							</select>
-						</div>
-						<div className='mx-0 mb-4 lg:ml-4 md:my-0'>
-							<CustomeDataPicker
-								date={startDate}
-								setDate={setStartDate}
-								title='Start Date'
-							/>
-						</div>
+        <div className="w-[97%] mx-auto">
+          <div className="grid items-center grid-cols-1 md:grid-cols-2">
+            <p className="normal-text">
+              HOD :{" "}
+              {values.divisionId && hod ? (
+                <span className="font-bold">
+                  {hod.firstName + " " + hod.lastName}
+                </span>
+              ) : (
+                <span className="italic-sm-text">Please select a Division</span>
+              )}
+            </p>
+          </div>
+        </div>
 
-						<div className='mx-0 mb-4 lg:mt-2 lg:ml-4 md:my-0'>
-							<CustomeTimePicker
-								time={startTime}
-								setTime={setStartTime}
-								title='Start Time'
-							/>
-						</div>
+        <hr className="horizontal-line" />
+        <div className="flex w-[100%]">
+          {/* left section of the flex */}
+          <div className="flex-1 mr-4">
+            <div className="mx-0 input-field lg:ml-4">
+              <label className="input-label" htmlFor="leaveType">
+                Leave Type
+              </label>
+              <select
+                className="tailwind-text-box w-[90%]"
+                value={values.leaveType}
+                id="leaveType"
+                name="leaveType"
+                onChange={onChange}
+              >
+                <option value="" disabled>
+                  Select a Item Type
+                </option>
 
-						<div>
-							<label
-								className='input-label basis-1/2'
-								htmlFor='noOfDaysRequested'
-							>
-								No of Days Requested
-							</label>
+                {Projects
+                  ? Projects.map((p, index) => (
+                      <option value={p.value} key={index}>
+                        {p.value}
+                      </option>
+                    ))
+                  : ""}
+              </select>
+            </div>
 
-							<input
-								id='outlined-basic'
-								type='search'
-								className='mr-4 tailwind-text-box w-[100%]'
-								name='noOfDaysRequested'
-								onChange={onChange}
-								value={values.noOfDaysRequested}
-								required
-							/>
-						</div>
-					</div>
-					{/* Right section of the flex */}
-					<div className='flex-1 mr-4'>
-						<div>
-							<label className='input-label basis-1/2' htmlFor='remainingLeave'>
-								Remaining Leave
-							</label>
+            <div>
+              <label
+                className="input-label basis-1/2 lg:ml-4"
+                htmlFor="durationInDays"
+              >
+                Duration In Days:
+              </label>
 
-							<input
-								id='outlined-basic'
-								type='search'
-								className='mr-4 tailwind-text-box w-[100%]'
-								name='remainingLeave'
-								onChange={onChange}
-								value={values.remainingLeave}
-								required
-							/>
-						</div>
-						<div className='mx-0 mb-4  md:my-0'>
-							<CustomeDataPicker
-								date={endDate}
-								setDate={setEndDate}
-								title='End Date'
-							/>
-						</div>
+              <input
+                id="outlined-basic"
+                type="search"
+                className="mr-4 lg:ml-4 tailwind-text-box w-[100%]"
+                name="durationInDays"
+                onChange={onChange}
+                value={values.durationInDays}
+                required
+              />
+            </div>
 
-						<div className='mx-0 lg:mt-2 mb-4  md:my-0'>
-							<CustomeTimePicker
-								time={endTime}
-								setTime={setEndTime}
-								title='End Time'
-							/>
-						</div>
+            <label
+              className="input-label basis-1/2 lg:ml-4"
+              htmlFor="requestDate"
+            >
+              If you apply for a leave: state the date, if not ignore this
+              field:
+            </label>
 
-						<div>
-							<label
-								className='input-label basis-1/2 mt-4 '
-								htmlFor='noOfDaysTakenForTheYear'
-							>
-								No of Days taken for the year
-							</label>
+            <div className="mx-0 mb-4 lg:ml-4 md:my-0 lg:mb-4">
+              <CustomeDataPicker
+                date={requestDate}
+                setDate={setRequestDate}
+                title="Request Date"
+                name="requestDate"
+              />
+            </div>
+          </div>
+          {/* Right section of the flex */}
+          <div className="flex-1 mr-4">
+            <div className="mx-0 mb-4  md:my-0 lg:ml-6">
+              <CustomeDataPicker
+                date={startDate}
+                setDate={setStartDate}
+                title="Start Date"
+              />
+            </div>
 
-							<input
-								id='outlined-basic'
-								type='search'
-								className='mr-4 tailwind-text-box w-[100%] '
-								name='noOfDaysTakenForTheYear'
-								onChange={onChange}
-								value={values.noOfDaysTakenForTheYear}
-								required
-							/>
-						</div>
-					</div>
-				</div>
-				<hr className='horizontal-line' />
-				<div className='flex w-[100%]'>
-					{/* left section of the flex */}
-					<div className='flex-1 mr-4'>
-						<div className='mx-0 input-field lg:ml-4'>
-							<label className='input-label' htmlFor='leaveType'>
-								Leave Type
-							</label>
-							<select
-								className='tailwind-text-box w-[90%]'
-								value={values.leaveType}
-								id='leaveType'
-								name='leaveType'
-								onChange={onChange}
-							>
-								<option value='' disabled>
-									Select a Item Type
-								</option>
+            <div className="mx-0  mb-4  md:my-0 lg:mt-4 lg:ml-6">
+              <CustomeTimePicker
+                time={startTime}
+                setTime={setStartTime}
+                title="Start Time"
+              />
+            </div>
+          </div>
+        </div>
+        <hr className="horizontal-line" />
+        <div className="flex w-[100%]">
+          {/* left section of the flex */}
+          <div className="mx-0 input-field lg:ml-4">
+            <label className="input-label" htmlFor="jobCategory">
+              Job Category:
+            </label>
+            <select
+              className="tailwind-text-box w-[90%]"
+              value={values.jobCategory}
+              id="jobCategory"
+              name="jobCategory"
+              onChange={onChange}
+            >
+              <option value="" disabled>
+                Select a Job Category:
+              </option>
 
-								{Projects
-									? Projects.map((p, index) => (
-											<option value={p.value} key={index}>
-												{p.value}
-											</option>
-									  ))
-									: ''}
-							</select>
-						</div>
+              {Projects
+                ? Projects.map((p, index) => (
+                    <option value={p.value} key={index}>
+                      {p.value}
+                    </option>
+                  ))
+                : ""}
+            </select>
+          </div>
 
-						<FileInput
-							setEventAttachment={setEventAttachment}
-							eventAttachment={eventAttachment}
-							title='Upload Attachment'
-						/>
-					</div>
-					{/* Right section of the flex */}
-					<div className='flex-1 mr-4'>
-						<div>
-							<label className='input-label basis-1/2' htmlFor='acting'>
-								Acting
-							</label>
+          {/* Right section of the flex */}
+        </div>
 
-							<input
-								id='outlined-basic'
-								type='search'
-								className='mr-4 tailwind-text-box w-[100%]'
-								name='acting'
-								onChange={onChange}
-								value={values.acting}
-								required
-							/>
-						</div>
+        <div>
+          <label className="input-label basis-1/2" htmlFor="evidence">
+            Evidence:
+          </label>
 
-						<div>
-							<label
-								className='input-label basis-1/2'
-								htmlFor='overseasContactNumber'
-							>
-								Overseas Contact Number
-							</label>
+          <input
+            id="outlined-basic"
+            type="search"
+            className="mr-4 tailwind-text-box w-[100%]"
+            name="evidence"
+            onChange={onChange}
+            value={values.evidence}
+            required
+          />
+        </div>
 
-							<input
-								id='outlined-basic'
-								type='search'
-								className='mr-4 tailwind-text-box w-[100%]'
-								name='overseasContactNumber'
-								onChange={onChange}
-								value={values.overseasContactNumber}
-								required
-							/>
-						</div>
-					</div>
-				</div>
-				<div>
-					<label className='input-label basis-1/2' htmlFor='purpose'>
-						Purpose
-					</label>
-
-					<input
-						id='outlined-basic'
-						type='search'
-						className='mr-4 tailwind-text-box w-[100%]'
-						name='purpose'
-						onChange={onChange}
-						value={values.purpose}
-						required
-					/>
-				</div>
-				<Stack
-					direction='row'
-					justifyContent='flex-end'
-					alignItems='flex-end'
-					spacing={2}
-					className='admin-form-buton-stack'
-				>
-					<button
-						className='action-com-model-error-btn'
-						type='reset'
-						color='error'
-						onClick={resetForm}
-					>
-						Reset
-					</button>
-					<button className='action-com-model-sucess-btn' type='submit'>
-						Submit
-					</button>
-				</Stack>
-			</form>
-		</div>
-	);
+        <Stack
+          direction="row"
+          justifyContent="flex-end"
+          alignItems="flex-end"
+          spacing={2}
+          className="admin-form-buton-stack"
+        >
+          <button
+            className="action-com-model-error-btn"
+            type="reset"
+            color="error"
+            onClick={resetForm}
+          >
+            Reset
+          </button>
+          <button className="action-com-model-sucess-btn" type="submit">
+            Submit
+          </button>
+        </Stack>
+      </form>
+    </div>
+  );
 }
 
 export default LeaveRequest;

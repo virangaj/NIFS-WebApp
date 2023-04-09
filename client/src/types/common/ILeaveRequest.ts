@@ -1,23 +1,17 @@
 export default interface ILeaveRequest {
+  // generated
   documentNo: string;
-  date: string;
-  employee: string;
   epfNo: number;
+  hod: number;
+  designationId: string;
   divisionId: string;
-  hod: string;
-  type: string;
-  leave: string;
-  remainingLeave: string;
-  noOfDaysTakenForTheYear: string;
-  fromDate: string;
-  toDate: string;
-  startTime: string;
-  endTime: string;
-  noOfDaysRequested: string;
 
   leaveType: string;
-  overseasContactNumber: string;
-  acting: string;
-  attachemnt: string;
-  purpose: string;
+  startDate: string;
+  startTime: string;
+  durationInDays: string;
+
+  requestDateOptional: string;
+  jobCategory: string;
+  evidence: string;
 }

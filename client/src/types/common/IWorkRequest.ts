@@ -1,17 +1,17 @@
 export default interface IWorkRequest {
+  // generated
   documentNo: string;
-  date: string;
   epfNo: number;
+  hod: number;
   designationId: string;
   divisionId: string;
-  hod: string;
+
+  date: string;
   project: string;
-  workDetails: string;
-  type: string;
-  vote: string;
-  forwardTo: string;
-  repairRequest: string;
-  fund: string;
-  attachment: string;
-  assetNo: string;
+  workType: string;
+  program: string;
+  hodEmail: string;
+  supervisorEmail: string;
+  workDescription: string;
+  googleLinkWithWorkDescription: string;
 }
