@@ -1,6 +1,7 @@
 package com.nifs.backend.model.sedu;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,10 +21,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 public class VenueMaster {
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "id", nullable = false)
-//    private int id;
+
     @Id
     @Column(name = "venue_id", nullable = false, length = 10)
     private String venueId;
@@ -57,34 +55,13 @@ public class VenueMaster {
     private Integer modifiedBy;
 
 
-
-//    relationships
-//    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
-//    @JoinTable(name = "venue_charges",
-//        joinColumns = {
-//                @JoinColumn(name = "venue_id", referencedColumnName = "venue_id")
-//        },
-//        inverseJoinColumns = {
-//                @JoinColumn(name="charge_id", referencedColumnName = "charge_id")
-//        }
-//    )
-//    private Set<Charges> charges;
-
-    @OneToMany(mappedBy = "venueMaster", cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
-    private List<VenueCharge> venueCharge;
-
-
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
-    @JoinTable(name = "venue_facility",
-        joinColumns = {
-            @JoinColumn(name = "venue_id", referencedColumnName = "venue_id"),
-        },
-        inverseJoinColumns = {
-            @JoinColumn(name = "facility_id", referencedColumnName = "facility_id")
-        }
-    )
-//    @JsonManagedReference
-    private Set<Facility> facilities;
+    //relationships
+    @JsonIgnore
+    @OneToMany(mappedBy = "venueMasterId")
+    private List<VenueCharge> venueCharges;
+    @JsonIgnore
+    @OneToMany(mappedBy = "venueMasterId")
+    private List<VenueFacility> venueFacilities;
 
 
 }

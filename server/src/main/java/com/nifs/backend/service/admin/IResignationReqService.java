@@ -14,4 +14,6 @@ public interface IResignationReqService {
     boolean putHodApproval(boolean approval, List<String> resId, String user);
 
     Object putDirectorApproval(boolean approval, List<String> resId, String user);
+
+
 }

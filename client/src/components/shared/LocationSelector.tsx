@@ -29,7 +29,7 @@ function LocationSelector({ onChange, value, name }: any) {
 				name={name}
 			>
 				<option value='' disabled>
-					Select Division
+					Select Location
 				</option>
 
 				{location &&

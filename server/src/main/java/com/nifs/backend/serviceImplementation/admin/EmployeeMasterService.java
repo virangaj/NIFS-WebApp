@@ -65,7 +65,7 @@ public class EmployeeMasterService implements IEmployeeMasterService {
                                     e.getLicenseNo(),
                                     e.getLicenseIssuedDate(),
                                     e.getLicenseExpireDate(),
-                                    e.getIsDelete(),
+                                    false,
                                     e.getRole(),
                                     e.getContactPerson(),
                                     e.getCpRelationship(),

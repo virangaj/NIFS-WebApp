@@ -35,6 +35,9 @@ public class ResignationReqController {
         return ResponseEntity.ok(resignationReqService.getAllResignationRequests(division));
     }
 
+
+
+
     @PutMapping("/hod")
     public ResponseEntity<?> putHodApproval(@RequestParam boolean approval, @RequestBody List<String> resId, @AuthenticationPrincipal UserDetails userDetails){
         String user = userDetails.getUsername();
