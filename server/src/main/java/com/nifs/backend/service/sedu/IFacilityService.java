@@ -1,5 +1,6 @@
 package com.nifs.backend.service.sedu;
 
+import com.nifs.backend.dto.sedu.FacilityDTO;
 import com.nifs.backend.model.sedu.Facility;
 
 import java.util.List;
@@ -13,11 +14,11 @@ public interface IFacilityService {
     Optional<Facility> returnFacility(String facilityId);
 
     //return all facilities
-    List<Facility> getAll();
+    List<FacilityDTO> getAll();
 
     //    create facility
-    String createFacility(Facility facData);
+    FacilityDTO createFacility(FacilityDTO facData, String user);
 
     // update facility
-    Boolean updateFacility(String facilityId, Facility facData);
+    Boolean updateFacility(String facilityId, FacilityDTO facData, String user);
 }

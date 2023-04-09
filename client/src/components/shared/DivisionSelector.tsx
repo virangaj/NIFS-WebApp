@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { useAppSelector } from "../../hooks/hooks";
-import { getAllDivisions } from "../../feature/admin/DivisionSlice";
-import IDivisionData from "../../types/admin/IDivisionData";
-import TextBoxLabel from "./TextBoxLabel";
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { useAppSelector } from '../../hooks/hooks';
+import { getAllDivisions } from '../../feature/admin/DivisionSlice';
+import IDivisionData from '../../types/admin/IDivisionData';
+import TextBoxLabel from './TextBoxLabel';
+
 function DivisionSelector({ onChange, tenant, name }: any) {
   const dispatch = useDispatch<any>();
   const { division, divisionIsLoading, divisionIsSuccess } = useAppSelector(

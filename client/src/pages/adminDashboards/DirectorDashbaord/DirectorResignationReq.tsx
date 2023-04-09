@@ -4,7 +4,7 @@ import ResignationService from '../../../services/admin/ResignationService';
 import ResignationRequestTable from '../../shared/ResignationRequestTable';
 import { toast } from 'react-toastify';
 
-function AdminResignationReq() {
+function DirectorResignationReq() {
 	const { auth } = useAppSelector((state) => state.persistedReducer);
 	const [requests, setRequests] = useState<any>([]);
 	const [rowId, setRowId] = useState(0);
@@ -32,7 +32,7 @@ function AdminResignationReq() {
 		console.log(selectedData);
 		setLoading(true);
 		setTimeout(() => {
-			ResignationService.sendHodApproval(selectedData, auth?.user?.token, true)
+			ResignationService.sendDirApproval(selectedData, auth?.user?.token, true)
 				.then((res) => {
 					if (res.data) {
 						toast.success('Resignation is Confirmed');
@@ -52,7 +52,7 @@ function AdminResignationReq() {
 	const sendReject = () => {
 		setLoading(true);
 		setTimeout(() => {
-			ResignationService.sendHodApproval(selectedData, auth?.user?.token, false)
+			ResignationService.sendDirApproval(selectedData, auth?.user?.token, false)
 				.then((res) => {
 					if (res.data) {
 						toast.success('Resignation is Declined');
@@ -100,4 +100,4 @@ function AdminResignationReq() {
 	);
 }
 
-export default AdminResignationReq;
+export default DirectorResignationReq;

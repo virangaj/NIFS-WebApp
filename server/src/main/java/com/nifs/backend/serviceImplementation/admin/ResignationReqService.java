@@ -61,11 +61,28 @@ public class ResignationReqService implements IResignationReqService {
         }
     }
 
+    // hod approval
     @Override
     public boolean putHodApproval(boolean approval, List<String> resId, String user) {
         try {
+            log.info("HOD Resignation Request : requested");
             resId.forEach(id -> {
                 resignationReqRepository.updateHodApproveAndModifiedFields(approval, user, new Date(), id);
+            });
+            return true;
+        }catch (Exception e){
+            log.info(e.toString());
+            return false;
+        }
+    }
+
+    // director approval
+    @Override
+    public Object putDirectorApproval(boolean approval, List<String> resId, String user) {
+        try {
+            log.info("Director Resignation Request : requested");
+            resId.forEach(id -> {
+                resignationReqRepository.updateDirApproveAndModifiedFields(approval, user, new Date(), id);
             });
             return true;
         }catch (Exception e){

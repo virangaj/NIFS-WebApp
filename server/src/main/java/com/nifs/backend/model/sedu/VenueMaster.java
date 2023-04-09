@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.Date;
 import java.util.List;
@@ -41,13 +43,18 @@ public class VenueMaster {
     @Column(name="availability", length = 255)
     private String availability;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="date_created")
-    private Date dateCreated;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="date_updated")
-    private Date dateUpdated;
+    @Column(name = "CreatedOn", nullable = false)
+    @CreationTimestamp
+    private Date createdOn;
+    @Column(name = "ModifiedOn")
+    @UpdateTimestamp
+    private Date modifiedOn;
+    @Column(name = "IsDeleted")
+    private boolean isDeleted;
+    @Column(name = "CreatedBy", nullable = false)
+    private Integer createdBy;
+    @Column(name = "ModifiedBy")
+    private Integer modifiedBy;
 
 
 
