@@ -1,497 +1,404 @@
-import React, { useState, useEffect } from 'react';
-import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
-import { generateID } from '../../utils/generateId';
-import CustomeDataPicker from '../../components/DataPicker';
-import IEmployeeData from '../../types/admin/IEmployeeData';
-import EmployeeService from '../../services/admin/EmployeeService';
-import IDesignationData from '../../types/admin/IDesignationData';
-import IDivisionData from '../../types/admin/IDivisionData';
-import DesignationMasterService from '../../services/admin/DesignationMasterService';
-import IWorkRequest from '../../types/common/IWorkRequest';
-import DivisionMasterService from '../../services/admin/DivisionMasterService';
+import React, { useState, useEffect } from "react";
+import Box from "@mui/material/Box";
+import Stack from "@mui/material/Stack";
+import { generateID } from "../../utils/generateId";
+import CustomeDataPicker from "../../components/DataPicker";
+import IEmployeeData from "../../types/admin/IEmployeeData";
+import IWorkRequest from "../../types/common/IWorkRequest";
 
-import Projects from '../../components/data/Project.json';
-import FileInput from '../../components/FileInput';
+import Projects from "../../components/data/Project.json";
+import { useAppSelector } from "../../hooks/hooks";
+import EmployeeSelector from "../../components/shared/EmployeeSelector";
+import DesignationSelector from "../../components/shared/DesignationSelector";
+import DivisionSelector from "../../components/shared/DivisionSelector";
+import { toast } from "react-toastify";
+import WorkRequestService from "../../services/common/WorkRequestService";
 
 const initialState: IWorkRequest = {
-	documentNo: '',
-	date: '',
-	epfNo: 0,
-	designationId: '',
-	divisionId: '',
-	hod: '',
-	project: '',
-	workDetails: '',
-	type: '',
-	vote: '',
-	forwardTo: '',
-	repairRequest: '',
-	fund: '',
-	attachment: '',
-	assetNo: '',
+  // generated
+  documentNo: "",
+  epfNo: 0,
+  hod: 0,
+  designationId: "",
+  divisionId: "",
+
+  date: "",
+  project: "",
+  workType: "",
+  program: "",
+  hodEmail: "",
+  supervisorEmail: "",
+  workDescription: "",
+  googleLinkWithWorkDescription: "",
 };
 
 function WorkRequest() {
-	const [getDocNo, setDocNo] = useState<String | any>('');
-	const [requestDate, setRequestDate] = React.useState<string | null>(null);
-	const [designationData, setDesignationData] = useState<IDesignationData>();
-	const [divisionData, setDivisionData] = useState<IDivisionData>();
+  const [getDocNo, setDocNo] = useState<String | any>("");
+  const [requestDate, setRequestDate] = React.useState<string | null>(null);
 
-	const [empFoundError, setEmpFoundError] = useState<boolean>(false);
-	const [empData, setEmpData] = useState<Array<IEmployeeData>>([]);
-	const [currentEmp, setCurrentEmp] = useState<IEmployeeData>();
-	const [values, setValues] = useState<IWorkRequest>(initialState);
-	const [eventAttachment, setEventAttachment] = useState<File | any>();
+  const [values, setValues] = useState<IWorkRequest>(initialState);
+  const [hod, setHod] = useState<IEmployeeData | null>();
+  const [loading, setLoading] = useState(false);
 
-	useEffect(() => {
-		setValues({
-			documentNo: values?.documentNo,
-			date: requestDate ? requestDate : '',
-			epfNo: values?.epfNo,
-			designationId: values?.designationId,
-			divisionId: values?.divisionId,
-			hod: values?.hod,
-			project: values?.project,
-			workDetails: values?.workDetails,
-			type: values?.type,
-			vote: values?.vote,
-			forwardTo: values?.forwardTo,
-			repairRequest: values?.repairRequest,
-			fund: values?.fund,
-			attachment: values?.attachment,
-			assetNo: values?.assetNo,
-		});
-	}, [requestDate]);
+  const { employees, employeesIsLoading, employeesIsSuccess } = useAppSelector(
+    (state) => state.employees
+  );
+  const { division, divisionIsLoading, divisionIsSuccess } = useAppSelector(
+    (state) => state.division
+  );
 
-	useEffect(() => {
-		setValues({
-			documentNo: values?.documentNo,
-			date: requestDate ? requestDate : '',
-			epfNo: values?.epfNo,
-			designationId: values?.designationId,
-			divisionId: values?.divisionId,
-			hod: values?.hod,
-			project: values?.project,
-			workDetails: values?.workDetails,
-			type: values?.type,
-			vote: values?.vote,
-			forwardTo: values?.forwardTo,
-			repairRequest: values?.repairRequest,
-			fund: values?.fund,
-			attachment: values?.attachment,
-			assetNo: values?.assetNo,
-		});
-		console.log(getDocNo);
-	}, [getDocNo]);
+  const { auth } = useAppSelector((state) => state.persistedReducer);
 
-	useEffect(() => {
-		retreiveEmployees();
-		console.log(empData);
-	}, []);
+  useEffect(() => {
+    setValues({
+      // generated
+      documentNo: values?.documentNo,
+      epfNo: values?.epfNo,
+      hod: values?.hod,
+      designationId: values?.designationId,
+      divisionId: values?.divisionId,
 
-	useEffect(() => {
-		let employee = empData.find(
-			(emp: IEmployeeData) => emp.epfNo.toString() === values.epfNo.toString()
-		);
-		setCurrentEmp(employee);
-		if (employee) {
-			setEmpFoundError(false);
-		} else {
-			setEmpFoundError(true);
-		}
-		setValues({
-			documentNo: values?.documentNo,
-			date: requestDate ? requestDate : '',
-			epfNo: values?.epfNo,
-			designationId: values?.designationId,
-			divisionId: values?.divisionId,
-			hod: values?.hod,
-			project: values?.project,
-			workDetails: values?.workDetails,
-			type: values?.type,
-			vote: values?.vote,
-			forwardTo: values?.forwardTo,
-			repairRequest: values?.repairRequest,
-			fund: values?.fund,
-			attachment: values?.attachment,
-			assetNo: values?.assetNo,
-		});
-		retriveEmployeeDetails(employee);
-	}, [values.epfNo]);
+      date: requestDate ? requestDate : "",
+      project: values?.project,
+      workType: values?.workType,
+      program: values?.program,
+      hodEmail: values?.hodEmail,
+      supervisorEmail: values?.supervisorEmail,
+      workDescription: values?.workDescription,
+      googleLinkWithWorkDescription: values?.googleLinkWithWorkDescription,
+    });
+  }, [requestDate]);
 
-	//get designation and division
-	const retriveEmployeeDetails = (emp: any) => {
-		//get designation
-		DesignationMasterService.getDesignation(emp?.designationId)
-			.then((res: any) => {
-				setDesignationData(res.data.data);
-			})
-			.catch((e: any) => {
-				console.log(e);
-			});
+  useEffect(() => {
+    setValues({
+      ...values,
+      documentNo: getDocNo && getDocNo,
+    });
+    console.log(getDocNo);
+  }, [getDocNo]);
 
-		//get divisions
+  useEffect(() => {
+    const divisionData = division.find(
+      (d) => d.divisionId === values.divisionId
+    );
 
-		DivisionMasterService.getDivision(emp?.divisionId)
-			.then((res: any) => {
-				setDivisionData(res.data.data);
-			})
-			.catch((e: any) => {
-				console.log(e);
-			});
-	};
+    if (divisionData) {
+      const employeeId = divisionData.hod;
+      const employee = employees.find((e) => e.epfNo === employeeId);
+      // console.log(employee);
+      if (employee) {
+        setHod(employee);
+        setValues({
+          ...values,
+          hod: employee.epfNo,
+        });
+      }
+    }
+  }, [values.divisionId]);
 
-	//get employees
-	const retreiveEmployees = () => {
-		EmployeeService.getAllEmployeeData()
-			.then((res: any) => {
-				console.log(res.data);
-				setEmpData(res.data.data);
-			})
-			.catch((e: any) => {
-				console.log(e);
-			});
-	};
+  // generate Doc number ID
+  const generateDocNo = () => {
+    setDocNo(generateID("RR"));
+    setValues(initialState);
+  };
 
-	// generate document ID
-	const generateDocNo = () => {
-		setDocNo(generateID('CE'));
-		setValues(initialState);
-	};
+  //reset form
+  const resetForm = () => {
+    setValues(initialState);
+    setDocNo("");
+    setHod(null);
+  };
 
-	//reset form
-	const resetForm = () => {
-		setValues(initialState);
-		setDocNo('');
-	};
+  //  onChange Function
+  const onChange = (e: any) => {
+    setValues((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
 
-	//onchange funtion
-	const onChange = (e: any) => {
-		setValues((preState) => ({
-			...preState,
-			[e.target.name]: e.target.value,
-		}));
-	};
+  const onSubmit = async (e: any) => {
+    e.preventDefault();
+    console.log(values);
 
-	const onSubmit = async (e: any) => {
-		e.preventDefault();
-		console.log(values);
-	};
+    setLoading(true);
+    setTimeout(() => {
+      const result = WorkRequestService.saveWorkRequest(
+        values,
+        auth?.user?.token
+      )
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
 
-	return (
-		<div className='sub-body-content xl:!w-[60%]'>
-			<h1 className='page-title'>Work Request</h1>
-			<hr className='horizontal-line' />
-			<form onSubmit={onSubmit}>
-				<div className='grid grid-cols-1 md:grid-cols-2 items-center w-[97%] mx-auto'>
-					<Box className='flex items-center justify-between input-field'>
-						Document No - {getDocNo && getDocNo}
-						<button
-							type='button'
-							className='rounded-outline-success-btn'
-							onClick={generateDocNo}
-							style={{ marginLeft: '20px' }}
-						>
-							New
-						</button>
-					</Box>
+      if (result !== null) {
+        toast.success("Article Request Added Successfully");
+        resetForm();
+      } else {
+        toast.error("Request Cannot be Completed");
+      }
+      setLoading(false);
+    }, 1000);
+  };
 
-					<div className='mx-0 mb-4 lg:ml-10 md:my-0'>
-						<CustomeDataPicker
-							date={requestDate}
-							setDate={setRequestDate}
-							title='Request Date'
-						/>
-					</div>
+  return (
+    <div className="sub-body-content xl:!w-[60%]">
+      <h1 className="page-title">Work Request</h1>
+      <hr className="horizontal-line" />
+      <form onSubmit={onSubmit}>
+        <div className="grid grid-cols-1 md:grid-cols-2 items-center w-[97%] mx-auto">
+          <Box className="flex items-center justify-between input-field">
+            Document No - {getDocNo && getDocNo}
+            <button
+              type="button"
+              className="rounded-outline-success-btn"
+              onClick={generateDocNo}
+              style={{ marginLeft: "20px" }}
+            >
+              New
+            </button>
+          </Box>
+        </div>
 
-					<div className='flex items-center'>
-						<div>
-							<label className='input-label' htmlFor='epfNo'>
-								Employee EPF No
-							</label>
+        <EmployeeSelector
+          onChange={onChange}
+          value={values.epfNo}
+          name="epfNo"
+        />
 
-							<input
-								id='epfNo'
-								type='text'
-								className='tailwind-text-box w-[40%] mr-4'
-								onChange={onChange}
-								name='epfNo'
-								value={values.epfNo}
-							/>
-						</div>
-						<div>
-							<label className='input-label' htmlFor='epfNo'>
-								Employee Name
-							</label>
-							<select
-								className='tailwind-text-box'
-								value={values.epfNo}
-								id='epfNo'
-								name='epfNo'
-								onChange={onChange}
-							>
-								<option disabled value={0}>
-									Select Employee
-								</option>
+        <div className="w-[97%] mx-auto">
+          <DesignationSelector
+            onChange={onChange}
+            value={values.designationId}
+            name="designationId"
+          />
+        </div>
 
-								{empData?.map((l: IEmployeeData, i: number) => {
-									return (
-										<option key={i} value={l.epfNo}>
-											{l.firstName + ' ' + l.lastName}
-										</option>
-									);
-								})}
-							</select>
-						</div>
-					</div>
-				</div>
-				{values.epfNo && empFoundError ? (
-					<p className='w-[97%] mx-auto error-text-message'>User Not Found!</p>
-				) : (
-					''
-				)}
+        <div className="w-[97%] mx-auto">
+          <DivisionSelector
+            onChange={onChange}
+            value={values.divisionId}
+            name="divisionId"
+          />
+        </div>
 
-				<div className='w-[97%] mx-auto'>
-					<p className='normal-text'>
-						Designation :{' '}
-						{values.epfNo && designationData ? (
-							<span className='font-bold'>
-								{designationData.designationName}
-							</span>
-						) : (
-							<span className='italic-sm-text'>Please select an employee</span>
-						)}
-					</p>
+        <div className="w-[97%] mx-auto">
+          <div className="grid items-center grid-cols-1 md:grid-cols-2">
+            <p className="normal-text">
+              HOD :{" "}
+              {values.divisionId && hod ? (
+                <span className="font-bold">
+                  {hod.firstName + " " + hod.lastName}
+                </span>
+              ) : (
+                <span className="italic-sm-text">Please select a Division</span>
+              )}
+            </p>
+          </div>
+        </div>
 
-					<div className='grid items-center grid-cols-1 md:grid-cols-2'>
-						<p className='normal-text'>
-							Division :{' '}
-							{values.epfNo && divisionData ? (
-								<span className='font-bold'>{divisionData.name}</span>
-							) : (
-								<span className='italic-sm-text'>
-									Please select an employee
-								</span>
-							)}
-						</p>
+        <div className="mx-0 mb-4 lg:ml-4 md:my-0">
+          <CustomeDataPicker
+            date={requestDate}
+            setDate={setRequestDate}
+            title="Request Date"
+          />
+        </div>
 
-						<p className='normal-text'>
-							HOD :{' '}
-							{values.epfNo && divisionData ? (
-								<span className='font-bold'>{divisionData.name}</span>
-							) : (
-								<span className='italic-sm-text'>
-									Please select an employee
-								</span>
-							)}
-						</p>
-					</div>
-				</div>
+        <div className="flex w-[100%]">
+          {/* left section of the flex */}
+          <div className="flex-1 mr-4">
+            <div className="mx-0 input-field lg:ml-4">
+              <label className="input-label" htmlFor="project">
+                Project
+              </label>
+              <select
+                className="tailwind-text-box w-[90%]"
+                value={values.project}
+                id="project"
+                name="project"
+                onChange={onChange}
+              >
+                <option value="" disabled>
+                  Select a Project
+                </option>
 
-				<div className='flex w-[100%]'>
-					{/* left section of the flex */}
-					<div className='flex-1 mr-4'>
-						<div className='mx-0 input-field lg:ml-4'>
-							<label className='input-label' htmlFor='project'>
-								Project
-							</label>
-							<select
-								className='tailwind-text-box w-[90%]'
-								value={values.project}
-								id='project'
-								name='project'
-								onChange={onChange}
-							>
-								<option value='' disabled>
-									Select a Project
-								</option>
+                {Projects
+                  ? Projects.map((p, index) => (
+                      <option value={p.value} key={index}>
+                        {p.value}
+                      </option>
+                    ))
+                  : ""}
+              </select>
+            </div>
 
-								{Projects
-									? Projects.map((p, index) => (
-											<option value={p.value} key={index}>
-												{p.value}
-											</option>
-									  ))
-									: ''}
-							</select>
-						</div>
+            <div className="mx-0 input-field lg:ml-4">
+              <label className="input-label" htmlFor="workType">
+                Work Type:
+              </label>
+              <select
+                className="tailwind-text-box w-[90%]"
+                value={values.workType}
+                id="workType"
+                name="workType"
+                onChange={onChange}
+              >
+                <option value="" disabled>
+                  Select a workType
+                </option>
 
-						<div className='mx-0 input-field lg:ml-4'>
-							<label className='input-label' htmlFor='type'>
-								Type
-							</label>
-							<select
-								className='tailwind-text-box w-[90%]'
-								value={values.type}
-								id='type'
-								name='type'
-								onChange={onChange}
-							>
-								<option value='' disabled>
-									Select a Item Type
-								</option>
+                {Projects
+                  ? Projects.map((p, index) => (
+                      <option value={p.value} key={index}>
+                        {p.value}
+                      </option>
+                    ))
+                  : ""}
+              </select>
+            </div>
 
-								{Projects
-									? Projects.map((p, index) => (
-											<option value={p.value} key={index}>
-												{p.value}
-											</option>
-									  ))
-									: ''}
-							</select>
-						</div>
+            <div className="mx-0 input-field lg:ml-4">
+              <label className="input-label" htmlFor="supervisorEmail">
+                Supervisor Email:
+              </label>
+              <select
+                className="tailwind-text-box w-[90%]"
+                value={values.supervisorEmail}
+                id="supervisorEmail"
+                name="supervisorEmail"
+                onChange={onChange}
+              >
+                <option value="" disabled>
+                  Select a Supervisor Email
+                </option>
 
-						<div className='mx-0 input-field lg:ml-4'>
-							<label className='input-label' htmlFor='vote'>
-								Vote
-							</label>
-							<select
-								className='tailwind-text-box w-[90%]'
-								value={values.vote}
-								id='vote'
-								name='vote'
-								onChange={onChange}
-							>
-								<option value='' disabled>
-									Select a Item Type
-								</option>
+                {Projects
+                  ? Projects.map((p, index) => (
+                      <option value={p.value} key={index}>
+                        {p.value}
+                      </option>
+                    ))
+                  : ""}
+              </select>
+            </div>
 
-								{Projects
-									? Projects.map((p, index) => (
-											<option value={p.value} key={index}>
-												{p.value}
-											</option>
-									  ))
-									: ''}
-							</select>
-						</div>
+            <div>
+              <label
+                className="input-label basis-1/2"
+                htmlFor="workDescription"
+              >
+                Type Work Description Here:
+              </label>
 
-						<div>
-							<label
-								className='input-label basis-1/2 lg:ml-2 '
-								htmlFor='assetNo'
-							>
-								Asset No
-							</label>
+              <input
+                id="outlined-basic"
+                type="search"
+                className="mr-4 tailwind-text-box w-[100%]"
+                name="workDescription"
+                onChange={onChange}
+                value={values.workDescription}
+                required
+              />
+            </div>
 
-							<input
-								id='outlined-basic'
-								type='search'
-								className='mr-4 tailwind-text-box w-[100%]'
-								name='assetNo'
-								onChange={onChange}
-								value={values.assetNo}
-								required
-							/>
-						</div>
+            <div>
+              <label
+                className="input-label basis-1/2"
+                htmlFor="googleLinkWithWorkDescription"
+              >
+                Create a Google Link With Work Description and paste it here:
+              </label>
 
-						<FileInput
-							setEventAttachment={setEventAttachment}
-							eventAttachment={eventAttachment}
-							title='Upload Attachment'
-						/>
-					</div>
-					{/* Right section of the flex */}
-					<div className='flex-1 mr-4'>
-						<div className='mx-0 input-field lg:ml-4'>
-							<label className='input-label' htmlFor='forwardTo'>
-								Forward To
-							</label>
-							<select
-								className='tailwind-text-box w-[90%]'
-								value={values.forwardTo}
-								id='forwardTo'
-								name='forwardTo'
-								onChange={onChange}
-							>
-								<option value='' disabled>
-									Select a Item Type
-								</option>
+              <input
+                id="outlined-basic"
+                type="search"
+                className="mr-4 tailwind-text-box w-[100%]"
+                name="googleLinkWithWorkDescription"
+                onChange={onChange}
+                value={values.googleLinkWithWorkDescription}
+                required
+              />
+            </div>
+          </div>
+          {/* Right section of the flex */}
+          <div className="flex-1 mr-4">
+            <div className="mx-0 input-field lg:ml-4">
+              <label className="input-label" htmlFor="program">
+                Program:
+              </label>
+              <select
+                className="tailwind-text-box w-[90%]"
+                value={values.program}
+                id="program"
+                name="program"
+                onChange={onChange}
+              >
+                <option value="" disabled>
+                  Select a Program
+                </option>
 
-								{Projects
-									? Projects.map((p, index) => (
-											<option value={p.value} key={index}>
-												{p.value}
-											</option>
-									  ))
-									: ''}
-							</select>
-						</div>
+                {Projects
+                  ? Projects.map((p, index) => (
+                      <option value={p.value} key={index}>
+                        {p.value}
+                      </option>
+                    ))
+                  : ""}
+              </select>
+            </div>
 
-						<div className='mx-0 input-field lg:ml-4'>
-							<label className='input-label' htmlFor='repairRequest'>
-								Repair Request
-							</label>
-							<select
-								className='tailwind-text-box w-[90%]'
-								value={values.repairRequest}
-								id='repairRequest'
-								name='repairRequest'
-								onChange={onChange}
-							>
-								<option value='' disabled>
-									Select a Item Type
-								</option>
+            <div className="mx-0 input-field lg:ml-4">
+              <label className="input-label" htmlFor="hodEmail">
+                HOD Email:
+              </label>
+              <select
+                className="tailwind-text-box w-[90%]"
+                value={values.hodEmail}
+                id="hodEmail"
+                name="hodEmail"
+                onChange={onChange}
+              >
+                <option value="" disabled>
+                  Select a HOD Email
+                </option>
 
-								{Projects
-									? Projects.map((p, index) => (
-											<option value={p.value} key={index}>
-												{p.value}
-											</option>
-									  ))
-									: ''}
-							</select>
-						</div>
-
-						<div className='mx-0 input-field lg:ml-4'>
-							<label className='input-label' htmlFor='fund'>
-								External /Fund Internal / Budget
-							</label>
-							<select
-								className='tailwind-text-box w-[90%]'
-								value={values.fund}
-								id='fund'
-								name='fund'
-								onChange={onChange}
-							>
-								<option value='' disabled>
-									Select a Fund type
-								</option>
-
-								{Projects
-									? Projects.map((p, index) => (
-											<option value={p.value} key={index}>
-												{p.value}
-											</option>
-									  ))
-									: ''}
-							</select>
-						</div>
-					</div>
-				</div>
-				<Stack
-					direction='row'
-					justifyContent='flex-end'
-					alignItems='flex-end'
-					spacing={2}
-					className='admin-form-buton-stack'
-				>
-					<button
-						className='action-com-model-error-btn'
-						type='reset'
-						color='error'
-						onClick={resetForm}
-					>
-						Reset
-					</button>
-					<button className='action-com-model-sucess-btn' type='submit'>
-						Submit
-					</button>
-				</Stack>
-			</form>
-		</div>
-	);
+                {Projects
+                  ? Projects.map((p, index) => (
+                      <option value={p.value} key={index}>
+                        {p.value}
+                      </option>
+                    ))
+                  : ""}
+              </select>
+            </div>
+          </div>
+        </div>
+        <Stack
+          direction="row"
+          justifyContent="flex-end"
+          alignItems="flex-end"
+          spacing={2}
+          className="admin-form-buton-stack"
+        >
+          <button
+            className="action-com-model-error-btn"
+            type="reset"
+            color="error"
+            onClick={resetForm}
+          >
+            Reset
+          </button>
+          <button className="action-com-model-sucess-btn" type="submit">
+            Submit
+          </button>
+        </Stack>
+      </form>
+    </div>
+  );
 }
 
 export default WorkRequest;
