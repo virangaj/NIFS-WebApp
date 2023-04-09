@@ -1,10 +1,8 @@
 package com.nifs.backend.service.sedu;
 
 import com.nifs.backend.dto.sedu.ChargeDTO;
-import com.nifs.backend.model.sedu.Charges;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface IChargeService {
 
@@ -16,7 +14,7 @@ public interface IChargeService {
     String returnNewChargeId();
 
     //return charge by id
-    Optional<Charges> returnCharge(String chargeId);
+    ChargeDTO returnCharge(String chargeId);
     //delete charge
     Boolean deleteCharge(String chargeId);
 

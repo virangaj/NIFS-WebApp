@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react';
-
 import Stack from '@mui/material/Stack';
-
 import Box from '@mui/material/Box';
 import SelectFacility from './shared/SelectFacility';
 import SetChargers from './shared/SetChargers';
@@ -15,6 +13,9 @@ import LocationMasterService from '../../services/admin/LocationMasterService';
 import ILocationData from '../../types/ILocationData';
 
 import '../pages.css';
+import LocationSelector from '../../components/shared/LocationSelector';
+import { useAppSelector } from '../../hooks/hooks';
+import { toast } from 'react-toastify';
 
 const initialState: IVenueMaster = {
 	venueId: '',
@@ -24,22 +25,24 @@ const initialState: IVenueMaster = {
 	location: '',
 	remark: '',
 	capacity: 0,
-	dateCreated: '',
+	createdOn: '',
+	modifiedOn: '',
+	createdBy: 0,
+	modifiedBy: 0,
+	charges: [],
+	facilities: [],
 };
 
 function VenueMaster() {
 	const [facilities, setFacilities] = useState<any[]>([]);
 	const [chargers, setChargers] = useState<any[]>([]);
 	const [locationData, setLocationData] = useState<ILocationData[]>();
-
 	const [loading, setLoading] = useState(false);
-
-	const [venue, setVenue] = useState([]);
-
 	const [v_id, setV_Id] = useState('');
 	const [success, setSuccess] = useState(false);
-
 	const [values, setValues] = useState<IVenueMaster>(initialState);
+
+	const { auth } = useAppSelector((state) => state.persistedReducer);
 
 	// onchange function
 	const onChange = (e: any) => {
@@ -49,22 +52,27 @@ function VenueMaster() {
 		}));
 	};
 	useEffect(() => {
-		// console.log(v_id)
 		setValues({
+			...values,
 			venueId: v_id,
-			venueName: values?.venueName,
-			type: values?.type,
-			availability: values?.availability,
-			location: values?.location,
-			remark: values?.remark,
-			capacity: values?.capacity,
-			dateCreated: '',
 		});
-		// console.log(values)
 	}, [v_id]);
+
+	useEffect(() => {
+		setValues({
+			...values,
+			charges: chargers.map((c) => c.chargeId),
+		});
+	}, [chargers]);
+	useEffect(() => {
+		setValues({
+			...values,
+			facilities: facilities.map((c) => c.facilityId),
+		});
+	}, [facilities]);
+
 	// generate id on button click
 	const generateVenueID = () => {
-		// window.location.reload;
 		resetForm();
 		VenueMasterService.getNewVenueId()
 			.then((res: any) => {
@@ -73,10 +81,6 @@ function VenueMaster() {
 			.catch((e: any) => {
 				console.log(e);
 			});
-
-		let id = generateID('VM');
-		// setV_Id(id)
-		// console.log(v_id)
 	};
 
 	const resetForm = () => {
@@ -86,53 +90,24 @@ function VenueMaster() {
 		setChargers([]);
 	};
 
-	useEffect(() => {
-		retreiveLocations();
-		retrieveVenue();
-		// console.log(venue);
-	}, []);
-
-	const retreiveLocations = () => {
-		LocationMasterService.getAllLocations()
-			.then((res: any) => {
-				setLocationData(res.data);
-				console.log(locationData);
-			})
-			.catch((e: any) => {
-				console.log(e);
-			});
-	};
-
-	const retrieveVenue = () => {
-		VenueMasterService.getAllVenues()
-			.then((res: any) => {
-				setVenue(res.data);
-				// console.log(venue)
-			})
-			.catch((e: any) => {
-				console.log(e);
-			});
-	};
-
 	const onSubmit = async (e: any) => {
 		e.preventDefault();
+
 		if (values.venueId !== null) {
 			try {
 				setLoading(true);
 				console.log(values);
-				const venuResult = await VenueMasterService.saveVenue(values);
-				const facCharge = await VenueOtherService.setCharges(
-					chargers,
-					values.venueId
+				await VenueMasterService.saveVenue(values, auth?.user?.token).then(
+					(res) => {
+						if (res.data) {
+							toast.success('New Venue is Added!');
+							setSuccess(true);
+							resetForm();
+						}
+					}
 				);
-				const facResult = await VenueOtherService.setFacilities(
-					facilities,
-					values.venueId
-				);
-				alert('done');
-				setSuccess(true);
-				resetForm();
 			} catch (e: any) {
+				toast.error('Request cannot be completed');
 				setLoading(true);
 				setSuccess(false);
 				alert(e);
@@ -155,34 +130,20 @@ function VenueMaster() {
 
 			{!loading ? (
 				<form onSubmit={onSubmit}>
+					<Box className='flex items-center input-field'>
+						<p>Venue Id - {v_id ? v_id : ''}</p>
+
+						<button
+							type='button'
+							className='rounded-outline-success-btn'
+							onClick={generateVenueID}
+							style={{ marginLeft: '20px' }}
+						>
+							New
+						</button>
+					</Box>
 					<div className='grid grid-cols-1 md:grid-cols-2'>
 						<div className='form-left-section'>
-							<Box className='flex items-center justify-between input-field'>
-								<p>Venue Id - {v_id ? v_id : ''}</p>
-								{/* <TextField fullWidth required
-                                id="outlined-basic"
-                                label="Venue ID"
-                                variant="outlined"
-                                type="text"
-                                name='venueId'
-                                size="small"
-                                onChange={onChange}
-                                defaultValue={values.venueId}
-                                InputProps={{
-                                    readOnly: true,
-                                }}
-
-                            /> */}
-								<button
-									type='button'
-									className='rounded-outline-success-btn'
-									onClick={generateVenueID}
-									style={{ marginLeft: '20px' }}
-								>
-									New
-								</button>
-							</Box>
-
 							<div>
 								<label className='input-label' htmlFor='venueName'>
 									Venue Name
@@ -242,29 +203,29 @@ function VenueMaster() {
 
 						{/* form right section */}
 						<div className='form-right-section'>
+							<LocationSelector
+								onChange={onChange}
+								value={values.location}
+								name='location'
+							/>
+
 							<div>
-								<label className='input-label' htmlFor='location'>
-									Location
+								<label className='input-label' htmlFor='remark'>
+									Capacity
 								</label>
-								<select
-									className='tailwind-text-box w-[90%]'
-									value={values.location}
-									id='location'
-									name='location'
+
+								<input
+									id='outlined-basic'
+									type='search'
+									className='mr-4 tailwind-text-box w-[90%]'
 									onChange={onChange}
-								>
-									<option disabled value=''>
-										Select Location
-									</option>
-									{locationData?.map((l: ILocationData, i: number) => {
-										return (
-											<option key={i} value={l.locationId}>
-												{l.locationName}
-											</option>
-										);
-									})}
-								</select>
+									name='capacity'
+									value={values.capacity}
+									required
+								/>
 							</div>
+
+							<SetChargers chargers={chargers} setChargers={setChargers} />
 							<div>
 								<label className='input-label' htmlFor='remark'>
 									Remark
@@ -280,30 +241,6 @@ function VenueMaster() {
 									required
 								/>
 							</div>
-
-							<div>
-								<label className='input-label' htmlFor='capacity'>
-									Capacity
-								</label>
-								<select
-									className='tailwind-text-box w-[90%]'
-									value={values.capacity}
-									id='capacity'
-									name='capacity'
-									onChange={onChange}
-								>
-									<option value={0} disabled>
-										Select Capacity
-									</option>
-									<option value={10}>10</option>
-									<option value={20}>20</option>
-									<option value={30}>30</option>
-									<option value={50}>50</option>
-									<option value={100}>100</option>
-								</select>
-							</div>
-
-							<SetChargers chargers={chargers} setChargers={setChargers} />
 						</div>
 					</div>
 					{/* button stack */}

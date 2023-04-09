@@ -19,7 +19,7 @@ function AllEmployees() {
 
 	useEffect(() => {
 		retreiveEmployees();
-		// console.log(empData)
+		// console.log(empData);
 	}, []);
 
 	useEffect(() => {
@@ -30,18 +30,9 @@ function AllEmployees() {
 	const retreiveEmployees = () => {
 		EmployeeService.getAllEmployeeData()
 			.then((res: any) => {
-				if (res.data.status === RequestStatus.SUCCESS) {
-					setEmpData(res.data.data);
-				} else {
-					toast.error(`${res.data.message}`, {
-						position: 'top-right',
-						autoClose: 5000,
-						hideProgressBar: false,
-						closeOnClick: true,
-						pauseOnHover: true,
-						draggable: true,
-						progress: undefined,
-					});
+				if (res.status === RequestStatus.SUCCESS) {
+					console.log(res.data);
+					setEmpData(res.data);
 				}
 			})
 			.catch((e: any) => {

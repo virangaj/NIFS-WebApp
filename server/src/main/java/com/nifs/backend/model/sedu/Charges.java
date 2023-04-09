@@ -48,15 +48,10 @@ public class Charges {
 
 
 //    relationships
-//    @ManyToMany(mappedBy = "charges", fetch = FetchType.LAZY)
-//    @JsonIgnore
-//    private Set<VenueMaster> venues;
 
     @OneToMany(mappedBy = "chargeId", cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
     private List<VenueCharge> venueCharges;
 
-
-//    getter and setter
 
 }
 

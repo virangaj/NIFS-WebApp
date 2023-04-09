@@ -76,8 +76,8 @@ public class ChargeService implements IChargeService {
 
     //    get charge by id
     @Override
-    public Optional<Charges> returnCharge(String chargeId) {
-        return chargeRepo.findById(chargeId);
+    public ChargeDTO returnCharge(String chargeId) {
+     return  modelMapper.map(chargeRepo.save(Objects.requireNonNull(chargeRepo.findById(chargeId).orElse(null))), ChargeDTO.class);
 
     }
 

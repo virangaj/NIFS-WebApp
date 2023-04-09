@@ -6,12 +6,14 @@ import AdminPages from '../../layout/AdminPages';
 import { SeduAdminSideNavbar } from '../../constant/SideNavData';
 import Chargers from './SeduAdmin/charges/Chargers';
 import Facilities from './SeduAdmin/facilities/Facilities';
+import VenuesAdmin from './SeduAdmin/VenuesAdmin';
 
 export function PageRoutes() {
 	return (
 		<Routes>
 			<Route path={RouteName.Facilities} element={<Facilities />} />
 			<Route path={RouteName.Charges} element={<Chargers />} />
+			<Route path={RouteName.VenueMaster} element={<VenuesAdmin />} />
 		</Routes>
 	);
 }
