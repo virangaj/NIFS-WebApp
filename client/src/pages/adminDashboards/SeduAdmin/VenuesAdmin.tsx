@@ -2,15 +2,21 @@ import React, { useEffect, useState } from 'react';
 import VenueMasterService from '../../../services/sedu/VenueMasterService';
 import IVenueMaster from '../../../types/sedu/IVenueMaster';
 import VenueCard from './VenueAdmin/VenueCard';
+import Ripple from '../../../components/Ripple';
 
 function VenuesAdmin() {
 	const [venueData, setVenueData] = useState<Array<IVenueMaster>>([]);
+	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
-		VenueMasterService.getAllVenues().then((res) => {
-			console.log(res.data);
-			setVenueData(res.data);
-		});
+		setLoading(true);
+		setTimeout(() => {
+			VenueMasterService.getAllVenues().then((res) => {
+				console.log(res.data);
+				setVenueData(res.data);
+			});
+			setLoading(false);
+		}, 1000);
 	}, []);
 
 	return (
@@ -21,11 +27,15 @@ function VenuesAdmin() {
 				<hr className='admin-horizontal-line' />
 			</div>
 
-			<div className='w-full admin-panel-flex'>
+			<div className='w-full'>
 				<div className='admin-table-section'>
-					<h2 className='text-lg font-bold'>Venus</h2>
-
-					<VenueCard />
+					{!loading ? (
+						venueData && venueData.map((data) => <VenueCard {...data} />)
+					) : (
+						<>
+							<Ripple />
+						</>
+					)}
 				</div>
 			</div>
 		</>
