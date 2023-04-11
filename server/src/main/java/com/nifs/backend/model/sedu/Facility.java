@@ -7,6 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -47,9 +48,9 @@ public class Facility {
 
 //    relationships
 //    @JsonBackReference
-    @ManyToMany(mappedBy = "facilities", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "facilityId", fetch = FetchType.LAZY)
     @JsonIgnore
-    private Set<VenueMaster> venues;
+    private List<VenueFacility> venueFacilities;
 
 
 }

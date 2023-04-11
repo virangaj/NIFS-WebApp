@@ -1,11 +1,12 @@
 package com.nifs.backend.controller.sedu;
 
-import com.nifs.backend.model.sedu.Charges;
-import com.nifs.backend.model.sedu.Facility;
-import com.nifs.backend.model.sedu.VenueCharge;
+import com.nifs.backend.dto.sedu.ResponseVenueMasterDTO;
+import com.nifs.backend.dto.sedu.VenueMasterDTO;
 import com.nifs.backend.model.sedu.VenueMaster;
 import com.nifs.backend.service.sedu.IVenueMasterService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,34 +32,21 @@ public class VenueMasterController {
         return venueService.returnVenue(venueId);
     }
 
-    //return all charges
-    @GetMapping("/allcharges")
-    private List<VenueCharge> returnAllCharges(){
-        return venueService.returnAllCharges();
-    }
 
-   //return all charges by id
-    @GetMapping("/allcharges/{id}")
-    private Optional<VenueCharge> returnAllChargesById(@PathVariable int id){
-        return venueService.returnAllChargesById(id);
-    }
 
 // get all venues
     @GetMapping
-    private List<VenueMaster> getAll() {
+    private List<ResponseVenueMasterDTO> getAll() {
         return venueService.getAll();
     }
 
     //create new venue
     @PostMapping
-    private Boolean createVenue(@RequestBody VenueMaster venueData) {
-        return venueService.createVenue(venueData);
+    private boolean createVenue(@RequestBody VenueMasterDTO venueData, @AuthenticationPrincipal UserDetails userDetails) {
+        String user = userDetails.getUsername();
+        return venueService.createVenue(venueData, user);
     }
-    //    put facilities
-    @PutMapping("/{venue_id}/addfacility")
-    private VenueMaster addFacility(@PathVariable String venue_id, @RequestBody Facility[] facData) {
-        return venueService.addFacility(venue_id, facData);
-    }
+
 
 //    update venue
     @PutMapping("update/{venue_id}")
@@ -66,11 +54,6 @@ public class VenueMasterController {
         return venueService.updateVenue(venue_id, venueData);
     }
 
-    //    put charges
-    @PostMapping("/{venue_id}/addcharge")
-    private Boolean addCharge(@PathVariable String venue_id, @RequestBody Charges[] chargeData) {
-        return venueService.addCharge(venue_id, chargeData);
-    }
 
 
 //delete venue
@@ -79,11 +62,7 @@ public class VenueMasterController {
         return venueService.deleteVenue(venue_id);
     }
 
-    //remove facility
-    @PutMapping("/remove/facility/{venueId}")
-    private VenueMaster removeFacility(@PathVariable String venueId, @RequestBody Facility facData){
-        return venueService.removeFacility(venueId, facData);
-    }
+
 
 
 

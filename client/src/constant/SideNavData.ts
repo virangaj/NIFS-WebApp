@@ -1,5 +1,10 @@
 import { BiCategoryAlt, BiUserPin } from 'react-icons/bi';
-import { HiOutlineUserGroup, HiOutlineOfficeBuilding } from 'react-icons/hi';
+import {
+	HiOutlineUserGroup,
+	HiOutlineOfficeBuilding,
+	HiOutlineCurrencyDollar,
+	HiOutlineLibrary,
+} from 'react-icons/hi';
 import { RiUserStarLine } from 'react-icons/ri';
 import { RouteName } from './routeNames';
 
@@ -48,11 +53,16 @@ export const SeduAdminSideNavbar = [
 	{
 		title: 'Charges',
 		link: RouteName.Charges,
-		icon: HiOutlineOfficeBuilding,
+		icon: HiOutlineCurrencyDollar,
 	},
 	{
 		title: 'Facilities',
 		link: RouteName.Facilities,
 		icon: HiOutlineOfficeBuilding,
+	},
+	{
+		title: 'All Venues',
+		link: RouteName.VenueMaster,
+		icon: HiOutlineLibrary,
 	},
 ];

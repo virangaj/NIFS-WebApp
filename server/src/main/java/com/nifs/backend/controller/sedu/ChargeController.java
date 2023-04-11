@@ -34,7 +34,7 @@ public class ChargeController {
 
 //    get charge by id
     @GetMapping("/{chargeId}")
-    Optional<Charges> returnCharge(@PathVariable String chargeId){
+    ChargeDTO returnCharge(@PathVariable String chargeId){
         return chargeService.returnCharge(chargeId);
     }
 

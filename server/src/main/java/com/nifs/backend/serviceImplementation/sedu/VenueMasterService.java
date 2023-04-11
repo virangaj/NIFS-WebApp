@@ -1,21 +1,21 @@
 package com.nifs.backend.serviceImplementation.sedu;
 
-import com.nifs.backend.model.sedu.VenueCharge;
-import com.nifs.backend.model.sedu.VenueMaster;
-import com.nifs.backend.repository.sedu.ChargeRepository;
-import com.nifs.backend.model.sedu.Charges;
-import com.nifs.backend.model.sedu.Facility;
+import com.nifs.backend.dto.sedu.ResponseVenueMasterDTO;
+import com.nifs.backend.dto.sedu.VenueMasterDTO;
+import com.nifs.backend.model.sedu.*;
 import com.nifs.backend.repository.sedu.FacilityRepository;
-import com.nifs.backend.repository.sedu.VenueChargeRepository;
 import com.nifs.backend.repository.sedu.VenueMasterRepository;
+import com.nifs.backend.service.sedu.IVenueChargeService;
+import com.nifs.backend.service.sedu.IVenueFacilityService;
 import com.nifs.backend.service.sedu.IVenueMasterService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class VenueMasterService implements IVenueMasterService {
@@ -24,18 +24,30 @@ public class VenueMasterService implements IVenueMasterService {
     private VenueMasterRepository venueRepo;
     @Autowired
     private FacilityRepository facRepo;
-    @Autowired
-    private ChargeRepository chargeRepo;
+
 
     @Autowired
-    private VenueChargeRepository venChargeRepo;
+    private IVenueFacilityService venueFacilityService;
 
-    public Boolean createVenue(VenueMaster venueData) {
+    @Autowired
+    private IVenueChargeService venueChargeService;
+    @Autowired
+    private ModelMapper modelMapper;
+
+    public boolean createVenue(VenueMasterDTO venueData, String user) {
         try {
             if (venueRepo.getVenue(venueData.getVenueId()) == null) {
+                VenueMaster venueMaster = modelMapper.map(venueData, VenueMaster.class);
                 Date d = new Date();
-                venueData.setCreatedOn(d);
-                venueRepo.save(venueData);
+                venueMaster.setCreatedOn(new Date());
+                venueMaster.setCreatedBy(Integer.valueOf(user));
+
+                VenueMaster saved = venueRepo.save(venueMaster);
+
+                //create charges
+                boolean b = venueChargeService.createNewChargeForVenue(saved, venueData.getCharges(), user);
+                //create facility
+                boolean c = venueFacilityService.createNewFacilityForVenue(saved, venueData.getFacilities(), user);
                 return true;
             }
             else {
@@ -47,66 +59,27 @@ public class VenueMasterService implements IVenueMasterService {
         }
     }
 
-    //    add facility
-    public VenueMaster addFacility(String venueId, Facility[] facData) {
+
+    public List<ResponseVenueMasterDTO> getAll() {
         try {
-            Set<Facility> facilitySet = null;
-            VenueMaster venueMaster = venueRepo.getVenue(venueId);
-            facilitySet = venueMaster.getFacilities();
-            for (Facility f : facData) {
-                Facility facility = facRepo.returnFacility(f.getFacilityId());
-                facilitySet.add(facility);
-            }
-            venueMaster.setFacilities(facilitySet);
-            return venueRepo.save(venueMaster);
+            List<VenueMaster> venueMasterList = venueRepo.findAll();
+
+            List<ResponseVenueMasterDTO> venueMasterDTOS = new ArrayList<>();
+
+            venueMasterList.forEach(venueMaster -> {
+                ResponseVenueMasterDTO dto =  modelMapper.map(venueMaster, ResponseVenueMasterDTO.class);
+                dto.setCharges(venueChargeService.getVenueChargesByVenueId(venueMaster.getVenueId()));
+                dto.setFacilities(venueFacilityService.getVenueFacilitiesByVenueId(venueMaster.getVenueId()));
+                venueMasterDTOS.add(dto);
+            });
+
+            return venueMasterDTOS;
+
         } catch (Exception e) {
             System.out.println(e.toString());
             return null;
         }
-    }
 
-
-//    add charge
-    public Boolean addCharge(String venueId, Charges[] chargeData) {
-
-        try {
-            VenueMaster venueMaster = venueRepo.getVenue(venueId);
-            if (venueMaster != null) {
-                for (Charges c : chargeData) {
-                    Date d = new Date();
-                    Charges charge = chargeRepo.returnCharge(c.getChargeId());
-                    if (charge != null) {
-
-                        VenueCharge venCharge = new VenueCharge(venueMaster, charge, d);
-//                    venCharge.setVenueMaster(venueMaster);
-//                    venCharge.setCharge(charge);
-                        System.out.println("b");
-                        venChargeRepo.save(venCharge);
-                    }
-                }
-                System.out.println("a");
-                return true;
-            }
-
-//        venueMaster.setCharges(chargeSet);
-//        return venueRepo.save(venueMaster);
-
-            return false;
-        } catch (Exception e) {
-            System.out.println(e.toString());
-            return false;
-        }
-    }
-
-
-
-    public List<VenueMaster> getAll() {
-        try {
-            return venueRepo.findAll();
-        } catch (Exception e) {
-            System.out.println(e.toString());
-            return null;
-        }
     }
 
     public String returnNewVenueId() {
@@ -174,42 +147,9 @@ public class VenueMasterService implements IVenueMasterService {
     }
 
 
-    public VenueMaster removeFacility(String venueId, Facility facData) {
-        try {
-            VenueMaster venueMaster = venueRepo.getVenue(venueId);
-            Facility facility = facRepo.returnFacility(facData.getFacilityId());
-            if (venueMaster != null && facility != null) {
-                Set<Facility> facilitySet = venueMaster.getFacilities();
-                facilitySet.remove(facility);
-                venueMaster.setFacilities(facilitySet);
-                return venueRepo.save(venueMaster);
-            }
-            else {
-                return null;
-            }
-        } catch (Exception e) {
-            System.out.println(e.toString());
-            return null;
-        }
-    }
 
-//    return all charges in a venue
-    public List<VenueCharge> returnAllCharges() {
-        try {
-            return venChargeRepo.findAll();
-        } catch (Exception e) {
-            System.out.println(e.toString());
-            return null;
-        }
-    }
 
-    public Optional<VenueCharge> returnAllChargesById(int id) {
-        try {
-            return venChargeRepo.returnVenueCharges(id);
-        } catch (Exception e) {
-            System.out.println(e.toString());
-            return Optional.empty();
-        }
 
-    }
+
+
 }

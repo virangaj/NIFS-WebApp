@@ -8,6 +8,7 @@ import com.nifs.backend.repository.admin.UserRepository;
 import com.nifs.backend.service.admin.IDivisionMasterService;
 import com.nifs.backend.service.auth.IJwtTokenService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,8 +16,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.HashMap;
 
 @Service
+@Log4j2
 @RequiredArgsConstructor
 public class AuthenticationService {
 
@@ -53,19 +56,25 @@ public class AuthenticationService {
 
 
             var employee = empRepo.returnEmployeeById(request.getEpfNo());
-            var jwtToken = jwtService.generateToken(user);
-            var division = divService.getDivisionById(employee.getDivisionId().getDivisionId());
-            System.out.println("AuthenticationService : "+request.getEpfNo());
 
-            //save in the database
-//            String tokenDatabase = tokenService.createToken(jwtToken, request.getEpfNo());
+//            var division = divService.getDivisionById(employee.getDivisionId().getDivisionId());
+
+            HashMap<String, Object> claims = new HashMap<>();
+            claims.put("division", employee.getDivisionId().getDivisionId());
+            claims.put("role", user.getRole());
+
+
+
+
+            var jwtToken = jwtService.generateToken(user, claims);
+            log.info("AuthenticationService : "+request.getEpfNo());
 
 
             UserDTO userDTO = UserDTO.builder()
                     .email(employee.getGsuitEmail())
                     .epfNo(employee.getEpfNo())
                     .role(user.getRole())
-                    .division(division.getName())
+                    .division(employee.getDivisionId().getDivisionId())
                     .lastLogin(user.getLastLogin()).build();
 
             if (user.getLastLogin() == null ||
