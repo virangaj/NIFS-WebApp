@@ -9,11 +9,6 @@ import Ripple from "../../components/Ripple";
 import IContractExtension from "../../types/admin/IContractExtension";
 import CustomeDataPicker from "../../components/DataPicker";
 import IEmployeeData from "../../types/admin/IEmployeeData";
-import EmployeeService from "../../services/admin/EmployeeService";
-import IDesignationData from "../../types/admin/IDesignationData";
-import DesignationMasterService from "../../services/admin/DesignationMasterService";
-import IDivisionData from "../../types/admin/IDivisionData";
-import DivisionMasterService from "../../services/admin/DivisionMasterService";
 import DivisionSelector from "../../components/shared/DivisionSelector";
 import IResignationRequest from "../../types/admin/IResignationRequest";
 import DesignationSelector from "../../components/shared/DesignationSelector";
@@ -106,13 +101,24 @@ function ResignationRequest() {
     e.preventDefault();
     setLoading(true);
     setTimeout(() => {
-      ResignationService.saveResignationRequest(values, auth?.user?.token)
+      const result = ResignationService.saveResignationRequest(
+        values,
+        auth?.user?.token
+      )
         .then((res) => {
           console.log(res);
         })
         .catch((e) => {
           console.log(e);
         });
+
+      if (result !== null) {
+        toast.success("Resignation Request Added Successfully");
+        resetForm();
+      } else {
+        toast.error("Request Cannot be Completed");
+      }
+      setLoading(false);
     }, 1000);
 
     console.log(values);
