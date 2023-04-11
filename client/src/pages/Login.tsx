@@ -148,7 +148,7 @@ export default function Login() {
 
 					<hr className='w-full my-6 border-gray-300' />
 
-					<button
+					{/* <button
 						type='button'
 						className='block w-full px-4 py-3 font-semibold text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:bg-sky-100'
 					>
@@ -187,7 +187,7 @@ export default function Login() {
 							</svg>
 							<span className='ml-4'>Log in with Google</span>
 						</div>
-					</button>
+					</button> */}
 
 					<Copyright />
 				</div>

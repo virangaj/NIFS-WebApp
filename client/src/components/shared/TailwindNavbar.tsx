@@ -160,7 +160,7 @@ function TailwindNavbar() {
 					>
 						<li>
 							{auth?.user && auth?.user.user.role === UserStatus.ADMIN && (
-								<Link to={RouteName.AdminAdmin}>Dashboard</Link>
+								<Link to={RouteName.AdminAdmin}>Admin Dashboard</Link>
 							)}
 						</li>
 						<li>

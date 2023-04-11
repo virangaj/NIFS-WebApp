@@ -1,6 +1,5 @@
 package com.nifs.backend.config;
 
-import io.jsonwebtoken.Jwt;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -65,8 +64,10 @@ public class SecurityConfig {
                         "/sedu/facility",
                         "/sedu/facility/newid",
 //                        contract extension
-                        "/admin/contractex"
-                                             )
+                        "/admin/contractex",
+                        //project
+                        "/common/project"
+                )
                 .permitAll()
                 .anyRequest()
                 .authenticated()

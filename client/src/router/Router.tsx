@@ -24,8 +24,17 @@ import TailwindNavbar from '../components/shared/TailwindNavbar';
 import MainPages from '../layout/MainPages';
 import DirectorAdmin from '../pages/adminDashboards/DirectorAdmin';
 import SeduAdmin from '../pages/adminDashboards/SeduAdmin';
+import { useAppSelector } from '../hooks/hooks';
+import { useEffect, useState } from 'react';
 
 const AppRouter = () => {
+	const { auth } = useAppSelector((state) => state.persistedReducer);
+	const [division, setDivision] = useState();
+	useEffect(() => {
+		if (auth !== null) {
+			setDivision(auth?.user?.user.division);
+		}
+	}, [auth]);
 	return (
 		<BrowserRouter>
 			<Routes>
