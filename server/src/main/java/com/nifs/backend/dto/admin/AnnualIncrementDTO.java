@@ -1,4 +1,4 @@
-package com.nifs.backend.dto.library;
+package com.nifs.backend.dto.admin;
 
 import com.nifs.backend.dto.BaseDTO;
 import lombok.AllArgsConstructor;
@@ -7,12 +7,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 @SuperBuilder
-public class ArticleRequestDTO extends BaseDTO {
+public class AnnualIncrementDTO extends BaseDTO {
 
     private String documentNo;
     private int epfNo;
@@ -20,16 +20,10 @@ public class ArticleRequestDTO extends BaseDTO {
     private String divisionId;
     private int hod;
 
-    private String date;
-    private String nameOfJournal;
-    private String publishYear;
-    private String volume;
-
-
-    private String issue;
-    private String pages;
-    private String webLink;
     private String remark;
-
-
+    private String date;
+    private String noOfLeaves;
+    private String salaryScale;
+    private String presentSalary;
+    private String newSalary;
 }

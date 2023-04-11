@@ -117,52 +117,52 @@ function AddEmployee() {
 		conStartDate,
 	]);
 
-	// get location data
-	const retreivePageLoadData = () => {
-		if (location.length === 0 || !locationIsSuccess) {
-			dispatch(getAllLocations());
-		}
+  // get location data
+  const retreivePageLoadData = () => {
+    if (location.length === 0 || !locationIsSuccess) {
+      dispatch(getAllLocations());
+    }
 
-		OtherDataServices.getAllProvinces()
-			.then((res: any) => {
-				setProvinces(res.data);
-				// console.log(provinces);
-			})
-			.catch((e: any) => {
-				console.log(e);
-			});
-		OtherDataServices.getAllReligions()
-			.then((res: any) => {
-				setReligions(res.data);
-				// console.log(provinces);
-			})
-			.catch((e: any) => {
-				console.log(e);
-			});
-	};
+    OtherDataServices.getAllProvinces()
+      .then((res: any) => {
+        setProvinces(res.data);
+        // console.log(provinces);
+      })
+      .catch((e: any) => {
+        console.log(e);
+      });
+    OtherDataServices.getAllReligions()
+      .then((res: any) => {
+        setReligions(res.data);
+        // console.log(provinces);
+      })
+      .catch((e: any) => {
+        console.log(e);
+      });
+  };
 
-	// get other data on location selected
-	useEffect(() => {
-		retreiveOtherEmployeeData(empData?.locationId);
-	}, [empData?.locationId]);
+  // get other data on location selected
+  useEffect(() => {
+    retreiveOtherEmployeeData(empData?.locationId);
+  }, [empData?.locationId]);
 
-	useEffect(() => {
-		retrieveDistricts(empData?.provinceId);
-		// console.log(empData?.province)
-	}, [empData?.provinceId]);
+  useEffect(() => {
+    retrieveDistricts(empData?.provinceId);
+    // console.log(empData?.province)
+  }, [empData?.provinceId]);
 
-	const retrieveDistricts = (id: number) => {
-		if (empData?.provinceId) {
-			OtherDataServices.getDistrictByProvinceId(id)
-				.then((res: any) => {
-					setDistricts(res.data);
-					// console.log(districts);
-				})
-				.catch((e: any) => {
-					console.log(e);
-				});
-		}
-	};
+  const retrieveDistricts = (id: number) => {
+    if (empData?.provinceId) {
+      OtherDataServices.getDistrictByProvinceId(id)
+        .then((res: any) => {
+          setDistricts(res.data);
+          // console.log(districts);
+        })
+        .catch((e: any) => {
+          console.log(e);
+        });
+    }
+  };
 
 	const retreiveOtherEmployeeData = (id: string) => {
 		if (empData?.locationId) {

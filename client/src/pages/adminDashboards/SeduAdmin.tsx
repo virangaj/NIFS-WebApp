@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { RouteName } from '../../constant/routeNames';
@@ -19,15 +20,15 @@ export function PageRoutes() {
 }
 
 function SeduAdmin() {
-	return (
-		<div>
-			<AdminPages
-				Sidebardata={SeduAdminSideNavbar}
-				Content={PageRoutes}
-				Route='sedu'
-			/>
-		</div>
-	);
+  return (
+    <div>
+      <AdminPages
+        Sidebardata={SeduAdminSideNavbar}
+        Content={PageRoutes}
+        Route="sedu"
+      />
+    </div>
+  );
 }
 
 export default SeduAdmin;

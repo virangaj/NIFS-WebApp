@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Service
 @Slf4j
@@ -45,7 +47,6 @@ public class ArticleRequestService implements IArticleRequestService {
                     .issue(data.getIssue())
                     .pages(data.getPages())
                     .webLink(data.getWebLink())
-                    .ISSN_No(data.getISSN_No())
                     .remark(data.getRemark())
                     .createdBy(data.getId())
                     .createdOn(new Date())
@@ -59,5 +60,22 @@ public class ArticleRequestService implements IArticleRequestService {
         }
 
         return null;
+    }
+
+    @Override
+    public List<ArticleRequestDTO> getAllArticleRequests() {
+
+        List<ArticleRequest> ar = new ArrayList<>();
+
+        ar = articleRequestRepository.findAll();
+
+        List<ArticleRequestDTO> arDTO = new ArrayList<>();
+
+        for (ArticleRequest a : ar){
+            ArticleRequestDTO arDTOSsingle = new ArticleRequestDTO(a.getDocumentNo(),a.getEpfNo(),a.getDesignationId(),a.getDivisionId(),a.getHod(),a.getDate(),a.getNameOfJournal(),a.getPublishYear(),a.getVolume(),a.getIssue(),a.getPages(),a.getWebLink(), a.getRemark());
+            arDTO.add(arDTOSsingle);
+        }
+
+        return arDTO;
     }
 }

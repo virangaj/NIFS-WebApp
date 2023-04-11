@@ -3,10 +3,10 @@ import http from "../../utils/http-common";
 
 axios.defaults.baseURL = process.env.REACT_APP_BACKEND_SERVER;
 
-const getCatalogSearchRequests = async (token: any) => {
+const getInsuranceClaimRequests = async (token: any) => {
   const response = await axios({
     method: "get",
-    url: `${process.env.REACT_APP_BACKEND_SERVER}/library/catalog-search`,
+    url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/insurance-claim`,
     headers: {
       "Content-Type": "application/json; charset=utf-8",
       Authorization: `Bearer ${token}`,
@@ -16,15 +16,15 @@ const getCatalogSearchRequests = async (token: any) => {
   return response;
 };
 
-const getCatalogSearchRequest = (id: any) => {
-  return http.get<any>(`/common/annual-increment/${id}`);
+const getInsuranceClaimRequest = (id: any) => {
+  return http.get<any>(`/common/insurance-claim/${id}`);
 };
 
-const saveCatalogSearchRequest = async (data: any, token: string) => {
+const saveInsuranceClaimRequest = async (data: any, token: string) => {
   console.log(token);
   const response = await axios({
     method: "post",
-    url: `${process.env.REACT_APP_BACKEND_SERVER}/library/catalog-search/add`,
+    url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/insurance-claim/add`,
     data: data,
     headers: {
       "Content-Type": "application/json; charset=utf-8",
@@ -38,7 +38,7 @@ const saveCatalogSearchRequest = async (data: any, token: string) => {
 const sendHodApproval = async (id: any, token: string, approval: boolean) => {
   const response = await axios({
     method: "put",
-    url: `${process.env.REACT_APP_BACKEND_SERVER}/library/catalog-search/hod?approval=${approval}`,
+    url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/insurance-claim/hod?approval=${approval}`,
     data: id,
     headers: {
       "Content-Type": "application/json; charset=utf-8",
@@ -56,7 +56,7 @@ const sendDirectorApproval = async (
 ) => {
   const response = await axios({
     method: "put",
-    url: `${process.env.REACT_APP_BACKEND_SERVER}/library/catalog-search/director?approval=${approval}`,
+    url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/insurance-claim/director?approval=${approval}`,
     data: id,
     headers: {
       "Content-Type": "application/json; charset=utf-8",
@@ -66,12 +66,12 @@ const sendDirectorApproval = async (
 
   return response;
 };
-const catalogSearchService = {
-  getCatalogSearchRequest,
-  getCatalogSearchRequests,
-  saveCatalogSearchRequest,
+const InsuranceClaimService = {
+  getInsuranceClaimRequest,
+  getInsuranceClaimRequests,
+  saveInsuranceClaimRequest,
   sendDirectorApproval,
   sendHodApproval,
 };
 
-export default catalogSearchService;
+export default InsuranceClaimService;

@@ -66,8 +66,9 @@ public class SecurityConfig {
 //                        contract extension
                         "/admin/contractex",
                         //project
-                        "/common/project"
-                )
+                        "/common/project",
+                        "/library/**"
+                                             )
                 .permitAll()
                 .anyRequest()
                 .authenticated()
