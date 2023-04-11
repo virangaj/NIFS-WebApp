@@ -15,6 +15,8 @@ import {
 	deleteDivision,
 	editDivision,
 } from '../../../../feature/admin/DivisionSlice';
+import CircularLoading from '../../../../components/tableIcons/CircularLoading';
+import DeleteButton from '../../../../components/tableIcons/DeleteButton';
 
 function DivisionAction({ params, rowId, setRowId, setDeleteId }: any) {
 	const dispatch = useDispatch<any>();
@@ -134,18 +136,7 @@ function DivisionAction({ params, rowId, setRowId, setDeleteId }: any) {
 					</Fab>
 				)}
 
-				{loading && (
-					<CircularProgress
-						size={52}
-						sx={{
-							color: green[500],
-							position: 'absolute',
-							top: -6,
-							left: -6,
-							zIndex: 1,
-						}}
-					/>
-				)}
+				{loading && <CircularLoading color={green[500]} />}
 			</Box>
 
 			{/* delete */}
@@ -156,34 +147,9 @@ function DivisionAction({ params, rowId, setRowId, setDeleteId }: any) {
 					position: 'relative',
 				}}
 			>
-				<Fab
-					color='warning'
-					sx={{
-						width: 40,
-						height: 40,
-						bgcolor: red[500],
-						'&:hover': { bgcolor: red[700] },
-					}}
-					className='cursor-pointer'
-					onClick={() => {
-						setDeleteConfirm((val) => !val);
-					}}
-				>
-					<BiTrash className='text-xl text-white row-commit-icon' />
-				</Fab>
+				<DeleteButton setDeleteConfirm={setDeleteConfirm} />
 
-				{deleteLoading && (
-					<CircularProgress
-						size={52}
-						sx={{
-							color: red[500],
-							position: 'absolute',
-							top: -6,
-							left: -6,
-							zIndex: 1,
-						}}
-					/>
-				)}
+				{deleteLoading && <CircularLoading color={red[500]} />}
 			</Box>
 
 			<Modal
