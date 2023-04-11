@@ -3,6 +3,8 @@ import { RouteName } from '../../constant/routeNames';
 import AdminResignationReq from './AdminAdmin/AdminResignationReq';
 import AdminPages from '../../layout/AdminPages';
 import { DirectorSideNavbar } from '../../constant/SideNavData';
+import AddProjects from './sharedDashboards/AddProjects';
+import Projects from './sharedDashboards/Projects';
 
 export function PageRoutes() {
 	return (
@@ -11,6 +13,7 @@ export function PageRoutes() {
 				path={RouteName.DirectorResignationReq}
 				element={<AdminResignationReq />}
 			/>
+			<Route path={RouteName.Projects} element={<Projects />} />
 		</Routes>
 	);
 }

@@ -10,6 +10,7 @@ import IParticipantMaster from '../../types/sedu/IParticipantMaster';
 import CustomeDataPicker from '../../components/DataPicker';
 import ParticipantMasterService from '../../services/sedu/ParticipantMasterService';
 import Ripple from '../../components/Ripple';
+import ImportFromXlsx from '../../components/ImportFromXlsx';
 
 const initialState: IParticipantMaster = {
 	pCode: '',
@@ -259,6 +260,8 @@ function ParticipantMaster() {
 			) : (
 				<Ripple />
 			)}
+
+			<ImportFromXlsx />
 		</div>
 	);
 }

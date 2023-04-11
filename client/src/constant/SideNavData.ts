@@ -47,6 +47,11 @@ export const DirectorSideNavbar = [
 		link: RouteName.DirectorResignationReq,
 		icon: HiOutlineOfficeBuilding,
 	},
+	{
+		title: 'Projects',
+		link: RouteName.Projects,
+		icon: HiOutlineOfficeBuilding,
+	},
 ];
 
 export const SeduAdminSideNavbar = [

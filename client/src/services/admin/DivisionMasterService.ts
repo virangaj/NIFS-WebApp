@@ -57,15 +57,6 @@ const editDivision = async (favJSON: any, token: string) => {
 		},
 	});
 
-	// const response = await axios.patch(
-	// 	process.env.REACT_APP_BACKEND_SERVER +
-	// 		'/admin/divisionmaster/' +
-	// 		favJSON.typeId,
-	// 	favJSON,
-	// 	config
-	// );
-
-	// alert("Favourite created --- "+ response);
 	return response;
 };
 

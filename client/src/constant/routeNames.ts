@@ -92,6 +92,7 @@ export enum RouteName {
 
 	//director pages
 	DirectorResignationReq = '/resignation-request',
+	Projects = '/projects',
 
 	//sedu admin pages
 	Charges = '/charges',

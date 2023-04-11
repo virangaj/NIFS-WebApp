@@ -21,6 +21,7 @@ public class ApplicationConfig {
     @Autowired
     private final UserRepository userRepo;
 
+
     @Bean
     public UserDetailsService userDetailsService(){
         try{
