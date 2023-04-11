@@ -1,23 +1,15 @@
-import { green, red } from '@mui/material/colors';
-import Fab from '@mui/material/Fab';
-import CircularProgress from '@mui/material/CircularProgress';
+import { green } from '@mui/material/colors';
 import { Box } from '@mui/system';
 import { useState, useEffect } from 'react';
-import Modal from '@mui/material/Modal';
-import { BiCheck, BiSave, BiTrash } from 'react-icons/bi';
+
 import { useAppSelector } from '../../../../hooks/hooks';
-import { useDispatch } from 'react-redux';
 import CircularLoading from '../../../../components/tableIcons/CircularLoading';
-import DeleteButton from '../../../../components/tableIcons/DeleteButton';
 import SuccessButton from '../../../../components/tableIcons/SuccessButton';
 import ProjectService from '../../../../services/common/ProjectService';
 
 function TableAction({ params, rowId, setRowId, setDeleteId }: any) {
-	const dispatch = useDispatch<any>();
 	const [loading, setLoading] = useState(false);
 	const [success, setSuccess] = useState(false);
-	const [deleteLoading, setDeleteLoadng] = useState(false);
-	const [deleteConfirm, setDeleteConfirm] = useState(false);
 
 	const { auth } = useAppSelector((state) => state.persistedReducer);
 
@@ -27,7 +19,6 @@ function TableAction({ params, rowId, setRowId, setDeleteId }: any) {
 		}
 	}, [rowId]);
 
-	const handleDelete = async () => {};
 	const handleUpdate = async () => {
 		setLoading(true);
 		const { projectId, projectName, description } = params.row;
@@ -66,17 +57,6 @@ function TableAction({ params, rowId, setRowId, setDeleteId }: any) {
 			</Box>
 
 			{/* delete */}
-
-			<Box
-				sx={{
-					m: 1,
-					position: 'relative',
-				}}
-			>
-				<DeleteButton setDeleteConfirm={setDeleteConfirm} />
-
-				{deleteLoading && <CircularLoading color={red[500]} />}
-			</Box>
 		</>
 	);
 }

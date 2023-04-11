@@ -1,6 +1,7 @@
 package com.nifs.backend.model.admin;
 
 
+import com.nifs.backend.constant.RequestStatus;
 import com.nifs.backend.model.Base;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -25,6 +26,6 @@ public class ResignationRequest extends Base {
     String divisionId;
     String hod;
     String remark;
-    boolean hodApprove;
-    boolean dirApproved;
+    RequestStatus hodApproved;
+    RequestStatus dirApproved;
 }

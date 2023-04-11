@@ -3,6 +3,7 @@ import { useAppSelector } from '../../../hooks/hooks';
 import ResignationService from '../../../services/admin/ResignationService';
 import ResignationRequestTable from '../../shared/ResignationRequestTable';
 import { toast } from 'react-toastify';
+import { RequestStatus } from '../../../constant/requestStatus';
 
 function AdminResignationReq() {
 	const { auth } = useAppSelector((state) => state.persistedReducer);
@@ -32,7 +33,11 @@ function AdminResignationReq() {
 		console.log(selectedData);
 		setLoading(true);
 		setTimeout(() => {
-			ResignationService.sendHodApproval(selectedData, auth?.user?.token, true)
+			ResignationService.sendHodApproval(
+				selectedData,
+				auth?.user?.token,
+				RequestStatus.APPROVED
+			)
 				.then((res) => {
 					if (res.data) {
 						toast.success('Resignation is Confirmed');
@@ -52,10 +57,14 @@ function AdminResignationReq() {
 	const sendReject = () => {
 		setLoading(true);
 		setTimeout(() => {
-			ResignationService.sendHodApproval(selectedData, auth?.user?.token, false)
+			ResignationService.sendHodApproval(
+				selectedData,
+				auth?.user?.token,
+				RequestStatus.DISAPPROVED
+			)
 				.then((res) => {
 					if (res.data) {
-						toast.success('Resignation is Declined');
+						toast.warning('Resignation is Declined');
 					} else {
 						toast.error('Request cannot be performed');
 					}

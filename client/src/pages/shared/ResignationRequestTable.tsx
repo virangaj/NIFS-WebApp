@@ -3,6 +3,7 @@ import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import ResignationService from '../../services/admin/ResignationService';
 import { useAppSelector } from '../../hooks/hooks';
 import Ripple from '../../components/Ripple';
+import RequestStatusView from '../../components/tableIcons/RequestStatusView';
 
 function ResignationRequestTable({ setSelectedData, getData }: any) {
 	const [requests, setRequests] = useState<any>([]);
@@ -50,8 +51,8 @@ function ResignationRequestTable({ setSelectedData, getData }: any) {
 			},
 			{
 				field: 'designationId',
-				headerName: 'Designation ID',
-				width: 100,
+				headerName: 'Designation',
+				width: 120,
 				editable: true,
 			},
 			{
@@ -67,17 +68,24 @@ function ResignationRequestTable({ setSelectedData, getData }: any) {
 				editable: true,
 			},
 			{
-				field: 'hodApprove',
+				field: 'actions1',
 				headerName: 'HOD Approved',
-				width: 100,
-				editable: true,
+				type: 'actions',
+				renderCell: (params: any) => (
+					<RequestStatusView status={params.row.hodApproved} />
+				),
+				width: 200,
 			},
 			{
-				field: 'dirApproved',
+				field: 'actions2',
 				headerName: 'Dir / Sec Approved',
-				width: 100,
-				editable: true,
+				type: 'actions',
+				renderCell: (params: any) => (
+					<RequestStatusView status={params.row.dirApproved} />
+				),
+				width: 200,
 			},
+
 			{
 				field: 'remark',
 				headerName: 'Remark',

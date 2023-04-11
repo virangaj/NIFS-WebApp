@@ -39,7 +39,7 @@ public class ProjectMasterController {
 
     }
 
-    @PutMapping("/upadte/{id}")
+    @PutMapping("/update/{id}")
     public boolean updateProject(@RequestBody ProjectMasterDTO data, @PathVariable String id, @AuthenticationPrincipal UserDetails userDetails) {
         String user = userDetails.getUsername();
         return projectMasterService.updateProject(data, id, user);
