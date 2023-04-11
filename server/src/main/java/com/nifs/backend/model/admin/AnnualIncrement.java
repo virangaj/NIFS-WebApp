@@ -1,4 +1,4 @@
-package com.nifs.backend.model.library;
+package com.nifs.backend.model.admin;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.nifs.backend.model.Base;
@@ -10,14 +10,14 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.springframework.format.annotation.DateTimeFormat;
 
-@Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @SuperBuilder
-@Table(name = "article_request")
-public class ArticleRequest extends Base {
+@Entity
+@Table(name = "annual_increment")
+public class AnnualIncrement extends Base {
 
     private String documentNo;
     private int epfNo;
@@ -25,19 +25,16 @@ public class ArticleRequest extends Base {
     private String divisionId;
     private int hod;
 
+    private String remark;
+
     @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(pattern = "dd/MM/yyyy")
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Column(name = "date")
     private String date;
-    private String nameOfJournal;
-    private String publishYear;
-    private String volume;
 
-
-    private String issue;
-    private String pages;
-    private String webLink;
-    private String remark;
-
+    private String noOfLeaves;
+    private String salaryScale;
+    private String presentSalary;
+    private String newSalary;
 }

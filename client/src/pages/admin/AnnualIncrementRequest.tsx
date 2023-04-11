@@ -1,384 +1,263 @@
-import React, { useState, useEffect } from 'react';
-import Box from '@mui/material/Box';
-import { toast } from 'react-toastify';
-import Stack from '@mui/material/Stack';
-import { generateID } from '../../utils/generateId';
-import Ripple from '../../components/Ripple';
-import IContractExtension from '../../types/admin/IContractExtension';
-import CustomeDataPicker from '../../components/DataPicker';
-import IEmployeeData from '../../types/admin/IEmployeeData';
-import EmployeeService from '../../services/admin/EmployeeService';
-import IDesignationData from '../../types/admin/IDesignationData';
-import DesignationMasterService from '../../services/admin/DesignationMasterService';
-import IDivisionData from '../../types/admin/IDivisionData';
-import DivisionMasterService from '../../services/admin/DivisionMasterService';
+import React, { useState, useEffect } from "react";
+import Box from "@mui/material/Box";
+import { toast } from "react-toastify";
+import Stack from "@mui/material/Stack";
+import { generateID } from "../../utils/generateId";
+import Ripple from "../../components/Ripple";
+import IContractExtension from "../../types/admin/IContractExtension";
+import CustomeDataPicker from "../../components/DataPicker";
+import IEmployeeData from "../../types/admin/IEmployeeData";
+import EmployeeService from "../../services/admin/EmployeeService";
+import IDesignationData from "../../types/admin/IDesignationData";
+import DesignationMasterService from "../../services/admin/DesignationMasterService";
+import IDivisionData from "../../types/admin/IDivisionData";
+import AnnualIncrementRequestService from "../../services/admin/AnnualIncrementRequestService";
+import IAnnualIncrement from "../../types/admin/IAnnualIncrement";
+import { useAppSelector } from "../../hooks/hooks";
+import EmployeeSelector from "../../components/shared/EmployeeSelector";
+import DesignationSelector from "../../components/shared/DesignationSelector";
+import DivisionSelector from "../../components/shared/DivisionSelector";
 
-const initialState: IContractExtension = {
-	documentNo: '',
-	date: '',
-	epfNo: 0,
-	designationId: '',
-	divisionId: '',
-	hod: '',
-	remark: '',
+const initialState: IAnnualIncrement = {
+  // generated
+  documentNo: "",
+  epfNo: 0,
+  hod: 0,
+  designationId: "",
+  divisionId: "",
+
+  remark: "",
+  date: "",
+
+  noOfLeaves: "",
+  salaryScale: "",
+  presentSalary: "",
+  newSalary: "",
 };
 
 function AnnualIncrementRequest() {
-	const [getDocNo, setDocNo] = useState<String | any>('');
-	const [requestDate, setRequestDate] = React.useState<string | null>(null);
-	const [incrementDate, setIncrementDate] = React.useState<string | null>(null);
+  const [getDocNo, setDocNo] = useState<String | any>("");
+  const [requestDate, setRequestDate] = React.useState<string | null>(null);
+  const [incrementDate, setIncrementDate] = React.useState<string | null>(null);
+  const [hod, setHod] = useState<IEmployeeData | null>();
+  const [designationData, setDesignationData] = useState<IDesignationData>();
+  const [divisionData, setDivisionData] = useState<IDivisionData>();
+  const [loading, setLoading] = useState(false);
+  const [empFoundError, setEmpFoundError] = useState<boolean>(false);
+  const [empData, setEmpData] = useState<Array<IEmployeeData>>([]);
+  const [currentEmp, setCurrentEmp] = useState<IEmployeeData>();
+  const [values, setValues] = useState<IAnnualIncrement>(initialState);
 
-	const [designationData, setDesignationData] = useState<IDesignationData>();
-	const [divisionData, setDivisionData] = useState<IDivisionData>();
+  const { employees, employeesIsLoading, employeesIsSuccess } = useAppSelector(
+    (state) => state.employees
+  );
+  const { division, divisionIsLoading, divisionIsSuccess } = useAppSelector(
+    (state) => state.division
+  );
 
-	const [empFoundError, setEmpFoundError] = useState<boolean>(false);
-	const [empData, setEmpData] = useState<Array<IEmployeeData>>([]);
-	const [currentEmp, setCurrentEmp] = useState<IEmployeeData>();
-	const [values, setValues] = useState<IContractExtension>(initialState);
+  const { auth } = useAppSelector((state) => state.persistedReducer);
 
-	useEffect(() => {
-		setValues({
-			documentNo: values?.documentNo,
-			date: requestDate ? requestDate : '',
-			epfNo: values?.epfNo,
-			designationId: values?.designationId,
-			divisionId: values?.divisionId,
-			hod: values?.hod,
-			remark: values?.remark,
-		});
-	}, [requestDate]);
+  useEffect(() => {
+    setValues({
+      date: requestDate ? requestDate : "",
+      documentNo: values?.documentNo,
+      epfNo: values?.epfNo,
+      designationId: values?.designationId,
+      divisionId: values?.divisionId,
+      hod: values?.hod,
+      remark: values?.remark,
 
-	useEffect(() => {
-		setValues({
-			documentNo: getDocNo && getDocNo,
-			date: requestDate ? requestDate : '',
-			epfNo: values?.epfNo,
-			designationId: values?.designationId,
-			divisionId: values?.divisionId,
-			hod: values?.hod,
-			remark: values?.remark,
-		});
-		console.log(getDocNo);
-	}, [getDocNo]);
+      noOfLeaves: values?.noOfLeaves,
+      salaryScale: values?.salaryScale,
+      presentSalary: values?.presentSalary,
+      newSalary: values?.newSalary,
+    });
+  }, [requestDate]);
 
-	useEffect(() => {
-		retreiveEmployees();
-		console.log(empData);
-	}, []);
+  useEffect(() => {
+    setValues({
+      ...values,
+      documentNo: getDocNo && getDocNo,
+    });
+    console.log(getDocNo);
+  }, [getDocNo]);
 
-	useEffect(() => {
-		let employee = empData.find(
-			(emp: IEmployeeData) => emp.epfNo.toString() === values.epfNo.toString()
-		);
-		setCurrentEmp(employee);
-		if (employee) {
-			setEmpFoundError(false);
-		} else {
-			setEmpFoundError(true);
-		}
-		setValues({
-			documentNo: getDocNo && getDocNo,
-			date: requestDate ? requestDate : '',
-			epfNo: values?.epfNo,
-			designationId: employee?.designationId,
-			divisionId: employee?.divisionId,
-			hod: values?.hod,
-			remark: values?.remark,
-		});
-		retriveEmployeeDetails(employee);
-	}, [values.epfNo]);
+  useEffect(() => {
+    const divisionData = division.find(
+      (d) => d.divisionId === values.divisionId
+    );
 
-	//get designation and division
-	const retriveEmployeeDetails = (emp: any) => {
-		//get designation
-		DesignationMasterService.getDesignation(emp?.designationId)
-			.then((res: any) => {
-				setDesignationData(res.data.data);
-			})
-			.catch((e: any) => {
-				console.log(e);
-			});
+    if (divisionData) {
+      const employeeId = divisionData.hod;
+      const employee = employees.find((e) => e.epfNo === employeeId);
+      // console.log(employee);
+      if (employee) {
+        setHod(employee);
+        setValues({
+          ...values,
+          hod: employee.epfNo,
+        });
+      }
+    }
+  }, [values.divisionId]);
 
-		//get divions
+  // generate Doc number ID
+  const generateDocNo = () => {
+    setDocNo(generateID("RR"));
+    setValues(initialState);
+  };
 
-		DivisionMasterService.getDivision(emp?.divisionId)
-			.then((res: any) => {
-				setDivisionData(res.data.data);
-			})
-			.catch((e: any) => {
-				console.log(e);
-			});
-	};
+  //reset form
+  const resetForm = () => {
+    setValues(initialState);
+    setDocNo("");
+    setHod(null);
+  };
 
-	//get employees
-	const retreiveEmployees = () => {
-		EmployeeService.getAllEmployeeData()
-			.then((res: any) => {
-				setEmpData(res.data.data);
-			})
-			.catch((e: any) => {
-				console.log(e);
-			});
-	};
+  //  onChange Function
+  const onChange = (e: any) => {
+    setValues((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
 
-	// generate document ID
-	const generateDocNo = () => {
-		setDocNo(generateID('CE'));
-		setValues(initialState);
-	};
+  const onSubmit = async (e: any) => {
+    e.preventDefault();
+    console.log(values);
+    setLoading(true);
+    setTimeout(() => {
+      const result = AnnualIncrementRequestService.saveAnnualIncrementRequest(
+        values,
+        auth?.user?.token
+      )
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
 
-	//reset form
-	const resetForm = () => {
-		setValues(initialState);
-		setDocNo('');
-	};
+      if (result !== null) {
+        toast.success("Annual Increment Request Added Successfully");
+        resetForm();
+      } else {
+        toast.error("Request Cannot be Completed");
+      }
+      setLoading(false);
+    }, 1000);
 
-	//onchange funtion
-	const onChange = (e: any) => {
-		setValues((preState) => ({
-			...preState,
-			[e.target.name]: e.target.value,
-		}));
-	};
+    console.log(values);
+  };
 
-	const onSubmit = async (e: any) => {
-		e.preventDefault();
-		console.log(values);
-	};
+  return (
+    <div className="sub-body-content xl:!w-[60%]">
+      <h1 className="page-title">Annual Increment Request</h1>
+      <hr className="horizontal-line" />
+      <form onSubmit={onSubmit}>
+        <div className="grid grid-cols-1 md:grid-cols-2 items-center w-[97%] mx-auto">
+          <Box className="flex items-center justify-between input-field">
+            Document No - {getDocNo && getDocNo}
+            <button
+              type="button"
+              className="rounded-outline-success-btn"
+              onClick={generateDocNo}
+              style={{ marginLeft: "20px" }}
+            >
+              New
+            </button>
+          </Box>
+        </div>
 
-	return (
-		<div className='sub-body-content xl:!w-[60%]'>
-			<h1 className='page-title'>Annual Increment Request</h1>
-			<hr className='horizontal-line' />
-			<form onSubmit={onSubmit}>
-				<div className='grid grid-cols-1 md:grid-cols-2 items-center w-[97%] mx-auto'>
-					<Box className='flex items-center justify-between input-field'>
-						Document No - {getDocNo && getDocNo}
-						<button
-							type='button'
-							className='rounded-outline-success-btn'
-							onClick={generateDocNo}
-							style={{ marginLeft: '20px' }}
-						>
-							New
-						</button>
-					</Box>
-					<div className='mx-0 mb-4 lg:ml-10 md:my-0'>
-						<CustomeDataPicker
-							date={requestDate}
-							setDate={setRequestDate}
-							title='Request Date'
-						/>
-					</div>
+        <EmployeeSelector
+          onChange={onChange}
+          value={values.epfNo}
+          name="epfNo"
+        />
 
-					<div className='flex items-center'>
-						<div>
-							<label className='input-label' htmlFor='epfNo'>
-								Employee EPF No
-							</label>
+        <div className="w-[97%] mx-auto">
+          <DesignationSelector
+            onChange={onChange}
+            value={values.designationId}
+            name="designationId"
+          />
+        </div>
 
-							<input
-								id='epfNo'
-								type='text'
-								className='tailwind-text-box w-[40%] mr-4'
-								onChange={onChange}
-								name='epfNo'
-								value={values.epfNo}
-							/>
-							{values.epfNo && empFoundError ? (
-								<p className='w-[97%] mx-auto error-text-message'>
-									User Not Found!
-								</p>
-							) : (
-								''
-							)}
-						</div>
-						<div>
-							<label className='input-label' htmlFor='epfNo'>
-								Employee Name
-							</label>
-							<select
-								className='tailwind-text-box'
-								value={values.epfNo}
-								id='epfNo'
-								name='epfNo'
-								onChange={onChange}
-							>
-								<option disabled value={0}>
-									Select Employee
-								</option>
+        <div className="w-[97%] mx-auto">
+          <DivisionSelector
+            onChange={onChange}
+            value={values.divisionId}
+            name="divisionId"
+          />
+        </div>
 
-								{empData?.map((l: IEmployeeData, i: number) => {
-									return (
-										<option key={i} value={l.epfNo}>
-											{l.firstName + ' ' + l.lastName}
-										</option>
-									);
-								})}
-							</select>
-						</div>
-					</div>
-				</div>
+        <div className="w-[97%] mx-auto">
+          <div className="grid items-center grid-cols-1 md:grid-cols-2">
+            <p className="normal-text">
+              HOD :{" "}
+              {values.divisionId && hod ? (
+                <span className="font-bold">
+                  {hod.firstName + " " + hod.lastName}
+                </span>
+              ) : (
+                <span className="italic-sm-text">Please select a Division</span>
+              )}
+            </p>
+          </div>
+        </div>
 
-				<div className='w-[97%] mx-auto'>
-					<p className='normal-text'>
-						Designation :{' '}
-						{values.epfNo && designationData ? (
-							<span className='font-bold'>
-								{designationData.designationName}
-							</span>
-						) : (
-							<span className='italic-sm-text'>Please select an employee</span>
-						)}
-					</p>
+        <div className="mx-0 mb-4 lg:ml-4 lg:mt-4 md:my-0">
+          <CustomeDataPicker
+            date={requestDate}
+            setDate={setRequestDate}
+            title="Request Date"
+          />
+        </div>
 
-					<div className='grid items-center grid-cols-1 md:grid-cols-2'>
-						<p className='normal-text'>
-							Division :{' '}
-							{values.epfNo && divisionData ? (
-								<span className='font-bold'>{divisionData.name}</span>
-							) : (
-								<span className='italic-sm-text'>
-									Please select an employee
-								</span>
-							)}
-						</p>
+        <div className="grid grid-cols-1 md:grid-cols-2">
+          {/* left section */}
+          <div className="form-left-section"></div>
 
-						<p className='normal-text'>
-							HOD :{' '}
-							{values.epfNo && divisionData ? (
-								<span className='font-bold'>{divisionData.name}</span>
-							) : (
-								<span className='italic-sm-text'>
-									Please select an employee
-								</span>
-							)}
-						</p>
-					</div>
-				</div>
+          {/* right section */}
+          <div className="form-right-section"></div>
+        </div>
 
-				<div className='w-[97%] mx-auto'>
-					<label className='input-label' htmlFor='remark'>
-						Remark
-					</label>
+        <div className="w-[97%] mx-auto">
+          <label className="input-label" htmlFor="remark">
+            Remark
+          </label>
 
-					<textarea
-						id='remark'
-						className='tailwind-text-box w-[100%] mr-4'
-						onChange={onChange}
-						name='remark'
-						value={values.remark}
-					></textarea>
-				</div>
+          <textarea
+            id="remark"
+            className="tailwind-text-box w-[100%] mr-4"
+            onChange={onChange}
+            name="remark"
+            value={values.remark}
+          ></textarea>
+        </div>
 
-				<h4 className='sub-page-title'>Requester Details</h4>
-				<hr className='horizontal-line' />
-
-				<div className='grid grid-cols-1 md:grid-cols-2 items-center w-[97%] mx-auto'>
-					<div>
-						<div className='flex items-center'>
-							<div>
-								<label className='input-label' htmlFor='epfNo'>
-									Employee EPF No
-								</label>
-
-								<input
-									id='epfNo'
-									type='text'
-									className='tailwind-text-box w-[40%] mr-4'
-									onChange={onChange}
-									name='epfNo'
-									value={values.epfNo}
-								/>
-								{values.epfNo && empFoundError ? (
-									<p className='w-[97%] mx-auto error-text-message'>
-										User Not Found!
-									</p>
-								) : (
-									''
-								)}
-							</div>
-							<div>
-								<label className='input-label' htmlFor='epfNo'>
-									Employee Name
-								</label>
-								<select
-									className='tailwind-text-box'
-									value={values.epfNo}
-									id='epfNo'
-									name='epfNo'
-									onChange={onChange}
-								>
-									<option disabled value={0}>
-										Select Employee
-									</option>
-
-									{empData?.map((l: IEmployeeData, i: number) => {
-										return (
-											<option key={i} value={l.epfNo}>
-												{l.firstName + ' ' + l.lastName}
-											</option>
-										);
-									})}
-								</select>
-							</div>
-						</div>
-						<div className='w-[97%] mx-auto'>
-							<p className='normal-text'>
-								Designation :{' '}
-								{values.epfNo && designationData ? (
-									<span className='font-bold'>
-										{designationData.designationName}
-									</span>
-								) : (
-									<span className='italic-sm-text'>
-										Please select an employee
-									</span>
-								)}
-							</p>
-
-							<p className='normal-text'>
-								Division :{' '}
-								{values.epfNo && divisionData ? (
-									<span className='font-bold'>{divisionData.name}</span>
-								) : (
-									<span className='italic-sm-text'>
-										Please select an employee
-									</span>
-								)}
-							</p>
-							<div className='mt-4'>
-								<CustomeDataPicker
-									date={requestDate}
-									setDate={setIncrementDate}
-									title='Increment Date'
-								/>
-							</div>
-						</div>
-					</div>
-				</div>
-				<Stack
-					direction='row'
-					justifyContent='flex-end'
-					alignItems='flex-end'
-					spacing={2}
-					className='admin-form-buton-stack'
-				>
-					<button
-						className='action-com-model-error-btn'
-						type='reset'
-						color='error'
-						onClick={resetForm}
-					>
-						Reset
-					</button>
-					<button className='action-com-model-sucess-btn' type='submit'>
-						Submit
-					</button>
-				</Stack>
-			</form>
-		</div>
-	);
+        <Stack
+          direction="row"
+          justifyContent="flex-end"
+          alignItems="flex-end"
+          spacing={2}
+          className="admin-form-buton-stack"
+        >
+          <button
+            className="action-com-model-error-btn"
+            type="reset"
+            color="error"
+            onClick={resetForm}
+          >
+            Reset
+          </button>
+          <button className="action-com-model-sucess-btn" type="submit">
+            Submit
+          </button>
+        </Stack>
+      </form>
+    </div>
+  );
 }
 
 export default AnnualIncrementRequest;
