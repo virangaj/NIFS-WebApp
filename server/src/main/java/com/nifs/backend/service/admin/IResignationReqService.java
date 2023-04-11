@@ -1,5 +1,6 @@
 package com.nifs.backend.service.admin;
 
+import com.nifs.backend.constant.RequestStatus;
 import com.nifs.backend.dto.admin.ResignationRequestDTO;
 import org.springframework.stereotype.Service;
 
@@ -11,9 +12,9 @@ public interface IResignationReqService {
 
     List<ResignationRequestDTO> getAllResignationRequests(String division);
 
-    boolean putHodApproval(boolean approval, List<String> resId, String user);
+    boolean putHodApproval(RequestStatus approval, List<String> resId, String user);
 
-    Object putDirectorApproval(boolean approval, List<String> resId, String user);
+    Object putDirectorApproval(RequestStatus approval, List<String> resId, String user);
 
 
 }

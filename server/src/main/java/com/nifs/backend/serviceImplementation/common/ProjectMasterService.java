@@ -70,7 +70,8 @@ public class ProjectMasterService implements IProjectMasterService {
         if (projectMasterRepository.findByProjectIdEquals(id) != null) {
 
             try {
-//                projectMasterRepository.update
+                log.info("Project update query start");
+                projectMasterRepository.updateProject(data.getProjectName(), data.getDescription(), new Date(), Integer.valueOf(user), id);
                 return true;
 
             } catch (Exception e) {
