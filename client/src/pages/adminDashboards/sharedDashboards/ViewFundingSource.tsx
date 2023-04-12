@@ -1,33 +1,32 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import IProjects from '../../../types/common/IProjects';
-import ProjectService from '../../../services/common/ProjectService';
 import { useAppSelector } from '../../../hooks/hooks';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
-import ProjectAction from './shared/ProjectAction';
+import TableAction from './shared/ProjectAction';
+import FundingSourceService from '../../../services/common/FundingSourceService';
+import FundingAction from './shared/FundingAction';
 
-function ViewProjects() {
+function ViewFundingSource() {
 	const dispatch = useDispatch<any>();
 	const [pageSize, setPageSize] = useState(10);
 	const [rowId, setRowId] = useState(0);
 	const [loading, setLoading] = useState(false);
 	const [deleteId, setDeleteId] = useState('');
-	const [projectData, setProjectData] = useState<Array<IProjects>>([]);
+	const [fundingSources, setFundingSources] = useState<Array<any>>([]);
 	const { auth } = useAppSelector((state) => state.persistedReducer);
 	useEffect(() => {
-		const filteredData = projectData.filter((p) => p.projectId !== deleteId);
-		setProjectData(filteredData);
+		const filteredData = fundingSources.filter((p) => p.projectId !== deleteId);
+		setFundingSources(filteredData);
 	}, [deleteId]);
 
 	useEffect(() => {
 		retreiveProjects();
 	}, []);
-
 	//get all projects form the database
 	const retreiveProjects = () => {
-		ProjectService.getAllProjects()
+		FundingSourceService.getAllFundingServices()
 			.then((res: any) => {
-				setProjectData(res.data);
+				setFundingSources(res.data);
 			})
 			.catch((e: any) => {
 				console.log(e);
@@ -36,17 +35,11 @@ function ViewProjects() {
 
 	const columns = useMemo(
 		() => [
-			{ field: 'projectId', headerName: 'Project Id', width: 100 },
+			{ field: 'fundingId', headerName: 'Id', width: 100 },
 			{
-				field: 'projectName',
-				headerName: 'Project Name',
+				field: 'name',
+				headerName: 'Funding Source Name',
 				width: 300,
-				editable: true,
-			},
-			{
-				field: 'remark',
-				headerName: 'Remark',
-				width: 100,
 				editable: true,
 			},
 			{
@@ -72,25 +65,24 @@ function ViewProjects() {
 				headerName: 'Action',
 				type: 'actions',
 				renderCell: (params: any) => (
-					<ProjectAction {...{ params, rowId, setRowId, setDeleteId }} />
+					<FundingAction {...{ params, rowId, setRowId, setDeleteId }} />
 				),
 				width: 200,
 			},
 		],
 		[rowId]
 	);
-
 	return (
 		<>
-			<h2 className='text-xl font-bold'>All Projects</h2>
+			<h2 className='text-xl font-bold'>All Funding Sources</h2>
 			<div className='w-full h-[700px]'>
 				<DataGrid
 					checkboxSelection={true}
 					components={{ Toolbar: GridToolbar }}
 					rowHeight={60}
 					columns={columns}
-					rows={projectData && projectData}
-					getRowId={(row) => row.projectId}
+					rows={fundingSources && fundingSources}
+					getRowId={(row) => row.fundingId}
 					rowsPerPageOptions={[5, 10, 20]}
 					pageSize={pageSize}
 					onPageSizeChange={(newPagesize) => setPageSize(newPagesize)}
@@ -101,4 +93,4 @@ function ViewProjects() {
 	);
 }
 
-export default ViewProjects;
+export default ViewFundingSource;

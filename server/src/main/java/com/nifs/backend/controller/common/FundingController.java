@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/admin/funding-source")
+@RequestMapping("/common/funding-source")
 public class FundingController {
 
     @Autowired
     private IFundingSourceService fundingSourceService;
 
-    @PostMapping
+    @PostMapping("/add")
     public boolean createNewFundingSource(@RequestBody FundingSourceDTO data, @AuthenticationPrincipal UserDetails userDetails){
         String user = userDetails.getUsername();
 

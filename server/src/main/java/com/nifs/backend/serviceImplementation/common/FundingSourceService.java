@@ -68,6 +68,7 @@ public class FundingSourceService implements IFundingSourceService {
                         .fundingId(f.getFundingId())
                         .description(f.getDescription())
                         .name(f.getName())
+                        .locationId(f.getLocationId().getLocationId())
                         .createdBy(f.getCreatedBy())
                         .createdOn(f.getCreatedOn())
                         .modifiedBy(f.getModifiedBy())

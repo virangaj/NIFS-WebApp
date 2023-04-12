@@ -10,6 +10,7 @@ import AdminResignationReq from './AdminAdmin/AdminResignationReq';
 import { AdministrationSidenav } from '../../constant/SideNavData';
 import AdminPages from '../../layout/AdminPages';
 import ContractextensionReq from './AdminAdmin/ContractextensionReq';
+import FundingSource from './sharedDashboards/FundingSource';
 
 export function PageRoutes() {
 	return (
@@ -27,6 +28,7 @@ export function PageRoutes() {
 				path={RouteName.ContractExtension}
 				element={<ContractextensionReq />}
 			/>
+			<Route path={RouteName.FundingSource} element={<FundingSource />} />
 		</Routes>
 	);
 }
