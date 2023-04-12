@@ -1,16 +1,20 @@
 import { useEffect, useState } from 'react';
 import { useAppSelector } from '../../../hooks/hooks';
-import ResignationService from '../../../services/admin/ResignationService';
-import ResignationRequestTable from '../../shared/ResignationRequestTable';
 import { toast } from 'react-toastify';
 import { RequestStatus } from '../../../constant/requestStatus';
+import getContractExtensionService from '../../../services/admin/ContractExtensionService';
+import ContractExtesnsionTable from '../../shared/ContractExtesnsionTable';
 
-function AdminResignationReq() {
+function HODContractextensionReq() {
 	const { auth } = useAppSelector((state) => state.persistedReducer);
 	const [requests, setRequests] = useState<any>([]);
+	const [rowId, setRowId] = useState(0);
 	const [selectedData, setSelectedData] = useState<Array<string>>([]);
+	const [pageSize, setPageSize] = useState(10);
 	const [loading, setLoading] = useState(false);
+	const [getData, setGetData] = useState(false);
 
+	//load data
 	useEffect(() => {
 		retriveData();
 	}, []);
@@ -18,7 +22,8 @@ function AdminResignationReq() {
 	const retriveData = () => {
 		setLoading(true);
 		setTimeout(() => {
-			ResignationService.getAllResignationRequest(auth?.user?.token)
+			getContractExtensionService
+				.getDivisionContractExtensionRequests(auth?.user?.token, auth?.division)
 				.then((res) => {
 					setRequests(res.data);
 				})
@@ -28,20 +33,47 @@ function AdminResignationReq() {
 			setLoading(false);
 		}, 500);
 	};
+	//send reject request
+	const sendReject = () => {
+		console.log(selectedData);
+		setLoading(true);
+		setTimeout(() => {
+			getContractExtensionService
+				.sendHodApproval(
+					selectedData,
+					auth?.user?.token,
+					RequestStatus.DISAPPROVED
+				)
+				.then((res) => {
+					if (res.data) {
+						toast.warning('Contract Extension is Declined');
+					} else {
+						toast.error('Request cannot be performed');
+					}
+				})
+				.catch((e) => {
+					console.log(e);
+					toast.error('Request cannot be performed');
+				});
+			retriveData();
+			setGetData((val) => !val);
+		}, 500);
+	};
 
-	//send approval request
+	//send approvérequest
 	const sendApprove = () => {
 		console.log(selectedData);
 		setLoading(true);
 		setTimeout(() => {
-			ResignationService.sendHodApproval(
-				selectedData,
-				auth?.user?.token,
-				RequestStatus.APPROVED
-			)
+			getContractExtensionService
+				.sendHodApproval(
+					selectedData,
+					auth?.user?.token,
+					RequestStatus.APPROVED
+				)
 				.then((res) => {
 					if (res.data) {
-						toast.success('Resignation is Confirmed');
+						toast.success('Contract Extension is Confirmed');
 					} else {
 						toast.error('Request cannot be performed');
 					}
@@ -51,37 +83,14 @@ function AdminResignationReq() {
 					toast.error('Request cannot be performed');
 				});
 			retriveData();
-		}, 500);
-	};
-	//send reject request
-	const sendReject = () => {
-		setLoading(true);
-		setTimeout(() => {
-			ResignationService.sendHodApproval(
-				selectedData,
-				auth?.user?.token,
-				RequestStatus.DISAPPROVED
-			)
-				.then((res) => {
-					if (res.data) {
-						toast.warning('Resignation is Declined');
-					} else {
-						toast.error('Request cannot be performed');
-					}
-				})
-				.catch((e) => {
-					console.log(e);
-					toast.error('Request cannot be performed');
-				});
-			retriveData();
-			setLoading(false);
+			setGetData((val) => !val);
 		}, 500);
 	};
 
 	return (
 		<>
 			<div className='admin-page-title'>
-				<p>Resignation Request</p>
+				<p>Contract Extension</p>
 
 				<hr className='admin-horizontal-line' />
 			</div>
@@ -100,7 +109,7 @@ function AdminResignationReq() {
 						Reject Selected
 					</button>
 				</div>
-				<ResignationRequestTable
+				<ContractExtesnsionTable
 					setSelectedData={setSelectedData}
 					requests={requests}
 					loading={loading}
@@ -110,4 +119,4 @@ function AdminResignationReq() {
 	);
 }
 
-export default AdminResignationReq;
+export default HODContractextensionReq;

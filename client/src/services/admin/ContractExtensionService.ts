@@ -17,6 +17,23 @@ const getContractExtensionRequests = async (token: any) => {
 	return response;
 };
 
+//get all constrsac t accodung to admin
+const getDivisionContractExtensionRequests = async (
+	token: any,
+	division: string
+) => {
+	const response = await axios({
+		method: 'get',
+		url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/contract-extension?division=${division}`,
+		headers: {
+			'Content-Type': 'application/json; charset=utf-8',
+			Authorization: `Bearer ${token}`,
+		},
+	});
+	// alert("Favourite created --- "+ response);
+	return response;
+};
+
 const getContractExtensionRequest = (id: any) => {
 	return http.get<any>(`/admin/contract-extension/${id}`);
 };
@@ -74,6 +91,7 @@ const sendDirectorApproval = async (
 const getContractExtensionService = {
 	getContractExtensionRequest,
 	getContractExtensionRequests,
+	getDivisionContractExtensionRequests,
 	saveContractExtensionRequest,
 	sendDirectorApproval,
 	sendHodApproval,

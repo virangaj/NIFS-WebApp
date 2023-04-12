@@ -18,6 +18,19 @@ const getAllResignationRequest = async (token: any) => {
 	// alert("Favourite created --- "+ response);
 	return response;
 };
+const getDivisionResignationRequest = async (token: any, division: string) => {
+	// console.log(token);
+	const response = await axios({
+		method: 'get',
+		url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/resignation?division=${division}`,
+		headers: {
+			'Content-Type': 'application/json; charset=utf-8',
+			Authorization: `Bearer ${token}`,
+		},
+	});
+	// alert("Favourite created --- "+ response);
+	return response;
+};
 
 const getResignationRequest = (id: any) => {
 	return http.get<any>(`/admin/resignation/get/${id}`);
@@ -77,6 +90,7 @@ const sendDirApproval = async (
 const ResignationService = {
 	getAllResignationRequest,
 	getResignationRequest,
+	getDivisionResignationRequest,
 	saveResignationRequest,
 	sendHodApproval,
 	sendDirApproval,

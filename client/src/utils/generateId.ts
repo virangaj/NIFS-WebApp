@@ -1,9 +1,4 @@
 export function generateID(key: any) {
-	let x = Math.floor(Math.random() * 10000);
-	// let i = Math.floor(Math.random() * 25)
-	// let j = Math.floor(Math.random() * 25)
-	// let k = Math.floor(Math.random() * 25)
-	// var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	const today = new Date();
 
 	let d = today.getDate() < 10 ? '0' + today.getDate() : today.getDate();

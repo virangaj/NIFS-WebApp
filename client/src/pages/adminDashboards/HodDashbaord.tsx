@@ -1,20 +1,16 @@
 import { Route, Routes } from 'react-router-dom';
 import { RouteName } from '../../constant/routeNames';
 import AdminPages from '../../layout/AdminPages';
-import { SeduAdminSideNavbar } from '../../constant/SideNavData';
-import Chargers from './SeduAdmin/charges/Chargers';
-import Facilities from './SeduAdmin/facilities/Facilities';
-import VenuesAdmin from './SeduAdmin/VenuesAdmin';
+import { HODSideNavbar } from '../../constant/SideNavData';
 import Projects from './sharedDashboards/Projects';
+import { useAppSelector } from '../../hooks/hooks';
+
 import HODResignationReq from './hodDashboards/HODResignationReq';
 import HODContractextensionReq from './hodDashboards/HODContractextensionReq';
 
 export function PageRoutes() {
 	return (
 		<Routes>
-			<Route path={RouteName.Facilities} element={<Facilities />} />
-			<Route path={RouteName.Charges} element={<Chargers />} />
-			<Route path={RouteName.VenueMaster} element={<VenuesAdmin />} />
 			<Route path={RouteName.Projects} element={<Projects />} />
 			<Route
 				path={RouteName.ResignationRequest}
@@ -28,16 +24,18 @@ export function PageRoutes() {
 	);
 }
 
-function SeduAdmin() {
+function HodDashbaord() {
+	const { auth } = useAppSelector((state) => state.persistedReducer);
+
 	return (
-		<div>
+		<>
 			<AdminPages
-				Sidebardata={SeduAdminSideNavbar}
+				Sidebardata={HODSideNavbar}
 				Content={PageRoutes}
-				Route='sedu'
+				Route={auth?.division}
 			/>
-		</div>
+		</>
 	);
 }
 
-export default SeduAdmin;
+export default HodDashbaord;

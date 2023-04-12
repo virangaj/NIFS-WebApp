@@ -14,6 +14,7 @@ import Pages from '../data/MainNavPages.json';
 
 import './navbar.css';
 import TokenService from '../../utils/DecodeToken';
+import Division from '../../pages/adminDashboards/AdminAdmin/Division';
 
 function TailwindNavbar() {
 	const dispatch = useAppDispatch();
@@ -133,6 +134,7 @@ function TailwindNavbar() {
 				</ul>
 			</div>
 			<div className='navbar-end'>
+				<p className='font-semibold'>{auth.name}</p>
 				<div className='dropdown dropdown-end'>
 					<label tabIndex={0} className='btn btn-ghost btn-circle'>
 						<div className='indicator'>
@@ -167,20 +169,28 @@ function TailwindNavbar() {
 						className='p-2 mt-3 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52'
 					>
 						<li>
-							{auth?.user && auth?.user.user.role === UserStatus.ADMIN && (
+							{auth?.user && auth?.isAdmin === UserStatus.ADMIN && (
 								<Link to={RouteName.AdminAdmin}>Admin Dashboard</Link>
 							)}
 						</li>
 						<li>
-							{auth?.user && auth?.user.user.role === UserStatus.ADMIN && (
+							{auth?.user && auth?.isAdmin === UserStatus.ADMIN && (
 								<Link to={RouteName.Director}>Director</Link>
 							)}
 						</li>
 						<li>
-							{auth?.user && auth?.user.user.role === UserStatus.ADMIN && (
+							{auth?.user && auth?.isAdmin === UserStatus.ADMIN && (
 								<Link to={RouteName.SeduAdmin}>Sedu Dashoard</Link>
 							)}
 						</li>
+						<li>
+							{auth?.user && auth?.isAdmin === UserStatus.ADMIN && (
+								<Link to={RouteName.HODAdmin.replace(':id', auth?.division)}>
+									HOD Dashoard
+								</Link>
+							)}
+						</li>
+
 						<li>
 							{auth?.user ? (
 								<a onClick={logoutFunc}>Logout</a>

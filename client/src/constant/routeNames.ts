@@ -75,8 +75,7 @@ export enum RouteName {
 	LibraryAdmin = '/dashboard/library/admin/*',
 	CommonAdmin = '/dashboard/common/admin/*',
 	Director = '/dashboard/director/admin/*',
-
-	HODAdminPage = '/dashbaord/:division/admin/*',
+	HODAdmin = '/dashboard/:id/admin/*',
 
 	//sub routes of administrator admin
 	Employee = '/employee',
@@ -100,4 +99,6 @@ export enum RouteName {
 	Charges = '/charges',
 	Facilities = '/facilities',
 	VenueMaster = '/venues',
+
+	//hod sub routes
 }
