@@ -7,6 +7,7 @@ import { useAppSelector } from '../../hooks/hooks';
 
 import HODResignationReq from './hodDashboards/HODResignationReq';
 import HODContractextensionReq from './hodDashboards/HODContractextensionReq';
+import FundingSource from './sharedDashboards/FundingSource';
 
 export function PageRoutes() {
 	return (
@@ -20,6 +21,7 @@ export function PageRoutes() {
 				path={RouteName.ContractExtension}
 				element={<HODContractextensionReq />}
 			/>
+			<Route path={RouteName.FundingSource} element={<FundingSource />} />
 		</Routes>
 	);
 }
