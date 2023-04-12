@@ -2,37 +2,44 @@
 	{
 		"id": 0,
 		"title": "Home",
+		"img": "https://icons8.com/icon/9J1KcyzZVytT/exterior",
 		"link": "/"
 	},
 	{
 		"id": 1,
 		"title": "Common",
+		"img": "https://icons8.com/icon/qDNClnB7Z4Ky/people",
 		"link": "/common"
 	},
 
 	{
 		"id": 3,
 		"title": "Admin",
+		"img": "https://icons8.com/icon/psevkzUhHRTs/admin-settings-male",
 		"link": "/admin"
 	},
 	{
 		"id": 4,
 		"title": "Library",
+		"img": "https://icons8.com/icon/7wXAYHZWBVM9/bookshop",
 		"link": "/library"
 	},
 	{
 		"id": 5,
 		"title": "Procument",
+		"img": "https://icons8.com/icon/ssAR7wQWk8Iz/bureau",
 		"link": "/procument"
 	},
 	{
 		"id": 6,
 		"title": "SEDU",
+		"img": "https://icons8.com/icon/jO2iD4rsKuFf/performance",
 		"link": "/sedu"
 	},
 	{
 		"id": 7,
 		"title": "Transport",
+		"img": "https://icons8.com/icon/1qzlYQzEek19/public-transportation",
 		"link": "/transport"
 	}
 ]

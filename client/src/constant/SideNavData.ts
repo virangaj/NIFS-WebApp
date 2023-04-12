@@ -39,12 +39,22 @@ export const AdministrationSidenav = [
 		link: RouteName.AdminResignationReq,
 		icon: HiOutlineOfficeBuilding,
 	},
+	{
+		title: 'Contract Extension',
+		link: RouteName.ContractExtension,
+		icon: HiOutlineOfficeBuilding,
+	},
 ];
 
 export const DirectorSideNavbar = [
 	{
 		title: 'Resignation Request',
 		link: RouteName.DirectorResignationReq,
+		icon: HiOutlineOfficeBuilding,
+	},
+	{
+		title: 'Contract Extension Request',
+		link: RouteName.ContractExtension,
 		icon: HiOutlineOfficeBuilding,
 	},
 	{

@@ -89,7 +89,7 @@ export default function Login() {
 				/>
 			</div>
 
-			<div className='flex items-center justify-center w-full h-screen px-6 bg-white md:max-w-md lg:max-w-full md:mx-auto md:mx-0 md:w-1/2 xl:w-1/3 lg:px-16 xl:px-12'>
+			<div className='flex items-center justify-center w-full h-screen px-6 bg-white md:max-w-md lg:max-w-full md:mx-auto md:w-1/2 xl:w-1/3 lg:px-16 xl:px-12'>
 				<div className='w-full h-100'>
 					<img src={Logo} alt='logo' className='login-logo' />
 					<p className='mt-2 text-sm text-center md:text-md text-sky-500'>

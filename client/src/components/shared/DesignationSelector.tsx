@@ -31,7 +31,7 @@ function DesignationSelector({ onChange, tenant, name }: any) {
 				value={tenant}
 				name={name}
 			>
-				<option value='' disabled>
+				<option defaultValue='' disabled>
 					Select Designation
 				</option>
 
