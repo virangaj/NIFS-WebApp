@@ -4,6 +4,8 @@ import ViewProjects from './ViewProjects';
 import { HiOutlineDocumentDuplicate } from 'react-icons/hi';
 import { AiOutlineUpload, AiOutlineFundView } from 'react-icons/ai';
 import TailwindTab from '../../../components/TailwindTab';
+import AddFundingSource from './AddFundingSource';
+import ViewFundingSource from './ViewFundingSource';
 
 const tabs = [
 	{ label: 'Create a Funding Source', icon: AiOutlineUpload },
@@ -25,7 +27,7 @@ function FundingSource() {
 					setActiveTab={setActiveTab}
 				/>
 				<div className='p-4 mt-4'>
-					{activeTab === 0 ? <AddProjects /> : <ViewProjects />}
+					{activeTab === 0 ? <AddFundingSource /> : <ViewFundingSource />}
 				</div>
 			</div>
 		</>

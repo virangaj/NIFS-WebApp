@@ -1,8 +1,8 @@
-package com.nifs.backend.controller.admin;
+package com.nifs.backend.controller.common;
 
 
-import com.nifs.backend.dto.admin.FundingSourceDTO;
-import com.nifs.backend.service.admin.IFundingSourceService;
+import com.nifs.backend.dto.common.FundingSourceDTO;
+import com.nifs.backend.service.common.IFundingSourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -1,10 +1,11 @@
-package com.nifs.backend.serviceImplementation.admin;
+package com.nifs.backend.serviceImplementation.common;
 
-import com.nifs.backend.dto.admin.FundingSourceDTO;
-import com.nifs.backend.model.admin.FundingSources;
-import com.nifs.backend.model.sedu.VenueMaster;
-import com.nifs.backend.repository.admin.FundingSourceRepository;
-import com.nifs.backend.service.admin.IFundingSourceService;
+import com.nifs.backend.dto.common.FundingSourceDTO;
+import com.nifs.backend.model.common.FundingSources;
+import com.nifs.backend.repository.common.FundingSourceRepository;
+import com.nifs.backend.service.common.IFundingSourceService;
+import com.nifs.backend.serviceImplementation.admin.LocationService;
+import com.nifs.backend.util.NewIdGenerator;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,12 +32,21 @@ public class FundingSourceService implements IFundingSourceService {
     @Override
     public boolean createNewFundingSource(FundingSourceDTO data, String user) {
 
-        try{
+        try {
 
             FundingSources fundingSources = modelMapper.map(data, FundingSources.class);
             fundingSources.setLocationId(locationService.getLocationById(data.getLocationId()));
             fundingSources.setCreatedOn(new Date());
             fundingSources.setCreatedBy(Integer.valueOf(user));
+
+            String lastId = fundingSourceRepository.returnLastId();
+            if (lastId == null) {
+                fundingSources.setFundingId("PR1001");
+            }
+            else {
+                fundingSources.setFundingId(NewIdGenerator.newIDGenerator(lastId));
+            }
+
             fundingSourceRepository.save(fundingSources);
             return true;
 
