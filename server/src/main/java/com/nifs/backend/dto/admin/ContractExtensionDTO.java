@@ -1,5 +1,6 @@
 package com.nifs.backend.dto.admin;
 
+import com.nifs.backend.constant.RequestStatus;
 import com.nifs.backend.dto.BaseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,6 +23,8 @@ public class ContractExtensionDTO extends BaseDTO {
     String divisionId;
     String hod;
     String remark;
+    RequestStatus hodApproved;
+    RequestStatus dirApproved;
 
 
 

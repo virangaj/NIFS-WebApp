@@ -8,13 +8,15 @@ import { RequestStatus } from '../../../constant/requestStatus';
 function AdminResignationReq() {
 	const { auth } = useAppSelector((state) => state.persistedReducer);
 	const [requests, setRequests] = useState<any>([]);
-	const [rowId, setRowId] = useState(0);
 	const [selectedData, setSelectedData] = useState<Array<string>>([]);
-	const [pageSize, setPageSize] = useState(10);
 	const [loading, setLoading] = useState(false);
 	const [getData, setGetData] = useState(false);
 
 	useEffect(() => {
+		retriveData();
+	}, []);
+
+	const retriveData = () => {
 		setLoading(true);
 		setTimeout(() => {
 			ResignationService.getAllResignationRequest(auth?.user?.token)
@@ -26,7 +28,7 @@ function AdminResignationReq() {
 				});
 			setLoading(false);
 		}, 500);
-	}, []);
+	};
 
 	//send approval request
 	const sendApprove = () => {
@@ -49,7 +51,7 @@ function AdminResignationReq() {
 					console.log(e);
 					toast.error('Request cannot be performed');
 				});
-			setLoading(false);
+			retriveData();
 			setGetData((val) => !val);
 		}, 500);
 	};
@@ -73,7 +75,7 @@ function AdminResignationReq() {
 					console.log(e);
 					toast.error('Request cannot be performed');
 				});
-			setGetData((val) => !val);
+			retriveData();
 			setLoading(false);
 		}, 500);
 	};
@@ -102,7 +104,8 @@ function AdminResignationReq() {
 				</div>
 				<ResignationRequestTable
 					setSelectedData={setSelectedData}
-					getData={getData}
+					requests={requests}
+					loading={loading}
 				/>
 			</div>
 		</>

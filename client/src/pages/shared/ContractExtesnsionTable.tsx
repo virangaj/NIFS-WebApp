@@ -5,7 +5,7 @@ import { useAppSelector } from '../../hooks/hooks';
 import Ripple from '../../components/Ripple';
 import RequestStatusView from '../../components/tableIcons/RequestStatusView';
 
-function ResignationRequestTable({ setSelectedData, requests, loading }: any) {
+function ContractExtesnsionTable({ setSelectedData, requests, loading }: any) {
 	const [pageSize, setPageSize] = useState(10);
 	const [rowId, setRowId] = useState(0);
 
@@ -70,6 +70,7 @@ function ResignationRequestTable({ setSelectedData, requests, loading }: any) {
 		],
 		[rowId]
 	);
+
 	return (
 		<div className='w-full h-[1000px]'>
 			{!loading ? (
@@ -93,4 +94,4 @@ function ResignationRequestTable({ setSelectedData, requests, loading }: any) {
 	);
 }
 
-export default ResignationRequestTable;
+export default ContractExtesnsionTable;

@@ -6,6 +6,7 @@ import { DirectorSideNavbar } from '../../constant/SideNavData';
 import AddProjects from './sharedDashboards/AddProjects';
 import Projects from './sharedDashboards/Projects';
 import DirectorResignationReq from './DirectorDashbaord/DirectorResignationReq';
+import DirectorContractExtension from './DirectorDashbaord/DirectorContractExtension';
 
 export function PageRoutes() {
 	return (
@@ -13,6 +14,10 @@ export function PageRoutes() {
 			<Route
 				path={RouteName.DirectorResignationReq}
 				element={<DirectorResignationReq />}
+			/>
+			<Route
+				path={RouteName.ContractExtension}
+				element={<DirectorContractExtension />}
 			/>
 			<Route path={RouteName.Projects} element={<Projects />} />
 		</Routes>

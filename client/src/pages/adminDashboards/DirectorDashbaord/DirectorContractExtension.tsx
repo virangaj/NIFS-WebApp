@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useAppSelector } from '../../../hooks/hooks';
-import ResignationService from '../../../services/admin/ResignationService';
-import ResignationRequestTable from '../../shared/ResignationRequestTable';
 import { toast } from 'react-toastify';
 import { RequestStatus } from '../../../constant/requestStatus';
-
-function DirectorResignationReq() {
+import getContractExtensionService from '../../../services/admin/ContractExtensionService';
+import ContractExtesnsionTable from '../../shared/ContractExtesnsionTable';
+function DirectorContractExtension() {
 	const { auth } = useAppSelector((state) => state.persistedReducer);
 	const [requests, setRequests] = useState<any>([]);
 	const [selectedData, setSelectedData] = useState<Array<string>>([]);
@@ -14,11 +13,11 @@ function DirectorResignationReq() {
 	useEffect(() => {
 		retriveData();
 	}, []);
-
 	const retriveData = () => {
 		setLoading(true);
 		setTimeout(() => {
-			ResignationService.getAllResignationRequest(auth?.user?.token)
+			getContractExtensionService
+				.getContractExtensionRequests(auth?.user?.token)
 				.then((res) => {
 					setRequests(res.data);
 				})
@@ -34,14 +33,15 @@ function DirectorResignationReq() {
 		console.log(selectedData);
 		setLoading(true);
 		setTimeout(() => {
-			ResignationService.sendDirApproval(
-				selectedData,
-				auth?.user?.token,
-				RequestStatus.APPROVED
-			)
+			getContractExtensionService
+				.sendDirectorApproval(
+					selectedData,
+					auth?.user?.token,
+					RequestStatus.APPROVED
+				)
 				.then((res) => {
 					if (res.data) {
-						toast.success('Resignation is Confirmed');
+						toast.success('Contract Extension is Confirmed');
 					} else {
 						toast.error('Request cannot be performed');
 					}
@@ -58,14 +58,15 @@ function DirectorResignationReq() {
 	const sendReject = () => {
 		setLoading(true);
 		setTimeout(() => {
-			ResignationService.sendDirApproval(
-				selectedData,
-				auth?.user?.token,
-				RequestStatus.DISAPPROVED
-			)
+			getContractExtensionService
+				.sendDirectorApproval(
+					selectedData,
+					auth?.user?.token,
+					RequestStatus.DISAPPROVED
+				)
 				.then((res) => {
 					if (res.data) {
-						toast.warning('Resignation is Declined');
+						toast.warning('Contract Extension is Declined');
 					} else {
 						toast.error('Request cannot be performed');
 					}
@@ -78,11 +79,10 @@ function DirectorResignationReq() {
 			setLoading(false);
 		}, 500);
 	};
-
 	return (
-		<>
+		<div>
 			<div className='admin-page-title'>
-				<p>Resignation Request</p>
+				<p>Contract Extension Request</p>
 
 				<hr className='admin-horizontal-line' />
 			</div>
@@ -101,14 +101,14 @@ function DirectorResignationReq() {
 						Reject Selected
 					</button>
 				</div>
-				<ResignationRequestTable
+				<ContractExtesnsionTable
 					setSelectedData={setSelectedData}
 					requests={requests}
 					loading={loading}
 				/>
 			</div>
-		</>
+		</div>
 	);
 }
 
-export default DirectorResignationReq;
+export default DirectorContractExtension;

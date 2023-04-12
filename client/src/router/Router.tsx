@@ -26,6 +26,7 @@ import DirectorAdmin from '../pages/adminDashboards/DirectorAdmin';
 import SeduAdmin from '../pages/adminDashboards/SeduAdmin';
 import { useAppSelector } from '../hooks/hooks';
 import { useEffect, useState } from 'react';
+import HodAdmin from '../pages/adminDashboards/HodAdmin';
 
 const AppRouter = () => {
 	const { auth } = useAppSelector((state) => state.persistedReducer);
@@ -38,8 +39,14 @@ const AppRouter = () => {
 	return (
 		<BrowserRouter>
 			<Routes>
+				{/* login page */}
 				<Route path={RouteName.Login} element={<Login />} />
+
+				{/* change password */}
+
 				<Route path={RouteName.ChangePassword} element={<ChangePassword />} />
+
+				{/* Home page */}
 
 				<Route
 					path={RouteName.Home}
@@ -49,6 +56,8 @@ const AppRouter = () => {
 						</>
 					}
 				/>
+				{/* Common page */}
+
 				<Route
 					path={RouteName.Common}
 					element={
@@ -57,14 +66,8 @@ const AppRouter = () => {
 						</>
 					}
 				/>
-				{/* <Route
-					path={RouteName.Account}
-					element={
-						<>
-							<MainPages Content={AccountMainPage} />
-						</>
-					}
-				/> */}
+				{/* admin page */}
+
 				<Route
 					path={RouteName.Admin}
 					element={
@@ -73,6 +76,8 @@ const AppRouter = () => {
 						</>
 					}
 				/>
+				{/* Library page */}
+
 				<Route
 					path={RouteName.Library}
 					element={
@@ -81,6 +86,8 @@ const AppRouter = () => {
 						</>
 					}
 				/>
+				{/* Procument page */}
+
 				<Route
 					path={RouteName.Procument}
 					element={
@@ -89,6 +96,8 @@ const AppRouter = () => {
 						</>
 					}
 				/>
+				{/* Sedu  page */}
+
 				<Route
 					path={RouteName.Sedu}
 					element={
@@ -97,6 +106,9 @@ const AppRouter = () => {
 						</>
 					}
 				/>
+
+				{/* Tranapost page */}
+
 				<Route
 					path={RouteName.Transport}
 					element={
@@ -105,6 +117,7 @@ const AppRouter = () => {
 						</>
 					}
 				/>
+				{/* Error page */}
 
 				<Route
 					path={RouteName.ErrorPage}
@@ -114,6 +127,9 @@ const AppRouter = () => {
 						</>
 					}
 				/>
+
+				{/* Admin page of admin division*/}
+
 				<Route
 					path={RouteName.AdminAdmin}
 					element={
@@ -123,6 +139,8 @@ const AppRouter = () => {
 					}
 				/>
 
+				{/* Admin page of director*/}
+
 				<Route
 					path={RouteName.Director}
 					element={
@@ -131,11 +149,24 @@ const AppRouter = () => {
 						</>
 					}
 				/>
+
+				{/* Admin page of sedu division*/}
+
 				<Route
 					path={RouteName.SeduAdmin}
 					element={
 						<>
 							<MainPages Content={SeduAdmin} />
+						</>
+					}
+				/>
+
+				{/* Admin page of HOD*/}
+				<Route
+					path={RouteName.HODAdminPage}
+					element={
+						<>
+							<MainPages Content={HodAdmin} />
 						</>
 					}
 				/>

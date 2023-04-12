@@ -1,11 +1,10 @@
 import { Route, Routes } from 'react-router-dom';
 import { RouteName } from '../../constant/routeNames';
 import AdminPages from '../../layout/AdminPages';
-import { SeduAdminSideNavbar } from '../../constant/SideNavData';
+import { HODAdminSideNavbar } from '../../constant/SideNavData';
 import Chargers from './SeduAdmin/charges/Chargers';
 import Facilities from './SeduAdmin/facilities/Facilities';
 import VenuesAdmin from './SeduAdmin/VenuesAdmin';
-import Projects from './sharedDashboards/Projects';
 
 export function PageRoutes() {
 	return (
@@ -13,16 +12,15 @@ export function PageRoutes() {
 			<Route path={RouteName.Facilities} element={<Facilities />} />
 			<Route path={RouteName.Charges} element={<Chargers />} />
 			<Route path={RouteName.VenueMaster} element={<VenuesAdmin />} />
-			<Route path={RouteName.Projects} element={<Projects />} />
 		</Routes>
 	);
 }
 
-function SeduAdmin() {
+function HodAdmin() {
 	return (
 		<div>
 			<AdminPages
-				Sidebardata={SeduAdminSideNavbar}
+				Sidebardata={HODAdminSideNavbar}
 				Content={PageRoutes}
 				Route='sedu'
 			/>
@@ -30,4 +28,4 @@ function SeduAdmin() {
 	);
 }
 
-export default SeduAdmin;
+export default HodAdmin;

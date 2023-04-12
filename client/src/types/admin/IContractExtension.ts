@@ -1,10 +1,13 @@
-export default interface IContractExtension {
-  documentNo: string;
-  date: string;
-  epfNo: number;
-  designationId: string;
-  divisionId: string;
-  hod: number;
+import { RequestStatus } from '../../constant/requestStatus';
 
-  remark: string;
+export default interface IContractExtension {
+	documentNo: string;
+	date: string;
+	epfNo: number;
+	designationId: string;
+	divisionId: string;
+	hod: number;
+	remark: string;
+	hodApproved: RequestStatus;
+	dirApproved: RequestStatus;
 }

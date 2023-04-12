@@ -59,7 +59,7 @@ function EmployeeSelector({ onChange, value, name }: any) {
 						value={value}
 						name={name}
 					>
-						<option disabled value={0}>
+						<option disabled value=''>
 							Select Employee
 						</option>
 
