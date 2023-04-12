@@ -2,14 +2,14 @@ import { useState } from 'react';
 import AddProjects from './AddProjects';
 import ViewProjects from './ViewProjects';
 import { HiOutlineDocumentDuplicate } from 'react-icons/hi';
-import { AiOutlineUpload } from 'react-icons/ai';
+import { AiOutlineUpload, AiOutlineFundView } from 'react-icons/ai';
 import TailwindTab from '../../../components/TailwindTab';
-const tabs = [
-	{ label: 'Create a Project', icon: AiOutlineUpload },
-	{ label: 'View All Project', icon: HiOutlineDocumentDuplicate },
-];
 
-function Projects() {
+const tabs = [
+	{ label: 'Create a Funding Source', icon: AiOutlineUpload },
+	{ label: 'View All Funding Sources', icon: AiOutlineFundView },
+];
+function FundingSource() {
 	const [activeTab, setActiveTab] = useState(0);
 	return (
 		<>
@@ -32,4 +32,4 @@ function Projects() {
 	);
 }
 
-export default Projects;
+export default FundingSource;

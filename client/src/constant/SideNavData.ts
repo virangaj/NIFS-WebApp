@@ -6,7 +6,12 @@ import {
 	HiOutlineLibrary,
 	HiOutlineDatabase,
 	HiOutlineClipboardList,
+	HiOutlineFolder,
+	HiOutlineDocumentText,
 } from 'react-icons/hi';
+import { GiExitDoor } from 'react-icons/gi';
+import { AiOutlineFundProjectionScreen } from 'react-icons/ai';
+import { BsCurrencyExchange } from 'react-icons/bs';
 import { RiUserStarLine } from 'react-icons/ri';
 import { RouteName } from './routeNames';
 
@@ -50,12 +55,12 @@ export const AdministrationSidenav = [
 			{
 				title: 'Resignation Request',
 				link: RouteName.AdminResignationReq,
-				icon: HiOutlineOfficeBuilding,
+				icon: GiExitDoor,
 			},
 			{
 				title: 'Contract Extension',
 				link: RouteName.ContractExtension,
-				icon: HiOutlineOfficeBuilding,
+				icon: HiOutlineDocumentText,
 			},
 		],
 	},
@@ -70,7 +75,7 @@ export const DirectorSideNavbar = [
 			{
 				title: 'Projects',
 				link: RouteName.Projects,
-				icon: HiOutlineOfficeBuilding,
+				icon: HiOutlineFolder,
 			},
 		],
 	},
@@ -81,12 +86,12 @@ export const DirectorSideNavbar = [
 			{
 				title: 'Resignation Request',
 				link: RouteName.DirectorResignationReq,
-				icon: HiOutlineOfficeBuilding,
+				icon: GiExitDoor,
 			},
 			{
 				title: 'Contract Extension Request',
 				link: RouteName.ContractExtension,
-				icon: HiOutlineOfficeBuilding,
+				icon: HiOutlineDocumentText,
 			},
 		],
 	},
@@ -116,7 +121,7 @@ export const SeduAdminSideNavbar = [
 			{
 				title: 'Projects',
 				link: RouteName.Projects,
-				icon: HiOutlineOfficeBuilding,
+				icon: HiOutlineFolder,
 			},
 		],
 	},
@@ -127,12 +132,12 @@ export const SeduAdminSideNavbar = [
 			{
 				title: 'Resignation Request',
 				link: RouteName.AdminResignationReq,
-				icon: HiOutlineOfficeBuilding,
+				icon: GiExitDoor,
 			},
 			{
 				title: 'Contract Extension',
 				link: RouteName.ContractExtension,
-				icon: HiOutlineOfficeBuilding,
+				icon: HiOutlineDocumentText,
 			},
 		],
 	},
@@ -147,7 +152,12 @@ export const HODSideNavbar = [
 			{
 				title: 'Projects',
 				link: RouteName.Projects,
-				icon: HiOutlineOfficeBuilding,
+				icon: HiOutlineFolder,
+			},
+			{
+				title: 'Funding Sources',
+				link: RouteName.FundingSource,
+				icon: AiOutlineFundProjectionScreen,
 			},
 		],
 	},
@@ -158,12 +168,12 @@ export const HODSideNavbar = [
 			{
 				title: 'Resignation Request',
 				link: RouteName.AdminResignationReq,
-				icon: HiOutlineOfficeBuilding,
+				icon: GiExitDoor,
 			},
 			{
 				title: 'Contract Extension',
 				link: RouteName.ContractExtension,
-				icon: HiOutlineOfficeBuilding,
+				icon: HiOutlineDocumentText,
 			},
 		],
 	},

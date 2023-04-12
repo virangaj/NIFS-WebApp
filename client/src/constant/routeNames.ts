@@ -101,4 +101,7 @@ export enum RouteName {
 	VenueMaster = '/venues',
 
 	//hod sub routes
+
+	//shared rouets
+	FundingSource = '/funding-sources',
 }
