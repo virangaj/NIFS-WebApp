@@ -14,6 +14,7 @@ import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Function;
 
 @Service
@@ -71,7 +72,7 @@ public class JwtService {
 
     // check weather token is expired
     private boolean isTokenExpire(String token) {
-        return extractExpiration(token).before(new Date());
+        return Objects.requireNonNull(extractExpiration(token)).before(new Date());
     }
 
     private Date extractExpiration(String token) {

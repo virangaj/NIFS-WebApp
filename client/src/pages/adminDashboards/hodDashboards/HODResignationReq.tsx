@@ -5,7 +5,7 @@ import ResignationRequestTable from '../../shared/ResignationRequestTable';
 import { toast } from 'react-toastify';
 import { RequestStatus } from '../../../constant/requestStatus';
 
-function AdminResignationReq() {
+function HODResignationReq() {
 	const { auth } = useAppSelector((state) => state.persistedReducer);
 	const [requests, setRequests] = useState<any>([]);
 	const [selectedData, setSelectedData] = useState<Array<string>>([]);
@@ -18,7 +18,10 @@ function AdminResignationReq() {
 	const retriveData = () => {
 		setLoading(true);
 		setTimeout(() => {
-			ResignationService.getAllResignationRequest(auth?.user?.token)
+			ResignationService.getDivisionResignationRequest(
+				auth?.user?.token,
+				auth?.division
+			)
 				.then((res) => {
 					setRequests(res.data);
 				})
@@ -110,4 +113,4 @@ function AdminResignationReq() {
 	);
 }
 
-export default AdminResignationReq;
+export default HODResignationReq;

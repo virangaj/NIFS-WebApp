@@ -88,4 +88,33 @@ export const SeduAdminSideNavbar = [
 		link: RouteName.Projects,
 		icon: HiOutlineOfficeBuilding,
 	},
+	{
+		title: 'Resignation Request',
+		link: RouteName.AdminResignationReq,
+		icon: HiOutlineOfficeBuilding,
+	},
+	{
+		title: 'Contract Extension',
+		link: RouteName.ContractExtension,
+		icon: HiOutlineOfficeBuilding,
+	},
+];
+
+//HOD dashboard
+export const HODSideNavbar = [
+	{
+		title: 'Projects',
+		link: RouteName.Projects,
+		icon: HiOutlineOfficeBuilding,
+	},
+	{
+		title: 'Resignation Request',
+		link: RouteName.AdminResignationReq,
+		icon: HiOutlineOfficeBuilding,
+	},
+	{
+		title: 'Contract Extension',
+		link: RouteName.ContractExtension,
+		icon: HiOutlineOfficeBuilding,
+	},
 ];

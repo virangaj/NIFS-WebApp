@@ -14,6 +14,7 @@ import Pages from '../data/MainNavPages.json';
 
 import './navbar.css';
 import TokenService from '../../utils/DecodeToken';
+import Division from '../../pages/adminDashboards/AdminAdmin/Division';
 
 function TailwindNavbar() {
 	const dispatch = useAppDispatch();
@@ -180,6 +181,13 @@ function TailwindNavbar() {
 						<li>
 							{auth?.user && auth?.isAdmin === UserStatus.ADMIN && (
 								<Link to={RouteName.SeduAdmin}>Sedu Dashoard</Link>
+							)}
+						</li>
+						<li>
+							{auth?.user && auth?.isAdmin === UserStatus.ADMIN && (
+								<Link to={RouteName.HODAdmin.replace(':id', auth?.division)}>
+									HOD Dashoard
+								</Link>
 							)}
 						</li>
 
