@@ -77,4 +77,8 @@ public class Locations {
     @OneToMany(mappedBy = "locationId", cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
     private List<ProjectMaster> projects;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "locationId", cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
+    private List<FundingSources> fundingSources;
+
 }
