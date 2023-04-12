@@ -5,10 +5,13 @@ import com.nifs.backend.model.common.FundingSources;
 import com.nifs.backend.repository.common.FundingSourceRepository;
 import com.nifs.backend.service.common.IFundingSourceService;
 import com.nifs.backend.serviceImplementation.admin.LocationService;
+import com.nifs.backend.util.EmailService;
 import com.nifs.backend.util.NewIdGenerator;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -27,6 +30,8 @@ public class FundingSourceService implements IFundingSourceService {
 
     @Autowired
     private LocationService locationService;
+    @Autowired
+    private EmailService emailService;
 
     //create a new funding source
     @Override
@@ -46,6 +51,9 @@ public class FundingSourceService implements IFundingSourceService {
             else {
                 fundingSources.setFundingId(NewIdGenerator.newIDGenerator(lastId));
             }
+
+            emailService.sendEmail("virangapasindu4@gmail.com", "New funding source added : " + fundingSources.getFundingId(), fundingSources.getDescription());
+
 
             fundingSourceRepository.save(fundingSources);
             return true;

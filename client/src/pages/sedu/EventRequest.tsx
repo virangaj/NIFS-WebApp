@@ -24,7 +24,6 @@ const initialState: IEventRequest = {
 	noParticipants: 0,
 	budget: 0,
 	project: '',
-	vote: '',
 	location: '',
 	venueName: '',
 	venueType: '',
@@ -48,23 +47,13 @@ function EventRequest() {
 
 	useEffect(() => {
 		setValues({
+			...values,
 			eventId: getEventId,
-			eventType: values?.eventType,
-			type: values?.type,
-			title: values?.title,
-			remarks: values?.remarks,
+
 			startDate: startDate ? startDate : '',
 			endDate: endDate ? endDate : '',
 			startTime: startTime ? startTime : '',
 			endTime: endTime ? endTime : '',
-			noParticipants: values?.noParticipants,
-			budget: values?.budget,
-			project: values?.project,
-			vote: values?.vote,
-			location: values?.location,
-			venueName: values?.venueName,
-			venueType: values?.venueType,
-			fundType: values?.fundType,
 		});
 	}, [startDate, endDate, startTime, endTime, getEventId]);
 
@@ -103,7 +92,6 @@ function EventRequest() {
 			noParticipants: values?.noParticipants,
 			budget: values?.budget,
 			project: values?.project,
-			vote: values?.vote,
 			location: values?.location,
 			venueName: values?.venueName,
 			venueType: values?.venueType,
@@ -308,34 +296,6 @@ function EventRequest() {
 							>
 								<option value='' disabled>
 									Select a Project
-								</option>
-
-								{Projects
-									? Projects.map((p, index) => (
-											<option value={p.value} key={index}>
-												{p.value}
-											</option>
-									  ))
-									: ''}
-							</select>
-						</div>
-					</div>
-
-					<div className='form-right-section'>
-						{/* vote */}
-						<div className='mx-0 input-field lg:ml-4'>
-							<label className='input-label' htmlFor='vote'>
-								Vote
-							</label>
-							<select
-								className='tailwind-text-box w-[90%]'
-								value={values.vote}
-								id='vote'
-								name='vote'
-								onChange={onChange}
-							>
-								<option value='' disabled>
-									Select a Vote
 								</option>
 
 								{Projects
