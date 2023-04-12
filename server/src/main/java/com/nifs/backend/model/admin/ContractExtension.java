@@ -1,6 +1,8 @@
 package com.nifs.backend.model.admin;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.nifs.backend.constant.RequestStatus;
 import com.nifs.backend.model.Base;
 import jakarta.persistence.*;
 import lombok.*;
@@ -22,6 +24,9 @@ public class ContractExtension extends Base {
     String divisionId;
     String hod;
     String remark;
+
+    RequestStatus hodApproved;
+    RequestStatus dirApproved;
 
 
 }

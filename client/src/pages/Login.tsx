@@ -89,7 +89,7 @@ export default function Login() {
 				/>
 			</div>
 
-			<div className='flex items-center justify-center w-full h-screen px-6 bg-white md:max-w-md lg:max-w-full md:mx-auto md:mx-0 md:w-1/2 xl:w-1/3 lg:px-16 xl:px-12'>
+			<div className='flex items-center justify-center w-full h-screen px-6 bg-white md:max-w-md lg:max-w-full md:mx-auto md:w-1/2 xl:w-1/3 lg:px-16 xl:px-12'>
 				<div className='w-full h-100'>
 					<img src={Logo} alt='logo' className='login-logo' />
 					<p className='mt-2 text-sm text-center md:text-md text-sky-500'>
@@ -148,7 +148,7 @@ export default function Login() {
 
 					<hr className='w-full my-6 border-gray-300' />
 
-					<button
+					{/* <button
 						type='button'
 						className='block w-full px-4 py-3 font-semibold text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:bg-sky-100'
 					>
@@ -187,7 +187,7 @@ export default function Login() {
 							</svg>
 							<span className='ml-4'>Log in with Google</span>
 						</div>
-					</button>
+					</button> */}
 
 					<Copyright />
 				</div>

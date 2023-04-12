@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 import http from '../../utils/http-common';
+import { RequestStatus } from '../../constant/requestStatus';
 
 axios.defaults.baseURL = process.env.REACT_APP_BACKEND_SERVER;
 
@@ -9,6 +10,19 @@ const getAllResignationRequest = async (token: any) => {
 	const response = await axios({
 		method: 'get',
 		url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/resignation`,
+		headers: {
+			'Content-Type': 'application/json; charset=utf-8',
+			Authorization: `Bearer ${token}`,
+		},
+	});
+	// alert("Favourite created --- "+ response);
+	return response;
+};
+const getDivisionResignationRequest = async (token: any, division: string) => {
+	// console.log(token);
+	const response = await axios({
+		method: 'get',
+		url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/resignation?division=${division}`,
 		headers: {
 			'Content-Type': 'application/json; charset=utf-8',
 			Authorization: `Bearer ${token}`,
@@ -37,10 +51,14 @@ const saveResignationRequest = async (data: any, token: string) => {
 	return response;
 };
 
-const sendHodApproval = async (id: any, token: string, approval: boolean) => {
+const sendHodApproval = async (
+	id: any,
+	token: string,
+	approval: RequestStatus
+) => {
 	const response = await axios({
 		method: 'put',
-		url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/resignation/hod?approval=${approval}`,
+		url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/resignation/hod/status?approval=${approval}`,
 		data: id,
 		headers: {
 			'Content-Type': 'application/json; charset=utf-8',
@@ -51,10 +69,14 @@ const sendHodApproval = async (id: any, token: string, approval: boolean) => {
 	return response;
 };
 
-const sendDirApproval = async (id: any, token: string, approval: boolean) => {
+const sendDirApproval = async (
+	id: any,
+	token: string,
+	approval: RequestStatus
+) => {
 	const response = await axios({
 		method: 'put',
-		url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/resignation/director?approval=${approval}`,
+		url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/resignation/director/status?approval=${approval}`,
 		data: id,
 		headers: {
 			'Content-Type': 'application/json; charset=utf-8',
@@ -68,6 +90,7 @@ const sendDirApproval = async (id: any, token: string, approval: boolean) => {
 const ResignationService = {
 	getAllResignationRequest,
 	getResignationRequest,
+	getDivisionResignationRequest,
 	saveResignationRequest,
 	sendHodApproval,
 	sendDirApproval,

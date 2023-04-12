@@ -1,6 +1,7 @@
 package com.nifs.backend.repository.admin;
 
 
+import com.nifs.backend.constant.RequestStatus;
 import com.nifs.backend.model.admin.ResignationRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -18,14 +19,14 @@ public interface ResignationReqRepository extends JpaRepository<ResignationReque
 
     @Transactional
     @Modifying
-    @Query("UPDATE ResignationRequest r SET r.hodApprove = :hodApprove, r.modifiedBy = :modifiedBy, r.modifiedOn = :modifiedOn WHERE r.documentNo = :documentNo")
-    void updateHodApproveAndModifiedFields(@Param("hodApprove") boolean hodApprove, @Param("modifiedBy") String modifiedBy, @Param("modifiedOn") Date modifiedOn, @Param("documentNo") String documentNo);
+    @Query("UPDATE ResignationRequest r SET r.hodApproved = :hodApproved, r.modifiedBy = :modifiedBy, r.modifiedOn = :modifiedOn WHERE r.documentNo = :documentNo")
+    void updateHodApproveAndModifiedFields(@Param("hodApproved") RequestStatus hodApprove, @Param("modifiedBy") String modifiedBy, @Param("modifiedOn") Date modifiedOn, @Param("documentNo") String documentNo);
 
 
     @Transactional
     @Modifying
     @Query("UPDATE ResignationRequest r SET r.dirApproved = :dirApproved, r.modifiedBy = :modifiedBy, r.modifiedOn = :modifiedOn WHERE r.documentNo = :documentNo")
-    void updateDirApproveAndModifiedFields(@Param("dirApproved") boolean dirApproved, @Param("modifiedBy") String modifiedBy, @Param("modifiedOn") Date modifiedOn, @Param("documentNo") String documentNo);
+    void updateDirApproveAndModifiedFields(@Param("dirApproved") RequestStatus dirApproved, @Param("modifiedBy") String modifiedBy, @Param("modifiedOn") Date modifiedOn, @Param("documentNo") String documentNo);
 
 
 
