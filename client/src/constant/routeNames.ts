@@ -76,6 +76,8 @@ export enum RouteName {
 	CommonAdmin = '/dashboard/common/admin/*',
 	Director = '/dashboard/director/admin/*',
 
+	HODAdminPage = '/dashbaord/:division/admin/*',
+
 	//sub routes of administrator admin
 	Employee = '/employee',
 	EmployeeType = '/employee-type',

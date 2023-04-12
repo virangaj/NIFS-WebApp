@@ -13,12 +13,20 @@ import Logo from '../../images/nifs_logo.png';
 import Pages from '../data/MainNavPages.json';
 
 import './navbar.css';
+import TokenService from '../../utils/DecodeToken';
 
 function TailwindNavbar() {
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 	const [employee, setEmployee] = useState<any>({});
 	const { auth } = useAppSelector((state) => state.persistedReducer);
+
+	useEffect(() => {
+		if (auth.user != null) {
+			const decode = TokenService.decodeToken(auth?.user?.token);
+			console.log(decode);
+		}
+	}, []);
 
 	// navbar function and variables
 	const location: any = useLocation();

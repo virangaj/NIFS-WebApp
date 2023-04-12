@@ -8,6 +8,7 @@ import {
 import { RiUserStarLine } from 'react-icons/ri';
 import { RouteName } from './routeNames';
 
+// admin of admin division
 export const AdministrationSidenav = [
 	{
 		title: 'Employees',
@@ -46,6 +47,7 @@ export const AdministrationSidenav = [
 	},
 ];
 
+//director dashboard
 export const DirectorSideNavbar = [
 	{
 		title: 'Resignation Request',
@@ -64,6 +66,7 @@ export const DirectorSideNavbar = [
 	},
 ];
 
+//sedu admin
 export const SeduAdminSideNavbar = [
 	{
 		title: 'Charges',
@@ -79,5 +82,29 @@ export const SeduAdminSideNavbar = [
 		title: 'All Venues',
 		link: RouteName.VenueMaster,
 		icon: HiOutlineLibrary,
+	},
+	{
+		title: 'Projects',
+		link: RouteName.Projects,
+		icon: HiOutlineOfficeBuilding,
+	},
+];
+
+//HOD admin
+export const HODAdminSideNavbar = [
+	{
+		title: 'Resignation Request',
+		link: RouteName.DirectorResignationReq,
+		icon: HiOutlineOfficeBuilding,
+	},
+	{
+		title: 'Contract Extension Request',
+		link: RouteName.ContractExtension,
+		icon: HiOutlineOfficeBuilding,
+	},
+	{
+		title: 'Projects',
+		link: RouteName.Projects,
+		icon: HiOutlineOfficeBuilding,
 	},
 ];
