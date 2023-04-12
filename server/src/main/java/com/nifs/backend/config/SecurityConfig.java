@@ -65,8 +65,7 @@ public class SecurityConfig {
                         "/sedu/facility",
                         "/sedu/facility/newid",
 //                        contract extension
-                        "/admin/contractex",
-                        "/library/**"
+                        "/admin/contractex"
                                              )
                 .permitAll()
                 .anyRequest()

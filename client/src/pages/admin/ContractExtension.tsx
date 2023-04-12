@@ -1,255 +1,320 @@
-import React, { useState, useEffect } from "react";
-import Box from "@mui/material/Box";
-import { toast } from "react-toastify";
-import Stack from "@mui/material/Stack";
-import { generateID } from "../../utils/generateId";
-import Ripple from "../../components/Ripple";
-import IContractExtension from "../../types/admin/IContractExtension";
-import CustomeDataPicker from "../../components/DataPicker";
-import IEmployeeData from "../../types/admin/IEmployeeData";
-import EmployeeService from "../../services/admin/EmployeeService";
-import IDesignationData from "../../types/admin/IDesignationData";
-import DesignationMasterService from "../../services/admin/DesignationMasterService";
-import IDivisionData from "../../types/admin/IDivisionData";
-import DivisionMasterService from "../../services/admin/DivisionMasterService";
-import ContractExtensionService from "../../services/admin/ContractExtensionService";
-import { useAppSelector } from "../../hooks/hooks";
-import EmployeeSelector from "../../components/shared/EmployeeSelector";
-import DesignationSelector from "../../components/shared/DesignationSelector";
-import DivisionSelector from "../../components/shared/DivisionSelector";
+import React, { useState, useEffect } from 'react';
+import Box from '@mui/material/Box';
+import { toast } from 'react-toastify';
+import Stack from '@mui/material/Stack';
+import { generateID } from '../../utils/generateId';
+import Ripple from '../../components/Ripple';
+import IContractExtension from '../../types/admin/IContractExtension';
+import CustomeDataPicker from '../../components/DataPicker';
+import IEmployeeData from '../../types/admin/IEmployeeData';
+import EmployeeService from '../../services/admin/EmployeeService';
+import IDesignationData from '../../types/admin/IDesignationData';
+import DesignationMasterService from '../../services/admin/DesignationMasterService';
+import IDivisionData from '../../types/admin/IDivisionData';
+import DivisionMasterService from '../../services/admin/DivisionMasterService';
+import ContractExtensionService from '../../services/admin/ContractExtensionService';
 
 const initialState: IContractExtension = {
-  documentNo: "",
-  date: "",
-  epfNo: 0,
-  designationId: "",
-  divisionId: "",
-  hod: 0,
-  remark: "",
+	documentNo: '',
+	date: '',
+	epfNo: 0,
+	designationId: '',
+	divisionId: '',
+	hod: '',
+	remark: '',
 };
 
 function ContractExtension() {
-  const [getDocNo, setDocNo] = useState<String | any>("");
-  const [requestDate, setRequestDate] = React.useState<string | null>(null);
-  const [designationData, setDesignationData] = useState<IDesignationData>();
-  const [divisionData, setDivisionData] = useState<IDivisionData>();
+	const [getDocNo, setDocNo] = useState<String | any>('');
+	const [requestDate, setRequestDate] = React.useState<string | null>(null);
+	const [designationData, setDesignationData] = useState<IDesignationData>();
+	const [divisionData, setDivisionData] = useState<IDivisionData>();
 
-  const [empFoundError, setEmpFoundError] = useState<boolean>(false);
-  const [empData, setEmpData] = useState<Array<IEmployeeData>>([]);
-  const [currentEmp, setCurrentEmp] = useState<IEmployeeData>();
-  const [values, setValues] = useState<IContractExtension>(initialState);
-  const [loading, setLoading] = useState(false);
-  const [hod, setHod] = useState<IEmployeeData | null>();
+	const [empFoundError, setEmpFoundError] = useState<boolean>(false);
+	const [empData, setEmpData] = useState<Array<IEmployeeData>>([]);
+	const [currentEmp, setCurrentEmp] = useState<IEmployeeData>();
+	const [values, setValues] = useState<IContractExtension>(initialState);
+	const [loading, setLoading] = useState(false);
+	useEffect(() => {
+		setValues({
+			documentNo: values?.documentNo,
+			date: requestDate ? requestDate : '',
+			epfNo: values?.epfNo,
+			designationId: values?.designationId,
+			divisionId: values?.divisionId,
+			hod: values?.hod,
+			remark: values?.remark,
+		});
+	}, [requestDate]);
 
-  const { employees, employeesIsLoading, employeesIsSuccess } = useAppSelector(
-    (state) => state.employees
-  );
-  const { division, divisionIsLoading, divisionIsSuccess } = useAppSelector(
-    (state) => state.division
-  );
+	useEffect(() => {
+		setValues({
+			documentNo: getDocNo && getDocNo,
+			date: requestDate ? requestDate : '',
+			epfNo: values?.epfNo,
+			designationId: values?.designationId,
+			divisionId: values?.divisionId,
+			hod: values?.hod,
+			remark: values?.remark,
+		});
+		console.log(getDocNo);
+	}, [getDocNo]);
 
-  const { auth } = useAppSelector((state) => state.persistedReducer);
+	useEffect(() => {
+		retreiveEmployees();
+		console.log(empData);
+	}, []);
 
-  useEffect(() => {
-    setValues({
-      documentNo: values?.documentNo,
-      date: requestDate ? requestDate : "",
-      epfNo: values?.epfNo,
-      designationId: values?.designationId,
-      divisionId: values?.divisionId,
-      hod: values?.hod,
-      remark: values?.remark,
-    });
-  }, [requestDate]);
+	useEffect(() => {
+		let employee = empData.find(
+			(emp: IEmployeeData) => emp.epfNo.toString() === values.epfNo.toString()
+		);
+		setCurrentEmp(employee);
+		if (employee) {
+			setEmpFoundError(false);
+		} else {
+			setEmpFoundError(true);
+		}
+		setValues({
+			documentNo: getDocNo && getDocNo,
+			date: requestDate ? requestDate : '',
+			epfNo: values?.epfNo,
+			designationId: employee?.designationId,
+			divisionId: employee?.divisionId,
+			hod: values?.hod,
+			remark: values?.remark,
+		});
+		retriveEmployeeDetails(employee);
+	}, [values.epfNo]);
 
-  useEffect(() => {
-    setValues({
-      ...values,
-      documentNo: getDocNo && getDocNo,
-    });
-    console.log(getDocNo);
-  }, [getDocNo]);
+	//get designation and division
+	const retriveEmployeeDetails = (emp: any) => {
+		//get designation
+		DesignationMasterService.getDesignation(emp?.designationId)
+			.then((res: any) => {
+				setDesignationData(res.data.data);
+			})
+			.catch((e: any) => {
+				console.log(e);
+			});
 
-  useEffect(() => {
-    const divisionData = division.find(
-      (d) => d.divisionId === values.divisionId
-    );
+		//get divisions
 
-    if (divisionData) {
-      const employeeId = divisionData.hod;
-      const employee = employees.find((e) => e.epfNo === employeeId);
-      // console.log(employee);
-      if (employee) {
-        setHod(employee);
-        setValues({
-          ...values,
-          hod: employee.epfNo,
-        });
-      }
-    }
-  }, [values.divisionId]);
+		DivisionMasterService.getDivision(emp?.divisionId)
+			.then((res: any) => {
+				setDivisionData(res.data.data);
+			})
+			.catch((e: any) => {
+				console.log(e);
+			});
+	};
 
-  // generate Doc number ID
-  const generateDocNo = () => {
-    setDocNo(generateID("RR"));
-    setValues(initialState);
-  };
+	//get employees
+	const retreiveEmployees = () => {
+		EmployeeService.getAllEmployeeData()
+			.then((res: any) => {
+				console.log(res.data);
+				setEmpData(res.data.data);
+			})
+			.catch((e: any) => {
+				console.log(e);
+			});
+	};
 
-  //reset form
-  const resetForm = () => {
-    setValues(initialState);
-    setDocNo("");
-    setHod(null);
-  };
+	// generate document ID
+	const generateDocNo = () => {
+		setDocNo(generateID('CE'));
+		setValues(initialState);
+	};
 
-  //  onChange Function
-  const onChange = (e: any) => {
-    setValues((prevState) => ({
-      ...prevState,
-      [e.target.name]: e.target.value,
-    }));
-  };
+	//reset form
+	const resetForm = () => {
+		setValues(initialState);
+		setDocNo('');
+	};
 
-  const onSubmit = async (e: any) => {
-    e.preventDefault();
-    console.log(values);
+	//onchange funtion
+	const onChange = (e: any) => {
+		setValues((preState) => ({
+			...preState,
+			[e.target.name]: e.target.value,
+		}));
+	};
 
-    setLoading(true);
-    setTimeout(() => {
-      const result = ContractExtensionService.saveContractExtensionRequest(
-        values,
-        auth?.user?.token
-      )
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((e) => {
-          console.log(e);
-        });
+	const onSubmit = async (e: any) => {
+		e.preventDefault();
 
-      if (result !== null) {
-        toast.success("Contract Extension Request Added Successfully");
-        resetForm();
-      } else {
-        toast.error("Request Cannot be Completed");
-      }
-      setLoading(false);
-    }, 1000);
-  };
+		if (values.documentNo !== '') {
+			setTimeout(async () => {
+				const result = await ContractExtensionService.saveContractExtension(
+					values
+				);
+				// console.log(result)
+				if (result?.data !== null) {
+					toast.success('Contract Extension is on preccess');
+					resetForm();
+				} else {
+					toast.error('Request cannot completed!');
+				}
+				setLoading(false);
+			}, 1000);
+		}
 
-  return (
-    <div className="sub-body-content xl:!w-[60%]">
-      <h1 className="page-title">Contract Extension</h1>
-      <hr className="horizontal-line" />
-      {!loading ? (
-        <form onSubmit={onSubmit}>
-          <div className="grid grid-cols-1 md:grid-cols-2 items-center w-[97%] mx-auto">
-            <Box className="flex items-center justify-between input-field">
-              Document No - {getDocNo && getDocNo}
-              <button
-                type="button"
-                className="rounded-outline-success-btn"
-                onClick={generateDocNo}
-                style={{ marginLeft: "20px" }}
-              >
-                New
-              </button>
-            </Box>
-          </div>
+		console.log(values);
+	};
 
-          <EmployeeSelector
-            onChange={onChange}
-            value={values.epfNo}
-            name="epfNo"
-          />
+	return (
+		<div className='sub-body-content xl:!w-[60%]'>
+			<h1 className='page-title'>Contract Extension</h1>
+			<hr className='horizontal-line' />
+			{!loading ? (
+				<form onSubmit={onSubmit}>
+					<div className='grid grid-cols-1 md:grid-cols-2 items-center w-[97%] mx-auto'>
+						<Box className='flex items-center justify-between input-field'>
+							Document No - {getDocNo && getDocNo}
+							<button
+								type='button'
+								className='rounded-outline-success-btn'
+								onClick={generateDocNo}
+								style={{ marginLeft: '20px' }}
+							>
+								New
+							</button>
+						</Box>
+						<div className='mx-0 mb-4 lg:ml-10 md:my-0'>
+							<CustomeDataPicker
+								date={requestDate}
+								setDate={setRequestDate}
+								title='Request Date'
+							/>
+						</div>
 
-          {values.epfNo && empFoundError ? (
-            <p className="w-[97%] mx-auto error-text-message">
-              User Not Found!
-            </p>
-          ) : (
-            ""
-          )}
+						<div className='flex items-center'>
+							<div>
+								<label className='input-label' htmlFor='epfNo'>
+									Employee EPF No
+								</label>
 
-          <div className="w-[97%] mx-auto">
-            <DesignationSelector
-              onChange={onChange}
-              value={values.designationId}
-              name="designationId"
-            />
-          </div>
+								<input
+									id='epfNo'
+									type='text'
+									className='tailwind-text-box w-[40%] mr-4'
+									onChange={onChange}
+									name='epfNo'
+									value={values.epfNo}
+								/>
+							</div>
+							<div>
+								<label className='input-label' htmlFor='epfNo'>
+									Employee Name
+								</label>
+								<select
+									className='tailwind-text-box'
+									value={values.epfNo}
+									id='epfNo'
+									name='epfNo'
+									onChange={onChange}
+								>
+									<option disabled value={0}>
+										Select Employee
+									</option>
 
-          <div className="w-[97%] mx-auto">
-            <DivisionSelector
-              onChange={onChange}
-              value={values.divisionId}
-              name="divisionId"
-            />
-          </div>
+									{empData?.map((l: IEmployeeData, i: number) => {
+										return (
+											<option key={i} value={l.epfNo}>
+												{l.firstName + ' ' + l.lastName}
+											</option>
+										);
+									})}
+								</select>
+							</div>
+						</div>
+					</div>
+					{values.epfNo && empFoundError ? (
+						<p className='w-[97%] mx-auto error-text-message'>
+							User Not Found!
+						</p>
+					) : (
+						''
+					)}
 
-          <div className="w-[97%] mx-auto">
-            <div className="grid items-center grid-cols-1 md:grid-cols-2">
-              <p className="normal-text">
-                HOD :{" "}
-                {values.divisionId && hod ? (
-                  <span className="font-bold">
-                    {hod.firstName + " " + hod.lastName}
-                  </span>
-                ) : (
-                  <span className="italic-sm-text">
-                    Please select a Division
-                  </span>
-                )}
-              </p>
-            </div>
-          </div>
+					<div className='w-[97%] mx-auto'>
+						<p className='normal-text'>
+							Designation :{' '}
+							{values.epfNo && designationData ? (
+								<span className='font-bold'>
+									{designationData.designationName}
+								</span>
+							) : (
+								<span className='italic-sm-text'>
+									Please select an employee
+								</span>
+							)}
+						</p>
 
-          <div className="mx-0 mb-4 lg:ml-10 md:my-0">
-            <CustomeDataPicker
-              date={requestDate}
-              setDate={setRequestDate}
-              title="Request Date"
-            />
-          </div>
+						<div className='grid items-center grid-cols-1 md:grid-cols-2'>
+							<p className='normal-text'>
+								Division :{' '}
+								{values.epfNo && divisionData ? (
+									<span className='font-bold'>{divisionData.name}</span>
+								) : (
+									<span className='italic-sm-text'>
+										Please select an employee
+									</span>
+								)}
+							</p>
 
-          <div className="w-[97%] mx-auto">
-            <label className="input-label" htmlFor="remark">
-              Remark
-            </label>
+							<p className='normal-text'>
+								HOD :{' '}
+								{values.epfNo && divisionData ? (
+									<span className='font-bold'>{divisionData.name}</span>
+								) : (
+									<span className='italic-sm-text'>
+										Please select an employee
+									</span>
+								)}
+							</p>
+						</div>
+					</div>
 
-            <textarea
-              id="remark"
-              className="tailwind-text-box w-[100%] mr-4"
-              onChange={onChange}
-              name="remark"
-              value={values.remark}
-            ></textarea>
-          </div>
-          <Stack
-            direction="row"
-            justifyContent="flex-end"
-            alignItems="flex-end"
-            spacing={2}
-            className="admin-form-buton-stack"
-          >
-            <button
-              className="action-com-model-error-btn"
-              type="reset"
-              color="error"
-              onClick={resetForm}
-            >
-              Reset
-            </button>
-            <button className="action-com-model-sucess-btn" type="submit">
-              Submit
-            </button>
-          </Stack>
-        </form>
-      ) : (
-        <Ripple />
-      )}
-    </div>
-  );
+					<div className='w-[97%] mx-auto'>
+						<label className='input-label' htmlFor='remark'>
+							Remark
+						</label>
+
+						<textarea
+							id='remark'
+							className='tailwind-text-box w-[100%] mr-4'
+							onChange={onChange}
+							name='remark'
+							value={values.remark}
+						></textarea>
+					</div>
+					<Stack
+						direction='row'
+						justifyContent='flex-end'
+						alignItems='flex-end'
+						spacing={2}
+						className='admin-form-buton-stack'
+					>
+						<button
+							className='action-com-model-error-btn'
+							type='reset'
+							color='error'
+							onClick={resetForm}
+						>
+							Reset
+						</button>
+						<button className='action-com-model-sucess-btn' type='submit'>
+							Submit
+						</button>
+					</Stack>
+				</form>
+			) : (
+				<Ripple />
+			)}
+		</div>
+	);
 }
 
 export default ContractExtension;

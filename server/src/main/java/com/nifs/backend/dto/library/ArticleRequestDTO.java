@@ -29,7 +29,6 @@ public class ArticleRequestDTO extends BaseDTO {
     private String issue;
     private String pages;
     private String webLink;
+    private String ISSN_No;
     private String remark;
-
-
 }

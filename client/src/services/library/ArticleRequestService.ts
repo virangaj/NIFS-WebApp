@@ -3,12 +3,13 @@ import http from "../../utils/http-common";
 
 axios.defaults.baseURL = process.env.REACT_APP_BACKEND_SERVER;
 
-const getAllArticleRequest = async () => {
+const getAllArticleRequest = async (token: any) => {
   const response = await axios({
     method: "get",
     url: `${process.env.REACT_APP_BACKEND_SERVER}/library/article-request`,
     headers: {
       "Content-Type": "application/json; charset=utf-8",
+      Authorization: `Bearer ${token}`,
     },
   });
   // alert("Favourite created --- "+ response);
