@@ -26,7 +26,6 @@ import DirectorAdmin from '../pages/adminDashboards/DirectorAdmin';
 import SeduAdmin from '../pages/adminDashboards/SeduAdmin';
 import { useAppSelector } from '../hooks/hooks';
 import { useEffect, useState } from 'react';
-import HodAdmin from '../pages/adminDashboards/HodAdmin';
 
 const AppRouter = () => {
 	const { auth } = useAppSelector((state) => state.persistedReducer);
@@ -162,14 +161,6 @@ const AppRouter = () => {
 				/>
 
 				{/* Admin page of HOD*/}
-				<Route
-					path={RouteName.HODAdminPage}
-					element={
-						<>
-							<MainPages Content={HodAdmin} />
-						</>
-					}
-				/>
 			</Routes>
 		</BrowserRouter>
 	);

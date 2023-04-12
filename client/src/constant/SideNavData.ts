@@ -89,22 +89,3 @@ export const SeduAdminSideNavbar = [
 		icon: HiOutlineOfficeBuilding,
 	},
 ];
-
-//HOD admin
-export const HODAdminSideNavbar = [
-	{
-		title: 'Resignation Request',
-		link: RouteName.DirectorResignationReq,
-		icon: HiOutlineOfficeBuilding,
-	},
-	{
-		title: 'Contract Extension Request',
-		link: RouteName.ContractExtension,
-		icon: HiOutlineOfficeBuilding,
-	},
-	{
-		title: 'Projects',
-		link: RouteName.Projects,
-		icon: HiOutlineOfficeBuilding,
-	},
-];

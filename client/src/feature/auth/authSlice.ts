@@ -19,6 +19,8 @@ const initialState: any = {
 	tokenExpireDate: null,
 	isAdmin: null,
 	division: null,
+	name: null,
+	epfNo: null,
 };
 
 export const login = createAsyncThunk('auth/login', async (data: any) => {
@@ -52,6 +54,8 @@ export const authSlice = createSlice({
 			state.tokenExpireDate = null;
 			state.isAdmin = null;
 			state.division = null;
+			state.name = null;
+			state.epfNo = null;
 		},
 	},
 
@@ -61,6 +65,8 @@ export const authSlice = createSlice({
 				state.user = null;
 				state.isAdmin = false;
 				state.division = null;
+				state.name = null;
+				state.epfNo = null;
 			})
 			.addCase(changePassword.fulfilled, (state) => {
 				state.user = null;
@@ -86,6 +92,8 @@ export const authSlice = createSlice({
 
 				state.division = TokenService.getDivision(action.payload.token);
 				state.isAdmin = TokenService.isAdmin(action.payload.token);
+				state.name = action.payload.name;
+				state.epfNo = action.payload.user.epfNo;
 			})
 			.addCase(login.rejected, (state, action) => {
 				state.isLoading = false;
