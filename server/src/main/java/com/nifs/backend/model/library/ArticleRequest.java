@@ -10,56 +10,34 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.springframework.format.annotation.DateTimeFormat;
 
-@AllArgsConstructor
-@NoArgsConstructor
+@Entity
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @SuperBuilder
 @Table(name = "article_request")
-@Entity
 public class ArticleRequest extends Base {
 
     private String documentNo;
-
-    @Column(name = "employee")
-    private String employee;
-
-    @Column(name = "designation")
-    private String designation;
-
-    @Column(name = "division")
-    private String division;
-
-    @Column(name = "head_of_library")
-    private String headOfLibrary;
-
-    @Column(name = "name_of_journal")
-    private String nameOfJournal;
-
-    @Column(name = "year")
-    private String year;
+    private int epfNo;
+    private String designationId;
+    private String divisionId;
+    private int hod;
 
     @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(pattern = "dd/MM/yyyy")
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Column(name = "date")
     private String date;
-
-    @Column(name = "volume")
+    private String nameOfJournal;
+    private String publishYear;
     private String volume;
 
-    @Column(name = "issue")
+
     private String issue;
-
-    @Column(name = "pages")
     private String pages;
-
-    @Column(name = "weblink")
     private String webLink;
+    private String remark;
 
-    @Column(name = "attachment")
-    private String attachment;
-
-    @Column(name = "remarks")
-    private String remarks;
 }

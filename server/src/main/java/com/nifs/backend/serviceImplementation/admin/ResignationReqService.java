@@ -1,5 +1,6 @@
 package com.nifs.backend.serviceImplementation.admin;
 
+import com.nifs.backend.constant.RequestStatus;
 import com.nifs.backend.dto.admin.ResignationRequestDTO;
 import com.nifs.backend.model.admin.ResignationRequest;
 import com.nifs.backend.repository.admin.ResignationReqRepository;
@@ -63,7 +64,7 @@ public class ResignationReqService implements IResignationReqService {
 
     // hod approval
     @Override
-    public boolean putHodApproval(boolean approval, List<String> resId, String user) {
+    public boolean putHodApproval(RequestStatus approval, List<String> resId, String user) {
         try {
             log.info("HOD Resignation Request : requested");
             resId.forEach(id -> {
@@ -78,7 +79,7 @@ public class ResignationReqService implements IResignationReqService {
 
     // director approval
     @Override
-    public Object putDirectorApproval(boolean approval, List<String> resId, String user) {
+    public Object putDirectorApproval(RequestStatus approval, List<String> resId, String user) {
         try {
             log.info("Director Resignation Request : requested");
             resId.forEach(id -> {
@@ -90,6 +91,8 @@ public class ResignationReqService implements IResignationReqService {
             return false;
         }
     }
+
+
 
 
 }

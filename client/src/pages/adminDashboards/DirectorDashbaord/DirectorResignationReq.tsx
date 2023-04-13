@@ -3,17 +3,19 @@ import { useAppSelector } from '../../../hooks/hooks';
 import ResignationService from '../../../services/admin/ResignationService';
 import ResignationRequestTable from '../../shared/ResignationRequestTable';
 import { toast } from 'react-toastify';
+import { RequestStatus } from '../../../constant/requestStatus';
 
 function DirectorResignationReq() {
 	const { auth } = useAppSelector((state) => state.persistedReducer);
 	const [requests, setRequests] = useState<any>([]);
-	const [rowId, setRowId] = useState(0);
 	const [selectedData, setSelectedData] = useState<Array<string>>([]);
-	const [pageSize, setPageSize] = useState(10);
 	const [loading, setLoading] = useState(false);
-	const [getData, setGetData] = useState(false);
 
 	useEffect(() => {
+		retriveData();
+	}, []);
+
+	const retriveData = () => {
 		setLoading(true);
 		setTimeout(() => {
 			ResignationService.getAllResignationRequest(auth?.user?.token)
@@ -25,14 +27,18 @@ function DirectorResignationReq() {
 				});
 			setLoading(false);
 		}, 500);
-	}, []);
+	};
 
 	//send approval request
 	const sendApprove = () => {
 		console.log(selectedData);
 		setLoading(true);
 		setTimeout(() => {
-			ResignationService.sendDirApproval(selectedData, auth?.user?.token, true)
+			ResignationService.sendDirApproval(
+				selectedData,
+				auth?.user?.token,
+				RequestStatus.APPROVED
+			)
 				.then((res) => {
 					if (res.data) {
 						toast.success('Resignation is Confirmed');
@@ -45,17 +51,21 @@ function DirectorResignationReq() {
 					toast.error('Request cannot be performed');
 				});
 			setLoading(false);
-			setGetData((val) => !val);
+			retriveData();
 		}, 500);
 	};
 	//send reject request
 	const sendReject = () => {
 		setLoading(true);
 		setTimeout(() => {
-			ResignationService.sendDirApproval(selectedData, auth?.user?.token, false)
+			ResignationService.sendDirApproval(
+				selectedData,
+				auth?.user?.token,
+				RequestStatus.DISAPPROVED
+			)
 				.then((res) => {
 					if (res.data) {
-						toast.success('Resignation is Declined');
+						toast.warning('Resignation is Declined');
 					} else {
 						toast.error('Request cannot be performed');
 					}
@@ -64,7 +74,7 @@ function DirectorResignationReq() {
 					console.log(e);
 					toast.error('Request cannot be performed');
 				});
-			setGetData((val) => !val);
+			retriveData();
 			setLoading(false);
 		}, 500);
 	};
@@ -93,7 +103,8 @@ function DirectorResignationReq() {
 				</div>
 				<ResignationRequestTable
 					setSelectedData={setSelectedData}
-					getData={getData}
+					requests={requests}
+					loading={loading}
 				/>
 			</div>
 		</>

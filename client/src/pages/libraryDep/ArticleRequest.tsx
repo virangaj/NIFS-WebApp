@@ -1,89 +1,136 @@
 import React, { useEffect, useState } from "react";
 import CustomeDataPicker from "../../components/DataPicker";
 import Stack from "@mui/material/Stack";
-import IArticleRequest from "../../types/ArticleRequest";
+import IArticleRequest from "../../types/library/IArticleRequest";
 import "../pages.css";
 import { toast } from "react-toastify";
 import ArticleRequestService from "../../services/library/ArticleRequestService";
+import IEmployeeData from "../../types/admin/IEmployeeData";
+import { useAppSelector } from "../../hooks/hooks";
+import { generateID } from "../../utils/generateId";
+import Box from "@mui/material/Box";
+import EmployeeSelector from "../../components/shared/EmployeeSelector";
+import DesignationSelector from "../../components/shared/DesignationSelector";
+import DivisionSelector from "../../components/shared/DivisionSelector";
+import FileInput from "../../components/FileInput";
 
 const initialState: IArticleRequest = {
   documentNo: "",
-  employee: "",
-  designation: "",
-  division: "",
-  headOfLibrary: "",
+  epfNo: 0,
+  designationId: "",
+  divisionId: "",
+  hod: 0,
   date: "",
   nameOfJournal: "",
-  year: "",
+  publishYear: "",
   volume: "",
   issue: "",
   pages: "",
   webLink: "",
-  attachment: "",
   remark: "",
 };
 
 export default function ArticleRequest() {
   const [values, setValues] = useState<IArticleRequest>(initialState);
-
-  const [date, setDate] = useState<string | null>(null);
-  const [year, setYear] = useState<string | null>(null);
-
+  const [hod, setHod] = useState<IEmployeeData | null>();
+  const [getDocNo, setDocNo] = useState<String | any>("");
+  const [requestDate, setRequestDate] = useState<string | null>(null);
+  const [publishedYear, setPublishedYear] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [eventAttachment, setEventAttachment] = useState<File | any>();
+
+  const { employees, employeesIsLoading, employeesIsSuccess } = useAppSelector(
+    (state) => state.employees
+  );
+  const { division, divisionIsLoading, divisionIsSuccess } = useAppSelector(
+    (state) => state.division
+  );
+
+  const { auth } = useAppSelector((state) => state.persistedReducer);
 
   useEffect(() => {
     setValues({
       documentNo: values?.documentNo,
-      employee: values?.employee,
-      designation: values?.designation,
-      division: values?.division,
-      headOfLibrary: values?.headOfLibrary,
-      date: date ? date : "",
+      epfNo: values?.epfNo,
+      designationId: values?.designationId,
+      divisionId: values?.divisionId,
+      hod: values?.hod,
+      date: requestDate ? requestDate : "",
       nameOfJournal: values?.nameOfJournal,
-      year: year ? year : "",
+      publishYear: publishedYear ? publishedYear : "",
       volume: values?.volume,
       issue: values?.issue,
       pages: values?.pages,
       webLink: values?.webLink,
-      attachment: values?.attachment,
       remark: values?.remark,
     });
-  }, [date, year]);
+  }, [requestDate, publishedYear]);
 
-  const resetForm = () => {
+  useEffect(() => {
     setValues({
-      documentNo: "",
-      employee: "",
-      designation: "",
-      division: "",
-      headOfLibrary: "",
-      date: "",
-      nameOfJournal: "",
-      year: "",
-      volume: "",
-      issue: "",
-      pages: "",
-      webLink: "",
-      attachment: "",
-      remark: "",
+      ...values,
+      documentNo: getDocNo && getDocNo,
     });
+    console.log(getDocNo);
+  }, [getDocNo]);
+
+  useEffect(() => {
+    const divisionData = division.find(
+      (d) => d.divisionId === values.divisionId
+    );
+
+    if (divisionData) {
+      const employeeId = divisionData.hod;
+      const employee = employees.find((e) => e.epfNo === employeeId);
+      // console.log(employee);
+      if (employee) {
+        setHod(employee);
+        setValues({
+          ...values,
+          hod: employee.epfNo,
+        });
+      }
+    }
+  }, [values.divisionId]);
+
+  // generate Doc number ID
+  const generateDocNo = () => {
+    setDocNo(generateID("RR"));
+    setValues(initialState);
   };
 
-  const onChange = (event: any) => {
+  //reset form
+  const resetForm = () => {
+    setValues(initialState);
+    setDocNo("");
+    setHod(null);
+  };
+
+  //  onChange Function
+  const onChange = (e: any) => {
     setValues((prevState) => ({
       ...prevState,
-      [event.target.name]: event.target.value,
+      [e.target.name]: e.target.value,
     }));
   };
 
-  const onSubmit = async (event: any) => {
-    event.preventDefault();
+  const onSubmit = async (e: any) => {
+    e.preventDefault();
     console.log(values);
+    setLoading(true);
+    setTimeout(() => {
+      const result = ArticleRequestService.saveArticleRequest(
+        values,
+        auth?.user?.token
+      )
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
 
-    setTimeout(async () => {
-      const result = await ArticleRequestService.saveArticleRequest(values);
-
-      if (result?.data !== null) {
+      if (result !== null) {
         toast.success("Article Request Added Successfully");
         resetForm();
       } else {
@@ -91,6 +138,8 @@ export default function ArticleRequest() {
       }
       setLoading(false);
     }, 1000);
+
+    console.log(values);
   };
 
   return (
@@ -99,87 +148,61 @@ export default function ArticleRequest() {
       <hr className="horizontal-line"></hr>
       <form onSubmit={onSubmit} className="w-[90%] mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2">
+          <Box className="flex items-center justify-between input-field">
+            Document No - {getDocNo && getDocNo}
+            <button
+              type="button"
+              className="rounded-outline-success-btn"
+              onClick={generateDocNo}
+              style={{ marginLeft: "20px" }}
+            >
+              New
+            </button>
+          </Box>
+
+          <EmployeeSelector
+            onChange={onChange}
+            value={values.epfNo}
+            name="epfNo"
+          />
+
+          <div className="w-[97%] mx-auto">
+            <DesignationSelector
+              onChange={onChange}
+              value={values.designationId}
+              name="designationId"
+            />
+          </div>
+
+          <div className="w-[97%] mx-auto">
+            <DivisionSelector
+              onChange={onChange}
+              value={values.divisionId}
+              name="divisionId"
+            />
+          </div>
+
+          <div className="w-[97%] mx-auto">
+            <div className="grid items-center grid-cols-1 md:grid-cols-2">
+              <p className="normal-text">
+                HOD :{" "}
+                {values.divisionId && hod ? (
+                  <span className="font-bold">
+                    {hod.firstName + " " + hod.lastName}
+                  </span>
+                ) : (
+                  <span className="italic-sm-text">
+                    Please select a Division
+                  </span>
+                )}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2">
+          {/* left section */}
           <div className="form-left-section">
-            <div className="flex items-center">
-              <label className="input-label basis-1/2" htmlFor="documentNo">
-                Document No:
-              </label>
-
-              <input
-                id="outlined-basic"
-                type="search"
-                className="mr-4 tailwind-text-box w-[90%]"
-                name="documentNo"
-                onChange={onChange}
-                value={values.documentNo}
-                required
-              />
-            </div>
-
-            <div className="flex items-center">
-              <label className="input-label basis-1/2" htmlFor="employee">
-                Employee:
-              </label>
-
-              <input
-                id="outlined-basic"
-                type="search"
-                className="mr-4 tailwind-text-box w-[90%]"
-                name="employee"
-                onChange={onChange}
-                value={values.employee}
-                required
-              />
-            </div>
-
-            <div className="flex items-center">
-              <label className="input-label basis-1/2" htmlFor="designation">
-                Designation:
-              </label>
-
-              <input
-                id="outlined-basic"
-                type="search"
-                className="mr-4 tailwind-text-box w-[90%]"
-                name="designation"
-                onChange={onChange}
-                value={values.designation}
-                required
-              />
-            </div>
-
-            <div className="flex items-center">
-              <label className="input-label basis-1/2" htmlFor="division">
-                Division:
-              </label>
-
-              <input
-                id="outlined-basic"
-                type="search"
-                className="mr-4 tailwind-text-box w-[90%]"
-                name="division"
-                onChange={onChange}
-                value={values.division}
-                required
-              />
-            </div>
-
-            <div className="flex items-center">
-              <label className="input-label basis-1/2" htmlFor="headOfLibrary">
-                Head Of Library:
-              </label>
-
-              <input
-                id="outlined-basic"
-                type="search"
-                className="mr-4 tailwind-text-box w-[90%]"
-                name="headOfLibrary"
-                onChange={onChange}
-                value={values.headOfLibrary}
-                required
-              />
-            </div>
-
             <div className="flex items-center">
               <label className="input-label basis-1/2" htmlFor="nameOfJournal">
                 Name Of Journal:
@@ -193,37 +216,6 @@ export default function ArticleRequest() {
                 onChange={onChange}
                 value={values.nameOfJournal}
                 required
-              />
-            </div>
-
-            {/* have to convert this to show only the year */}
-            <div>
-              <label className="input-label" htmlFor="emissionTestDate">
-                Year:
-              </label>
-              <CustomeDataPicker
-                date={year}
-                setDate={setYear}
-                title="Date"
-                className="mx-0 lg:ml-10"
-                name="emissionTestDate"
-              />
-            </div>
-          </div>
-
-          {/* Form Right Section */}
-
-          <div className="form-right-section">
-            <div>
-              <label className="input-label" htmlFor="date">
-                Date:
-              </label>
-              <CustomeDataPicker
-                date={date}
-                setDate={setDate}
-                title="Date"
-                className="mx-0 lg:ml-10"
-                name="date"
               />
             </div>
 
@@ -290,25 +282,46 @@ export default function ArticleRequest() {
                 required
               />
             </div>
+          </div>
 
-            {/* Have to add the functionality to upload an file */}
-            <div className="flex items-center">
-              <label className="input-label basis-1/2" htmlFor="attachment">
-                Attachment:
+          {/* right section */}
+          <div className="form-right-section">
+            <div>
+              <label className="input-label" htmlFor="date">
+                Request Date:
               </label>
+              <CustomeDataPicker
+                date={requestDate}
+                setDate={setRequestDate}
+                title="Date"
+                className="mx-0 lg:ml-10"
+                name="date"
+              />
+            </div>
 
-              <input
-                id="outlined-basic"
-                type="search"
-                className="mr-4 tailwind-text-box w-[90%]"
-                name="attachment"
-                onChange={onChange}
-                value={values.attachment}
-                required
+            <div>
+              <label className="input-label" htmlFor="publishedYear">
+                Published Year:
+              </label>
+              <CustomeDataPicker
+                date={publishedYear}
+                setDate={setPublishedYear}
+                title="publishedYear"
+                className="mx-0 lg:ml-10"
+                name="publishedYear"
+              />
+            </div>
+
+            <div className="lg:mt-4">
+              <FileInput
+                setEventAttachment={setEventAttachment}
+                eventAttachment={eventAttachment}
+                title="Upload Attachment"
               />
             </div>
           </div>
         </div>
+
         <div className="flex ">
           <label className="input-label basis-1/2" htmlFor="remark">
             Remarks:

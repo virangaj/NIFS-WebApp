@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import CustomeDataPicker from "../../components/DataPicker";
-import IRepairRequest from "../../types/RepairRequest";
+import IRepairRequest from "../../types/transport/IRepairRequest";
 import Stack from "@mui/material/Stack";
 import "../pages.css";
 import RepairRequestService from "../../services/transport/RepairRequestService";

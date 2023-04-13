@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Stack from "@mui/material/Stack";
 import CustomeDataPicker from "../../components/DataPicker";
-import ITravelMaster from "../../types/TravelMaster";
+import ITravelMaster from "../../types/transport/ITravelMaster";
 import "../pages.css";
 import TravelMasterService from "../../services/transport/TravelMasterService";
 import { toast } from "react-toastify";

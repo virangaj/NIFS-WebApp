@@ -43,13 +43,16 @@ const updateCharge = async (data: any, token: any) => {
 };
 
 // set charge
-const setCharges = async (objArr: any, id: any) => {
+const setCharges = async (objArr: any, id: any, token: string) => {
 	console.log(objArr);
 	const response = await axios({
 		method: 'put',
 		url: `${process.env.REACT_APP_BACKEND_SERVER}/sedu/venuemaster/${id}/addcharge`,
 		data: objArr,
-		headers: { 'Content-Type': 'application/json; charset=utf-8' },
+		headers: {
+			'Content-Type': 'application/json; charset=utf-8',
+			Authorization: `Bearer ${token}`,
+		},
 	});
 	return response;
 };
@@ -93,13 +96,16 @@ const updateFacility = async (data: any, token: any) => {
 };
 
 // set facility
-const setFacilities = async (objArr: any, id: any) => {
+const setFacilities = async (objArr: any, id: any, token: string) => {
 	console.log(objArr);
 	const response = await axios({
 		method: 'put',
 		url: `${process.env.REACT_APP_BACKEND_SERVER}/sedu/venuemaster/${id}/addfacility`,
 		data: objArr,
-		headers: { 'Content-Type': 'application/json; charset=utf-8' },
+		headers: {
+			'Content-Type': 'application/json; charset=utf-8',
+			Authorization: `Bearer ${token}`,
+		},
 	});
 
 	return response;

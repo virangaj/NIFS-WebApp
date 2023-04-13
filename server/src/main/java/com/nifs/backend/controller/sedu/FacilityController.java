@@ -1,7 +1,6 @@
 package com.nifs.backend.controller.sedu;
 
 import com.nifs.backend.dto.sedu.FacilityDTO;
-import com.nifs.backend.model.sedu.Facility;
 import com.nifs.backend.service.sedu.IFacilityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -9,7 +8,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @CrossOrigin
@@ -28,10 +26,11 @@ public class FacilityController {
     }
 
 //    get facility by id
-    @GetMapping("/{facilityId}")
-    Optional<Facility> returnFacility(@PathVariable String facilityId){
-        return facService.returnFacility(facilityId);
-    }
+@GetMapping("/{facilityId}")
+FacilityDTO returnFacility(@PathVariable String facilityId) {
+    return facService.returnFacility(facilityId);
+}
+
     @GetMapping()
     List<FacilityDTO> getAll() {
         return facService.getAll();

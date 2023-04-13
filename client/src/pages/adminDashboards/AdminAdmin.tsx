@@ -9,6 +9,7 @@ import Division from './AdminAdmin/Division';
 import AdminResignationReq from './AdminAdmin/AdminResignationReq';
 import { AdministrationSidenav } from '../../constant/SideNavData';
 import AdminPages from '../../layout/AdminPages';
+import ContractextensionReq from './AdminAdmin/ContractextensionReq';
 
 export function PageRoutes() {
 	return (
@@ -21,6 +22,10 @@ export function PageRoutes() {
 			<Route
 				path={RouteName.ResignationRequest}
 				element={<AdminResignationReq />}
+			/>
+			<Route
+				path={RouteName.ContractExtension}
+				element={<ContractextensionReq />}
 			/>
 		</Routes>
 	);

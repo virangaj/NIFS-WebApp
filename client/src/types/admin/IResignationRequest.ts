@@ -1,3 +1,5 @@
+import { RequestStatus } from '../../constant/requestStatus';
+
 export default interface IResignationRequest {
 	documentNo: string;
 	date: string;
@@ -6,6 +8,6 @@ export default interface IResignationRequest {
 	divisionId: string;
 	hod: number;
 	remark: string;
-	hodApproved: boolean;
-	dirApproved: boolean;
+	hodApproved: RequestStatus;
+	dirApproved: RequestStatus;
 }

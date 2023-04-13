@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "../pages.css";
 import Stack from "@mui/material/Stack";
 import CustomeDataPicker from "../../components/DataPicker";
-import ITransportReportGenerator from "../../types/TransportReportGenerator";
+import ITransportReportGenerator from "../../types/transport/ITransportReportGenerator";
 
 export default function TransportReportGenerator() {
   const [values, setValues] = useState<ITransportReportGenerator>({

@@ -2,11 +2,15 @@ package com.nifs.backend.model.sedu;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.nifs.backend.model.Base;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.Date;
 
@@ -16,32 +20,17 @@ import java.util.Date;
 @Table(name="venue_charges")
 @AllArgsConstructor
 @NoArgsConstructor
-public class VenueCharge {
+@SuperBuilder
+public class VenueCharge extends Base {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private int id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "venue_id", referencedColumnName = "venue_id")
+    private VenueMaster venueMasterId;
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
-    @JoinColumn(name = "venue_id", referencedColumnName = "venue_id", nullable = false)
-    private VenueMaster venueMaster;
-
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
-    @JoinColumn(name = "charge_id", referencedColumnName = "charge_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "charge_id", referencedColumnName = "charge_id")
     private Charges chargeId;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="date_created")
-    private Date dateCreated;
-
-    public VenueCharge(VenueMaster venueMaster, Charges chargeId, Date dateCreated) {
-
-        this.venueMaster = venueMaster;
-        this.chargeId = chargeId;
-        this.dateCreated = dateCreated;
-    }
 
 }

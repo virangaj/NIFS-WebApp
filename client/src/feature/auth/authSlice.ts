@@ -3,6 +3,7 @@ import { Constant } from '../../constant/constant';
 import { RequestStatus } from '../../constant/requestStatus';
 import OAuthService from '../../services/auth/OAuthService';
 import { RootState } from '../../store/store';
+import TokenService from '../../utils/DecodeToken';
 
 const user = localStorage.getItem('emplpoyee');
 
@@ -16,6 +17,10 @@ const initialState: any = {
 	isSuccess: false,
 	isLoading: false,
 	tokenExpireDate: null,
+	isAdmin: null,
+	division: null,
+	name: null,
+	epfNo: null,
 };
 
 export const login = createAsyncThunk('auth/login', async (data: any) => {
@@ -47,6 +52,10 @@ export const authSlice = createSlice({
 			state.isError = false;
 			state.message = '';
 			state.tokenExpireDate = null;
+			state.isAdmin = null;
+			state.division = null;
+			state.name = null;
+			state.epfNo = null;
 		},
 	},
 
@@ -54,6 +63,10 @@ export const authSlice = createSlice({
 		builder
 			.addCase(logout.fulfilled, (state) => {
 				state.user = null;
+				state.isAdmin = false;
+				state.division = null;
+				state.name = null;
+				state.epfNo = null;
 			})
 			.addCase(changePassword.fulfilled, (state) => {
 				state.user = null;
@@ -71,9 +84,16 @@ export const authSlice = createSlice({
 					action.payload.status === RequestStatus.CHANGE_PASSWORD
 						? action.payload
 						: null;
+
+				//set expire date
 				state.tokenExpireDate = new Date().setDate(
 					new Date().getDate() + Constant.TOKEN_EXPIRY
 				);
+
+				state.division = TokenService.getDivision(action.payload.token);
+				state.isAdmin = TokenService.isAdmin(action.payload.token);
+				state.name = action.payload.name;
+				state.epfNo = action.payload.user.epfNo;
 			})
 			.addCase(login.rejected, (state, action) => {
 				state.isLoading = false;

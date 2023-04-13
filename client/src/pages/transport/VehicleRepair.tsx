@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import CustomeDataPicker from "../../components/DataPicker";
 import Stack from "@mui/material/Stack";
-import IVehicleReplacement from "../../types/VehicleRepair";
+import IVehicleReplacement from "../../types/transport/IVehicleRepair";
 import "../pages.css";
-import IVehicleRepair from "../../types/VehicleRepair";
+import IVehicleRepair from "../../types/transport/IVehicleRepair";
 import VehicleRepairService from "../../services/transport/VehicleRepairService";
 import { toast } from "react-toastify";
 

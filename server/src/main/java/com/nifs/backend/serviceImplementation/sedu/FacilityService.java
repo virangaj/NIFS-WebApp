@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class FacilityService implements IFacilityService {
@@ -81,9 +80,10 @@ public class FacilityService implements IFacilityService {
         }
     }
 //    get facility by id
-    public Optional<Facility> returnFacility(String facilityId) {
+    public FacilityDTO returnFacility(String facilityId) {
         try {
-            return facRepo.findById(facilityId);
+
+            return modelMapper.map(facRepo.findById(facilityId).orElse(null), FacilityDTO.class);
         } catch (Exception e) {
             System.out.println(e.toString());
             return null;

@@ -96,40 +96,15 @@ function AddEmployee() {
 
 	useEffect(() => {
 		setEmpData({
-			epfNo: empData?.epfNo,
-			initials: empData?.initials,
-			firstName: empData?.firstName,
-			lastName: empData?.lastName,
-			gender: empData?.gender,
+			...empData,
 			dob: birthDate ? birthDate : '',
-			address: empData?.address,
-			districtId: empData?.districtId,
-			provinceId: empData?.provinceId,
-			contactNo: empData?.contactNo,
-			personalEmail: empData?.personalEmail,
-			gsuitEmail: empData?.gsuitEmail,
-			nicNo: empData?.nicNo,
 			nicIssuedDate: NICIDate ? NICIDate : '',
-			passportNo: empData?.passportNo,
 			passExpireDate: passExDate ? passExDate : '',
-			licenseNo: empData?.licenseNo,
 			licenseIssuedDate: licIssueDate ? licIssueDate : '',
 			licenseExpireDate: licExpireDate ? licExpireDate : '',
-			contactPerson: empData?.contactPerson,
-			cpRelationship: empData?.cpRelationship,
-			cpAddress: empData?.cpAddress,
-			cpTelephone: empData?.cpTelephone,
-			cpStatus: empData?.cpStatus,
-			cpCivilStatus: empData?.cpCivilStatus,
-			cpReligion: empData?.cpReligion,
 			appointmentDate: appDate ? appDate : '',
 			contractStart: conStartDate ? conStartDate : '',
 			contractEnd: conEndDate ? conEndDate : '',
-			locationId: empData?.locationId,
-			empTypeId: empData?.empTypeId,
-			empCatId: empData?.empCatId,
-			designationId: empData?.designationId,
-			divisionId: empData?.divisionId,
 		});
 	}, [
 		birthDate,
@@ -142,52 +117,52 @@ function AddEmployee() {
 		conStartDate,
 	]);
 
-	// get location data
-	const retreivePageLoadData = () => {
-		if (location.length === 0 || !locationIsSuccess) {
-			dispatch(getAllLocations());
-		}
+  // get location data
+  const retreivePageLoadData = () => {
+    if (location.length === 0 || !locationIsSuccess) {
+      dispatch(getAllLocations());
+    }
 
-		OtherDataServices.getAllProvinces()
-			.then((res: any) => {
-				setProvinces(res.data);
-				// console.log(provinces);
-			})
-			.catch((e: any) => {
-				console.log(e);
-			});
-		OtherDataServices.getAllReligions()
-			.then((res: any) => {
-				setReligions(res.data);
-				// console.log(provinces);
-			})
-			.catch((e: any) => {
-				console.log(e);
-			});
-	};
+    OtherDataServices.getAllProvinces()
+      .then((res: any) => {
+        setProvinces(res.data);
+        // console.log(provinces);
+      })
+      .catch((e: any) => {
+        console.log(e);
+      });
+    OtherDataServices.getAllReligions()
+      .then((res: any) => {
+        setReligions(res.data);
+        // console.log(provinces);
+      })
+      .catch((e: any) => {
+        console.log(e);
+      });
+  };
 
-	// get other data on location selected
-	useEffect(() => {
-		retreiveOtherEmployeeData(empData?.locationId);
-	}, [empData?.locationId]);
+  // get other data on location selected
+  useEffect(() => {
+    retreiveOtherEmployeeData(empData?.locationId);
+  }, [empData?.locationId]);
 
-	useEffect(() => {
-		retrieveDistricts(empData?.provinceId);
-		// console.log(empData?.province)
-	}, [empData?.provinceId]);
+  useEffect(() => {
+    retrieveDistricts(empData?.provinceId);
+    // console.log(empData?.province)
+  }, [empData?.provinceId]);
 
-	const retrieveDistricts = (id: number) => {
-		if (empData?.provinceId) {
-			OtherDataServices.getDistrictByProvinceId(id)
-				.then((res: any) => {
-					setDistricts(res.data);
-					// console.log(districts);
-				})
-				.catch((e: any) => {
-					console.log(e);
-				});
-		}
-	};
+  const retrieveDistricts = (id: number) => {
+    if (empData?.provinceId) {
+      OtherDataServices.getDistrictByProvinceId(id)
+        .then((res: any) => {
+          setDistricts(res.data);
+          // console.log(districts);
+        })
+        .catch((e: any) => {
+          console.log(e);
+        });
+    }
+  };
 
 	const retreiveOtherEmployeeData = (id: string) => {
 		if (empData?.locationId) {

@@ -14,6 +14,7 @@ import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Function;
 
 @Service
@@ -30,11 +31,7 @@ public class JwtService {
     }
 
 
-    public String generateToken(UserDetails userDetails){
-
-        HashMap<String, Object> claims = new HashMap<>();
-        claims.put("roles", "Admin");
-
+    public String generateToken(UserDetails userDetails, HashMap<String, Object> claims){
         return generateToken(claims, userDetails);
     }
 
@@ -62,7 +59,7 @@ public class JwtService {
     }
 
 
-    //validate tokem
+    //validate token
     public boolean isTokenValid(String token, UserDetails userDetails){
         try{
             final String username = extractUsername(token);
@@ -75,7 +72,7 @@ public class JwtService {
 
     // check weather token is expired
     private boolean isTokenExpire(String token) {
-        return extractExpiration(token).before(new Date());
+        return Objects.requireNonNull(extractExpiration(token)).before(new Date());
     }
 
     private Date extractExpiration(String token) {

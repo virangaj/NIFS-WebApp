@@ -9,16 +9,12 @@ import Ripple from '../../components/Ripple';
 import IContractExtension from '../../types/admin/IContractExtension';
 import CustomeDataPicker from '../../components/DataPicker';
 import IEmployeeData from '../../types/admin/IEmployeeData';
-import EmployeeService from '../../services/admin/EmployeeService';
-import IDesignationData from '../../types/admin/IDesignationData';
-import DesignationMasterService from '../../services/admin/DesignationMasterService';
-import IDivisionData from '../../types/admin/IDivisionData';
-import DivisionMasterService from '../../services/admin/DivisionMasterService';
 import DivisionSelector from '../../components/shared/DivisionSelector';
 import IResignationRequest from '../../types/admin/IResignationRequest';
 import DesignationSelector from '../../components/shared/DesignationSelector';
 import EmployeeSelector from '../../components/shared/EmployeeSelector';
 import ResignationService from '../../services/admin/ResignationService';
+import { RequestStatus } from '../../constant/requestStatus';
 
 const initialState: IResignationRequest = {
 	documentNo: '',
@@ -28,8 +24,8 @@ const initialState: IResignationRequest = {
 	divisionId: '',
 	hod: 0,
 	remark: '',
-	hodApproved: false,
-	dirApproved: false,
+	hodApproved: RequestStatus.PENDING,
+	dirApproved: RequestStatus.PENDING,
 };
 
 function ResignationRequest() {
@@ -46,6 +42,7 @@ function ResignationRequest() {
 		(state) => state.division
 	);
 	const { auth } = useAppSelector((state) => state.persistedReducer);
+
 	useEffect(() => {
 		setValues({
 			...values,
@@ -108,10 +105,19 @@ function ResignationRequest() {
 			ResignationService.saveResignationRequest(values, auth?.user?.token)
 				.then((res) => {
 					console.log(res);
+					if (res.status === 200) {
+						toast.success('Resignation Request send for processing!');
+						resetForm();
+					} else {
+						toast.error('Reqeust cannot be completed!');
+					}
 				})
 				.catch((e) => {
 					console.log(e);
+					toast.error('Reqeust cannot be completed!');
 				});
+
+			setLoading(false);
 		}, 1000);
 
 		console.log(values);

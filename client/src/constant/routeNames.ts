@@ -45,6 +45,8 @@ export enum RouteName {
 	TransportVehicleMaintenanceRequest = '/vehicle-maintenance-request',
 	TransportVehicleRepairRequest = '/vehicle-repair-request',
 	TranportReports = '/report',
+	TransportTravelRequest = '/travel-request',
+	TransportCost = '/transport-cost',
 
 	// Library
 	LibraryArticleRequest = '/article-request',
@@ -73,6 +75,7 @@ export enum RouteName {
 	LibraryAdmin = '/dashboard/library/admin/*',
 	CommonAdmin = '/dashboard/common/admin/*',
 	Director = '/dashboard/director/admin/*',
+	HODAdmin = '/dashboard/:id/admin/*',
 
 	//sub routes of administrator admin
 	Employee = '/employee',
@@ -90,8 +93,15 @@ export enum RouteName {
 
 	//director pages
 	DirectorResignationReq = '/resignation-request',
+	Projects = '/projects',
 
 	//sedu admin pages
 	Charges = '/charges',
 	Facilities = '/facilities',
+	VenueMaster = '/venues',
+
+	//hod sub routes
+
+	//shared rouets
+	FundingSource = '/funding-sources',
 }

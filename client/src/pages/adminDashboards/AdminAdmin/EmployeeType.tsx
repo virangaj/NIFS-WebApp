@@ -7,7 +7,6 @@ import EmpTypeAction from './shared/EmpTypeAction';
 import Ripple from '../../../components/Ripple';
 import ILocationData from '../../../types/ILocationData';
 import LocationMasterService from '../../../services/admin/LocationMasterService';
-import ImportFromXlsx from './shared/ImportFromXlsx';
 import { HiX } from 'react-icons/hi';
 import { toast } from 'react-toastify';
 import { RequestStatus } from '../../../constant/requestStatus';
@@ -132,15 +131,7 @@ function EmployeeType() {
 			}, 1000);
 		} else {
 			// alert('Please add a ID');
-			toast.error('Please add an ID', {
-				position: 'top-right',
-				autoClose: 5000,
-				hideProgressBar: false,
-				closeOnClick: true,
-				pauseOnHover: true,
-				draggable: true,
-				progress: undefined,
-			});
+			toast.error('Please add an ID');
 		}
 	};
 
@@ -301,8 +292,6 @@ function EmployeeType() {
 					)}
 				</div>
 			</div>
-
-			<ImportFromXlsx />
 		</>
 	);
 }

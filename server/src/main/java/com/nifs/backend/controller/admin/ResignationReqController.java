@@ -2,6 +2,7 @@ package com.nifs.backend.controller.admin;
 
 
 import com.nifs.backend.config.JwtService;
+import com.nifs.backend.constant.RequestStatus;
 import com.nifs.backend.dto.admin.ResignationRequestDTO;
 import com.nifs.backend.service.admin.IResignationReqService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,14 +36,17 @@ public class ResignationReqController {
         return ResponseEntity.ok(resignationReqService.getAllResignationRequests(division));
     }
 
-    @PutMapping("/hod")
-    public ResponseEntity<?> putHodApproval(@RequestParam boolean approval, @RequestBody List<String> resId, @AuthenticationPrincipal UserDetails userDetails){
+
+
+
+    @PutMapping("/hod/status")
+    public ResponseEntity<?> putHodApproval(@RequestParam RequestStatus approval, @RequestBody List<String> resId, @AuthenticationPrincipal UserDetails userDetails){
         String user = userDetails.getUsername();
         return ResponseEntity.ok(resignationReqService.putHodApproval(approval, resId, user));
     }
 
-    @PutMapping("/director")
-    public ResponseEntity<?> putDirectorApproval(@RequestParam boolean approval, @RequestBody List<String> resId, @AuthenticationPrincipal UserDetails userDetails){
+    @PutMapping("/director/status")
+    public ResponseEntity<?> putDirectorApproval(@RequestParam RequestStatus approval, @RequestBody List<String> resId, @AuthenticationPrincipal UserDetails userDetails){
         String user = userDetails.getUsername();
         return ResponseEntity.ok(resignationReqService.putDirectorApproval(approval, resId, user));
     }
