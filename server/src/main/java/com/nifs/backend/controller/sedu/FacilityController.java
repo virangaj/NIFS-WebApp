@@ -25,11 +25,11 @@ public class FacilityController {
         return facService.returnNewFacilityId();
     }
 
-//    get facility by id
-@GetMapping("/{facilityId}")
-FacilityDTO returnFacility(@PathVariable String facilityId) {
-    return facService.returnFacility(facilityId);
-}
+    //    get facility by id
+    @GetMapping("/{facilityId}")
+    FacilityDTO returnFacility(@PathVariable String facilityId) {
+        return facService.returnFacility(facilityId);
+    }
 
     @GetMapping()
     List<FacilityDTO> getAll() {

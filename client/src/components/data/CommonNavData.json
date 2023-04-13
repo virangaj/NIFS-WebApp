@@ -1,57 +1,32 @@
 [
-  {
-    "section": "Dashboard",
-    "only_admin": false,
-    "routes": [
-      {
-        "title": "Check Documnet Status",
-        "link": "/common/check-doc-status",
-        "img": "https://img.icons8.com/fluency/50/000000/view.png",
-        "only_admin": false
-      }
-    ]
-  },
-
-  {
-    "section": "Transaction",
-    "only_admin": false,
-    "routes": [
-      {
-        "title": "Work Request",
-        "link": "/common/work-request",
-        "img": "https://img.icons8.com/fluency/48/000000/signing-a-document.png",
-        "only_admin": false
-      },
-      {
-        "title": "Leave Request",
-        "link": "/common/leave-request",
-        "img": "https://img.icons8.com/fluency/48/000000/exit.png",
-        "only_admin": false
-      },
-      {
-        "title": "Over Time",
-        "link": "/common/over-time",
-        "img": "https://img.icons8.com/fluency/48/000000/timer.png",
-        "only_admin": false
-      },
-      {
-        "title": "Payment Request",
-        "link": "/common/payment-request",
-        "img": "https://img.icons8.com/fluency/48/000000/request-money.png",
-        "only_admin": false
-      }
-    ]
-  },
-  {
-    "section": "Reports",
-    "only_admin": true,
-    "routes": [
-      {
-        "title": "common Report Generator",
-        "link": "/common/report-generator",
-        "img": "https://img.icons8.com/cute-clipart/50/000000/load-from-file.png",
-        "only_admin": true
-      }
-    ]
-  }
+	{
+		"section": "Transaction",
+		"only_admin": false,
+		"routes": [
+			{
+				"title": "Work Request",
+				"link": "/common/work-request",
+				"img": "https://img.icons8.com/fluency/48/000000/signing-a-document.png",
+				"only_admin": false
+			},
+			{
+				"title": "Leave Request",
+				"link": "/common/leave-request",
+				"img": "https://img.icons8.com/fluency/48/000000/exit.png",
+				"only_admin": false
+			},
+			{
+				"title": "Over Time",
+				"link": "/common/over-time",
+				"img": "https://img.icons8.com/fluency/48/000000/timer.png",
+				"only_admin": false
+			},
+			{
+				"title": "Payment Request",
+				"link": "/common/payment-request",
+				"img": "https://img.icons8.com/fluency/48/000000/request-money.png",
+				"only_admin": false
+			}
+		]
+	}
 ]

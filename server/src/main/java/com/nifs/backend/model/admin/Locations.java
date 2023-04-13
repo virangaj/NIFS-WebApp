@@ -3,6 +3,7 @@ package com.nifs.backend.model.admin;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.nifs.backend.model.common.FundingSources;
 import com.nifs.backend.model.common.ProjectMaster;
+import com.nifs.backend.model.sedu.EventRequest;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -81,5 +82,9 @@ public class Locations {
     @JsonIgnore
     @OneToMany(mappedBy = "locationId", cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
     private List<FundingSources> fundingSources;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "locationId", cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
+    private List<EventRequest> eventRequests;
 
 }
