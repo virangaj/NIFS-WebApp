@@ -25,11 +25,13 @@ const initialState: IContractExtension = {
 	epfNo: 0,
 	designationId: '',
 	divisionId: '',
-	hod: '',
+	hod: 0,
 	remark: '',
+	hodApproved: RequestStatus.PENDING,
 	dirApproved: RequestStatus.PENDING,
 };
 
+function ContractExtension() {
 	const [getDocNo, setDocNo] = useState<String | any>('');
 	const [requestDate, setRequestDate] = React.useState<string | null>(null);
 	const [designationData, setDesignationData] = useState<IDesignationData>();
@@ -106,9 +108,9 @@ const initialState: IContractExtension = {
 		}));
 	};
 
-  const onSubmit = async (e: any) => {
-    e.preventDefault();
-    console.log(values);
+	const onSubmit = async (e: any) => {
+		e.preventDefault();
+		console.log(values);
 
 		setLoading(true);
 		setTimeout(() => {

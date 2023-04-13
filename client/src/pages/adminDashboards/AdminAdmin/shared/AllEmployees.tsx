@@ -17,37 +17,30 @@ function AllEmployees() {
   const [deleteId, setDeleteId] = useState(0);
   const [empData, setEmpData] = useState<Array<IEmployeeData>>([]);
 
-  useEffect(() => {
-    retreiveEmployees();
-    // console.log(empData)
-  }, []);
+
+	useEffect(() => {
+		retreiveEmployees();
+		// console.log(empData);
+	}, []);
 
   useEffect(() => {
     const filteredData = empData?.filter((emp) => emp.epfNo !== deleteId);
     setEmpData(filteredData);
   }, [deleteId]);
 
-  const retreiveEmployees = () => {
-    EmployeeService.getAllEmployeeData()
-      .then((res: any) => {
-        if (res.data.status === RequestStatus.SUCCESS) {
-          setEmpData(res.data.data);
-        } else {
-          toast.error(`${res.data.message}`, {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          });
-        }
-      })
-      .catch((e: any) => {
-        console.log(e);
-      });
-  };
+
+	const retreiveEmployees = () => {
+		EmployeeService.getAllEmployeeData()
+			.then((res: any) => {
+				if (res.status === RequestStatus.SUCCESS) {
+					console.log(res.data);
+					setEmpData(res.data);
+				}
+			})
+			.catch((e: any) => {
+				console.log(e);
+			});
+	};
 
   const allEmployeesWithoutDeleted = () => {
     EmployeeService.getAllEmployeeDataWithoutDeleted()

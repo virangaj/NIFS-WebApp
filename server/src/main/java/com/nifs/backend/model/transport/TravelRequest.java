@@ -1,6 +1,7 @@
 package com.nifs.backend.model.transport;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.nifs.backend.constant.RequestStatus;
 import com.nifs.backend.model.Base;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -52,4 +53,7 @@ public class TravelRequest extends Base {
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Column(name = "arrival_date")
     private String arrivalDate;
+
+    RequestStatus hodApproved;
+    RequestStatus dirApproved;
 }

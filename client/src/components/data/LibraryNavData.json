@@ -15,12 +15,7 @@
         "img": "https://img.icons8.com/color/512/moleskine.png",
         "only_admin": false
       },
-      {
-        "title": "Item Burrow & Return",
-        "link": "/library/itemBurrow-return",
-        "img": "https://img.icons8.com/color/512/return-purchase.png",
-        "only_admin": false
-      },
+
       {
         "title": "Catalog Search",
         "link": "/library/catalog-search",

@@ -11,119 +11,99 @@ import EmployeeService from "../../services/admin/EmployeeService";
 import IDesignationData from "../../types/admin/IDesignationData";
 import DesignationMasterService from "../../services/admin/DesignationMasterService";
 import IDivisionData from "../../types/admin/IDivisionData";
-import DivisionMasterService from "../../services/admin/DivisionMasterService";
+import AnnualIncrementRequestService from "../../services/admin/AnnualIncrementRequestService";
+import IAnnualIncrement from "../../types/admin/IAnnualIncrement";
+import { useAppSelector } from "../../hooks/hooks";
+import EmployeeSelector from "../../components/shared/EmployeeSelector";
+import DesignationSelector from "../../components/shared/DesignationSelector";
+import DivisionSelector from "../../components/shared/DivisionSelector";
 
-const initialState: IContractExtension = {
+const initialState: IAnnualIncrement = {
+  // generated
   documentNo: "",
-  date: "",
   epfNo: 0,
+  hod: 0,
   designationId: "",
   divisionId: "",
-  hod: "",
+
   remark: "",
+  date: "",
+
+  noOfLeaves: "",
+  salaryScale: "",
+  presentSalary: "",
+  newSalary: "",
 };
 
 function AnnualIncrementRequest() {
   const [getDocNo, setDocNo] = useState<String | any>("");
   const [requestDate, setRequestDate] = React.useState<string | null>(null);
   const [incrementDate, setIncrementDate] = React.useState<string | null>(null);
-
+  const [hod, setHod] = useState<IEmployeeData | null>();
   const [designationData, setDesignationData] = useState<IDesignationData>();
   const [divisionData, setDivisionData] = useState<IDivisionData>();
-
+  const [loading, setLoading] = useState(false);
   const [empFoundError, setEmpFoundError] = useState<boolean>(false);
   const [empData, setEmpData] = useState<Array<IEmployeeData>>([]);
   const [currentEmp, setCurrentEmp] = useState<IEmployeeData>();
-  const [values, setValues] = useState<IContractExtension>(initialState);
+  const [values, setValues] = useState<IAnnualIncrement>(initialState);
+
+  const { employees, employeesIsLoading, employeesIsSuccess } = useAppSelector(
+    (state) => state.employees
+  );
+  const { division, divisionIsLoading, divisionIsSuccess } = useAppSelector(
+    (state) => state.division
+  );
+
+  const { auth } = useAppSelector((state) => state.persistedReducer);
 
   useEffect(() => {
     setValues({
-      documentNo: values?.documentNo,
       date: requestDate ? requestDate : "",
+      documentNo: values?.documentNo,
       epfNo: values?.epfNo,
       designationId: values?.designationId,
       divisionId: values?.divisionId,
       hod: values?.hod,
       remark: values?.remark,
+
+      noOfLeaves: values?.noOfLeaves,
+      salaryScale: values?.salaryScale,
+      presentSalary: values?.presentSalary,
+      newSalary: values?.newSalary,
     });
   }, [requestDate]);
 
   useEffect(() => {
     setValues({
+      ...values,
       documentNo: getDocNo && getDocNo,
-      date: requestDate ? requestDate : "",
-      epfNo: values?.epfNo,
-      designationId: values?.designationId,
-      divisionId: values?.divisionId,
-      hod: values?.hod,
-      remark: values?.remark,
     });
     console.log(getDocNo);
   }, [getDocNo]);
 
   useEffect(() => {
-    retreiveEmployees();
-    console.log(empData);
-  }, []);
-
-  useEffect(() => {
-    let employee = empData.find(
-      (emp: IEmployeeData) => emp.epfNo.toString() === values.epfNo.toString()
+    const divisionData = division.find(
+      (d) => d.divisionId === values.divisionId
     );
-    setCurrentEmp(employee);
-    if (employee) {
-      setEmpFoundError(false);
-    } else {
-      setEmpFoundError(true);
+
+    if (divisionData) {
+      const employeeId = divisionData.hod;
+      const employee = employees.find((e) => e.epfNo === employeeId);
+      // console.log(employee);
+      if (employee) {
+        setHod(employee);
+        setValues({
+          ...values,
+          hod: employee.epfNo,
+        });
+      }
     }
-    setValues({
-      documentNo: getDocNo && getDocNo,
-      date: requestDate ? requestDate : "",
-      epfNo: values?.epfNo,
-      designationId: employee?.designationId,
-      divisionId: employee?.divisionId,
-      hod: values?.hod,
-      remark: values?.remark,
-    });
-    retriveEmployeeDetails(employee);
-  }, [values.epfNo]);
+  }, [values.divisionId]);
 
-  //get designation and division
-  const retriveEmployeeDetails = (emp: any) => {
-    //get designation
-    DesignationMasterService.getDesignation(emp?.designationId)
-      .then((res: any) => {
-        setDesignationData(res.data.data);
-      })
-      .catch((e: any) => {
-        console.log(e);
-      });
-
-    //get divions
-
-    DivisionMasterService.getDivision(emp?.divisionId)
-      .then((res: any) => {
-        setDivisionData(res.data.data);
-      })
-      .catch((e: any) => {
-        console.log(e);
-      });
-  };
-
-  //get employees
-  const retreiveEmployees = () => {
-    EmployeeService.getAllEmployeeData()
-      .then((res: any) => {
-        setEmpData(res.data.data);
-      })
-      .catch((e: any) => {
-        console.log(e);
-      });
-  };
-
-  // generate document ID
+  // generate Doc number ID
   const generateDocNo = () => {
-    setDocNo(generateID("CE"));
+    setDocNo(generateID("RR"));
     setValues(initialState);
   };
 
@@ -131,18 +111,42 @@ function AnnualIncrementRequest() {
   const resetForm = () => {
     setValues(initialState);
     setDocNo("");
+    setHod(null);
   };
 
-  //onchange funtion
+  //  onChange Function
   const onChange = (e: any) => {
-    setValues((preState) => ({
-      ...preState,
+    setValues((prevState) => ({
+      ...prevState,
       [e.target.name]: e.target.value,
     }));
   };
 
   const onSubmit = async (e: any) => {
     e.preventDefault();
+    console.log(values);
+    setLoading(true);
+    setTimeout(() => {
+      const result = AnnualIncrementRequestService.saveAnnualIncrementRequest(
+        values,
+        auth?.user?.token
+      )
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+
+      if (result !== null) {
+        toast.success("Annual Increment Request Added Successfully");
+        resetForm();
+      } else {
+        toast.error("Request Cannot be Completed");
+      }
+      setLoading(false);
+    }, 1000);
+
     console.log(values);
   };
 
@@ -163,98 +167,59 @@ function AnnualIncrementRequest() {
               New
             </button>
           </Box>
-          <div className="mx-0 mb-4 lg:ml-10 md:my-0">
-            <CustomeDataPicker
-              date={requestDate}
-              setDate={setRequestDate}
-              title="Request Date"
-            />
-          </div>
+        </div>
 
-          <div className="flex items-center">
-            <div>
-              <label className="input-label" htmlFor="epfNo">
-                Employee EPF No
-              </label>
+        <EmployeeSelector
+          onChange={onChange}
+          value={values.epfNo}
+          name="epfNo"
+        />
 
-              <input
-                id="epfNo"
-                type="text"
-                className="tailwind-text-box w-[40%] mr-4"
-                onChange={onChange}
-                name="epfNo"
-                value={values.epfNo}
-              />
-              {values.epfNo && empFoundError ? (
-                <p className="w-[97%] mx-auto error-text-message">
-                  User Not Found!
-                </p>
-              ) : (
-                ""
-              )}
-            </div>
-            <div>
-              <label className="input-label" htmlFor="epfNo">
-                Employee Name
-              </label>
-              <select
-                className="tailwind-text-box"
-                value={values.epfNo}
-                id="epfNo"
-                name="epfNo"
-                onChange={onChange}
-              >
-                <option disabled value={0}>
-                  Select Employee
-                </option>
-
-                {empData?.map((l: IEmployeeData, i: number) => {
-                  return (
-                    <option key={i} value={l.epfNo}>
-                      {l.firstName + " " + l.lastName}
-                    </option>
-                  );
-                })}
-              </select>
-            </div>
-          </div>
+        <div className="w-[97%] mx-auto">
+          <DesignationSelector
+            onChange={onChange}
+            value={values.designationId}
+            name="designationId"
+          />
         </div>
 
         <div className="w-[97%] mx-auto">
-          <p className="normal-text">
-            Designation :{" "}
-            {values.epfNo && designationData ? (
-              <span className="font-bold">
-                {designationData.designationName}
-              </span>
-            ) : (
-              <span className="italic-sm-text">Please select an employee</span>
-            )}
-          </p>
+          <DivisionSelector
+            onChange={onChange}
+            value={values.divisionId}
+            name="divisionId"
+          />
+        </div>
 
+        <div className="w-[97%] mx-auto">
           <div className="grid items-center grid-cols-1 md:grid-cols-2">
             <p className="normal-text">
-              Division :{" "}
-              {values.epfNo && divisionData ? (
-                <span className="font-bold">{divisionData.name}</span>
-              ) : (
-                <span className="italic-sm-text">
-                  Please select an employee
-                </span>
-              )}
-            </p>
-
-            <p className="normal-text">
               HOD :{" "}
-              {values.epfNo && divisionData ? (
-                <span className="font-bold">{divisionData.name}</span>
-              ) : (
-                <span className="italic-sm-text">
-                  Please select an employee
+              {values.divisionId && hod ? (
+                <span className="font-bold">
+                  {hod.firstName + " " + hod.lastName}
                 </span>
+              ) : (
+                <span className="italic-sm-text">Please select a Division</span>
               )}
             </p>
           </div>
+        </div>
+
+        <div className="mx-0 mb-4 lg:ml-4 lg:mt-4 md:my-0">
+          <CustomeDataPicker
+            date={requestDate}
+            setDate={setRequestDate}
+            title="Request Date"
+          />
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2">
+          {/* left section */}
+          <div className="form-left-section"></div>
+
+          {/* right section */}
+          <div className="form-right-section"></div>
         </div>
 
         <div className="w-[97%] mx-auto">
@@ -271,92 +236,6 @@ function AnnualIncrementRequest() {
           ></textarea>
         </div>
 
-        <h4 className="sub-page-title">Requester Details</h4>
-        <hr className="horizontal-line" />
-
-        <div className="grid grid-cols-1 md:grid-cols-2 items-center w-[97%] mx-auto">
-          <div>
-            <div className="flex items-center">
-              <div>
-                <label className="input-label" htmlFor="epfNo">
-                  Employee EPF No
-                </label>
-
-                <input
-                  id="epfNo"
-                  type="text"
-                  className="tailwind-text-box w-[40%] mr-4"
-                  onChange={onChange}
-                  name="epfNo"
-                  value={values.epfNo}
-                />
-                {values.epfNo && empFoundError ? (
-                  <p className="w-[97%] mx-auto error-text-message">
-                    User Not Found!
-                  </p>
-                ) : (
-                  ""
-                )}
-              </div>
-              <div>
-                <label className="input-label" htmlFor="epfNo">
-                  Employee Name
-                </label>
-                <select
-                  className="tailwind-text-box"
-                  value={values.epfNo}
-                  id="epfNo"
-                  name="epfNo"
-                  onChange={onChange}
-                >
-                  <option disabled value={0}>
-                    Select Employee
-                  </option>
-
-                  {empData?.map((l: IEmployeeData, i: number) => {
-                    return (
-                      <option key={i} value={l.epfNo}>
-                        {l.firstName + " " + l.lastName}
-                      </option>
-                    );
-                  })}
-                </select>
-              </div>
-            </div>
-            <div className="w-[97%] mx-auto">
-              <p className="normal-text">
-                Designation :{" "}
-                {values.epfNo && designationData ? (
-                  <span className="font-bold">
-                    {designationData.designationName}
-                  </span>
-                ) : (
-                  <span className="italic-sm-text">
-                    Please select an employee
-                  </span>
-                )}
-              </p>
-
-              <p className="normal-text">
-                Division :{" "}
-                {values.epfNo && divisionData ? (
-                  <span className="font-bold">{divisionData.name}</span>
-                ) : (
-                  <span className="italic-sm-text">
-                    Please select an employee
-                  </span>
-                )}
-              </p>
-              <div className="mt-4">
-                <CustomeDataPicker
-                  date={requestDate}
-                  setDate={setIncrementDate}
-                  title="Increment Date"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
         <Stack
           direction="row"
           justifyContent="flex-end"

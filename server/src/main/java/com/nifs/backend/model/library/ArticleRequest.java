@@ -38,6 +38,6 @@ public class ArticleRequest extends Base {
     private String issue;
     private String pages;
     private String webLink;
-    private String ISSN_No;
     private String remark;
+
 }

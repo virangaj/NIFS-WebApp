@@ -1,15 +1,20 @@
 package com.nifs.backend.serviceImplementation.transport;
 
+import com.nifs.backend.constant.RequestStatus;
 import com.nifs.backend.dto.transport.TravelRequestDTO;
 import com.nifs.backend.model.transport.TravelRequest;
 import com.nifs.backend.repository.transport.TravelRequestRepository;
 import com.nifs.backend.service.transport.ITravelRequestService;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -19,13 +24,16 @@ public class TravelRequestService implements ITravelRequestService {
     final
     TravelRequestRepository travelRequestRepository;
 
-    public TravelRequestService(TravelRequestRepository travelRequestRepository) {
+    private final ModelMapper modelMapper;
+
+    public TravelRequestService(TravelRequestRepository travelRequestRepository, ModelMapper modelMapper) {
         this.travelRequestRepository = travelRequestRepository;
+        this.modelMapper = modelMapper;
     }
 
 
     @Override
-    public ResponseEntity<?> createNewTravelRequest(TravelRequestDTO data) {
+    public TravelRequestDTO createNewTravelRequest(TravelRequestDTO data) {
 
         log.info("Data from the Client " + data.getDocumentNo());
 
@@ -51,12 +59,77 @@ public class TravelRequestService implements ITravelRequestService {
                     .createdOn(new Date())
                     .build();
 
-            TravelRequest created = travelRequestRepository.save(travelRequest);
+            travelRequestRepository.save(travelRequest);
 
-            return ResponseEntity.ok(created);
+            return modelMapper.map(travelRequest,TravelRequestDTO.class);
 
         }
 
         return null;
+    }
+
+
+//    @Override
+//    public TravelRequestDTO createNewTravelRequest(TravelRequestDTO data) {
+//        TravelRequest request = modelMapper.map(data,TravelRequest.class);
+//
+//        request.setCreatedOn(new Date());
+//        request.setCreatedBy(Integer.valueOf((data.getEpfNo())));
+//        TravelRequest travelRequest = travelRequestRepository.save(request);
+//
+//        return  modelMapper.map(travelRequest,TravelRequestDTO.class);
+//    }
+
+    @Override
+    public List<TravelRequestDTO> getAllTravelRequests(String division) {
+
+        try {
+            List<TravelRequest> travelRequests = new ArrayList<>();
+
+            if (division == null){
+                travelRequests = travelRequestRepository.findAllByOrderByCreatedOnDesc();
+            }else {
+                travelRequests = travelRequestRepository.findByDivisionIdOrderByCreatedOnDesc(division);
+            }
+            return travelRequests.stream()
+                    .map(request -> modelMapper.map(request,TravelRequestDTO.class))
+                    .collect(Collectors.toList());
+        }catch (Exception e){
+            log.info(e.toString());
+            return null;
+        }
+
+    }
+
+    @Override
+    public boolean putHodApproval(RequestStatus approval, List<String> resId, String user) {
+
+        try{
+            log.info("Transport Travel Request : requested");
+            resId.forEach(id->{
+                travelRequestRepository.updateHodApproveAndModifiedFields(approval,user,new Date(),id);
+            });
+            return true;
+        }catch (Exception e){
+            log.info(e.toString());
+            return false;
+        }
+
+    }
+
+    @Override
+    public Object putDirectorApproval(RequestStatus approval, List<String> resId, String user) {
+
+        try {
+            log.info("Director Travel Request : requested");
+            resId.forEach(id->{
+                travelRequestRepository.updateDirApproveAndModifiedFields(approval,user,new Date(),id);
+            });
+            return true;
+        }catch (Exception e){
+            log.info(e.toString());
+            return false;
+        }
+
     }
 }

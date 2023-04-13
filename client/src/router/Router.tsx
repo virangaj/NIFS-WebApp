@@ -27,6 +27,9 @@ import SeduAdmin from "../pages/adminDashboards/SeduAdmin";
 import { useAppSelector } from "../hooks/hooks";
 import { useEffect, useState } from "react";
 import HodDashbaord from "../pages/adminDashboards/HodDashbaord";
+import TransportDashboard from "../pages/adminDashboards/TransportDashboard";
+import ProcumentDashboard from "../pages/adminDashboards/ProcumentDashboard";
+import { LibraryDashboard } from "../pages/adminDashboards/LibraryDashboard";
 
 const AppRouter = () => {
   const { auth } = useAppSelector((state) => state.persistedReducer);
@@ -167,6 +170,36 @@ const AppRouter = () => {
           element={
             <>
               <MainPages Content={HodDashbaord} />
+            </>
+          }
+        />
+
+        {/* Admin page of Transport*/}
+        <Route
+          path={RouteName.TransportAdmin}
+          element={
+            <>
+              <MainPages Content={TransportDashboard} />
+            </>
+          }
+        />
+
+        {/* Admin page of Procument*/}
+        <Route
+          path={RouteName.ProcumentAdmin}
+          element={
+            <>
+              <MainPages Content={ProcumentDashboard} />
+            </>
+          }
+        />
+
+        {/* Admin page of Library*/}
+        <Route
+          path={RouteName.LibraryAdmin}
+          element={
+            <>
+              <MainPages Content={LibraryDashboard} />
             </>
           }
         />
