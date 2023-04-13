@@ -1,6 +1,7 @@
 package com.nifs.backend.model.admin;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.nifs.backend.model.common.FundingSources;
 import com.nifs.backend.model.common.ProjectMaster;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

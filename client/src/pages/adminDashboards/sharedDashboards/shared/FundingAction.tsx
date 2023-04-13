@@ -5,13 +5,12 @@ import { useState, useEffect } from 'react';
 import { useAppSelector } from '../../../../hooks/hooks';
 import CircularLoading from '../../../../components/tableIcons/CircularLoading';
 import SuccessButton from '../../../../components/tableIcons/SuccessButton';
-import ProjectService from '../../../../services/common/ProjectService';
+import FundingSourceService from '../../../../services/common/FundingSourceService';
 import { toast } from 'react-toastify';
 
-function ProjectAction({ params, rowId, setRowId, setDeleteId }: any) {
+function FundingAction({ params, rowId, setRowId, setDeleteId }: any) {
 	const [loading, setLoading] = useState(false);
 	const [success, setSuccess] = useState(false);
-
 	const { auth } = useAppSelector((state) => state.persistedReducer);
 
 	useEffect(() => {
@@ -19,31 +18,30 @@ function ProjectAction({ params, rowId, setRowId, setDeleteId }: any) {
 			setSuccess(false);
 		}
 	}, [rowId]);
-
 	const handleUpdate = async () => {
 		setLoading(true);
-		const { projectId, projectName, description } = params.row;
+		const { fundingId, name, description } = params.row;
 		setTimeout(async () => {
 			const data = {
 				data: {
-					projectId,
-					projectName,
+					fundingId,
+					name,
 					description,
 				},
 				token: auth?.user?.token,
 			};
 
-			await ProjectService.updateProject(data)
+			await FundingSourceService.updateFunding(data)
 				.then((res) => {
 					if (res) {
-						toast.success('Project updated!');
+						toast.success('Funding Source updated!');
 					} else {
 						toast.error('Request cannotţbe completed!');
 					}
 				})
 				.catch((e) => {
-					toast.error('Request cannotţbe completed!');
 					console.log(e);
+					toast.error('Request cannotţbe completed!');
 				});
 
 			setLoading(false);
@@ -61,10 +59,8 @@ function ProjectAction({ params, rowId, setRowId, setDeleteId }: any) {
 
 				{loading && <CircularLoading color={green[500]} />}
 			</Box>
-
-			{/* delete */}
 		</>
 	);
 }
 
-export default ProjectAction;
+export default FundingAction;

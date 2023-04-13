@@ -1,6 +1,6 @@
-package com.nifs.backend.service.admin;
+package com.nifs.backend.service.common;
 
-import com.nifs.backend.dto.admin.FundingSourceDTO;
+import com.nifs.backend.dto.common.FundingSourceDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -13,7 +13,7 @@
 				"title": "Participant Master",
 				"link": "/sedu/participant-master",
 				"img": "https://img.icons8.com/fluency/50/000000/conference-foreground-selected.png",
-				"only_admin": false
+				"only_admin": true
 			}
 		]
 	},
@@ -32,37 +32,6 @@
 				"link": "/sedu/event-request",
 				"img": "https://img.icons8.com/fluency/50/000000/invite.png",
 				"only_admin": false
-			},
-			{
-				"title": "Attendance Feedback",
-				"link": "/sedu/attendance-feedback",
-				"img": "https://img.icons8.com/fluency/50/000000/feedback-hub.png",
-				"only_admin": true
-			},
-			{
-				"title": " Update Event Material",
-				"link": "/sedu/update-material",
-				"img": "https://img.icons8.com/fluency/50/000000/available-updates.png",
-				"only_admin": true
-			},
-
-			{
-				"title": "Material Search",
-				"link": "/sedu/material-search",
-				"img": "https://img.icons8.com/fluency/50/000000/search.png",
-				"only_admin": true
-			}
-		]
-	},
-	{
-		"section": "Reports",
-		"only_admin": true,
-		"routes": [
-			{
-				"title": "SEDU Report Generator",
-				"link": "/sedu/report-generator",
-				"img": "https://img.icons8.com/cute-clipart/50/000000/load-from-file.png",
-				"only_admin": true
 			}
 		]
 	}

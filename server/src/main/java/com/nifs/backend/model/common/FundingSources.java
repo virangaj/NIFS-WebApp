@@ -1,7 +1,8 @@
-package com.nifs.backend.model.admin;
+package com.nifs.backend.model.common;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.nifs.backend.model.Base;
+import com.nifs.backend.model.admin.Locations;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
