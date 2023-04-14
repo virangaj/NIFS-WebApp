@@ -29,9 +29,19 @@ const getAllEvents = async () => {
 	return response;
 };
 
+const getEventById = async (id: string) => {
+	const response = await axios({
+		method: 'get',
+		url: `${process.env.REACT_APP_BACKEND_SERVER}/sedu/event-master/${id}`,
+	});
+	// alert("Favourite created --- "+ response);
+	return response;
+};
+
 const EventRequestService = {
 	newEventRequest,
 	getAllEvents,
+	getEventById,
 };
 
 export default EventRequestService;

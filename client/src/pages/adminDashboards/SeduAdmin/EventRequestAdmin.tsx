@@ -1,10 +1,10 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 
-import EventTable from './EventRequest/EventTable';
 import { useAppSelector } from '../../../hooks/hooks';
 import EventRequestService from '../../../services/sedu/EventRequestService';
-import { Box } from '@mui/material';
+import EventParticipantTable from './EventRequest/EventParticipantTable';
+import TableSelectEventId from '../../shared/TableSelectEventId';
 
 function EventRequestAdmin() {
 	const { auth } = useAppSelector((state) => state.persistedReducer);
@@ -35,7 +35,20 @@ function EventRequestAdmin() {
 
 	const columns = useMemo(
 		() => [
-			{ field: 'documentNo', headerName: 'Document No', width: 160 },
+			{
+				field: 'id',
+				headerName: 'Document No',
+				type: 'actions',
+				width: 200,
+				renderCell: (params: any) => (
+					<TableSelectEventId
+						{...{
+							params,
+							setSelectedData,
+						}}
+					/>
+				),
+			},
 			{
 				field: 'title',
 				headerName: 'Title',
@@ -87,19 +100,19 @@ function EventRequestAdmin() {
 			{
 				field: 'noParticipants',
 				headerName: 'No Participants',
-				width: 110,
+				width: 120,
 				editable: true,
 			},
 			{
 				field: 'fundingId',
 				headerName: 'Funding Id',
-				width: 110,
+				width: 250,
 				editable: true,
 			},
 			{
 				field: 'projectId',
 				headerName: 'Project Id',
-				width: 110,
+				width: 150,
 				editable: true,
 			},
 			{
@@ -111,7 +124,7 @@ function EventRequestAdmin() {
 			{
 				field: 'venueId',
 				headerName: 'Venue Id',
-				width: 110,
+				width: 150,
 				editable: true,
 			},
 		],
@@ -129,7 +142,6 @@ function EventRequestAdmin() {
 				<div className='w-full h-[700px]'>
 					{!loading ? (
 						<DataGrid
-							checkboxSelection={true}
 							components={{ Toolbar: GridToolbar }}
 							rowHeight={60}
 							columns={columns}
@@ -145,7 +157,11 @@ function EventRequestAdmin() {
 					)}
 				</div>
 			</div>
-			<EventTable />
+			{selectedData !== null ? (
+				<EventParticipantTable selectedData={selectedData} />
+			) : (
+				<></>
+			)}
 		</>
 	);
 }

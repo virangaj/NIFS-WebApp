@@ -8,4 +8,6 @@ public interface IEventRequestService {
     String createNewEventRequest(EventRequestDTO eventData, String user);
 
     Object getAllEvents();
+
+    Object getEventById(String id);
 }

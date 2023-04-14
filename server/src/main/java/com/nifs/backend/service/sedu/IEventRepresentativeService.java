@@ -8,4 +8,6 @@ import java.util.List;
 @Service
 public interface IEventRepresentativeService {
     boolean saveRepresentativeData(String documentNo, List<EventRepresentativeDTO> representativeList, String user);
+
+    List<EventRepresentativeDTO> getRepresentativeByEventId(String id);
 }

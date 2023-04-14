@@ -81,6 +81,7 @@ function EventRequest() {
 		setEventId('');
 		setTotalParticipants([]);
 	};
+	console.log(totalParticipants);
 
 	const onSubmit = async (e: any) => {
 		e.preventDefault();

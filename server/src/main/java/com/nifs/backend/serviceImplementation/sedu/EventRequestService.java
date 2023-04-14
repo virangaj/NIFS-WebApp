@@ -1,9 +1,12 @@
 package com.nifs.backend.serviceImplementation.sedu;
 
+import com.nifs.backend.dto.sedu.EventRepresentativeDTO;
 import com.nifs.backend.dto.sedu.EventRequestDTO;
 import com.nifs.backend.dto.sedu.EventRequestMasterDTO;
 import com.nifs.backend.model.sedu.EventRequest;
 import com.nifs.backend.repository.sedu.EventRequestRepository;
+import com.nifs.backend.service.common.IFundingSourceService;
+import com.nifs.backend.service.common.IProjectMasterService;
 import com.nifs.backend.service.sedu.IEventRepresentativeService;
 import com.nifs.backend.service.sedu.IEventRequestService;
 import lombok.extern.log4j.Log4j2;
@@ -25,6 +28,12 @@ public class EventRequestService implements IEventRequestService {
     private IEventRepresentativeService eventRepresentativeService;
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+    private IFundingSourceService fundingSourceService;
+    @Autowired
+    private IProjectMasterService projectMasterService;
+
 
     // save new events
     @Override
@@ -65,10 +74,10 @@ public class EventRequestService implements IEventRequestService {
                 .EndTime(data.getEndTime())
                 .title(data.getTitle())
                 .remark(data.getRemark())
-                .locationId(data.getLocationId().getLocationId())
-                .venueId(data.getVenueId().getVenueId())
-                .fundingId(data.getFundingId())
-                .projectId(data.getProjectId())
+                .locationId(data.getLocationId().getLocationName())
+                .venueId(data.getVenueId().getVenueName())
+                .fundingId(fundingSourceService.getFundingById(data.getFundingId()).getName())
+                .projectId(projectMasterService.getProjectById(data.getProjectId()).getProjectName())
                 .eventType(data.getEventType())
                 .noParticipants(data.getNoParticipants())
                 .budget(data.getBudget())
@@ -89,5 +98,16 @@ public class EventRequestService implements IEventRequestService {
             dtoList.add(convertToDTO(events));
         });
         return dtoList;
+    }
+
+    @Override
+    public Object getEventById(String id) {
+        EventRequest getEvent = eventRequestRepository.findByDocumentNoEquals(id);
+        EventRequestMasterDTO dto = convertToDTO(getEvent);
+
+        List<EventRepresentativeDTO> requestMasterDTOList = eventRepresentativeService.getRepresentativeByEventId(id);
+
+        return EventRequestDTO.builder().eventData(dto).representativeList(requestMasterDTOList).build();
+
     }
 }

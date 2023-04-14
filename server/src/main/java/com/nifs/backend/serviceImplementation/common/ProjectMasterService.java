@@ -85,6 +85,11 @@ public class ProjectMasterService implements IProjectMasterService {
 
     }
 
+    @Override
+    public ProjectMaster getProjectById(String projectId) {
+        return projectMasterRepository.findByProjectIdEquals(projectId);
+    }
+
 
     //convert in to dto
     public ProjectMasterDTO createProjectDTO(ProjectMaster p) {

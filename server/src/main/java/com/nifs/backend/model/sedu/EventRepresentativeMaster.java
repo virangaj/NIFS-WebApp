@@ -18,6 +18,7 @@ import lombok.experimental.SuperBuilder;
 @Table(name="event_representative_master")
 public class EventRepresentativeMaster extends Base {
 
+    private String participantId;
     private String eventId;
     private String name;
     private String nic;
