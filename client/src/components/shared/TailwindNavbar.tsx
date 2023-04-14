@@ -202,21 +202,13 @@ function TailwindNavbar() {
 
             <li>
               {auth?.user && auth?.isAdmin === UserStatus.ADMIN && (
-                <Link
-                  to={RouteName.ProcumentAdmin.replace(":id", auth?.division)}
-                >
-                  Procument Dashboard
-                </Link>
+                <Link to={RouteName.ProcumentAdmin}>Procument Dashboard</Link>
               )}
             </li>
 
             <li>
               {auth?.user && auth?.isAdmin === UserStatus.ADMIN && (
-                <Link
-                  to={RouteName.LibraryAdmin.replace(":id", auth?.division)}
-                >
-                  Library Dashboard
-                </Link>
+                <Link to={RouteName.LibraryAdmin}>Library Dashboard</Link>
               )}
             </li>
 
