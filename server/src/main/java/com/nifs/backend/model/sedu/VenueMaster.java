@@ -63,5 +63,9 @@ public class VenueMaster {
     @OneToMany(mappedBy = "venueMasterId")
     private List<VenueFacility> venueFacilities;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "venueId", cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
+    private List<EventRequest> eventRequests;
+
 
 }

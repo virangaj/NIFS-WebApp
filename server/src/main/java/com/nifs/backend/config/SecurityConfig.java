@@ -67,7 +67,9 @@ public class SecurityConfig {
                         "/admin/contractex",
                         //project
                         "/common/project",
-                        "/library/**"
+                        "/library/**",
+                        "/common/funding-source",
+                        "sedu/event-master"
                                              )
                 .permitAll()
                 .anyRequest()

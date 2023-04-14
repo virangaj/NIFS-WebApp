@@ -124,7 +124,7 @@ export default function JournalRequest() {
         });
 
       if (result !== null) {
-        toast.success("Travel Request Added Successfully");
+        toast.success("Journal Request Added Successfully");
         resetForm();
       } else {
         toast.error("Request Cannot be Completed");

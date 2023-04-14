@@ -7,6 +7,7 @@ import AddProjects from './sharedDashboards/AddProjects';
 import Projects from './sharedDashboards/Projects';
 import DirectorResignationReq from './DirectorDashbaord/DirectorResignationReq';
 import DirectorContractExtension from './DirectorDashbaord/DirectorContractExtension';
+import FundingSource from './sharedDashboards/FundingSource';
 
 export function PageRoutes() {
 	return (
@@ -20,6 +21,7 @@ export function PageRoutes() {
 				element={<DirectorContractExtension />}
 			/>
 			<Route path={RouteName.Projects} element={<Projects />} />
+			<Route path={RouteName.FundingSource} element={<FundingSource />} />
 		</Routes>
 	);
 }

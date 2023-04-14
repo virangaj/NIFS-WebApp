@@ -1,6 +1,7 @@
 package com.nifs.backend.model.transport;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.nifs.backend.constant.RequestStatus;
 import com.nifs.backend.model.Base;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -43,4 +44,7 @@ public class TransportCost extends Base {
     private float startReading;
     private float endReading;
     private String remark;
+
+    RequestStatus hodApproved;
+    RequestStatus dirApproved;
 }

@@ -48,7 +48,7 @@ function AddProjects() {
 	};
 
 	return (
-		<div>
+		<>
 			<h2 className='text-xl font-bold'>Add New Project</h2>
 			<div className='w-[60%] mx-auto pb-10 admin-form'>
 				<form onSubmit={onSubmit}>
@@ -99,7 +99,7 @@ function AddProjects() {
 					</Stack>
 				</form>
 			</div>
-		</div>
+		</>
 	);
 }
 

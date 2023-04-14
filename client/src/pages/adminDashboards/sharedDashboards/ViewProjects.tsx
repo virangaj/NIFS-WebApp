@@ -4,8 +4,7 @@ import IProjects from '../../../types/common/IProjects';
 import ProjectService from '../../../services/common/ProjectService';
 import { useAppSelector } from '../../../hooks/hooks';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
-import { Box } from '@mui/material';
-import TableAction from './shared/ProjectAction';
+import ProjectAction from './shared/ProjectAction';
 
 function ViewProjects() {
 	const dispatch = useDispatch<any>();
@@ -73,7 +72,7 @@ function ViewProjects() {
 				headerName: 'Action',
 				type: 'actions',
 				renderCell: (params: any) => (
-					<TableAction {...{ params, rowId, setRowId, setDeleteId }} />
+					<ProjectAction {...{ params, rowId, setRowId, setDeleteId }} />
 				),
 				width: 200,
 			},

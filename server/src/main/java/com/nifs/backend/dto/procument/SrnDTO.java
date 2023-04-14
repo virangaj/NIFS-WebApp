@@ -1,5 +1,6 @@
 package com.nifs.backend.dto.procument;
 
+import com.nifs.backend.constant.RequestStatus;
 import com.nifs.backend.dto.BaseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,4 +31,7 @@ public class SrnDTO extends BaseDTO {
     private String fundAllocationForTheProject;
     private String description;
     private String googleLink;
+
+    RequestStatus hodApproved;
+    RequestStatus dirApproved;
 }

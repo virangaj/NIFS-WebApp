@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
+import { HiX } from 'react-icons/hi';
+import { useNavigate } from 'react-router-dom';
 import * as XLSX from 'xlsx';
 
-function ImportFromXlsx() {
+function ImportFromXlsx({ setColDefs, data, colDefs, setData }: any) {
+	const naivate = useNavigate();
 	const EXTENSIONS = ['xlsx', 'xls', 'csv'];
-	const [colDefs, setColDefs] = useState<any>();
-	const [data, setData] = useState<any[]>();
 
 	const getExention = (file: any) => {
 		const parts = file.name.split('.');
@@ -19,7 +20,9 @@ function ImportFromXlsx() {
 			row.forEach((element: any, index: number) => {
 				rowData[headers[index]] = element;
 			});
-			rows.push(rowData);
+			if (Object.keys(rowData)[0] !== null) {
+				rows.push(rowData);
+			}
 		});
 		setData(rows);
 
@@ -32,8 +35,8 @@ function ImportFromXlsx() {
 
 	const importExel = (e: any) => {
 		const file = e.target.files[0];
-		
-        const reader = new FileReader();
+
+		const reader = new FileReader();
 		reader.onload = (e: any) => {
 			// parse data
 			const bstr = e.target.result;
@@ -70,16 +73,19 @@ function ImportFromXlsx() {
 	};
 
 	return (
-		<div>
-			ImportFromXlsx
+		<>
+			{/* <input type='file' onChange={importExel} /> */}
+
 			<input
-				type="file"
+				type='file'
+				className='file-input w-full max-w-xs'
 				onChange={importExel}
 			/>
-			{colDefs?.map((c: any, i: number) => (
+
+			{/* {colDefs?.map((c: any, i: number) => (
 				<p key={i}>{c.title}</p>
-			))}
-		</div>
+			))} */}
+		</>
 	);
 }
 

@@ -6,8 +6,9 @@ import { useAppSelector } from '../../../../hooks/hooks';
 import CircularLoading from '../../../../components/tableIcons/CircularLoading';
 import SuccessButton from '../../../../components/tableIcons/SuccessButton';
 import ProjectService from '../../../../services/common/ProjectService';
+import { toast } from 'react-toastify';
 
-function TableAction({ params, rowId, setRowId, setDeleteId }: any) {
+function ProjectAction({ params, rowId, setRowId, setDeleteId }: any) {
 	const [loading, setLoading] = useState(false);
 	const [success, setSuccess] = useState(false);
 
@@ -34,9 +35,14 @@ function TableAction({ params, rowId, setRowId, setDeleteId }: any) {
 
 			await ProjectService.updateProject(data)
 				.then((res) => {
-					console.log(res);
+					if (res) {
+						toast.success('Project updated!');
+					} else {
+						toast.error('Request cannotţbe completed!');
+					}
 				})
 				.catch((e) => {
+					toast.error('Request cannotţbe completed!');
 					console.log(e);
 				});
 
@@ -61,4 +67,4 @@ function TableAction({ params, rowId, setRowId, setDeleteId }: any) {
 	);
 }
 
-export default TableAction;
+export default ProjectAction;

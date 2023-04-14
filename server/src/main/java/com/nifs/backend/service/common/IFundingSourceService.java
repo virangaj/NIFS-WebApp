@@ -1,6 +1,7 @@
-package com.nifs.backend.service.admin;
+package com.nifs.backend.service.common;
 
-import com.nifs.backend.dto.admin.FundingSourceDTO;
+import com.nifs.backend.dto.common.FundingSourceDTO;
+import com.nifs.backend.model.common.FundingSources;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,4 +13,6 @@ public interface IFundingSourceService {
     List<FundingSourceDTO> getAll();
 
     boolean updateFundingSource(FundingSourceDTO data, String id, String user);
+
+    FundingSources getFundingById(String fundingId);
 }

@@ -25,11 +25,11 @@ public class FacilityController {
         return facService.returnNewFacilityId();
     }
 
-//    get facility by id
-@GetMapping("/{facilityId}")
-FacilityDTO returnFacility(@PathVariable String facilityId) {
-    return facService.returnFacility(facilityId);
-}
+    //    get facility by id
+    @GetMapping("/{facilityId}")
+    FacilityDTO returnFacility(@PathVariable String facilityId) {
+        return facService.returnFacility(facilityId);
+    }
 
     @GetMapping()
     List<FacilityDTO> getAll() {
@@ -40,7 +40,7 @@ FacilityDTO returnFacility(@PathVariable String facilityId) {
     @PostMapping("/add")
     FacilityDTO createFacility(@RequestBody FacilityDTO facData, @AuthenticationPrincipal UserDetails userDetails) {
         String user = userDetails.getUsername();
-       return facService.createFacility(facData, user);
+        return facService.createFacility(facData, user);
     }
 
 //    update facility

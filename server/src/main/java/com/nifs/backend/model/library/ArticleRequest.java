@@ -1,6 +1,7 @@
 package com.nifs.backend.model.library;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.nifs.backend.constant.RequestStatus;
 import com.nifs.backend.model.Base;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -39,5 +40,8 @@ public class ArticleRequest extends Base {
     private String pages;
     private String webLink;
     private String remark;
+
+    RequestStatus hodApproved;
+    RequestStatus dirApproved;
 
 }

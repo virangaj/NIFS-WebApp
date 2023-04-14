@@ -7,11 +7,12 @@ import { HiPlus, HiX } from 'react-icons/hi';
 import { generateID } from '../../../utils/generateId';
 
 import '../../pages.css';
+import IRepresentativeMaster from '../../../types/sedu/IRepresentativeMaster';
 
-function EventParticipantForm({ type, total, setTotal }: any) {
-	const [value, setValue] = useState({
-		id: '',
-		p_type: type,
+function EventParticipantForm({ type, total, setTotal, name }: any) {
+	const [value, setValue] = useState<IRepresentativeMaster>({
+		participantId: '',
+		participantType: type,
 		name: '',
 		nic: '',
 		contactNo: '',
@@ -23,15 +24,11 @@ function EventParticipantForm({ type, total, setTotal }: any) {
 
 	useEffect(() => {
 		generateEventId();
-		console.log('trigger ' + p_id);
+		// console.log('trigger ' + p_id);
 		setValue({
-			id: p_id,
-			p_type: type,
-			name: value?.name,
-			nic: value?.nic,
-			contactNo: value?.contactNo,
-			address: value?.address,
-			email: value?.email,
+			...value,
+			participantId: p_id,
+			participantType: type,
 		});
 	}, [value.name]);
 
@@ -48,16 +45,12 @@ function EventParticipantForm({ type, total, setTotal }: any) {
 
 	const handleAdd = () => {
 		setValue({
-			id: p_id,
-			p_type: type,
-			name: value?.name,
-			nic: value?.nic,
-			contactNo: value?.contactNo,
-			address: value?.address,
-			email: value?.email,
+			...value,
+			participantId: p_id,
+			participantType: type,
 		});
 
-		console.log(value);
+		// console.log(value);
 		if (value.name !== '') {
 			setTotal((prev: any) => [...prev, value]);
 			reset();
@@ -68,8 +61,8 @@ function EventParticipantForm({ type, total, setTotal }: any) {
 
 	const reset = () => {
 		setValue({
-			id: '',
-			p_type: type,
+			participantId: '',
+			participantType: type,
 			name: '',
 			nic: '',
 			contactNo: '',
@@ -82,6 +75,7 @@ function EventParticipantForm({ type, total, setTotal }: any) {
 
 	return (
 		<>
+			<h1 className='mb-6 text-lg font-semibold'>{name} Details</h1>
 			<div className='flex flex-col items-center justify-between sm:flex-row'>
 				{/* name */}
 				<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 justify-between w-[100%]'>
