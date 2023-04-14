@@ -23,7 +23,7 @@ export function dateConveter(data: string) {
 	const dateString = '16/4/2023';
 	const parts = dateString.split('/');
 	const year = parts[2];
-	const month = parts[1];
+	const month = parseInt(parts[1]);
 	const day = parts[0];
-	return `${year}-${month}-${day}`;
+	return `${year}-${month < 10 ? '0' + month : month}-${day}`;
 }

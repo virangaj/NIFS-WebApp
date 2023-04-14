@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import EventRequestService from '../../services/sedu/EventRequestService';
 import { dateConveter } from '../../utils/generateId';
 function SeduBooking() {
-	const [requests, setRequests] = useState<any>([]);
+	const [requests, setRequests] = useState<Array<any>>([]);
 	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
@@ -17,11 +17,12 @@ function SeduBooking() {
 			EventRequestService.getAllEvents()
 				.then((res) => {
 					res.data?.map((d: any) => {
-						setRequests({
-							...requests,
-							eventId: d.documentNo,
+						let singleEvent = {
+							title: d.title,
 							date: dateConveter(d.startDate),
-						});
+						};
+						console.log(singleEvent);
+						requests.push(singleEvent);
 					});
 				})
 				.then((e) => {
@@ -30,6 +31,8 @@ function SeduBooking() {
 			setLoading(false);
 		}, 500);
 	};
+
+	const handleDateClick = () => {};
 	console.log(requests);
 	const events = [
 		{ title: 'Event 1', date: '2023-04-01' },
@@ -41,7 +44,11 @@ function SeduBooking() {
 		<div className='sub-body-content'>
 			<h1 className='page-title'>Booking</h1>
 			<hr className='horizontal-line' />
-			<FullCalendar plugins={[dayGridPlugin]} events={requests} />
+			<FullCalendar
+				plugins={[dayGridPlugin]}
+				initialView='dayGridMonth'
+				events={requests}
+			/>
 		</div>
 	);
 }
