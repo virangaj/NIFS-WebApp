@@ -1,6 +1,7 @@
 package com.nifs.backend.serviceImplementation.sedu;
 
 import com.nifs.backend.constant.EventRepresentativeType;
+import com.nifs.backend.dto.sedu.BulkParticipantsDTO;
 import com.nifs.backend.dto.sedu.EventRepresentativeDTO;
 import com.nifs.backend.dto.sedu.ParticipantsMasterDTO;
 import com.nifs.backend.model.sedu.EventRepresentativeMaster;
@@ -17,6 +18,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @Log4j2
@@ -34,7 +36,7 @@ public class ParticipantMasterService implements IParticipantMasterService {
                 .address(data.getAddress())
                 .name(data.getName())
                 .nic(data.getNic())
-                .participantId(data.getParticipantId())
+                .participantId(UUID.randomUUID().toString())
                 .eventId(data.getEventId())
                 .institute(data.getInstitute())
                 .contactNo(data.getContactNo())
@@ -88,5 +90,28 @@ public class ParticipantMasterService implements IParticipantMasterService {
         return list;
 
 
+    }
+
+    @Override
+    public boolean addBulkOfParticipants(BulkParticipantsDTO data, String user) {
+        try{
+            log.info("-----Bulk of data received");
+            List<ParticipantMaster> participantList = new ArrayList<>();
+            data.getParticipants().forEach(p -> {
+                if (p.getName() != null) {
+                    ParticipantMaster single = convertToEntity(p, user);
+                    single.setEventId(data.getEventId());
+                    participantList.add(single);
+                }
+            });
+            log.info("Final list size : {}", participantList.size());
+
+            participantMasterRepository.saveAll(participantList);
+
+            return true;
+        }catch (Exception e){
+            log.error(e.toString());
+            return false;
+        }
     }
 }

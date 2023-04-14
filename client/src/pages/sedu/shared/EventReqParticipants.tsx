@@ -26,15 +26,17 @@ function EventReqParticipants({ total, setTotal }: any) {
 				setTotal={setTotal}
 			/>
 
-			<table>
-				<tr>
-					<th>Name</th>
-					<th>NIC No</th>
-					<th>Contact No</th>
-					<th>Address</th>
-					<th>Email</th>
-					<th>Action</th>
-				</tr>
+			<table className='table table-zebra w-full'>
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>NIC No</th>
+						<th>Contact No</th>
+						<th>Address</th>
+						<th>Email</th>
+						<th>Action</th>
+					</tr>
+				</thead>
 				<tbody>
 					{total &&
 						total

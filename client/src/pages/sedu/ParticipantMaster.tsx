@@ -84,7 +84,14 @@ function ParticipantMaster() {
 
 	return (
 		<div className='sub-body-content lg:!w-[60%]'>
-			<h1 className='page-title'>Participant Master</h1>
+			<div className='flex justify-between items-center'>
+				<h1 className='page-title'>Participant Master</h1>
+				<Link to={RouteName.ImportFromExcel}>
+					<button className='action-com-model-sucess-btn'>
+						Import from Excel
+					</button>
+				</Link>
+			</div>
 			<hr className='horizontal-line' />
 
 			{!loading ? (
@@ -231,11 +238,6 @@ function ParticipantMaster() {
 						<button className='action-com-model-sucess-btn' type='submit'>
 							Submit
 						</button>
-						<Link to={RouteName.ImportFromExcel}>
-							<button className='action-com-model-sucess-btn'>
-								Import from Excel
-							</button>
-						</Link>
 					</Stack>
 				</form>
 			) : (
