@@ -133,7 +133,7 @@ function Srn() {
 
     setLoading(true);
     setTimeout(() => {
-      const result = SrnService.saveSrn(values, auth?.user?.token)
+      const result = SrnService.saveSRN(values, auth?.user?.token)
         .then((res) => {
           console.log(res);
         })

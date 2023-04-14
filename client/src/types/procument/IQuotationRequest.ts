@@ -1,7 +1,11 @@
 export default interface IQuotationRequest {
+  epfNo: number;
+  designationId: string;
+  divisionId: string;
+  hod: number;
+
   documentNo: string;
   date: string;
-  epfNo: number;
   project: string;
   fund: string;
   srnNo: string;

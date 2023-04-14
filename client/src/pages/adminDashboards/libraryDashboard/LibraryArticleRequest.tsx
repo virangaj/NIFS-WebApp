@@ -4,6 +4,8 @@ import ArticleRequestService from "../../../services/library/ArticleRequestServi
 import { RequestStatus } from "../../../constant/requestStatus";
 import { toast } from "react-toastify";
 import ResignationRequestTable from "../../shared/ResignationRequestTable";
+import ArticleRequestTable from "../../shared/library/ArticleRequestTable";
+import JournalRequestTable from "../../shared/library/JournalRequestTable";
 
 const LibraryArticleRequest = () => {
   const { auth } = useAppSelector((state) => state.persistedReducer);
@@ -105,7 +107,8 @@ const LibraryArticleRequest = () => {
             Reject Selected
           </button>
         </div>
-        <ResignationRequestTable
+
+        <ArticleRequestTable
           setSelectedData={setSelectedData}
           requests={requests}
           loading={loading}

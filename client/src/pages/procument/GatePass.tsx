@@ -157,7 +157,10 @@ function GatePass() {
 
     setLoading(true);
     setTimeout(() => {
-      const result = GatePassService.saveGatePass(values, auth?.user?.token)
+      const result = GatePassService.getDivisionGatePass(
+        values,
+        auth?.user?.token
+      )
         .then((res) => {
           console.log(res);
         })

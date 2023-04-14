@@ -1,9 +1,12 @@
 import axios from "axios";
+
 import http from "../../utils/http-common";
+import { RequestStatus } from "../../constant/requestStatus";
 
 axios.defaults.baseURL = process.env.REACT_APP_BACKEND_SERVER;
 
-const getQuotationSummaries = async (token: any) => {
+const getAllQuotationSummary = async (token: any) => {
+  // console.log(token);
   const response = await axios({
     method: "get",
     url: `${process.env.REACT_APP_BACKEND_SERVER}/procument/quotation-summary`,
@@ -15,9 +18,22 @@ const getQuotationSummaries = async (token: any) => {
   // alert("Favourite created --- "+ response);
   return response;
 };
+const getDivisionQuotationSummary = async (token: any, division: string) => {
+  // console.log(token);
+  const response = await axios({
+    method: "get",
+    url: `${process.env.REACT_APP_BACKEND_SERVER}/procument/quotation-summary?division=${division}`,
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  // alert("Favourite created --- "+ response);
+  return response;
+};
 
 const getQuotationSummary = (id: any) => {
-  return http.get<any>(`/procument/srn/${id}`);
+  return http.get<any>(`/procument/quotation-summary/get/${id}`);
 };
 
 const saveQuotationSummary = async (data: any, token: string) => {
@@ -35,28 +51,14 @@ const saveQuotationSummary = async (data: any, token: string) => {
   return response;
 };
 
-const sendHodApproval = async (id: any, token: string, approval: boolean) => {
-  const response = await axios({
-    method: "put",
-    url: `${process.env.REACT_APP_BACKEND_SERVER}/procument/quotation-summary/hod?approval=${approval}`,
-    data: id,
-    headers: {
-      "Content-Type": "application/json; charset=utf-8",
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
-  return response;
-};
-
-const sendDirectorApproval = async (
+const sendHodApproval = async (
   id: any,
   token: string,
-  approval: boolean
+  approval: RequestStatus
 ) => {
   const response = await axios({
     method: "put",
-    url: `${process.env.REACT_APP_BACKEND_SERVER}/procument/quotation-summary/director?approval=${approval}`,
+    url: `${process.env.REACT_APP_BACKEND_SERVER}/procument/quotation-summary/hod/status?approval=${approval}`,
     data: id,
     headers: {
       "Content-Type": "application/json; charset=utf-8",
@@ -67,12 +69,31 @@ const sendDirectorApproval = async (
   return response;
 };
 
-const QotationSummaryService = {
-  getQuotationSummaries,
-  getQuotationSummary,
-  saveQuotationSummary,
-  sendDirectorApproval,
-  sendHodApproval,
+const sendDirApproval = async (
+  id: any,
+  token: string,
+  approval: RequestStatus
+) => {
+  const response = await axios({
+    method: "put",
+    url: `${process.env.REACT_APP_BACKEND_SERVER}/procument/quotation-summary/director/status?approval=${approval}`,
+    data: id,
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response;
 };
 
-export default QotationSummaryService;
+const QuotationSummaryService = {
+  getAllQuotationSummary,
+  getQuotationSummary,
+  getDivisionQuotationSummary,
+  saveQuotationSummary,
+  sendHodApproval,
+  sendDirApproval,
+};
+
+export default QuotationSummaryService;

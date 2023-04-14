@@ -11,9 +11,14 @@ import { useAppSelector } from "../../hooks/hooks";
 import { toast } from "react-toastify";
 import QuotationRequestService from "../../services/procument/QuotationRequestService";
 import EmployeeSelector from "../../components/shared/EmployeeSelector";
+import DesignationSelector from "../../components/shared/DesignationSelector";
+import DivisionSelector from "../../components/shared/DivisionSelector";
 
 const initialState: IQuotationRequest = {
   documentNo: "",
+  designationId: "",
+  divisionId: "",
+  hod: 0,
   date: "",
   epfNo: 0,
   project: "",
@@ -37,6 +42,7 @@ function QuotationRequest() {
   const [startDate, setStartDate] = React.useState<string | null>(null);
   const [endDate, setEndDate] = React.useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
+  const [hod, setHod] = useState<IEmployeeData | null>();
 
   const { employees, employeesIsLoading, employeesIsSuccess } = useAppSelector(
     (state) => state.employees
@@ -52,6 +58,9 @@ function QuotationRequest() {
       documentNo: values?.documentNo,
       date: requestDate ? requestDate : "",
       epfNo: values?.epfNo,
+      designationId: values?.designationId,
+      divisionId: values?.designationId,
+      hod: values?.hod,
       project: values?.project,
       fund: values?.fund,
       srnNo: values?.srnNo,
@@ -73,6 +82,25 @@ function QuotationRequest() {
     console.log(getDocNo);
   }, [getDocNo]);
 
+  useEffect(() => {
+    const divisionData = division.find(
+      (d) => d.divisionId === values.divisionId
+    );
+
+    if (divisionData) {
+      const employeeId = divisionData.hod;
+      const employee = employees.find((e) => e.epfNo === employeeId);
+      // console.log(employee);
+      if (employee) {
+        setHod(employee);
+        setValues({
+          ...values,
+          hod: employee.epfNo,
+        });
+      }
+    }
+  }, [values.divisionId]);
+
   // generate Doc number ID
   const generateDocNo = () => {
     setDocNo(generateID("RR"));
@@ -91,6 +119,7 @@ function QuotationRequest() {
   const resetForm = () => {
     setValues(initialState);
     setDocNo("");
+    setHod(null);
   };
 
   //on Submit
@@ -127,7 +156,7 @@ function QuotationRequest() {
       <form onSubmit={onSubmit}>
         <div className="grid grid-cols-1 md:grid-cols-2 items-center w-[97%] mx-auto">
           <Box className="flex items-center justify-between input-field">
-            Quotation No - {getDocNo}
+            Document No - {getDocNo && getDocNo}
             <button
               type="button"
               className="rounded-outline-success-btn"
@@ -138,6 +167,28 @@ function QuotationRequest() {
             </button>
           </Box>
 
+          <EmployeeSelector
+            onChange={onChange}
+            value={values.epfNo}
+            name="epfNo"
+          />
+
+          <div className="w-[97%] mx-auto">
+            <DesignationSelector
+              onChange={onChange}
+              value={values.designationId}
+              name="designationId"
+            />
+          </div>
+
+          <div className="w-[97%] mx-auto">
+            <DivisionSelector
+              onChange={onChange}
+              value={values.divisionId}
+              name="divisionId"
+            />
+          </div>
+
           <div className="mx-0 mb-4 lg:ml-10 md:my-0">
             <CustomeDataPicker
               date={requestDate}
@@ -145,12 +196,6 @@ function QuotationRequest() {
               title="Quotation Date"
             />
           </div>
-
-          <EmployeeSelector
-            onChange={onChange}
-            value={values.epfNo}
-            name="epfNo"
-          />
         </div>
 
         <div className="flex w-[100%]">

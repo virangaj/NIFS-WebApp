@@ -1,9 +1,12 @@
 import axios from "axios";
+
 import http from "../../utils/http-common";
+import { RequestStatus } from "../../constant/requestStatus";
 
 axios.defaults.baseURL = process.env.REACT_APP_BACKEND_SERVER;
 
 const getAllGatePass = async (token: any) => {
+  // console.log(token);
   const response = await axios({
     method: "get",
     url: `${process.env.REACT_APP_BACKEND_SERVER}/procument/gate-pass`,
@@ -15,9 +18,22 @@ const getAllGatePass = async (token: any) => {
   // alert("Favourite created --- "+ response);
   return response;
 };
+const getDivisionGatePass = async (token: any, division: string) => {
+  // console.log(token);
+  const response = await axios({
+    method: "get",
+    url: `${process.env.REACT_APP_BACKEND_SERVER}/procument/gate-pass?division=${division}`,
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  // alert("Favourite created --- "+ response);
+  return response;
+};
 
 const getGatePass = (id: any) => {
-  return http.get<any>(`/procument/gate-pass/${id}`);
+  return http.get<any>(`/procument/gate-pass/get/${id}`);
 };
 
 const saveGatePass = async (data: any, token: string) => {
@@ -35,10 +51,14 @@ const saveGatePass = async (data: any, token: string) => {
   return response;
 };
 
-const sendHodApproval = async (id: any, token: string, approval: boolean) => {
+const sendHodApproval = async (
+  id: any,
+  token: string,
+  approval: RequestStatus
+) => {
   const response = await axios({
     method: "put",
-    url: `${process.env.REACT_APP_BACKEND_SERVER}/procument/gate-pass/hod?approval=${approval}`,
+    url: `${process.env.REACT_APP_BACKEND_SERVER}/procument/gate-pass/hod/status?approval=${approval}`,
     data: id,
     headers: {
       "Content-Type": "application/json; charset=utf-8",
@@ -49,14 +69,14 @@ const sendHodApproval = async (id: any, token: string, approval: boolean) => {
   return response;
 };
 
-const sendDirectorApproval = async (
+const sendDirApproval = async (
   id: any,
   token: string,
-  approval: boolean
+  approval: RequestStatus
 ) => {
   const response = await axios({
     method: "put",
-    url: `${process.env.REACT_APP_BACKEND_SERVER}/procument/gate-pass/director?approval=${approval}`,
+    url: `${process.env.REACT_APP_BACKEND_SERVER}/procument/gate-pass/director/status?approval=${approval}`,
     data: id,
     headers: {
       "Content-Type": "application/json; charset=utf-8",
@@ -70,9 +90,10 @@ const sendDirectorApproval = async (
 const GatePassService = {
   getAllGatePass,
   getGatePass,
+  getDivisionGatePass,
   saveGatePass,
-  sendDirectorApproval,
   sendHodApproval,
+  sendDirApproval,
 };
 
 export default GatePassService;

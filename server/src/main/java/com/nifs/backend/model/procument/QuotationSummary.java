@@ -1,6 +1,7 @@
 package com.nifs.backend.model.procument;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.nifs.backend.constant.RequestStatus;
 import com.nifs.backend.model.Base;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -39,4 +40,7 @@ public class QuotationSummary extends Base {
     private String fund;
     private String project;
     private String remark;
+
+    RequestStatus hodApproved;
+    RequestStatus dirApproved;
 }
