@@ -4,6 +4,7 @@ import TransportCostSerice from "../../../services/transport/TransportCostServic
 import { toast } from "react-toastify";
 import { RequestStatus } from "../../../constant/requestStatus";
 import ResignationRequestTable from "../../shared/ResignationRequestTable";
+import TransportCostTable from "../../shared/transport/TransportCostTable";
 
 const HODTransportCostReq = () => {
   const { auth } = useAppSelector((state) => state.persistedReducer);
@@ -105,7 +106,7 @@ const HODTransportCostReq = () => {
             Reject Selected
           </button>
         </div>
-        <ResignationRequestTable
+        <TransportCostTable
           setSelectedData={setSelectedData}
           requests={requests}
           loading={loading}
