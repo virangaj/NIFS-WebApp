@@ -1,9 +1,12 @@
 import axios from "axios";
+
 import http from "../../utils/http-common";
+import { RequestStatus } from "../../constant/requestStatus";
 
 axios.defaults.baseURL = process.env.REACT_APP_BACKEND_SERVER;
 
-const getAllTransportCost = async (token: any) => {
+const getAllTransportCosts = async (token: any) => {
+  // console.log(token);
   const response = await axios({
     method: "get",
     url: `${process.env.REACT_APP_BACKEND_SERVER}/transport/transport-cost`,
@@ -15,9 +18,22 @@ const getAllTransportCost = async (token: any) => {
   // alert("Favourite created --- "+ response);
   return response;
 };
+const getDivisionTransportCost = async (token: any, division: string) => {
+  // console.log(token);
+  const response = await axios({
+    method: "get",
+    url: `${process.env.REACT_APP_BACKEND_SERVER}/transport/transport-cost?division=${division}`,
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  // alert("Favourite created --- "+ response);
+  return response;
+};
 
 const getTransportCost = (id: any) => {
-  return http.get<any>(`/transport/transport-cost/${id}`);
+  return http.get<any>(`/transport/transport-cost/get/${id}`);
 };
 
 const saveTransportCost = async (data: any, token: string) => {
@@ -35,28 +51,14 @@ const saveTransportCost = async (data: any, token: string) => {
   return response;
 };
 
-const sendHodApproval = async (id: any, token: string, approval: boolean) => {
-  const response = await axios({
-    method: "put",
-    url: `${process.env.REACT_APP_BACKEND_SERVER}/transport/transport-cost/hod?approval=${approval}`,
-    data: id,
-    headers: {
-      "Content-Type": "application/json; charset=utf-8",
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
-  return response;
-};
-
-const sendDirectorApproval = async (
+const sendHodApproval = async (
   id: any,
   token: string,
-  approval: boolean
+  approval: RequestStatus
 ) => {
   const response = await axios({
     method: "put",
-    url: `${process.env.REACT_APP_BACKEND_SERVER}/transport/transport-cost/director?approval=${approval}`,
+    url: `${process.env.REACT_APP_BACKEND_SERVER}/transport/transport-cost/hod/status?approval=${approval}`,
     data: id,
     headers: {
       "Content-Type": "application/json; charset=utf-8",
@@ -67,12 +69,31 @@ const sendDirectorApproval = async (
   return response;
 };
 
-const TransportCostSerice = {
-  getAllTransportCost,
-  getTransportCost,
-  saveTransportCost,
-  sendHodApproval,
-  sendDirectorApproval,
+const sendDirApproval = async (
+  id: any,
+  token: string,
+  approval: RequestStatus
+) => {
+  const response = await axios({
+    method: "put",
+    url: `${process.env.REACT_APP_BACKEND_SERVER}/transport/transport-cost/director/status?approval=${approval}`,
+    data: id,
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response;
 };
 
-export default TransportCostSerice;
+const TransportCostService = {
+  getAllTransportCosts,
+  getTransportCost,
+  getDivisionTransportCost,
+  saveTransportCost,
+  sendHodApproval,
+  sendDirApproval,
+};
+
+export default TransportCostService;

@@ -1,5 +1,6 @@
 package com.nifs.backend.dto.transport;
 
+import com.nifs.backend.constant.RequestStatus;
 import com.nifs.backend.dto.BaseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -34,5 +35,7 @@ public class TransportCostDTO extends BaseDTO {
     private float endReading;
     private String remark;
 
+    RequestStatus hodApproved;
+    RequestStatus dirApproved;
 
 }
