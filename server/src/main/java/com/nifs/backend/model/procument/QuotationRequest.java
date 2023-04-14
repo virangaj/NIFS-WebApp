@@ -1,6 +1,7 @@
 package com.nifs.backend.model.procument;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.nifs.backend.constant.RequestStatus;
 import com.nifs.backend.model.Base;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -21,6 +22,9 @@ public class QuotationRequest extends Base {
 
     private String documentNo;
     private String epfNo;
+    private String designationId;
+    private String divisionId;
+    private float hod;
 
     @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(pattern = "dd/MM/yyyy")
@@ -47,4 +51,7 @@ public class QuotationRequest extends Base {
     @Column(name = "bid_closing_date")
     private String bidClosingDate;
     private String remark;
+
+    RequestStatus hodApproved;
+    RequestStatus dirApproved;
 }

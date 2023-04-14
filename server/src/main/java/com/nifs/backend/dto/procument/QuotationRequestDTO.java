@@ -1,5 +1,6 @@
 package com.nifs.backend.dto.procument;
 
+import com.nifs.backend.constant.RequestStatus;
 import com.nifs.backend.dto.BaseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,7 +16,11 @@ import lombok.experimental.SuperBuilder;
 public class QuotationRequestDTO extends BaseDTO {
 
     private String documentNo;
+    private String designationId;
+    private String divisionId;
+    private float hod;
     private String epfNo;
+
     private String date;
     private String project;
     private String fund;
@@ -27,5 +32,9 @@ public class QuotationRequestDTO extends BaseDTO {
     private String bidStartingDate;
     private String bidClosingDate;
     private String remark;
+
+
+    RequestStatus hodApproved;
+    RequestStatus dirApproved;
 
 }
