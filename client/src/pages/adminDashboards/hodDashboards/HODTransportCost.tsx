@@ -91,7 +91,7 @@ const HODTransportCost = () => {
   return (
     <>
       <div className="admin-page-title">
-        <p>Contract Extension</p>
+        <p>Transport Cost</p>
 
         <hr className="admin-horizontal-line" />
       </div>

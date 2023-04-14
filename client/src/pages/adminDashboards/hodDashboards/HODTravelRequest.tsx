@@ -91,7 +91,7 @@ const HODTravelRequest = () => {
   return (
     <>
       <div className="admin-page-title">
-        <p>Contract Extension</p>
+        <p>Travel Request</p>
 
         <hr className="admin-horizontal-line" />
       </div>

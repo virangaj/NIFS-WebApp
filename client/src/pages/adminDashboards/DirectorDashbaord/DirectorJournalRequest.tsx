@@ -1,11 +1,14 @@
+import React from "react";
 import { useEffect, useState } from "react";
 import { useAppSelector } from "../../../hooks/hooks";
 import { toast } from "react-toastify";
 import { RequestStatus } from "../../../constant/requestStatus";
 import getContractExtensionService from "../../../services/admin/ContractExtensionService";
 import ContractExtesnsionTable from "../../shared/ContractExtesnsionTable";
+import JournalRequestService from "../../../services/library/JournalRequestService";
+import JournalRequestTable from "../../shared/library/JournalRequestTable";
 
-function DirectorContractExtension() {
+const DirectorJournalRequest = () => {
   const { auth } = useAppSelector((state) => state.persistedReducer);
   const [requests, setRequests] = useState<any>([]);
   const [selectedData, setSelectedData] = useState<Array<string>>([]);
@@ -17,8 +20,7 @@ function DirectorContractExtension() {
   const retriveData = () => {
     setLoading(true);
     setTimeout(() => {
-      getContractExtensionService
-        .getContractExtensionRequests(auth?.user?.token)
+      JournalRequestService.getAllJournalRequest(auth?.user?.token)
         .then((res) => {
           setRequests(res.data);
         })
@@ -34,15 +36,14 @@ function DirectorContractExtension() {
     console.log(selectedData);
     setLoading(true);
     setTimeout(() => {
-      getContractExtensionService
-        .sendDirectorApproval(
-          selectedData,
-          auth?.user?.token,
-          RequestStatus.APPROVED
-        )
+      JournalRequestService.sendDirApproval(
+        selectedData,
+        auth?.user?.token,
+        RequestStatus.APPROVED
+      )
         .then((res) => {
           if (res.data) {
-            toast.success("Contract Extension is Confirmed");
+            toast.success("Journal Request is Confirmed");
           } else {
             toast.error("Request cannot be performed");
           }
@@ -59,15 +60,14 @@ function DirectorContractExtension() {
   const sendReject = () => {
     setLoading(true);
     setTimeout(() => {
-      getContractExtensionService
-        .sendDirectorApproval(
-          selectedData,
-          auth?.user?.token,
-          RequestStatus.DISAPPROVED
-        )
+      JournalRequestService.sendDirApproval(
+        selectedData,
+        auth?.user?.token,
+        RequestStatus.DISAPPROVED
+      )
         .then((res) => {
           if (res.data) {
-            toast.warning("Contract Extension is Declined");
+            toast.warning("Journal Request is Declined");
           } else {
             toast.error("Request cannot be performed");
           }
@@ -83,7 +83,7 @@ function DirectorContractExtension() {
   return (
     <div>
       <div className="admin-page-title">
-        <p>Contract Extension Request</p>
+        <p>Journal Request</p>
 
         <hr className="admin-horizontal-line" />
       </div>
@@ -102,7 +102,8 @@ function DirectorContractExtension() {
             Reject Selected
           </button>
         </div>
-        <ContractExtesnsionTable
+
+        <JournalRequestTable
           setSelectedData={setSelectedData}
           requests={requests}
           loading={loading}
@@ -110,6 +111,6 @@ function DirectorContractExtension() {
       </div>
     </div>
   );
-}
+};
 
-export default DirectorContractExtension;
+export default DirectorJournalRequest;

@@ -87,7 +87,7 @@ const HODSrn = () => {
   return (
     <>
       <div className="admin-page-title">
-        <p>Contract Extension</p>
+        <p>SRN</p>
 
         <hr className="admin-horizontal-line" />
       </div>

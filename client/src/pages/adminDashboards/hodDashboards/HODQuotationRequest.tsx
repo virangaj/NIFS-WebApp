@@ -92,7 +92,7 @@ const HODQuotationRequest = () => {
   return (
     <>
       <div className="admin-page-title">
-        <p>Contract Extension</p>
+        <p>Quotation Request</p>
 
         <hr className="admin-horizontal-line" />
       </div>

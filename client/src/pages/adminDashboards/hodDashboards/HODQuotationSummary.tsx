@@ -90,7 +90,7 @@ const HODQuotationSummary = () => {
   return (
     <>
       <div className="admin-page-title">
-        <p>Contract Extension</p>
+        <p>Quotation Summary</p>
 
         <hr className="admin-horizontal-line" />
       </div>

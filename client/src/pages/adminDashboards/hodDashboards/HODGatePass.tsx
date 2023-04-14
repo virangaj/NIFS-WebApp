@@ -87,7 +87,7 @@ const HODGatePass = () => {
   return (
     <>
       <div className="admin-page-title">
-        <p>Contract Extension</p>
+        <p>Gate Pass</p>
 
         <hr className="admin-horizontal-line" />
       </div>
