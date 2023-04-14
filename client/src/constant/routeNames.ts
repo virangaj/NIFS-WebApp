@@ -26,6 +26,7 @@ export enum RouteName {
 	SeduProjectProposal = '/project-proposal',
 	SeduMaterialSearch = '/material-search',
 	SeduReportGenerator = '/report-generator',
+	ImportFromExcel = '/sedu/participant-master/import-from-excel',
 
 	//   common
 

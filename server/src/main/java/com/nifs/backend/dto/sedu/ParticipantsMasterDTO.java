@@ -1,6 +1,5 @@
 package com.nifs.backend.dto.sedu;
 
-import com.nifs.backend.constant.EventRepresentativeType;
 import com.nifs.backend.dto.BaseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,14 +12,15 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @Setter
 @SuperBuilder
-public class EventRepresentativeDTO extends BaseDTO {
+public class ParticipantsMasterDTO extends BaseDTO {
     private String participantId;
-    String eventId;
-    String name;
-    String nic;
-    String contactNo;
-    String address;
-    String email;
-    EventRepresentativeType participantType;
+    private String eventId;
+    private String name;
+    private String nic;
+    private String gender;
+    private String contactNo;
+    private String address;
+    private String email;
+    private String institute;
 
 }

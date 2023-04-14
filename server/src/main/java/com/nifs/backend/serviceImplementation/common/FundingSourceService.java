@@ -99,5 +99,10 @@ public class FundingSourceService implements IFundingSourceService {
 
     }
 
+    @Override
+    public FundingSources getFundingById(String fundingId) {
+        return fundingSourceRepository.findByFundingId(fundingId);
+    }
+
 
 }

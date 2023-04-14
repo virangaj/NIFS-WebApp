@@ -18,6 +18,7 @@ import { RouteName } from '../constant/routeNames';
 
 import Dots from '../images/dots_circle_b.png';
 import ContentPage from '../layout/ContentPage';
+import ImportFromExcel from './sedu/shared/ImportFromExcel';
 
 export function PageRoutes() {
 	return (
@@ -49,6 +50,10 @@ export function PageRoutes() {
 			<Route
 				path={RouteName.SeduReportGenerator}
 				element={<SeduReportGenerator />}
+			/>
+			<Route
+				path={RouteName.SeduParticipantMaster + '/import-from-excel'}
+				element={<ImportFromExcel />}
 			/>
 		</Routes>
 	);

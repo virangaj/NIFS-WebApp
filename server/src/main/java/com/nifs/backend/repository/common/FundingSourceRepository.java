@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Date;
 
 public interface FundingSourceRepository extends JpaRepository<FundingSources, Integer> {
+    @Query("select f from FundingSources f where f.fundingId = ?1")
+    FundingSources findByFundingId(String fundingId);
 
     @Transactional
     @Modifying

@@ -38,7 +38,7 @@ public class ProjectMasterService implements IProjectMasterService {
             project.setLocationId(locationService.getLocationById(data.getLocationId()));
             String lastId = projectMasterRepository.returnLastId();
             if (lastId == null) {
-                project.setProjectId("P1001");
+                project.setProjectId("PM1001");
             }
             else {
                 project.setProjectId(NewIdGenerator.newIDGenerator(lastId));
@@ -83,6 +83,11 @@ public class ProjectMasterService implements IProjectMasterService {
             return false;
         }
 
+    }
+
+    @Override
+    public ProjectMaster getProjectById(String projectId) {
+        return projectMasterRepository.findByProjectIdEquals(projectId);
     }
 
 

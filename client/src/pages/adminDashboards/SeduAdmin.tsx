@@ -9,6 +9,7 @@ import Projects from './sharedDashboards/Projects';
 import HODResignationReq from './hodDashboards/HODResignationReq';
 import HODContractextensionReq from './hodDashboards/HODContractextensionReq';
 import FundingSource from './sharedDashboards/FundingSource';
+import EventRequestAdmin from './SeduAdmin/EventRequestAdmin';
 
 export function PageRoutes() {
 	return (
@@ -26,6 +27,10 @@ export function PageRoutes() {
 				element={<HODContractextensionReq />}
 			/>
 			<Route path={RouteName.FundingSource} element={<FundingSource />} />
+			<Route
+				path={RouteName.SeduEventRequest}
+				element={<EventRequestAdmin />}
+			/>
 		</Routes>
 	);
 }
