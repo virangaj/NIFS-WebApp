@@ -12,6 +12,7 @@ import {
 import { GiExitDoor, GiIndiaGate, GiNotebook } from "react-icons/gi";
 import { AiOutlineFundProjectionScreen, AiOutlineSearch } from "react-icons/ai";
 import { RiUserReceived2Line, RiUserStarLine } from "react-icons/ri";
+import { BsCalendar3Week } from 'react-icons/bs';
 import { RouteName } from "./routeNames";
 
 // admin of admin division
@@ -149,53 +150,58 @@ export const DirectorSideNavbar = [
 
 //sedu admin
 export const SeduAdminSideNavbar = [
-  {
-    title: "Master",
-    icon: HiOutlineDatabase,
-    subpages: [
-      {
-        title: "Charges",
-        link: RouteName.Charges,
-        icon: HiOutlineCurrencyDollar,
-      },
-      {
-        title: "Facilities",
-        link: RouteName.Facilities,
-        icon: HiOutlineOfficeBuilding,
-      },
-      {
-        title: "All Venues",
-        link: RouteName.VenueMaster,
-        icon: HiOutlineLibrary,
-      },
-      {
-        title: "Projects",
-        link: RouteName.Projects,
-        icon: HiOutlineFolder,
-      },
-      {
-        title: "Funding Sources",
-        link: RouteName.FundingSource,
-        icon: AiOutlineFundProjectionScreen,
-      },
-    ],
-  },
-  {
-    title: "Transactions",
-    icon: HiOutlineClipboardList,
-    subpages: [
-      {
-        title: "Resignation Request",
-        link: RouteName.AdminResignationReq,
-        icon: GiExitDoor,
-      },
-      {
-        title: "Contract Extension",
-        link: RouteName.ContractExtension,
-        icon: HiOutlineDocumentText,
-      },
-    ],
-  },
+	{
+		title: 'Master',
+		icon: HiOutlineDatabase,
+		subpages: [
+			{
+				title: 'Charges',
+				link: RouteName.Charges,
+				icon: HiOutlineCurrencyDollar,
+			},
+			{
+				title: 'Facilities',
+				link: RouteName.Facilities,
+				icon: HiOutlineOfficeBuilding,
+			},
+			{
+				title: 'All Venues',
+				link: RouteName.VenueMaster,
+				icon: HiOutlineLibrary,
+			},
+			{
+				title: 'Projects',
+				link: RouteName.Projects,
+				icon: HiOutlineFolder,
+			},
+			{
+				title: 'Funding Sources',
+				link: RouteName.FundingSource,
+				icon: AiOutlineFundProjectionScreen,
+			},
+		],
+	},
+	{
+		title: 'Transactions',
+		icon: HiOutlineClipboardList,
+		subpages: [
+			{
+				title: 'Resignation Request',
+				link: RouteName.AdminResignationReq,
+				icon: GiExitDoor,
+			},
+			{
+				title: 'Contract Extension',
+				link: RouteName.ContractExtension,
+				icon: HiOutlineDocumentText,
+			},
+			{
+				title: 'Event Requests',
+				link: RouteName.SeduEventRequest,
+				icon: BsCalendar3Week,
+			},
+		],
+	},
 ];
 
 //HOD dashboard

@@ -4,13 +4,6 @@
 		"only_admin": false,
 		"routes": [
 			{
-				"title": "Administrative Report",
-				"link": "/admin/administrative-report",
-				"img": "https://img.icons8.com/fluency/50/000000/administrative-tools.png",
-				"only_admin": false
-			},
-
-			{
 				"title": "Accommodation",
 				"link": "/admin/accommodation",
 				"img": "https://img.icons8.com/fluency/50/000000/3-star-hotel.png",

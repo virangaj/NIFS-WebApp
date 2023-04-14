@@ -5,5 +5,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface IEventRequestService {
-    boolean createNewEventRequest(EventRequestDTO eventData, String user);
+    String createNewEventRequest(EventRequestDTO eventData, String user);
+
+    Object getAllEvents();
+
+    Object getEventById(String id);
 }
