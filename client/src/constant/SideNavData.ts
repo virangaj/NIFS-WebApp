@@ -11,7 +11,7 @@ import {
 } from 'react-icons/hi';
 import { GiExitDoor } from 'react-icons/gi';
 import { AiOutlineFundProjectionScreen } from 'react-icons/ai';
-import { BsCurrencyExchange } from 'react-icons/bs';
+import { BsCalendar3Week } from 'react-icons/bs';
 import { RiUserStarLine } from 'react-icons/ri';
 import { RouteName } from './routeNames';
 
@@ -153,6 +153,11 @@ export const SeduAdminSideNavbar = [
 				title: 'Contract Extension',
 				link: RouteName.ContractExtension,
 				icon: HiOutlineDocumentText,
+			},
+			{
+				title: 'Event Requests',
+				link: RouteName.SeduEventRequest,
+				icon: BsCalendar3Week,
 			},
 		],
 	},

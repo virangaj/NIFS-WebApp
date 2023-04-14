@@ -1,6 +1,7 @@
 package com.nifs.backend.serviceImplementation.sedu;
 
 import com.nifs.backend.dto.sedu.EventRequestDTO;
+import com.nifs.backend.dto.sedu.EventRequestMasterDTO;
 import com.nifs.backend.model.sedu.EventRequest;
 import com.nifs.backend.repository.sedu.EventRequestRepository;
 import com.nifs.backend.service.sedu.IEventRepresentativeService;
@@ -10,7 +11,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Service
 @Log4j2
@@ -22,6 +25,8 @@ public class EventRequestService implements IEventRequestService {
     private IEventRepresentativeService eventRepresentativeService;
     @Autowired
     private ModelMapper modelMapper;
+
+    // save new events
     @Override
     public String createNewEventRequest(EventRequestDTO eventData, String user) {
         try{
@@ -47,5 +52,42 @@ public class EventRequestService implements IEventRequestService {
             log.error(e.toString());
             return e.toString();
         }
+    }
+
+//convert entity class to dto class
+    public EventRequestMasterDTO convertToDTO(EventRequest data) {
+
+        return EventRequestMasterDTO.builder()
+                .documentNo(data.getDocumentNo())
+                .startDate(data.getStartDate())
+                .startTime(data.getStartTime())
+                .EndDate(data.getEndDate())
+                .EndTime(data.getEndTime())
+                .title(data.getTitle())
+                .remark(data.getRemark())
+                .locationId(data.getLocationId().getLocationId())
+                .venueId(data.getVenueId().getVenueId())
+                .fundingId(data.getFundingId())
+                .projectId(data.getProjectId())
+                .eventType(data.getEventType())
+                .noParticipants(data.getNoParticipants())
+                .budget(data.getBudget())
+                .createdBy(data.getCreatedBy())
+                .createdOn(data.getCreatedOn())
+                .modifiedBy(data.getModifiedBy())
+                .modifiedOn(data.getModifiedOn())
+                .build();
+    }
+
+
+    // get all events
+    @Override
+    public Object getAllEvents() {
+        List<EventRequest> allEvents = eventRequestRepository.findAll();
+        List<EventRequestMasterDTO> dtoList = new ArrayList<>();
+        allEvents.forEach(events -> {
+            dtoList.add(convertToDTO(events));
+        });
+        return dtoList;
     }
 }

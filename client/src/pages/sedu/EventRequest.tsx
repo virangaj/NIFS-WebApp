@@ -79,6 +79,7 @@ function EventRequest() {
 		setEndDate('');
 		setEndTime('');
 		setEventId('');
+		setTotalParticipants([]);
 	};
 
 	const onSubmit = async (e: any) => {

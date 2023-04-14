@@ -45,4 +45,10 @@ public class EventRequestController {
             return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
         }
     }
+
+
+    @GetMapping()
+    ResponseEntity<?> getAllEvents(){
+        return ResponseEntity.ok(eventRequestService.getAllEvents());
+    }
 }

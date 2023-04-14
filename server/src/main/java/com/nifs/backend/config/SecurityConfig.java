@@ -68,7 +68,8 @@ public class SecurityConfig {
                         //project
                         "/common/project",
                         "/library/**",
-                        "/common/funding-source"
+                        "/common/funding-source",
+                        "sedu/event-master"
                                              )
                 .permitAll()
                 .anyRequest()
