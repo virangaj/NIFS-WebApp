@@ -3,7 +3,6 @@ import { Route, Routes } from "react-router-dom";
 import { RouteName } from "../../constant/routeNames";
 import LibraryArticleRequest from "./libraryDashboard/LibraryArticleRequest";
 import LibraryJournalRequest from "./libraryDashboard/LibraryJournalRequest";
-import { LibraryCatalogSearch } from "./libraryDashboard/LibraryCatalogSearch";
 import AdminPages from "../../layout/AdminPages";
 import {
   LibrarySideBar,
@@ -20,10 +19,6 @@ export function PageRoutes() {
       <Route
         path={RouteName.LibraryJournalRequest}
         element={<LibraryJournalRequest />}
-      />
-      <Route
-        path={RouteName.LibraryCatalogSearch}
-        element={<LibraryCatalogSearch />}
       />
     </Routes>
   );

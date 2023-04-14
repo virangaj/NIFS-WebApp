@@ -307,11 +307,6 @@ export const LibrarySideBar = [
         link: RouteName.LibraryJournalRequest,
         icon: HiOutlineDocumentText,
       },
-      {
-        title: "Catalog Search",
-        link: RouteName.LibraryCatalogSearch,
-        icon: AiOutlineSearch,
-      },
     ],
   },
 ];

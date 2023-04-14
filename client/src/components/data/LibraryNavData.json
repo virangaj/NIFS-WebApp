@@ -14,13 +14,6 @@
         "link": "/library/journal-request",
         "img": "https://img.icons8.com/color/512/moleskine.png",
         "only_admin": false
-      },
-
-      {
-        "title": "Catalog Search",
-        "link": "/library/catalog-search",
-        "img": "https://img.icons8.com/color/512/search-property.png",
-        "only_admin": false
       }
     ]
   }
