@@ -4,10 +4,11 @@ import EventParticipantForm from './EventParticipantForm';
 
 import '../../pages.css';
 import { EventRepresentative } from '../../../constant/eventRepresentative';
+import IRepresentativeMaster from '../../../types/sedu/IRepresentativeMaster';
 
 function NifsRepresentatives({ total, setTotal }: any) {
 	const handleDelete = (id: any) => {
-		setTotal((prev: any) => prev.filter((i: any) => i.id !== id));
+		setTotal((prev: any) => prev.filter((i: any) => i.participantId !== id));
 	};
 
 	// console.log(total)
@@ -34,9 +35,10 @@ function NifsRepresentatives({ total, setTotal }: any) {
 					{total &&
 						total
 							.filter(
-								(t: any) => t.p_type === EventRepresentative.NIFS_REPRESENTATIVE
+								(t: IRepresentativeMaster) =>
+									t.participantType === EventRepresentative.NIFS_REPRESENTATIVE
 							)
-							.map((t: any, index: number) => (
+							.map((t: IRepresentativeMaster, index: number) => (
 								<tr key={index}>
 									<td>{t.name}</td>
 									<td>{t.nic}</td>
@@ -46,7 +48,7 @@ function NifsRepresentatives({ total, setTotal }: any) {
 									<td>
 										<HiOutlineTrash
 											className='text-xl cursor-pointer hover:text-red-500'
-											onClick={() => handleDelete(t.id)}
+											onClick={() => handleDelete(t.participantId)}
 										/>
 									</td>
 								</tr>

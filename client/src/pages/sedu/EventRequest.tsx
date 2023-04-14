@@ -14,6 +14,9 @@ import ProjectSelector from '../../components/shared/ProjectSelector';
 import FundingSourceSelector from '../../components/shared/FundingSourceSelector';
 import VenueSelector from '../../components/shared/VenueSelector';
 import TextBoxLabel from '../../components/shared/TextBoxLabel';
+import EventRequestService from '../../services/sedu/EventRequestService';
+import { useAppSelector } from '../../hooks/hooks';
+import { toast } from 'react-toastify';
 
 const initialState: IEventRequest = {
 	documentNo: '',
@@ -38,7 +41,7 @@ function EventRequest() {
 
 	const [endDate, setEndDate] = useState<string | null>(null);
 	const [endTime, setEndTime] = useState<string | null>(null);
-
+	const [loading, setLoading] = useState(false);
 	const [getEventId, setEventId] = useState<String | any>('');
 
 	const [totalParticipants, setTotalParticipants] = useState([]);
@@ -46,7 +49,7 @@ function EventRequest() {
 	const [eventAttachment, setEventAttachment] = useState<File | any>();
 
 	const [values, setValues] = useState<IEventRequest>(initialState);
-
+	const { auth } = useAppSelector((state) => state.persistedReducer);
 	useEffect(() => {
 		setValues({
 			...values,
@@ -80,6 +83,30 @@ function EventRequest() {
 
 	const onSubmit = async (e: any) => {
 		e.preventDefault();
+
+		const data = {
+			eventData: values,
+			representativeList: totalParticipants,
+		};
+
+		setLoading(true);
+		try {
+			EventRequestService.newEventRequest(data, auth?.user?.token).then(
+				(res) => {
+					if (res.data.code === 200) {
+						toast.success(res.data.message);
+						setLoading(false);
+						resetForm();
+					} else {
+						toast.error(res.data.message);
+						setLoading(false);
+					}
+				}
+			);
+		} catch (e: any) {
+			toast.error('Request cannot be completed');
+			setLoading(false);
+		}
 
 		console.log(values);
 		console.log(totalParticipants);

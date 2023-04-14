@@ -1,7 +1,6 @@
 package com.nifs.backend.dto.sedu;
 
 
-import com.nifs.backend.dto.BaseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,23 +14,7 @@ import java.util.List;
 @Getter
 @Setter
 @SuperBuilder
-public class EventRequestDTO extends BaseDTO {
-
-    private String documentNo;
-    private String startDate;
-    private String startTime;
-    private String EndDate;
-    private String EndTime;
-    private String title;
-    private String remark;
-    private String locationId;
-    private String venueId;
-    private String fundingId;
-    private String projectId;
-    private String eventType;
-    private int noParticipants;
-    private int budget;
-    List<EventRepresentativeDTO> RepresentativeList;
-
-
+public class EventRequestDTO {
+    EventRequestMasterDTO eventData;
+    List<EventRepresentativeDTO> representativeList;
 }

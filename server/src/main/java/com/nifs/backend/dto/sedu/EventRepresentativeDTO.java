@@ -15,7 +15,6 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class EventRepresentativeDTO extends BaseDTO {
     String eventId;
-
     String name;
     String nic;
     String contactNo;

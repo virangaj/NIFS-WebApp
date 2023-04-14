@@ -7,11 +7,12 @@ import { HiPlus, HiX } from 'react-icons/hi';
 import { generateID } from '../../../utils/generateId';
 
 import '../../pages.css';
+import IRepresentativeMaster from '../../../types/sedu/IRepresentativeMaster';
 
 function EventParticipantForm({ type, total, setTotal, name }: any) {
-	const [value, setValue] = useState({
-		id: '',
-		p_type: type,
+	const [value, setValue] = useState<IRepresentativeMaster>({
+		participantId: '',
+		participantType: type,
 		name: '',
 		nic: '',
 		contactNo: '',
@@ -23,15 +24,11 @@ function EventParticipantForm({ type, total, setTotal, name }: any) {
 
 	useEffect(() => {
 		generateEventId();
-		console.log('trigger ' + p_id);
+		// console.log('trigger ' + p_id);
 		setValue({
-			id: p_id,
-			p_type: type,
-			name: value?.name,
-			nic: value?.nic,
-			contactNo: value?.contactNo,
-			address: value?.address,
-			email: value?.email,
+			...value,
+			participantId: p_id,
+			participantType: type,
 		});
 	}, [value.name]);
 
@@ -48,8 +45,8 @@ function EventParticipantForm({ type, total, setTotal, name }: any) {
 
 	const handleAdd = () => {
 		setValue({
-			id: p_id,
-			p_type: type,
+			participantId: p_id,
+			participantType: type,
 			name: value?.name,
 			nic: value?.nic,
 			contactNo: value?.contactNo,
@@ -57,7 +54,7 @@ function EventParticipantForm({ type, total, setTotal, name }: any) {
 			email: value?.email,
 		});
 
-		console.log(value);
+		// console.log(value);
 		if (value.name !== '') {
 			setTotal((prev: any) => [...prev, value]);
 			reset();
@@ -68,8 +65,8 @@ function EventParticipantForm({ type, total, setTotal, name }: any) {
 
 	const reset = () => {
 		setValue({
-			id: '',
-			p_type: type,
+			participantId: '',
+			participantType: type,
 			name: '',
 			nic: '',
 			contactNo: '',
