@@ -1,9 +1,12 @@
 import axios from "axios";
+
 import http from "../../utils/http-common";
+import { RequestStatus } from "../../constant/requestStatus";
 
 axios.defaults.baseURL = process.env.REACT_APP_BACKEND_SERVER;
 
-const getAllSrn = async (token: any) => {
+const getAllSRN = async (token: any) => {
+  // console.log(token);
   const response = await axios({
     method: "get",
     url: `${process.env.REACT_APP_BACKEND_SERVER}/procument/srn`,
@@ -15,12 +18,25 @@ const getAllSrn = async (token: any) => {
   // alert("Favourite created --- "+ response);
   return response;
 };
-
-const getSrn = (id: any) => {
-  return http.get<any>(`/procument/srn/${id}`);
+const getDivisionSRN = async (token: any, division: string) => {
+  // console.log(token);
+  const response = await axios({
+    method: "get",
+    url: `${process.env.REACT_APP_BACKEND_SERVER}/procument/srn?division=${division}`,
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  // alert("Favourite created --- "+ response);
+  return response;
 };
 
-const saveSrn = async (data: any, token: string) => {
+const getSRN = (id: any) => {
+  return http.get<any>(`/procument/srn/get/${id}`);
+};
+
+const saveSRN = async (data: any, token: string) => {
   console.log(token);
   const response = await axios({
     method: "post",
@@ -35,28 +51,14 @@ const saveSrn = async (data: any, token: string) => {
   return response;
 };
 
-const sendHodApproval = async (id: any, token: string, approval: boolean) => {
-  const response = await axios({
-    method: "put",
-    url: `${process.env.REACT_APP_BACKEND_SERVER}/procument/srn/hod?approval=${approval}`,
-    data: id,
-    headers: {
-      "Content-Type": "application/json; charset=utf-8",
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
-  return response;
-};
-
-const sendDirectorApproval = async (
+const sendHodApproval = async (
   id: any,
   token: string,
-  approval: boolean
+  approval: RequestStatus
 ) => {
   const response = await axios({
     method: "put",
-    url: `${process.env.REACT_APP_BACKEND_SERVER}/procument/srn/director?approval=${approval}`,
+    url: `${process.env.REACT_APP_BACKEND_SERVER}/procument/srn/hod/status?approval=${approval}`,
     data: id,
     headers: {
       "Content-Type": "application/json; charset=utf-8",
@@ -67,12 +69,31 @@ const sendDirectorApproval = async (
   return response;
 };
 
-const SrnService = {
-  getAllSrn,
-  getSrn,
-  saveSrn,
-  sendDirectorApproval,
-  sendHodApproval,
+const sendDirApproval = async (
+  id: any,
+  token: string,
+  approval: RequestStatus
+) => {
+  const response = await axios({
+    method: "put",
+    url: `${process.env.REACT_APP_BACKEND_SERVER}/procument/srn/director/status?approval=${approval}`,
+    data: id,
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response;
 };
 
-export default SrnService;
+const SRNService = {
+  getAllSRN,
+  getSRN,
+  getDivisionSRN,
+  saveSRN,
+  sendHodApproval,
+  sendDirApproval,
+};
+
+export default SRNService;

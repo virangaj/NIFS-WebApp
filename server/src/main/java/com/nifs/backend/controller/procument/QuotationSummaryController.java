@@ -1,10 +1,17 @@
 package com.nifs.backend.controller.procument;
 
+import com.nifs.backend.config.JwtService;
+import com.nifs.backend.constant.RequestStatus;
+import com.nifs.backend.dto.procument.QuotationRequestDTO;
 import com.nifs.backend.dto.procument.QuotationSummaryDTO;
 import com.nifs.backend.serviceImplementation.procument.QuotationSummaryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RestController
@@ -14,18 +21,34 @@ public class QuotationSummaryController {
     final
     QuotationSummaryService quotationSummaryService;
 
-    public QuotationSummaryController(QuotationSummaryService quotationSummaryService) {
-        this.quotationSummaryService = quotationSummaryService;
-    }
+    final
+    JwtService jwtService;
 
-    @GetMapping
-    public ResponseEntity<?> getAllQuotationSummary(){
-        return ResponseEntity.ok("Success");
+    public QuotationSummaryController(QuotationSummaryService quotationSummaryService, JwtService jwtService) {
+        this.quotationSummaryService = quotationSummaryService;
+        this.jwtService = jwtService;
     }
 
     @PostMapping("/add")
-    public ResponseEntity<?> createQuotationSummary(@RequestBody QuotationSummaryDTO data){
-        return quotationSummaryService.createNewQuotationSummary(data);
+    public ResponseEntity<?> createNewQuotationSummary(@RequestBody QuotationSummaryDTO data){
+        return ResponseEntity.ok(quotationSummaryService.createNewQuotationSummary(data));
+    }
+
+    @GetMapping
+    public ResponseEntity<?> getAllQuotationSummaries(@RequestParam(required = false) String division){
+        return ResponseEntity.ok(quotationSummaryService.getAllQuotationSummaries(division));
+    }
+
+    @PutMapping("/hod/status")
+    public ResponseEntity<?> putHodApproval(@RequestParam RequestStatus approval, @RequestBody List<String> resId, @AuthenticationPrincipal UserDetails userDetails){
+        String user = userDetails.getUsername();
+        return ResponseEntity.ok(quotationSummaryService.putHodApproval(approval,resId,user));
+    }
+
+    @PutMapping("/director/status")
+    public ResponseEntity<?> putDirectorApproval(@RequestParam RequestStatus approval, @RequestBody List<String> resId, @AuthenticationPrincipal UserDetails userDetails){
+        String user = userDetails.getUsername();
+        return ResponseEntity.ok(quotationSummaryService.putDirectorApproval(approval, resId, user));
     }
 
 }

@@ -1,5 +1,6 @@
 package com.nifs.backend.dto.procument;
 
+import com.nifs.backend.constant.RequestStatus;
 import com.nifs.backend.dto.BaseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -35,6 +36,9 @@ public class GatePassDTO extends BaseDTO {
     private String officerInChargeName;
     private String nameOfOfficerOutsideIncharge;
     private String resultOfVerificationBySecurityOfficer;
+
+    RequestStatus hodApproved;
+    RequestStatus dirApproved;
 
 
 
