@@ -8,6 +8,14 @@ import { useAppSelector } from "../../hooks/hooks";
 import HODResignationReq from "./hodDashboards/HODResignationReq";
 import HODContractextensionReq from "./hodDashboards/HODContractextensionReq";
 import FundingSource from "./sharedDashboards/FundingSource";
+import HODTravelRequest from "./hodDashboards/HODTravelRequest";
+import HODTransportCost from "./hodDashboards/HODTransportCost";
+import HODArticleRequest from "./hodDashboards/HODArticleRequest";
+import HODJournalRequest from "./hodDashboards/HODJournalRequest";
+import HODGatePass from "./hodDashboards/HODGatePass";
+import HODQuotationRequest from "./hodDashboards/HODQuotationRequest";
+import HODQuotationSummary from "./hodDashboards/HODQuotationSummary";
+import HODSrn from "./hodDashboards/HODSrn";
 
 export function PageRoutes() {
   return (
@@ -21,6 +29,31 @@ export function PageRoutes() {
         path={RouteName.ContractExtension}
         element={<HODContractextensionReq />}
       />
+      <Route
+        path={RouteName.TransportTravelRequest}
+        element={<HODTravelRequest />}
+      />
+      <Route
+        path={RouteName.LibraryArticleRequest}
+        element={<HODArticleRequest />}
+      />
+      <Route
+        path={RouteName.LibraryJournalRequest}
+        element={<HODJournalRequest />}
+      />
+
+      <Route path={RouteName.GatePass} element={<HODGatePass />} />
+      <Route
+        path={RouteName.QuotationRequest}
+        element={<HODQuotationRequest />}
+      />
+      <Route
+        path={RouteName.QuotationSummary}
+        element={<HODQuotationSummary />}
+      />
+      <Route path={RouteName.Srn} element={<HODSrn />} />
+
+      <Route path={RouteName.TransportCost} element={<HODTransportCost />} />
       <Route path={RouteName.FundingSource} element={<FundingSource />} />
     </Routes>
   );

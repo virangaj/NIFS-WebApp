@@ -189,6 +189,47 @@ export const HODSideNavbar = [
         link: RouteName.ContractExtension,
         icon: HiOutlineDocumentText,
       },
+      {
+        title: "Travel Request",
+        link: RouteName.TransportTravelRequest,
+        icon: GiExitDoor,
+      },
+      {
+        title: "Transport Cost",
+        link: RouteName.TransportCost,
+        icon: HiOutlineCurrencyDollar,
+      },
+      {
+        title: "Article Request",
+        link: RouteName.LibraryArticleRequest,
+        icon: GiExitDoor,
+      },
+      {
+        title: "Journal Request",
+        link: RouteName.LibraryJournalRequest,
+        icon: HiOutlineDocumentText,
+      },
+
+      {
+        title: "Gate Pass",
+        link: RouteName.GatePass,
+        icon: GiIndiaGate,
+      },
+      {
+        title: "Quotation Request",
+        link: RouteName.QuotationRequest,
+        icon: GiNotebook,
+      },
+      {
+        title: "Quotation Summary",
+        link: RouteName.QuotationSummary,
+        icon: HiOutlineDocumentText,
+      },
+      {
+        title: "SRN",
+        link: RouteName.Srn,
+        icon: RiUserReceived2Line,
+      },
     ],
   },
 ];
@@ -275,7 +316,7 @@ export const ProcumentSideBar = [
   },
 ];
 
-// Procument Dashboard
+// Library Dashboard
 export const LibrarySideBar = [
   {
     title: "Master",
