@@ -1,5 +1,6 @@
 package com.nifs.backend.dto.transport;
 
+import com.nifs.backend.constant.RequestStatus;
 import com.nifs.backend.dto.BaseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,4 +29,7 @@ public class TravelRequestDTO extends BaseDTO {
     private String requestDate;
     private String time;
     private String arrivalDate;
+
+    RequestStatus hodApproved;
+    RequestStatus dirApproved;
 }

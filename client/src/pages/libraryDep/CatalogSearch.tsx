@@ -5,6 +5,7 @@ import IArticleRequest from "../../types/library/IArticleRequest";
 import { toast } from "react-toastify";
 import { Box } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { useAppSelector } from "../../hooks/hooks";
 
 const initialState: IArticleRequest = {
   documentNo: "",
@@ -26,13 +27,14 @@ export default function CatalogSearch() {
   const [values, setValues] = useState<Array<IArticleRequest>>([]);
   const [rowId, setRowId] = useState(0);
   const [pageSize, setPageSize] = useState(20);
+  const { auth } = useAppSelector((state) => state.persistedReducer);
 
   useEffect(() => {
     retreiveArticle();
   }, []);
 
   const retreiveArticle = () => {
-    ArticleRequestService.getAllArticleRequest()
+    ArticleRequestService.getAllArticleRequest(values)
       .then((res: any) => {
         if (res.data.status === RequestStatus.SUCCESS) {
           setValues(res.data.data);

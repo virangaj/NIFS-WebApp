@@ -1,5 +1,6 @@
 package com.nifs.backend.dto.library;
 
+import com.nifs.backend.constant.RequestStatus;
 import com.nifs.backend.dto.BaseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,6 +33,9 @@ public class JournalRequestDTO extends BaseDTO {
     private String type;
     private String methodOfPayment;
     private String remark;
+
+    RequestStatus hodApproved;
+    RequestStatus dirApproved;
 
 
 
