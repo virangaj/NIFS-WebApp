@@ -3,6 +3,7 @@ import { HiOutlineTrash } from 'react-icons/hi';
 import EventParticipantForm from './EventParticipantForm';
 
 import '../../pages.css';
+import { EventRepresentative } from '../../../constant/eventRepresentative';
 
 function NifsRepresentatives({ total, setTotal }: any) {
 	const handleDelete = (id: any) => {
@@ -14,7 +15,8 @@ function NifsRepresentatives({ total, setTotal }: any) {
 	return (
 		<>
 			<EventParticipantForm
-				type='NIFS Representative'
+				name='NIFS Representative'
+				type={EventRepresentative.NIFS_REPRESENTATIVE}
 				total={total}
 				setTotal={setTotal}
 			/>
@@ -31,7 +33,9 @@ function NifsRepresentatives({ total, setTotal }: any) {
 				<tbody>
 					{total &&
 						total
-							.filter((t: any) => t.p_type === 'NIFS Representative')
+							.filter(
+								(t: any) => t.p_type === EventRepresentative.NIFS_REPRESENTATIVE
+							)
 							.map((t: any, index: number) => (
 								<tr key={index}>
 									<td>{t.name}</td>

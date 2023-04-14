@@ -8,14 +8,12 @@ import CustomeTimePicker from '../../components/TimePicker';
 import FileInput from '../../components/FileInput';
 import EventRequestParticipants from './shared/EventRequestParticipants';
 
-import Projects from '../../components/data/Project.json';
 import IEventRequest from '../../types/sedu/IEventRequest';
 import LocationSelector from '../../components/shared/LocationSelector';
 import ProjectSelector from '../../components/shared/ProjectSelector';
 import FundingSourceSelector from '../../components/shared/FundingSourceSelector';
 import VenueSelector from '../../components/shared/VenueSelector';
 import TextBoxLabel from '../../components/shared/TextBoxLabel';
-import InputFileds from '../../components/InputFileds';
 
 const initialState: IEventRequest = {
 	documentNo: '',
@@ -84,7 +82,7 @@ function EventRequest() {
 		e.preventDefault();
 
 		console.log(values);
-		console.log(getEventId);
+		console.log(totalParticipants);
 	};
 
 	return (

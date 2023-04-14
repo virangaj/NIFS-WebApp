@@ -1,6 +1,8 @@
 package com.nifs.backend.controller.sedu;
 
-import com.nifs.backend.dto.sedu.FacilityDTO;
+import com.nifs.backend.dto.sedu.EventRequestDTO;
+import com.nifs.backend.service.sedu.IEventRequestService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
@@ -11,10 +13,13 @@ import org.springframework.web.bind.annotation.*;
 public class EventRequestController {
 
 
+    @Autowired
+    IEventRequestService eventRequestService;
+
     // crete new event
     @PostMapping("/add")
-    boolean createFacility(@RequestBody FacilityDTO facData, @AuthenticationPrincipal UserDetails userDetails) {
+    boolean createNewEventRequest(@RequestBody EventRequestDTO eventData, @AuthenticationPrincipal UserDetails userDetails) {
         String user = userDetails.getUsername();
-        return true;
+        return eventRequestService.createNewEventRequest(eventData, user);
     }
 }

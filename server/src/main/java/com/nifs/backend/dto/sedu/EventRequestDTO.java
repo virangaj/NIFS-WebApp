@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -29,6 +31,7 @@ public class EventRequestDTO extends BaseDTO {
     private String eventType;
     private int noParticipants;
     private int budget;
+    List<EventRepresentativeDTO> RepresentativeList;
 
 
 }
