@@ -11,12 +11,12 @@ function LocationSelector({ onChange, value, name }: any) {
 	);
 	useEffect(() => {
 		if (location.length == 0 || !locationIsSuccess) {
-			retreiveDivisions();
+			retreiveLocations();
 		}
 	}, []);
 
 	//get all locations
-	const retreiveDivisions = () => {
+	const retreiveLocations = () => {
 		dispatch(getAllLocations());
 	};
 	return (

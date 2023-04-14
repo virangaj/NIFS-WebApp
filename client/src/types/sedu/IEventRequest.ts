@@ -1,18 +1,16 @@
 export default interface IEventRequest {
-	eventId: string;
+	documentNo: string;
 	eventType: string;
-	type: string;
 	title: string;
-	remarks: string;
+	remark: string;
 	startDate: string;
 	endDate: string;
 	startTime: string;
 	endTime: string;
 	noParticipants: number;
 	budget: number;
-	project: string;
-	location: string;
-	venueName: string;
-	venueType: string;
-	fundType: string;
+	projectId: string;
+	locationId: string;
+	venueId: string;
+	fundingId: string;
 }

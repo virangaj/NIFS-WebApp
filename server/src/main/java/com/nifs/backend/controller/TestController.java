@@ -18,29 +18,12 @@ import java.util.Map;
 @RequestMapping("/test")
 public class TestController {
 
-    @Autowired
-    private IOtherDataService other;
+//    @Autowired
+//    SimpleMessaging
 
     @GetMapping("/{id}")
     private ResponseEntity<?> returnResponse(@PathVariable int id) {
-        try {
-            Map<String, Object> map = new LinkedHashMap<String, Object>();
-            List<Religions> r = other.returnAllReligions();
-            if (r.isEmpty()) {
-                map.put("status", 1);
-                map.put("data", r);
-                return new ResponseEntity<>(map, HttpStatus.OK);
-            }
-
-            map.clear();
-            map.put("status", 0);
-            map.put("message", "Data is not found");
-            return new ResponseEntity<>(map, HttpStatus.NOT_FOUND);
-
-
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.OK).body(null);
-        }
+        return ResponseEntity.ok("success");
 
     }
 }
