@@ -1,9 +1,12 @@
 import axios from "axios";
+
 import http from "../../utils/http-common";
+import { RequestStatus } from "../../constant/requestStatus";
 
 axios.defaults.baseURL = process.env.REACT_APP_BACKEND_SERVER;
 
-const getAlljournalRequest = async (token: any) => {
+const getAllJournalRequest = async (token: any) => {
+  // console.log(token);
   const response = await axios({
     method: "get",
     url: `${process.env.REACT_APP_BACKEND_SERVER}/library/journal-request`,
@@ -15,9 +18,22 @@ const getAlljournalRequest = async (token: any) => {
   // alert("Favourite created --- "+ response);
   return response;
 };
+const getDivisionJournalRequest = async (token: any, division: string) => {
+  // console.log(token);
+  const response = await axios({
+    method: "get",
+    url: `${process.env.REACT_APP_BACKEND_SERVER}/library/journal-request?division=${division}`,
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  // alert("Favourite created --- "+ response);
+  return response;
+};
 
 const getJournalRequest = (id: any) => {
-  return http.get<any>(`/library/journal-request/${id}`);
+  return http.get<any>(`/library/journal-request/get/${id}`);
 };
 
 const saveJournalRequest = async (data: any, token: string) => {
@@ -35,28 +51,14 @@ const saveJournalRequest = async (data: any, token: string) => {
   return response;
 };
 
-const sendHodApproval = async (id: any, token: string, approval: boolean) => {
-  const response = await axios({
-    method: "put",
-    url: `${process.env.REACT_APP_BACKEND_SERVER}/library/journal-request/hod?approval=${approval}`,
-    data: id,
-    headers: {
-      "Content-Type": "application/json; charset=utf-8",
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
-  return response;
-};
-
-const sendDirectorApproval = async (
+const sendHodApproval = async (
   id: any,
   token: string,
-  approval: boolean
+  approval: RequestStatus
 ) => {
   const response = await axios({
     method: "put",
-    url: `${process.env.REACT_APP_BACKEND_SERVER}/library/journal-request/director?approval=${approval}`,
+    url: `${process.env.REACT_APP_BACKEND_SERVER}/library/journal-request/hod/status?approval=${approval}`,
     data: id,
     headers: {
       "Content-Type": "application/json; charset=utf-8",
@@ -66,12 +68,32 @@ const sendDirectorApproval = async (
 
   return response;
 };
-const journalRequestService = {
-  getAlljournalRequest,
-  getJournalRequest,
-  saveJournalRequest,
-  sendDirectorApproval,
-  sendHodApproval,
+
+const sendDirApproval = async (
+  id: any,
+  token: string,
+  approval: RequestStatus
+) => {
+  const response = await axios({
+    method: "put",
+    url: `${process.env.REACT_APP_BACKEND_SERVER}/library/journal-request/director/status?approval=${approval}`,
+    data: id,
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response;
 };
 
-export default journalRequestService;
+const JournalRequestService = {
+  getAllJournalRequest,
+  getJournalRequest,
+  getDivisionJournalRequest,
+  saveJournalRequest,
+  sendHodApproval,
+  sendDirApproval,
+};
+
+export default JournalRequestService;

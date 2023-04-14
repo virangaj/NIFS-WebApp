@@ -1,9 +1,12 @@
 import axios from "axios";
+
 import http from "../../utils/http-common";
+import { RequestStatus } from "../../constant/requestStatus";
 
 axios.defaults.baseURL = process.env.REACT_APP_BACKEND_SERVER;
 
 const getAllTravelRequest = async (token: any) => {
+  // console.log(token);
   const response = await axios({
     method: "get",
     url: `${process.env.REACT_APP_BACKEND_SERVER}/transport/travel-request`,
@@ -15,9 +18,22 @@ const getAllTravelRequest = async (token: any) => {
   // alert("Favourite created --- "+ response);
   return response;
 };
+const getDivisionTravelRequest = async (token: any, division: string) => {
+  // console.log(token);
+  const response = await axios({
+    method: "get",
+    url: `${process.env.REACT_APP_BACKEND_SERVER}/transport/travel-request?division=${division}`,
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  // alert("Favourite created --- "+ response);
+  return response;
+};
 
 const getTravelRequest = (id: any) => {
-  return http.get<any>(`/transport/travel-request/${id}`);
+  return http.get<any>(`/transport/travel-request/get/${id}`);
 };
 
 const saveTravelRequest = async (data: any, token: string) => {
@@ -35,10 +51,14 @@ const saveTravelRequest = async (data: any, token: string) => {
   return response;
 };
 
-const sendHodApproval = async (id: any, token: string, approval: boolean) => {
+const sendHodApproval = async (
+  id: any,
+  token: string,
+  approval: RequestStatus
+) => {
   const response = await axios({
     method: "put",
-    url: `${process.env.REACT_APP_BACKEND_SERVER}/transport/travel-request/hod?approval=${approval}`,
+    url: `${process.env.REACT_APP_BACKEND_SERVER}/transport/travel-request/hod/status?approval=${approval}`,
     data: id,
     headers: {
       "Content-Type": "application/json; charset=utf-8",
@@ -49,14 +69,14 @@ const sendHodApproval = async (id: any, token: string, approval: boolean) => {
   return response;
 };
 
-const sendDirectorApproval = async (
+const sendDirApproval = async (
   id: any,
   token: string,
-  approval: boolean
+  approval: RequestStatus
 ) => {
   const response = await axios({
     method: "put",
-    url: `${process.env.REACT_APP_BACKEND_SERVER}/transport/travel-request/director?approval=${approval}`,
+    url: `${process.env.REACT_APP_BACKEND_SERVER}/transport/travel-request/director/status?approval=${approval}`,
     data: id,
     headers: {
       "Content-Type": "application/json; charset=utf-8",
@@ -70,9 +90,10 @@ const sendDirectorApproval = async (
 const TravelRequestService = {
   getAllTravelRequest,
   getTravelRequest,
+  getDivisionTravelRequest,
   saveTravelRequest,
   sendHodApproval,
-  sendDirectorApproval,
+  sendDirApproval,
 };
 
 export default TravelRequestService;
