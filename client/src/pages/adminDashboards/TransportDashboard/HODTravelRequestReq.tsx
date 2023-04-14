@@ -4,6 +4,7 @@ import TravelRequestService from "../../../services/transport/TravelRequestServi
 import { RequestStatus } from "../../../constant/requestStatus";
 import { toast } from "react-toastify";
 import ResignationRequestTable from "../../shared/ResignationRequestTable";
+import TravelRequestTable from "../../shared/transport/TravelRequestTable";
 
 const HODTravelRequestReq = () => {
   const { auth } = useAppSelector((state) => state.persistedReducer);
@@ -105,7 +106,8 @@ const HODTravelRequestReq = () => {
             Reject Selected
           </button>
         </div>
-        <ResignationRequestTable
+
+        <TravelRequestTable
           setSelectedData={setSelectedData}
           requests={requests}
           loading={loading}
