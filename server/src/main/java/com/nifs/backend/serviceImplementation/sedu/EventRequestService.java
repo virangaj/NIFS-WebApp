@@ -1,14 +1,14 @@
 package com.nifs.backend.serviceImplementation.sedu;
 
-import com.nifs.backend.dto.sedu.EventRepresentativeDTO;
-import com.nifs.backend.dto.sedu.EventRequestDTO;
-import com.nifs.backend.dto.sedu.EventRequestMasterDTO;
+import com.nifs.backend.dto.sedu.*;
 import com.nifs.backend.model.sedu.EventRequest;
+import com.nifs.backend.model.sedu.ParticipantMaster;
 import com.nifs.backend.repository.sedu.EventRequestRepository;
 import com.nifs.backend.service.common.IFundingSourceService;
 import com.nifs.backend.service.common.IProjectMasterService;
 import com.nifs.backend.service.sedu.IEventRepresentativeService;
 import com.nifs.backend.service.sedu.IEventRequestService;
+import com.nifs.backend.service.sedu.IParticipantMasterService;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +33,8 @@ public class EventRequestService implements IEventRequestService {
     private IFundingSourceService fundingSourceService;
     @Autowired
     private IProjectMasterService projectMasterService;
+    @Autowired
+    private IParticipantMasterService participantMasterService;
 
 
     // save new events
@@ -106,8 +108,9 @@ public class EventRequestService implements IEventRequestService {
         EventRequestMasterDTO dto = convertToDTO(getEvent);
 
         List<EventRepresentativeDTO> requestMasterDTOList = eventRepresentativeService.getRepresentativeByEventId(id);
+        List<ParticipantsMasterDTO> participantsMasterDTOList = participantMasterService.getParticipantsByEventId(id);
 
-        return EventRequestDTO.builder().eventData(dto).representativeList(requestMasterDTOList).build();
+        return EventResponseDTO.builder().eventData(dto).representativeList(requestMasterDTOList).participantsList(participantsMasterDTOList).build();
 
     }
 }

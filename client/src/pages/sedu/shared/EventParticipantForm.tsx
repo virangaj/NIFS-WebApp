@@ -45,13 +45,9 @@ function EventParticipantForm({ type, total, setTotal, name }: any) {
 
 	const handleAdd = () => {
 		setValue({
+			...value,
 			participantId: p_id,
 			participantType: type,
-			name: value?.name,
-			nic: value?.nic,
-			contactNo: value?.contactNo,
-			address: value?.address,
-			email: value?.email,
 		});
 
 		// console.log(value);

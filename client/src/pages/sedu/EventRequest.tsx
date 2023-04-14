@@ -93,7 +93,7 @@ function EventRequest() {
 
 		setLoading(true);
 		try {
-			EventRequestService.newEventRequest(data, auth?.user?.token).then(
+			await EventRequestService.newEventRequest(data, auth?.user?.token).then(
 				(res) => {
 					if (res.data.code === 200) {
 						toast.success(res.data.message);

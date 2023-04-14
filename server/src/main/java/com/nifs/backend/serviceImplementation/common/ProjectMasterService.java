@@ -38,7 +38,7 @@ public class ProjectMasterService implements IProjectMasterService {
             project.setLocationId(locationService.getLocationById(data.getLocationId()));
             String lastId = projectMasterRepository.returnLastId();
             if (lastId == null) {
-                project.setProjectId("P1001");
+                project.setProjectId("PM1001");
             }
             else {
                 project.setProjectId(NewIdGenerator.newIDGenerator(lastId));

@@ -40,7 +40,7 @@ public class FacilityController {
     @PostMapping("/add")
     FacilityDTO createFacility(@RequestBody FacilityDTO facData, @AuthenticationPrincipal UserDetails userDetails) {
         String user = userDetails.getUsername();
-       return facService.createFacility(facData, user);
+        return facService.createFacility(facData, user);
     }
 
 //    update facility

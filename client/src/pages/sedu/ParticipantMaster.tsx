@@ -11,126 +11,102 @@ import CustomeDataPicker from '../../components/DataPicker';
 import ParticipantMasterService from '../../services/sedu/ParticipantMasterService';
 import Ripple from '../../components/Ripple';
 import ImportFromXlsx from '../../components/ImportFromXlsx';
+import EventSelector from '../../components/shared/EventSelector';
+import { toast } from 'react-toastify';
+import { useAppSelector } from '../../hooks/hooks';
+import { generateID } from '../../utils/generateId';
+import { Link } from 'react-router-dom';
+import { RouteName } from '../../constant/routeNames';
 
 const initialState: IParticipantMaster = {
-	pCode: '',
-	date: '',
-	pName: '',
+	eventId: '',
+	participantId: '',
+	name: '',
 	nic: '',
 	gender: '',
 	address: '',
 	contactNo: '',
 	email: '',
-	instituteName: '',
+	institute: '',
 };
 
 function ParticipantMaster() {
 	const [participantCode, setParticipantsCode] = useState('');
-	const [date, setDate] = useState<string | null>(null);
-
 	const [loading, setLoading] = useState(false);
-
 	const [values, setValues] = useState<IParticipantMaster>(initialState);
+	const { auth } = useAppSelector((state) => state.persistedReducer);
 
+	const [p_id, setP_id] = useState<String | any>('');
 	const onChange = (e: any) => {
 		setValues((preState) => ({
 			...preState,
 			[e.target.name]: e.target.value,
 		}));
 	};
-
 	useEffect(() => {
+		generateEventId();
+		// console.log('trigger ' + p_id);
 		setValues({
-			pCode: participantCode ? participantCode : '',
-			date: date ? date : '',
-			pName: values?.pName,
-			nic: values?.nic,
-			gender: values?.gender,
-			address: values?.address,
-			contactNo: values?.contactNo,
-			email: values?.email,
-			instituteName: values?.instituteName,
+			...values,
+			participantId: p_id,
 		});
-	}, [participantCode, date]);
+	}, [values.name]);
 
+	const generateEventId = () => {
+		setP_id(generateID('PM'));
+	};
 	const resetForm = () => {
 		setValues(initialState);
 	};
-	const onSubmit = async (e: any) => {
+	const onSingleSubmit = async (e: any) => {
 		e.preventDefault();
+		setValues({
+			...values,
+			participantId: p_id,
+		});
 
-		try {
-			setLoading(true);
-			// const result = await ParticipantMasterService.saveParticipant(values);
-			alert('done');
-		} catch (e: any) {
-			setLoading(true);
-			alert(e);
-		}
+		setLoading(true);
+		await ParticipantMasterService.saveParticipant(values, auth?.user?.token)
+			.then((res) => {
+				if (res.data) {
+					toast.success('Participant Added!');
+					resetForm();
+				}
+			})
+			.catch((e: any) => {
+				toast.error('Requset cannot be Completed!');
+			});
+
 		setLoading(false);
 
 		console.log(values);
 	};
-	console.log(date);
-	const participants = [
-		{ label: 'The Shawshank Redemption', year: 1994 },
-		{ label: 'The Godfather', year: 1972 },
-		{ label: 'The Godfather: Part II', year: 1974 },
-		{ label: 'The Dark Knight', year: 2008 },
-		{ label: '12 Angry Men', year: 1957 },
-		{ label: "Schindler's List", year: 1993 },
-		{ label: 'Pulp Fiction', year: 1994 },
-	];
+
 	return (
 		<div className='sub-body-content lg:!w-[60%]'>
 			<h1 className='page-title'>Participant Master</h1>
 			<hr className='horizontal-line' />
 
 			{!loading ? (
-				<form onSubmit={onSubmit} className='w-[90%] mx-auto'>
-					<div className='form-flex'>
-						<Box className='input-field lg:mr-10 mx-0 !lg:w-[60%] w-[100%]'>
-							<Autocomplete
-								disablePortal
-								id='combo-box-demo'
-								options={participants}
-								isOptionEqualToValue={(option: any) => option.label}
-								onChange={(event, value: any) => {
-									setParticipantsCode(value.label);
-								}}
-								renderInput={(params) => (
-									<TextField
-										{...params}
-										fullWidth
-										required
-										label='Participant Code'
-										name='participant'
-										value={participantCode}
-									/>
-								)}
-							/>
-						</Box>
-
-						<CustomeDataPicker
-							date={date}
-							setDate={setDate}
-							title='Date'
-							className='mx-0 lg:ml-10'
-						/>
-					</div>
+				<form onSubmit={onSingleSubmit} className='w-[90%] mx-auto'>
+					<EventSelector
+						onChange={onChange}
+						name='eventId'
+						value={values.eventId}
+					/>
 
 					<div className='mb-4'>
-						<label className='input-label' htmlFor='pName'>
+						<label className='input-label' htmlFor='name'>
 							Participant Name
 						</label>
 
 						<input
-							id='pName'
+							id='name'
 							type='text'
 							className='tailwind-text-box '
 							onChange={onChange}
-							name='pName'
-							value={values.pName}
+							name='name'
+							value={values.name}
 							required
 						/>
 					</div>
@@ -222,17 +198,17 @@ function ParticipantMaster() {
 					</div>
 
 					<div className='mb-4'>
-						<label className='input-label' htmlFor='instituteName'>
+						<label className='input-label' htmlFor='institute'>
 							Institute Name
 						</label>
 
 						<input
-							id='instituteName'
-							type='instituteName'
+							id='institute'
+							type='institute'
 							className='tailwind-text-box '
 							onChange={onChange}
-							name='instituteName'
-							value={values.instituteName}
+							name='institute'
+							value={values.institute}
 							required
 						/>
 					</div>
@@ -255,13 +231,16 @@ function ParticipantMaster() {
 						<button className='action-com-model-sucess-btn' type='submit'>
 							Submit
 						</button>
+						<Link to={RouteName.ImportFromExcel}>
+							<button className='action-com-model-sucess-btn'>
+								Import from Excel
+							</button>
+						</Link>
 					</Stack>
 				</form>
 			) : (
 				<Ripple />
 			)}
-
-			<ImportFromXlsx />
 		</div>
 	);
 }

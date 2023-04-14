@@ -1,7 +1,7 @@
 package com.nifs.backend.serviceImplementation.sedu;
 
+import com.nifs.backend.constant.EventRepresentativeType;
 import com.nifs.backend.dto.sedu.EventRepresentativeDTO;
-import com.nifs.backend.dto.sedu.EventRequestMasterDTO;
 import com.nifs.backend.model.sedu.EventRepresentativeMaster;
 import com.nifs.backend.repository.sedu.EventRepresentativeRepository;
 import com.nifs.backend.service.sedu.IEventRepresentativeService;
@@ -53,7 +53,13 @@ public class EventRepresentativeService implements IEventRepresentativeService {
         List<EventRepresentativeMaster> people = representativeRepository.findByEventIdEquals(id);
 
         Type listType = new TypeToken<List<EventRepresentativeDTO>>(){}.getType();
-        return modelMapper.map(people, listType);
+        List<EventRepresentativeDTO> dtoList = modelMapper.map(people, listType);
+
+        dtoList.forEach(l->{
+            l.setParticipantType(EventRepresentativeType.valueOf(l.getParticipantType().name()));
+        });
+
+        return dtoList;
 
     }
 }

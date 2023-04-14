@@ -1,6 +1,5 @@
 package com.nifs.backend.dto.sedu;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,8 +13,8 @@ import java.util.List;
 @Getter
 @Setter
 @SuperBuilder
-public class EventRequestDTO {
+public class EventResponseDTO {
     EventRequestMasterDTO eventData;
     List<EventRepresentativeDTO> representativeList;
-
+    List<ParticipantsMasterDTO> participantsList;
 }
