@@ -1,4 +1,4 @@
-package com.nifs.backend.dto.admin;
+package com.nifs.backend.dto.common;
 
 import com.nifs.backend.dto.BaseDTO;
 import lombok.AllArgsConstructor;

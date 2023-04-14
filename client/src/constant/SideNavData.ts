@@ -45,6 +45,11 @@ export const AdministrationSidenav = [
         link: RouteName.Divisions,
         icon: HiOutlineOfficeBuilding,
       },
+      {
+        title: "Funding Sources",
+        link: RouteName.FundingSource,
+        icon: AiOutlineFundProjectionScreen,
+      },
     ],
   },
   {
@@ -75,6 +80,11 @@ export const DirectorSideNavbar = [
         title: "Projects",
         link: RouteName.Projects,
         icon: HiOutlineFolder,
+      },
+      {
+        title: "Funding Sources",
+        link: RouteName.FundingSource,
+        icon: AiOutlineFundProjectionScreen,
       },
     ],
   },
@@ -121,6 +131,11 @@ export const SeduAdminSideNavbar = [
         title: "Projects",
         link: RouteName.Projects,
         icon: HiOutlineFolder,
+      },
+      {
+        title: "Funding Sources",
+        link: RouteName.FundingSource,
+        icon: AiOutlineFundProjectionScreen,
       },
     ],
   },

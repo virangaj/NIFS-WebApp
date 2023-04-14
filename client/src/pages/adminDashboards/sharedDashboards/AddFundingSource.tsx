@@ -1,21 +1,19 @@
 import { useState } from 'react';
 import InputFileds from '../../../components/InputFileds';
-import EmployeeSelector from '../../../components/shared/EmployeeSelector';
 import { Stack } from '@mui/material';
 import LocationSelector from '../../../components/shared/LocationSelector';
-import ProjectService from '../../../services/common/ProjectService';
 import { useAppSelector } from '../../../hooks/hooks';
 import { toast } from 'react-toastify';
+import FundingSourceService from '../../../services/common/FundingSourceService';
 
 const initialState = {
-	projectId: '',
-	projectName: '',
+	fundingId: '',
+	name: '',
 	description: '',
-	remark: '',
-	location: '',
+	locationId: '',
 };
 
-function AddProjects() {
+function AddFundingSource() {
 	const [values, setValues] = useState(initialState);
 	const { auth } = useAppSelector((state) => state.persistedReducer);
 	const onChange = (e: any) => {
@@ -25,38 +23,34 @@ function AddProjects() {
 		}));
 	};
 
+	//reset form
 	const resetForm = () => {
 		setValues(initialState);
 	};
-
 	const onSubmit = async (e: any) => {
 		e.preventDefault();
 		console.log(values);
 
-		const data = {
-			data: values,
-			token: auth?.user?.token,
-		};
-
-		ProjectService.createProject(data).then((res) => {
-			if (res) {
-				toast.success('Project is successfully created!');
-			} else {
-				toast.error('Requset cannot be completed!');
+		FundingSourceService.saveFundingSource(values, auth?.user?.token).then(
+			(res) => {
+				if (res) {
+					toast.success('Funding Source is successfully created!');
+				} else {
+					toast.error('Requset cannot be completed!');
+				}
 			}
-		});
+		);
 	};
-
 	return (
 		<>
-			<h2 className='text-xl font-bold'>Add New Project</h2>
+			<h2 className='text-xl font-bold'>Add New Funding Source</h2>
 			<div className='w-[60%] mx-auto pb-10 admin-form'>
 				<form onSubmit={onSubmit}>
 					<InputFileds
 						onChange={onChange}
-						value={values.projectName}
-						name={'projectName'}
-						label={'Project Name'}
+						value={values.name}
+						name={'name'}
+						label={'Funding Source Name'}
 					/>
 					<InputFileds
 						onChange={onChange}
@@ -66,16 +60,8 @@ function AddProjects() {
 					/>
 					<LocationSelector
 						onChange={onChange}
-						value={values.location}
-						name={'location'}
-					/>
-					<label className='input-label' htmlFor='epfNo'>
-						Remark
-					</label>
-					<EmployeeSelector
-						onChange={onChange}
-						value={values.remark}
-						name={'remark'}
+						value={values.locationId}
+						name={'locationId'}
 					/>
 
 					<Stack
@@ -103,4 +89,4 @@ function AddProjects() {
 	);
 }
 
-export default AddProjects;
+export default AddFundingSource;

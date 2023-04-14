@@ -113,24 +113,20 @@ function TailwindNavbar() {
       </div>
       <div className="hidden navbar-center lg:flex">
         <ul className="px-1 menu menu-horizontal">
-          {Pages.map((page, index) =>
-            location.pathname.split("/")[1] === page.link.split("/")[1] ? (
-              <li
-                className="font-bold text-gray-800 rounded-md bg-sky-300"
-                key={index}
-              >
-                <Link to={page.link} style={{ textDecoration: "none" }}>
-                  {page.title}
-                </Link>
-              </li>
-            ) : (
-              <li key={index}>
-                <Link to={page.link} style={{ textDecoration: "none" }}>
-                  {page.title}
-                </Link>
-              </li>
-            )
-          )}
+          {Pages.map((page, index) => (
+            <li
+              className={
+                location.pathname.split("/")[1] === page.link.split("/")[1]
+                  ? "font-bold text-gray-800 rounded-md bg-sky-300"
+                  : ""
+              }
+              key={index}
+            >
+              <Link to={page.link} style={{ textDecoration: "none" }}>
+                {page.title}
+              </Link>
+            </li>
+          ))}
         </ul>
       </div>
       <div className="navbar-end">
