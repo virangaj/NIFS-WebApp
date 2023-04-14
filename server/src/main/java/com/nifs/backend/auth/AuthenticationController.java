@@ -26,13 +26,20 @@ public class AuthenticationController {
     @PostMapping("/login")
     public ResponseEntity<?> loginRequest(@RequestBody LoginRequest request) {
         try {
-
-
             return ResponseEntity.ok(service.loginRequest(request));
         } catch (Exception e) {
             System.out.println(e);
             return ResponseEntity.ok("Bad Request");
 
+        }
+    }
+
+    @PostMapping("/forget-password")
+    public ResponseEntity<?> forgetPassword(@RequestBody String email){
+        try{
+            return service.forgetPassword(email);
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body("Request cannot be done!");
         }
     }
 }

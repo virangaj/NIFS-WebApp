@@ -12,6 +12,7 @@ import java.util.Date;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
+    User findByEmployee_GsuitEmailEquals(String gsuitEmail);
     @Transactional
     @Modifying
     @Query("update User u set u.lastLogin = ?1 where u.employee.epfNo = ?2")

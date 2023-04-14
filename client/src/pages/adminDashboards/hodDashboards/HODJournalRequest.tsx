@@ -1,24 +1,31 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAppSelector } from "../../../hooks/hooks";
-import { toast } from "react-toastify";
+import JournalRequestService from "../../../services/library/JournalRequestService";
 import { RequestStatus } from "../../../constant/requestStatus";
-import getContractExtensionService from "../../../services/admin/ContractExtensionService";
-import ContractExtesnsionTable from "../../shared/ContractExtesnsionTable";
+import { toast } from "react-toastify";
+import JournalRequestTable from "../../shared/library/JournalRequestTable";
 
-function DirectorContractExtension() {
+const HODJournalRequest = () => {
   const { auth } = useAppSelector((state) => state.persistedReducer);
   const [requests, setRequests] = useState<any>([]);
+  const [rowId, setRowId] = useState(0);
   const [selectedData, setSelectedData] = useState<Array<string>>([]);
+  const [pageSize, setPageSize] = useState(10);
   const [loading, setLoading] = useState(false);
+  const [getData, setGetData] = useState(false);
 
+  //load data
   useEffect(() => {
     retriveData();
   }, []);
+
   const retriveData = () => {
     setLoading(true);
     setTimeout(() => {
-      getContractExtensionService
-        .getContractExtensionRequests(auth?.user?.token)
+      JournalRequestService.getDivisionJournalRequest(
+        auth?.user?.token,
+        auth?.division
+      )
         .then((res) => {
           setRequests(res.data);
         })
@@ -29,45 +36,45 @@ function DirectorContractExtension() {
     }, 500);
   };
 
-  //send approval request
+  //send reject request
+  const sendReject = () => {
+    console.log(selectedData);
+    setLoading(true);
+    setTimeout(() => {
+      JournalRequestService.sendHodApproval(
+        selectedData,
+        auth?.user?.token,
+        RequestStatus.DISAPPROVED
+      )
+        .then((res) => {
+          if (res.data) {
+            toast.warning("Journal Request is Declined");
+          } else {
+            toast.error("Request cannot be performed");
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+          toast.error("Request cannot be performed");
+        });
+      retriveData();
+      setGetData((val) => !val);
+    }, 500);
+  };
+
+  //send approvérequest
   const sendApprove = () => {
     console.log(selectedData);
     setLoading(true);
     setTimeout(() => {
-      getContractExtensionService
-        .sendDirectorApproval(
-          selectedData,
-          auth?.user?.token,
-          RequestStatus.APPROVED
-        )
+      JournalRequestService.sendHodApproval(
+        selectedData,
+        auth?.user?.token,
+        RequestStatus.APPROVED
+      )
         .then((res) => {
           if (res.data) {
-            toast.success("Contract Extension is Confirmed");
-          } else {
-            toast.error("Request cannot be performed");
-          }
-        })
-        .catch((e) => {
-          console.log(e);
-          toast.error("Request cannot be performed");
-        });
-      setLoading(false);
-      retriveData();
-    }, 500);
-  };
-  //send reject request
-  const sendReject = () => {
-    setLoading(true);
-    setTimeout(() => {
-      getContractExtensionService
-        .sendDirectorApproval(
-          selectedData,
-          auth?.user?.token,
-          RequestStatus.DISAPPROVED
-        )
-        .then((res) => {
-          if (res.data) {
-            toast.warning("Contract Extension is Declined");
+            toast.success("Journal Request is Confirmed");
           } else {
             toast.error("Request cannot be performed");
           }
@@ -77,13 +84,13 @@ function DirectorContractExtension() {
           toast.error("Request cannot be performed");
         });
       retriveData();
-      setLoading(false);
+      setGetData((val) => !val);
     }, 500);
   };
   return (
-    <div>
+    <>
       <div className="admin-page-title">
-        <p>Contract Extension Request</p>
+        <p>Journal Request</p>
 
         <hr className="admin-horizontal-line" />
       </div>
@@ -102,14 +109,15 @@ function DirectorContractExtension() {
             Reject Selected
           </button>
         </div>
-        <ContractExtesnsionTable
+
+        <JournalRequestTable
           setSelectedData={setSelectedData}
           requests={requests}
           loading={loading}
         />
       </div>
-    </div>
+    </>
   );
-}
+};
 
-export default DirectorContractExtension;
+export default HODJournalRequest;

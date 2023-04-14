@@ -1,11 +1,14 @@
+import React from "react";
 import { useEffect, useState } from "react";
 import { useAppSelector } from "../../../hooks/hooks";
 import { toast } from "react-toastify";
 import { RequestStatus } from "../../../constant/requestStatus";
 import getContractExtensionService from "../../../services/admin/ContractExtensionService";
 import ContractExtesnsionTable from "../../shared/ContractExtesnsionTable";
+import TransportCostService from "../../../services/transport/TransportCostService";
+import TransportCostTable from "../../shared/transport/TransportCostTable";
 
-function DirectorContractExtension() {
+const DirectorTransportCost = () => {
   const { auth } = useAppSelector((state) => state.persistedReducer);
   const [requests, setRequests] = useState<any>([]);
   const [selectedData, setSelectedData] = useState<Array<string>>([]);
@@ -17,8 +20,7 @@ function DirectorContractExtension() {
   const retriveData = () => {
     setLoading(true);
     setTimeout(() => {
-      getContractExtensionService
-        .getContractExtensionRequests(auth?.user?.token)
+      TransportCostService.getAllTransportCosts(auth?.user?.token)
         .then((res) => {
           setRequests(res.data);
         })
@@ -34,15 +36,14 @@ function DirectorContractExtension() {
     console.log(selectedData);
     setLoading(true);
     setTimeout(() => {
-      getContractExtensionService
-        .sendDirectorApproval(
-          selectedData,
-          auth?.user?.token,
-          RequestStatus.APPROVED
-        )
+      TransportCostService.sendDirApproval(
+        selectedData,
+        auth?.user?.token,
+        RequestStatus.APPROVED
+      )
         .then((res) => {
           if (res.data) {
-            toast.success("Contract Extension is Confirmed");
+            toast.success("Transport Cost is Confirmed");
           } else {
             toast.error("Request cannot be performed");
           }
@@ -59,15 +60,14 @@ function DirectorContractExtension() {
   const sendReject = () => {
     setLoading(true);
     setTimeout(() => {
-      getContractExtensionService
-        .sendDirectorApproval(
-          selectedData,
-          auth?.user?.token,
-          RequestStatus.DISAPPROVED
-        )
+      TransportCostService.sendDirApproval(
+        selectedData,
+        auth?.user?.token,
+        RequestStatus.DISAPPROVED
+      )
         .then((res) => {
           if (res.data) {
-            toast.warning("Contract Extension is Declined");
+            toast.warning("Transport Cost is Declined");
           } else {
             toast.error("Request cannot be performed");
           }
@@ -83,7 +83,7 @@ function DirectorContractExtension() {
   return (
     <div>
       <div className="admin-page-title">
-        <p>Contract Extension Request</p>
+        <p>Transport Cost Request</p>
 
         <hr className="admin-horizontal-line" />
       </div>
@@ -102,7 +102,8 @@ function DirectorContractExtension() {
             Reject Selected
           </button>
         </div>
-        <ContractExtesnsionTable
+
+        <TransportCostTable
           setSelectedData={setSelectedData}
           requests={requests}
           loading={loading}
@@ -110,6 +111,6 @@ function DirectorContractExtension() {
       </div>
     </div>
   );
-}
+};
 
-export default DirectorContractExtension;
+export default DirectorTransportCost;
