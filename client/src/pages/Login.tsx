@@ -12,6 +12,7 @@ import Ripple from '../components/Ripple';
 import { login } from '../feature/auth/authSlice';
 import { useAppDispatch, useAppSelector } from '../hooks/hooks';
 import LoginImage from '../images/login_image.png';
+import ForgetPasswordPopUp from '../components/ForgetPasswordPopUp';
 
 function Copyright(props: any) {
 	return (
@@ -31,7 +32,7 @@ export default function Login() {
 	const dispatch = useAppDispatch();
 
 	const { auth } = useAppSelector((state) => state.persistedReducer);
-
+	const [popup, setPopUp] = useState(false);
 	const [loading, setLoading] = useState(false);
 	const {
 		register,
@@ -81,118 +82,61 @@ export default function Login() {
 	};
 
 	return (
-		// <section className='flex flex-col items-center h-screen md:flex-row'>
-		// 	<div className='hidden w-full h-screen bg-indigo-600 md:block md:w-1/2 xl:w-2/3'>
-		// 		<img
-		// 			src='https://source.unsplash.com/random'
-		// 			alt='random'
-		// 			className='object-cover w-full h-full'
-		// 		/>
-		// 	</div>
+		<>
+			<div className='flex items-center h-screen p-6'>
+				<div className='max-w-4xl mx-auto overflow-hidden bg-white shadow-xl rounded-box'>
+					<div className='flex flex-col overflow-y-auto md:flex-row'>
+						<div className='flex-1 h-32 md:h-auto md:w-1/2'>
+							<img
+								src={LoginImage}
+								className='object-cover w-full h-full'
+								alt='login'
+							/>
+						</div>
+						<div className='flex-1 p-6 sm:p-12 md:w-1/2'>
+							<img src={Logo} alt='logo' className='login-logo' />
+							<p className='mt-2 text-sm text-center md:text-md text-sky-500'>
+								National Institute of Fundamental Studies
+							</p>
 
-		// 	<div className='flex items-center justify-center w-full h-screen px-6 bg-white md:max-w-md lg:max-w-full md:mx-auto md:w-1/2 xl:w-1/3 lg:px-16 xl:px-12'>
-		// 		<div className='w-full h-100'>
-		// 			<img src={Logo} alt='logo' className='login-logo' />
+							<form className='mt-6' onSubmit={handleSubmit(onSubmit)}>
+								<div className='w-full'>
+									<input
+										type='text'
+										{...register('epfNo')}
+										placeholder='Enter EPF Number'
+										className='w-full mb-4 input rounded-xl input-bordered'
+									/>
+									<input
+										type='password'
+										{...register('password')}
+										placeholder='Enter Password'
+										className='w-full mb-4 input rounded-xl input-bordered'
+									/>
 
-		// 			<h1 className='mt-12 text-xl font-bold leading-tight md:text-2xl'>
-		// 				Log in to your account
-		// 			</h1>
-
-		// 			{loading ? (
-		// 				<>
-		// 					<Ripple />
-		// 				</>
-		// 			) : (
-		// 				<form className='mt-6' onSubmit={handleSubmit(onSubmit)}>
-		// 					<div>
-		// 						<label className='input-label'>EPF Number</label>
-		// 						<input
-		// 							type='text'
-		// 							{...register('epfNo')}
-		// 							placeholder='Enter EPF Number'
-		// 							className='tailwind-text-box w-[100%]'
-		// 							required
-		// 						/>
-		// 					</div>
-
-		// 					<div className='mt-4'>
-		// 						<label className='input-label'>Password</label>
-		// 						<input
-		// 							type='password'
-		// 							{...register('password')}
-		// 							placeholder='Enter Password'
-		// 							className='tailwind-text-box w-[100%]'
-		// 							required
-		// 						/>
-		// 					</div>
-
-		// 					<button
-		// 						type='submit'
-		// 						className='block w-full px-4 py-3 mt-6 font-semibold text-white bg-indigo-500 rounded-lg hover:bg-indigo-400 focus:bg-indigo-400'
-		// 					>
-		// 						Log In
-		// 					</button>
-		// 				</form>
-		// 			)}
-
-		// 			<hr className='w-full my-6 border-gray-300' />
-
-		// 			<Copyright />
-		// 		</div>
-		// 	</div>
-		// </section>
-		<div className='flex items-center h-screen p-6'>
-			<div className='max-w-4xl mx-auto overflow-hidden bg-white shadow-xl rounded-box'>
-				<div className='flex flex-col overflow-y-auto md:flex-row'>
-					<div className='flex-1 h-32 md:h-auto md:w-1/2'>
-						<img
-							src={LoginImage}
-							className='object-cover w-full h-full'
-							alt='login'
-						/>
-					</div>
-					<div className='flex-1 p-6 sm:p-12 md:w-1/2'>
-						<img src={Logo} alt='logo' className='login-logo' />
-						<p className='mt-2 text-sm text-center md:text-md text-sky-500'>
-							National Institute of Fundamental Studies
-						</p>
-
-						<form className='mt-6' onSubmit={handleSubmit(onSubmit)}>
-							<div className='w-full'>
-								<input
-									type='text'
-									{...register('epfNo')}
-									placeholder='Enter EPF Number'
-									className='w-full mb-4 input rounded-xl input-bordered'
-								/>
-								<input
-									type='password'
-									{...register('password')}
-									placeholder='Enter Password'
-									className='w-full mb-4 input rounded-xl input-bordered'
-								/>
-
-								<button
-									className='w-full mt-5 btn btn-info rounded-xl'
-									type='submit'
-								>
-									Log in
-								</button>
-
-								<div className='mt-2 text-right'>
-									<a
-										href='#'
-										className='text-sm font-semibold text-gray-700 hover:text-blue-700 focus:text-blue-700'
+									<button
+										className='w-full mt-5 btn btn-info rounded-xl'
+										type='submit'
 									>
-										Forgot Password?
-									</a>
+										Log in
+									</button>
+
+									<div className='mt-2 text-right'>
+										<p
+											className='cursor-pointer text-sm font-semibold text-gray-700 hover:text-blue-700 focus:text-blue-700'
+											onClick={() => setPopUp((val) => !val)}
+										>
+											Forgot Password?
+										</p>
+									</div>
 								</div>
-							</div>
-						</form>
-						<Copyright />
+							</form>
+							<Copyright />
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+			{popup ? <ForgetPasswordPopUp setPopUp={setPopUp} /> : <></>}
+		</>
 	);
 }

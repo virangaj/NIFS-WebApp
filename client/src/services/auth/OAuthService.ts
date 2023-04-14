@@ -46,6 +46,21 @@ const changePassword = async (favJSON: any, token: string) => {
 	return response;
 };
 
+//login
+const forgetPassword = async (email: any) => {
+	// console.log(favJSON);
+	const response = await axios({
+		method: 'post',
+		url: `${process.env.REACT_APP_BACKEND_SERVER}/auth/forget-password`,
+		data: email,
+		headers: {
+			'Content-Type': 'application/json; charset=utf-8',
+		},
+	});
+	// alert("Favourite created --- "+ response);
+	return response;
+};
+
 const logout = () => {
 	localStorage.removeItem('persist:employee');
 };
@@ -54,6 +69,7 @@ const OAuthService = {
 	loginRequest,
 	changePassword,
 	logout,
+	forgetPassword,
 };
 
 export default OAuthService;

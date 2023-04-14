@@ -7,9 +7,13 @@ import com.nifs.backend.repository.admin.EmployeeMasterRepository;
 import com.nifs.backend.repository.admin.UserRepository;
 import com.nifs.backend.service.admin.IDivisionMasterService;
 import com.nifs.backend.service.auth.IJwtTokenService;
+import com.nifs.backend.util.EmailService;
+import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,6 +21,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 @Service
 @Log4j2
@@ -40,7 +46,8 @@ public class AuthenticationService {
     private final AuthenticationManager manager;
     @Autowired
     private final PasswordEncoder passwordEncoder;
-
+    @Autowired
+    private EmailService emailService;
 
     // login requests
     public AuthenticationResponse loginRequest(LoginRequest request) {
@@ -107,5 +114,36 @@ public class AuthenticationService {
                 .message("You are not AUTHORIZED to the system!")
                 .build();
 
+    }
+
+    public ResponseEntity<?> forgetPassword(String email) throws MessagingException {
+        Map<String, Object> map = new LinkedHashMap<String, Object>();
+        var user = userRepo.findByEmployee_GsuitEmailEquals(email);
+        var id = user.getEmployee().getId();
+        if(id != null){
+
+            String msg = "Trouble signing in?\n" +
+                    "Resetting your password is easy.\n" +
+                    "\n" +
+                    "Just press the button below and follow the instructions. We’ll have you up and running in no time.\n" +
+                    "\n" +
+                    "Copy paste following link in your browser.\n" +
+                    "http://localhost:3000/forget-password/"+id+"\n" +
+                    "\n" +
+                    "If you did not make this request then please ignore this email.";
+
+            //send email
+            emailService.sendEmail(email, "Reset Password - NIFS", msg);
+
+
+            map.put("status", RequestStatus.SUCCESS);
+            map.put("code", 201);
+            map.put("message", "Password reset link has sent to your email!");
+        }else{
+            map.put("status", RequestStatus.ERROR);
+            map.put("code", 400);
+            map.put("message", "Please Enter valid email address");
+        }
+        return new ResponseEntity<>(map, HttpStatus.OK);
     }
 }
