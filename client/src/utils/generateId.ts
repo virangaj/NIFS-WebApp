@@ -18,3 +18,12 @@ export function generateID(key: any) {
 
 	return day + key.toUpperCase() + time;
 }
+
+export function dateConveter(data: string) {
+	const dateString = '16/4/2023';
+	const parts = dateString.split('/');
+	const year = parts[2];
+	const month = parts[1];
+	const day = parts[0];
+	return `${year}-${month}-${day}`;
+}
