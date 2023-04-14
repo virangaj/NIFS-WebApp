@@ -102,6 +102,47 @@ export const DirectorSideNavbar = [
         link: RouteName.ContractExtension,
         icon: HiOutlineDocumentText,
       },
+      {
+        title: "Article Request",
+        link: RouteName.LibraryArticleRequest,
+        icon: GiExitDoor,
+      },
+      {
+        title: "Journal Request",
+        link: RouteName.LibraryArticleRequest,
+        icon: HiOutlineDocumentText,
+      },
+      {
+        title: "Travel Request",
+        link: RouteName.TransportTravelRequest,
+        icon: GiExitDoor,
+      },
+      {
+        title: "Transport Cost",
+        link: RouteName.TransportCost,
+        icon: HiOutlineCurrencyDollar,
+      },
+
+      {
+        title: "SRN",
+        link: RouteName.Srn,
+        icon: RiUserReceived2Line,
+      },
+      {
+        title: "Quotation Request",
+        link: RouteName.QuotationRequest,
+        icon: GiNotebook,
+      },
+      {
+        title: "Quotation Summary",
+        link: RouteName.QuotationSummary,
+        icon: HiOutlineDocumentText,
+      },
+      {
+        title: "Gate Pass",
+        link: RouteName.GatePass,
+        icon: GiIndiaGate,
+      },
     ],
   },
 ];

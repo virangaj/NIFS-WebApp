@@ -91,7 +91,7 @@ const HODArticleRequest = () => {
   return (
     <>
       <div className="admin-page-title">
-        <p>Contract Extension</p>
+        <p>Article Request</p>
 
         <hr className="admin-horizontal-line" />
       </div>
