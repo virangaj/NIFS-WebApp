@@ -5,6 +5,7 @@ import com.nifs.backend.config.JwtService;
 import com.nifs.backend.constant.RequestStatus;
 import com.nifs.backend.dto.admin.ResignationRequestDTO;
 import com.nifs.backend.service.admin.IResignationReqService;
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -25,7 +26,7 @@ public class ResignationReqController {
 
 
     @PostMapping
-    public ResponseEntity<?> createResignationRequest(@RequestBody ResignationRequestDTO data){
+    public ResponseEntity<?> createResignationRequest(@RequestBody ResignationRequestDTO data) throws MessagingException {
 
         return ResponseEntity.ok(resignationReqService.createResignationRequest(data));
     }
