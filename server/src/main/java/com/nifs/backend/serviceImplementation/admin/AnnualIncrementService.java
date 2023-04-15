@@ -17,9 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -65,14 +63,18 @@ public class AnnualIncrementService implements IAnnualIncrementService {
                     .newSalary(data.getNewSalary())
                     .createdBy(data.getEpfNo())
                     .createdOn(new Date())
+                    .dirApproved(data.getDirApproved())
+                    .hodApproved(data.getHodApproved())
                     .build();
 
             annualIncrementRepository.save(annualIncrement);
 
+            String hodEmail = employeeMasterService.getGsuitEmailById(data.getHod());
 
             String msgBody = emailService.HODRequestMessage("Annual Increment Request", data.getEpfNo(), data.getHod(), "annual-increment-request");
 
-            emailService.sendEmail("virangapasindu4@gmail.com", "New funding source added : ", msgBody);
+            //send email to hod
+            emailService.sendEmail(hodEmail, "Annual Increment Request", msgBody);
 
             return modelMapper.map(annualIncrement,AnnualIncrementDTO.class);
 
@@ -104,11 +106,41 @@ public class AnnualIncrementService implements IAnnualIncrementService {
     public boolean putHodApproval(RequestStatus approval, List<String> resId, String user) {
         try{
             log.info("Transport Travel Request : requested");
+
+
+            List<Map<String ,String>> emailList = new ArrayList<>();
+
+
             resId.forEach(id->{
-                annualIncrementRepository.updateHodApproveAndModifiedFields(approval,user,new Date(),id);
+                annualIncrementRepository.updateHodApproveAndModifiedFields(approval, user, new Date(), id);
+                int epfNo = getUserIDByRequestId(id);
+
+                Map<String, String> map = new LinkedHashMap<String, String>();
+                map.put("email", employeeMasterService.getGsuitEmailById(epfNo));
+                map.put("id", id);
+
+                emailList.add(map);
             });
-            String dirEmail = employeeMasterService.getDirectorEmail();
-            String secEmail = employeeMasterService.getSecretaryEmail();
+
+            //send email to director if approved
+            if(approval == RequestStatus.APPROVED){
+                String dirEmail = employeeMasterService.getDirectorEmail();
+                String secEmail = employeeMasterService.getSecretaryEmail();
+                String msgBody = emailService.DirectorRequestMessage("Annual Increment Request", "annual-increment-request");
+
+                emailService.sendEmail(dirEmail, "Annual Increment Request", msgBody);
+
+                emailService.sendEmail(secEmail, "Annual Increment Request", msgBody);
+
+                emailService.sendBulkEmailToRequester(emailList,"Annual Increment Request", "APPROVED", user);
+            }else{
+                emailService.sendBulkEmailToRequester(emailList,"Annual Increment Request", "NOT APPROVED", user);
+
+            }
+
+
+
+
             return true;
         }catch (Exception e){
             log.info(e.toString());
@@ -129,4 +161,10 @@ public class AnnualIncrementService implements IAnnualIncrementService {
             return false;
         }
     }
+
+    public int getUserIDByRequestId(String id){
+        AnnualIncrement request = annualIncrementRepository.findByDocumentNoEquals(id);
+        return request.getEpfNo();
+    }
+
 }

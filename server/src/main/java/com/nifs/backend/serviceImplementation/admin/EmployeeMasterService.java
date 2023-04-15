@@ -406,4 +406,10 @@ public class EmployeeMasterService implements IEmployeeMasterService {
         EmployeeMaster secretary = empRepo.findByDesignationId_DesignationIdEquals("ED1002");
         return secretary.getGsuitEmail();
     }
+
+    @Override
+    public String getGsuitEmailById(int hod) {
+        EmployeeMaster head = empRepo.findByEpfNoEquals(hod);
+        return head.getGsuitEmail();
+    }
 }
