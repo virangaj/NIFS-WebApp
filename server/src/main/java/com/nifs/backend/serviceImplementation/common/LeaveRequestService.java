@@ -57,6 +57,7 @@ public class LeaveRequestService implements ILeaveRequestService {
                     .createdBy(data.getEpfNo())
                     .createdOn(new Date())
                     .dirApproved(data.getDirApproved())
+                    .hodApproved(data.getHodApproved())
                     .build();
 
             LeaveRequest created = leaveRequestRepository.save(leaveRequest);

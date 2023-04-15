@@ -60,6 +60,7 @@ public class ArticleRequestService implements IArticleRequestService {
                     .createdBy(data.getEpfNo())
                     .createdOn(new Date())
                     .hodApproved(data.getHodApproved())
+                    .dirApproved(data.getDirApproved())
                     .build();
 
             articleRequestRepository.save(articleRequest);

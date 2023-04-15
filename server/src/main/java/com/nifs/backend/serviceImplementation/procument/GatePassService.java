@@ -65,6 +65,7 @@ public class GatePassService implements IGatePassService {
                     .resultOfVerificationBySecurityOfficer(data.getResultOfVerificationBySecurityOfficer())
                     .createdBy(Integer.valueOf(data.getEpfNo()))
                     .hodApproved(data.getHodApproved())
+                    .dirApproved(data.getDirApproved())
                     .createdOn(new Date())
                     .build();
 

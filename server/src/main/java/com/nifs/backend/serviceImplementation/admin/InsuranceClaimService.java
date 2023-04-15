@@ -59,6 +59,7 @@ public class InsuranceClaimService implements IInsuranceClaimService {
                     .createdBy(data.getEpfNo())
                     .createdOn(new Date())
                     .hodApproved(data.getHodApproved())
+                    .dirApproved(data.getDirApproved())
                     .build();
 
             insuranceClaimRepository.save(insuranceClaim);

@@ -62,6 +62,7 @@ public class QuotationRequestService implements IQuotationRequestService {
                     .createdBy(Integer.valueOf(data.getEpfNo()))
                     .createdOn(new Date())
                     .hodApproved(data.getHodApproved())
+                    .dirApproved(data.getDirApproved())
                     .build();
 
             quotationRequestRepository.save(quotationRequest);

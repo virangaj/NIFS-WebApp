@@ -57,6 +57,7 @@ public class OverTimeService implements IOverTimeService {
                     .createdBy(data.getEpfNo())
                     .createdOn(new Date())
                     .hodApproved(data.getHodApproved())
+                    .dirApproved(data.getDirApproved())
                     .build();
 
             OverTime created = overTimeRepository.save(overTime);

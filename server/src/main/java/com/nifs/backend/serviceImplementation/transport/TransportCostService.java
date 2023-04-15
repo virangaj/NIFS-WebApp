@@ -66,6 +66,7 @@ public class TransportCostService implements ITransportCostService {
 
                     .createdBy(Integer.valueOf(data.getEpfNo()))
                     .hodApproved(data.getHodApproved())
+                    .dirApproved(data.getDirApproved())
                     .createdOn(new Date())
                     .build();
 
