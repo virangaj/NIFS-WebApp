@@ -17,6 +17,7 @@ import HODQuotationRequest from "./hodDashboards/HODQuotationRequest";
 import HODQuotationSummary from "./hodDashboards/HODQuotationSummary";
 import HODSrn from "./hodDashboards/HODSrn";
 import HODAccomodation from "./hodDashboards/HODAccomodation";
+import HODInsuranceClaim from "./hodDashboards/HODInsuranceClaim";
 
 export function PageRoutes() {
   return (
@@ -55,7 +56,7 @@ export function PageRoutes() {
 
       {/* admin */}
       <Route path={RouteName.Accommodation} element={<HODAccomodation />} />
-
+      <Route path={RouteName.InsuranceClaims} element={<HODInsuranceClaim />} />
       <Route path={RouteName.Srn} element={<HODSrn />} />
 
       <Route path={RouteName.TransportCost} element={<HODTransportCost />} />

@@ -16,7 +16,7 @@ import {
   AiOutlineSearch,
 } from "react-icons/ai";
 import { RiUserReceived2Line, RiUserStarLine } from "react-icons/ri";
-import { BsCalendar3Week } from "react-icons/bs";
+import { BsCalendar3Week, BsShieldCheck } from "react-icons/bs";
 import { RouteName } from "./routeNames";
 
 // admin of admin division
@@ -75,6 +75,11 @@ export const AdministrationSidenav = [
         title: "Accomodation",
         link: RouteName.Accommodation,
         icon: AiOutlineHome,
+      },
+      {
+        title: "Insurance Claim",
+        link: RouteName.InsuranceClaims,
+        icon: BsShieldCheck,
       },
     ],
   },
@@ -160,6 +165,11 @@ export const DirectorSideNavbar = [
         title: "Accomodation",
         link: RouteName.Accommodation,
         icon: AiOutlineHome,
+      },
+      {
+        title: "Insurance Claim",
+        link: RouteName.InsuranceClaims,
+        icon: BsShieldCheck,
       },
     ],
   },
@@ -299,6 +309,11 @@ export const HODSideNavbar = [
         title: "Accomodation",
         link: RouteName.Accommodation,
         icon: AiOutlineHome,
+      },
+      {
+        title: "Insurance",
+        link: RouteName.InsuranceClaims,
+        icon: BsShieldCheck,
       },
     ],
   },

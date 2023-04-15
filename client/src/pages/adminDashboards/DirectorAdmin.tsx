@@ -17,6 +17,7 @@ import DirectorGatePass from "./DirectorDashbaord/DirectorGatePass";
 import DirectorQuotationRequest from "./DirectorDashbaord/DirectorQuotationRequest";
 import DirectorQuotationSummaryRequest from "./DirectorDashbaord/DirectorQuotationSummaryRequest";
 import DirectorAccomodation from "./DirectorDashbaord/DirectorAccomodation";
+import DirectorInsuranceClaim from "./DirectorDashbaord/DirectorInsuranceClaim";
 
 export function PageRoutes() {
   return (
@@ -67,6 +68,11 @@ export function PageRoutes() {
       <Route
         path={RouteName.Accommodation}
         element={<DirectorAccomodation />}
+      />
+
+      <Route
+        path={RouteName.InsuranceClaims}
+        element={<DirectorInsuranceClaim />}
       />
 
       <Route path={RouteName.Projects} element={<Projects />} />
