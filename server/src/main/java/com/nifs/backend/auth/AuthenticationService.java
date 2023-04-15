@@ -69,7 +69,7 @@ public class AuthenticationService {
             HashMap<String, Object> claims = new HashMap<>();
             claims.put("division", employee.getDivisionId().getDivisionId());
             claims.put("role", user.getRole());
-
+            claims.put("designation", employee.getDesignationId().getDesignationId());
 
 
 

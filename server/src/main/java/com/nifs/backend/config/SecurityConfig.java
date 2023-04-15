@@ -34,13 +34,12 @@ public class SecurityConfig {
                 .requestMatchers(
 
                         "/auth/**",
-                        "/**",
                         "/admin/otherdata/**",
                         "/sedu/charges",
 //                        designations
 //                        "/admin/designation",
                         "/admin/designation/newid",
-                        "/admin/designation/get/**",
+                        "/admin/designation/**",
                         "/admin/designation/location/**",
 //                        divisions
                         "/admin/division",

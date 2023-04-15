@@ -10,6 +10,10 @@ function getDivision(token: string) {
 	const decoded: any = decodeToken(token);
 	return decoded.division;
 }
+function getDesignation(token: string) {
+	const decoded: any = decodeToken(token);
+	return decoded.designation;
+}
 function isAdmin(token: string) {
 	const decoded: any = decodeToken(token);
 	return decoded.role;
@@ -19,6 +23,7 @@ const TokenService = {
 	decodeToken,
 	getDivision,
 	isAdmin,
+	getDesignation,
 };
 
 export default TokenService;
