@@ -1,8 +1,8 @@
-package com.nifs.backend.repository.admin;
+package com.nifs.backend.repository.transport;
 
 import com.nifs.backend.constant.RequestStatus;
 import com.nifs.backend.model.admin.Accomodation;
-import com.nifs.backend.model.admin.InsuranceClaim;
+import com.nifs.backend.model.transport.TravelRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -12,25 +12,25 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Date;
 import java.util.List;
 
-public interface InsuranceClaimRepository extends JpaRepository<InsuranceClaim,String> {
+public interface AccomodationRepository extends JpaRepository<Accomodation,String> {
 
-    @Query("select c from InsuranceClaim c where c.documentNo = ?1")
-    InsuranceClaim findByDocumentNoEquals(String documentNo);
+    @Query("select c from Accomodation c where c.documentNo = ?1")
+    Accomodation findByDocumentNoEquals(String documentNo);
 
-    List<InsuranceClaim> findByDivisionIdOrderByCreatedOnDesc(String divisionId);
+    List<Accomodation> findByDivisionIdOrderByCreatedOnDesc(String divisionId);
 
 
-    List<InsuranceClaim> findAllByOrderByCreatedOnDesc();
+    List<Accomodation> findAllByOrderByCreatedOnDesc();
 
     @Transactional
     @Modifying
-    @Query("UPDATE InsuranceClaim r SET r.hodApproved = :hodApproved, r.modifiedBy = :modifiedBy, r.modifiedOn = :modifiedOn WHERE r.documentNo = :documentNo")
+    @Query("UPDATE Accomodation r SET r.hodApproved = :hodApproved, r.modifiedBy = :modifiedBy, r.modifiedOn = :modifiedOn WHERE r.documentNo = :documentNo")
     void updateHodApproveAndModifiedFields(@Param("hodApproved") RequestStatus hodApprove, @Param("modifiedBy") String modifiedBy, @Param("modifiedOn") Date modifiedOn, @Param("documentNo") String documentNo);
 
 
     @Transactional
     @Modifying
-    @Query("UPDATE InsuranceClaim r SET r.dirApproved = :dirApproved, r.modifiedBy = :modifiedBy, r.modifiedOn = :modifiedOn WHERE r.documentNo = :documentNo")
+    @Query("UPDATE Accomodation r SET r.dirApproved = :dirApproved, r.modifiedBy = :modifiedBy, r.modifiedOn = :modifiedOn WHERE r.documentNo = :documentNo")
     void updateDirApproveAndModifiedFields(@Param("dirApproved") RequestStatus dirApproved, @Param("modifiedBy") String modifiedBy, @Param("modifiedOn") Date modifiedOn, @Param("documentNo") String documentNo);
 
 

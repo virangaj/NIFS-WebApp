@@ -13,21 +13,30 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @Setter
 @SuperBuilder
-public class AnnualIncrementDTO extends BaseDTO {
+public class AccomodationDTO extends BaseDTO {
 
     private String documentNo;
-    private int epfNo;
+    private String epfNo;
     private String designationId;
     private String divisionId;
     private int hod;
 
-    private String remark;
     private String date;
-    private String noOfLeaves;
-    private String salaryScale;
-    private String presentSalary;
-    private String newSalary;
+    private String guestName;
+    private String address;
+    private String email;
+    private String nicNo;
+    private String telephoneNo;
+    private String roomNumber;
+    private String noOfDays;
+    private String fromDate;
+
+    private String toDate;
+    private String roomRates;
+    private String roomType;
+    private String totalCharges;
 
     RequestStatus hodApproved;
     RequestStatus dirApproved;
+
 }

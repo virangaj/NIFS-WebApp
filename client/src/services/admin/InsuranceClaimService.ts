@@ -1,9 +1,12 @@
 import axios from "axios";
+
 import http from "../../utils/http-common";
+import { RequestStatus } from "../../constant/requestStatus";
 
 axios.defaults.baseURL = process.env.REACT_APP_BACKEND_SERVER;
 
-const getInsuranceClaimRequests = async (token: any) => {
+const getAllInsuranceClaim = async (token: any) => {
+  // console.log(token);
   const response = await axios({
     method: "get",
     url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/insurance-claim`,
@@ -15,12 +18,25 @@ const getInsuranceClaimRequests = async (token: any) => {
   // alert("Favourite created --- "+ response);
   return response;
 };
-
-const getInsuranceClaimRequest = (id: any) => {
-  return http.get<any>(`/common/insurance-claim/${id}`);
+const getDivisionInsuranceClaim = async (token: any, division: string) => {
+  // console.log(token);
+  const response = await axios({
+    method: "get",
+    url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/insurance-claim?division=${division}`,
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  // alert("Favourite created --- "+ response);
+  return response;
 };
 
-const saveInsuranceClaimRequest = async (data: any, token: string) => {
+const getInsuranceClaim = (id: any) => {
+  return http.get<any>(`/admin/insurance-claim/get/${id}`);
+};
+
+const saveInsuranceClaim = async (data: any, token: string) => {
   console.log(token);
   const response = await axios({
     method: "post",
@@ -35,28 +51,14 @@ const saveInsuranceClaimRequest = async (data: any, token: string) => {
   return response;
 };
 
-const sendHodApproval = async (id: any, token: string, approval: boolean) => {
-  const response = await axios({
-    method: "put",
-    url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/insurance-claim/hod?approval=${approval}`,
-    data: id,
-    headers: {
-      "Content-Type": "application/json; charset=utf-8",
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
-  return response;
-};
-
-const sendDirectorApproval = async (
+const sendHodApproval = async (
   id: any,
   token: string,
-  approval: boolean
+  approval: RequestStatus
 ) => {
   const response = await axios({
     method: "put",
-    url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/insurance-claim/director?approval=${approval}`,
+    url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/insurance-claim/hod/status?approval=${approval}`,
     data: id,
     headers: {
       "Content-Type": "application/json; charset=utf-8",
@@ -66,12 +68,32 @@ const sendDirectorApproval = async (
 
   return response;
 };
+
+const sendDirApproval = async (
+  id: any,
+  token: string,
+  approval: RequestStatus
+) => {
+  const response = await axios({
+    method: "put",
+    url: `${process.env.REACT_APP_BACKEND_SERVER}/library/article-request/director/status?approval=${approval}`,
+    data: id,
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response;
+};
+
 const InsuranceClaimService = {
-  getInsuranceClaimRequest,
-  getInsuranceClaimRequests,
-  saveInsuranceClaimRequest,
-  sendDirectorApproval,
+  getAllInsuranceClaim,
+  getInsuranceClaim,
+  getDivisionInsuranceClaim,
+  saveInsuranceClaim,
   sendHodApproval,
+  sendDirApproval,
 };
 
 export default InsuranceClaimService;

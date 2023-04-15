@@ -1,6 +1,7 @@
 package com.nifs.backend.model.admin;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.nifs.backend.constant.RequestStatus;
 import com.nifs.backend.model.Base;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -37,4 +38,7 @@ public class AnnualIncrement extends Base {
     private String salaryScale;
     private String presentSalary;
     private String newSalary;
+
+    RequestStatus hodApproved;
+    RequestStatus dirApproved;
 }

@@ -126,7 +126,7 @@ function InsuranceClaim() {
 
     setLoading(true);
     setTimeout(() => {
-      const result = InsuranceClaimService.saveInsuranceClaimRequest(
+      const result = InsuranceClaimService.saveInsuranceClaim(
         values,
         auth?.user?.token
       )
