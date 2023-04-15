@@ -16,6 +16,7 @@ import { toast } from "react-toastify";
 import EmployeeSelector from "../../components/shared/EmployeeSelector";
 import DesignationSelector from "../../components/shared/DesignationSelector";
 import DivisionSelector from "../../components/shared/DivisionSelector";
+import { RequestStatus } from "../../constant/requestStatus";
 
 const initialState: IOvertime = {
   documentNo: "",
@@ -31,6 +32,8 @@ const initialState: IOvertime = {
   nameOfWorkToBeDone: "",
   necessityToWorkOvertime: "",
   remark: "",
+  hodApproved: RequestStatus.PENDING,
+  dirApproved: RequestStatus.PENDING,
 };
 
 export default function Overtime() {
@@ -51,19 +54,8 @@ export default function Overtime() {
 
   useEffect(() => {
     setValues({
+      ...values,
       date: requestDate ? requestDate : "",
-      documentNo: values?.documentNo,
-      //   auto generated
-      epfNo: values?.epfNo,
-      hod: values?.hod,
-      designationId: values?.designationId,
-      divisionId: values?.divisionId,
-
-      noOfHoursRequested: values?.noOfHoursRequested,
-      noOfHoursOTDone: values?.noOfHoursOTDone,
-      nameOfWorkToBeDone: values?.nameOfWorkToBeDone,
-      necessityToWorkOvertime: values?.necessityToWorkOvertime,
-      remark: values?.remark,
     });
   }, [requestDate]);
 

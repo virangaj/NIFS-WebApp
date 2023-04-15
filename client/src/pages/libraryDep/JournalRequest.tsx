@@ -15,6 +15,7 @@ import EmployeeSelector from "../../components/shared/EmployeeSelector";
 import DesignationSelector from "../../components/shared/DesignationSelector";
 import DivisionSelector from "../../components/shared/DivisionSelector";
 import FileInput from "../../components/FileInput";
+import { RequestStatus } from "../../constant/requestStatus";
 
 const initialState: IJournalRequest = {
   documentNo: "",
@@ -33,6 +34,9 @@ const initialState: IJournalRequest = {
   type: "",
   methodOfPayment: "",
   remark: "",
+
+  hodApproved: RequestStatus.PENDING,
+  dirApproved: RequestStatus.PENDING,
 };
 
 export default function JournalRequest() {

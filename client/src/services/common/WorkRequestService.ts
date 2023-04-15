@@ -18,10 +18,7 @@ const getWorkRequests = async (token: any) => {
 };
 
 //get all constrsac t accodung to admin
-const getDivisionWorkRequests = async (
-  token: any,
-  division: string
-) => {
+const getDivisionWorkRequests = async (token: any, division: string) => {
   const response = await axios({
     method: "get",
     url: `${process.env.REACT_APP_BACKEND_SERVER}/common/work-request?division=${division}`,

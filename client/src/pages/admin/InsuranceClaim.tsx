@@ -11,6 +11,7 @@ import DesignationSelector from "../../components/shared/DesignationSelector";
 import DivisionSelector from "../../components/shared/DivisionSelector";
 import CustomeDataPicker from "../../components/DataPicker";
 import { Stack } from "@mui/material";
+import { RequestStatus } from "../../constant/requestStatus";
 
 const initialState: IInsuranceClaim = {
   documentNo: "",
@@ -28,6 +29,9 @@ const initialState: IInsuranceClaim = {
   claimPaidDate: "",
   spectacleClaimDate: "",
   remark: "",
+
+  hodApproved: RequestStatus.PENDING,
+  dirApproved: RequestStatus.PENDING,
 };
 
 function InsuranceClaim() {
@@ -52,22 +56,10 @@ function InsuranceClaim() {
 
   useEffect(() => {
     setValues({
+      ...values,
       date: requestDate ? requestDate : "",
-      // generated
-      documentNo: values?.documentNo,
-      epfNo: values?.epfNo,
-      hod: values?.hod,
-      designationId: values?.designationId,
-      divisionId: values?.divisionId,
-
-      noOfClaims: values?.noOfClaims,
-      claimAmount: values?.claimAmount,
-      totalBillAmount: values?.totalBillAmount,
-      paidClaimAmount: values?.paidClaimAmount,
-      notPaidClaimAmount: values?.notPaidClaimAmount,
       claimPaidDate: claimPaidDate ? claimPaidDate : "",
       spectacleClaimDate: spectacleClaimDate ? spectacleClaimDate : "",
-      remark: values?.remark,
     });
   }, [requestDate, claimPaidDate, spectacleClaimDate]);
 

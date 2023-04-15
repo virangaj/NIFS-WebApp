@@ -13,6 +13,7 @@ import QuotationRequestService from "../../services/procument/QuotationRequestSe
 import EmployeeSelector from "../../components/shared/EmployeeSelector";
 import DesignationSelector from "../../components/shared/DesignationSelector";
 import DivisionSelector from "../../components/shared/DivisionSelector";
+import { RequestStatus } from "../../constant/requestStatus";
 
 const initialState: IQuotationRequest = {
   documentNo: "",
@@ -31,6 +32,9 @@ const initialState: IQuotationRequest = {
   bidClosingDate: "",
   bidStartingDate: "",
   remark: "",
+
+  hodApproved: RequestStatus.PENDING,
+  dirApproved: RequestStatus.PENDING,
 };
 
 function QuotationRequest() {
@@ -55,24 +59,12 @@ function QuotationRequest() {
 
   useEffect(() => {
     setValues({
-      documentNo: values?.documentNo,
+      ...values,
       date: requestDate ? requestDate : "",
-      epfNo: values?.epfNo,
-      designationId: values?.designationId,
-      divisionId: values?.designationId,
-      hod: values?.hod,
-      project: values?.project,
-      fund: values?.fund,
-      srnNo: values?.srnNo,
-      fileNo: values?.fileNo,
-      validityPeriodOfTheQuotation: values?.validityPeriodOfTheQuotation,
-      shippingTerms: values?.shippingTerms,
-      supplierCatergory: values?.supplierCatergory,
       bidClosingDate: endDate ? endDate : "",
       bidStartingDate: startDate ? startDate : "",
-      remark: values?.remark,
     });
-  }, [requestDate, startDate, endDate]);
+  }, [requestDate]);
 
   useEffect(() => {
     setValues({

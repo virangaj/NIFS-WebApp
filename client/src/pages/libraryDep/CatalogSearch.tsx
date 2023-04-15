@@ -21,6 +21,9 @@ const initialState: IArticleRequest = {
   pages: "",
   webLink: "",
   remark: "",
+
+  hodApproved: RequestStatus.PENDING,
+  dirApproved: RequestStatus.PENDING,
 };
 
 export default function CatalogSearch() {

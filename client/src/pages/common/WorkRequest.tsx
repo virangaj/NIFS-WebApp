@@ -13,6 +13,7 @@ import DesignationSelector from "../../components/shared/DesignationSelector";
 import DivisionSelector from "../../components/shared/DivisionSelector";
 import { toast } from "react-toastify";
 import WorkRequestService from "../../services/common/WorkRequestService";
+import { RequestStatus } from "../../constant/requestStatus";
 
 const initialState: IWorkRequest = {
   // generated
@@ -30,6 +31,9 @@ const initialState: IWorkRequest = {
   supervisorEmail: "",
   workDescription: "",
   googleLinkWithWorkDescription: "",
+
+  hodApproved: RequestStatus.PENDING,
+  dirApproved: RequestStatus.PENDING,
 };
 
 function WorkRequest() {
@@ -51,21 +55,8 @@ function WorkRequest() {
 
   useEffect(() => {
     setValues({
-      // generated
-      documentNo: values?.documentNo,
-      epfNo: values?.epfNo,
-      hod: values?.hod,
-      designationId: values?.designationId,
-      divisionId: values?.divisionId,
-
+      ...values,
       date: requestDate ? requestDate : "",
-      project: values?.project,
-      workType: values?.workType,
-      program: values?.program,
-      hodEmail: values?.hodEmail,
-      supervisorEmail: values?.supervisorEmail,
-      workDescription: values?.workDescription,
-      googleLinkWithWorkDescription: values?.googleLinkWithWorkDescription,
     });
   }, [requestDate]);
 

@@ -85,7 +85,7 @@ const sendDirectorApproval = async (
 
   return response;
 };
-const OverTimeService = {
+const OverTimeRequestService = {
   getOverTimeRequest,
   getOverTimeRequests,
   getDivisionOverTimeRequests,
@@ -94,4 +94,4 @@ const OverTimeService = {
   sendHodApproval,
 };
 
-export default OverTimeService;
+export default OverTimeRequestService;

@@ -64,7 +64,8 @@ public class TransportCostService implements ITransportCostService {
                     .endReading(data.getEndReading())
                     .remark(data.getRemark())
 
-                    .createdBy(data.getId())
+                    .createdBy(Integer.valueOf(data.getEpfNo()))
+                    .hodApproved(data.getHodApproved())
                     .createdOn(new Date())
                     .build();
 

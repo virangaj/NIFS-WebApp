@@ -59,8 +59,9 @@ public class AccomodationService implements IAccomodationService {
                     .roomType(data.getRoomType())
                     .totalCharges(data.getTotalCharges())
 
-                    .createdBy(data.getId())
+                    .createdBy(Integer.valueOf(data.getEpfNo()))
                     .createdOn(new Date())
+                    .hodApproved(data.getHodApproved())
                     .build();
 
             accomodationRepository.save(accomodation);

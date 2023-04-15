@@ -1,3 +1,5 @@
+import { RequestStatus } from "../../constant/requestStatus";
+
 export default interface ITransportCost {
   documentNo: string;
   epfNo: number;
@@ -17,4 +19,7 @@ export default interface ITransportCost {
   startReading: number;
   endReading: number;
   remark: string;
+
+  hodApproved: RequestStatus;
+  dirApproved: RequestStatus;
 }

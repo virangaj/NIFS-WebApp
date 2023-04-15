@@ -1,6 +1,7 @@
 package com.nifs.backend.model.common;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.nifs.backend.constant.RequestStatus;
 import com.nifs.backend.model.Base;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -43,5 +44,8 @@ public class LeaveRequest extends Base {
     private String requestDateOptional;
     private String jobCategory;
     private String evidence;
+
+    RequestStatus hodApproved;
+    RequestStatus dirApproved;
 
 }
