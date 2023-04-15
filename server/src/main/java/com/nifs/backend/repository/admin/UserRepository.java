@@ -12,6 +12,16 @@ import java.util.Date;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
+    @Transactional
+    @Modifying
+    @Query("update User u set u.password = ?1 where u.email = ?2")
+    int updatePasswordByEmailEquals(String password, String email);
+    @Query("select e.employee.gsuitEmail from User e where e.employee.id = ?1")
+    String findEmailById(String id);
+    @Transactional
+    @Modifying
+    @Query("update User u set u.password = ?1 where u.id = ?2")
+    void updatePasswordByIdEquals(String password, String id);
     User findByEmployee_GsuitEmailEquals(String gsuitEmail);
     @Transactional
     @Modifying

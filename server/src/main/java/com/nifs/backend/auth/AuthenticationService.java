@@ -110,7 +110,7 @@ public class AuthenticationService {
         }
         return AuthenticationResponse.builder()
             .status(String.valueOf(RequestStatus.UNAUTHORIZED))
-            .code(404)
+            .code(200)
                 .message("You are not AUTHORIZED to the system!")
                 .build();
 
@@ -121,6 +121,7 @@ public class AuthenticationService {
         var user = userRepo.findByEmployee_GsuitEmailEquals(email);
         var id = user.getEmployee().getId();
         if(id != null){
+
 
             String msg = "Trouble signing in?\n" +
                     "Resetting your password is easy.\n" +
@@ -143,6 +144,35 @@ public class AuthenticationService {
             map.put("status", RequestStatus.ERROR);
             map.put("code", 400);
             map.put("message", "Please Enter valid email address");
+        }
+        return new ResponseEntity<>(map, HttpStatus.OK);
+    }
+
+    public ResponseEntity<?> resetPassword(String password, String id) {
+        Map<String, Object> map = new LinkedHashMap<String, Object>();
+
+        try {
+            String pwd = passwordEncoder.encode(password);
+
+
+            String email = userRepo.findEmailById(id);
+
+            userRepo.updatePasswordByEmailEquals(pwd, email);
+
+            String msg = "Password has been updated successfully\n" +
+                    "Please login with your new credentials\n";
+
+            emailService.sendEmail(email, "Reset Password - Successful", msg);
+
+            map.put("status", RequestStatus.SUCCESS);
+            map.put("code", 201);
+            map.put("message", "Password is updated!");
+
+
+        }catch(Exception e){
+            map.put("status", RequestStatus.ERROR);
+            map.put("code", 400);
+            map.put("message", "Request cannot be completed!");
         }
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
