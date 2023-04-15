@@ -20,4 +20,6 @@ public interface IUserService {
     boolean changePassword(int id, ChangePasswordDTO data);
 
     void updateIsDelete(boolean b, int id);
+
+
 }

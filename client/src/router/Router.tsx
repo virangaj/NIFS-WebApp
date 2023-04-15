@@ -31,7 +31,7 @@ import TransportDashboard from '../pages/adminDashboards/TransportDashboard';
 import ProcumentDashboard from '../pages/adminDashboards/ProcumentDashboard';
 import { LibraryDashboard } from '../pages/adminDashboards/LibraryDashboard';
 import ForgetPassword from '../pages/login/ForgetPassword';
-
+import Circle from '../images/dots_circle_b.png';
 const AppRouter = () => {
 	const { auth } = useAppSelector((state) => state.persistedReducer);
 	const [division, setDivision] = useState();
@@ -42,6 +42,7 @@ const AppRouter = () => {
 	}, [auth]);
 	return (
 		<BrowserRouter>
+			<img src={Circle} className='absolute -right-[250px] -top-28 !-z-10' />
 			<Routes>
 				{/* login page */}
 				<Route path={RouteName.Login} element={<Login />} />

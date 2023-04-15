@@ -7,6 +7,10 @@ import com.nifs.backend.model.admin.Accomodation;
 import com.nifs.backend.model.admin.AnnualIncrement;
 import com.nifs.backend.repository.admin.AnnualIncrementRepository;
 import com.nifs.backend.service.admin.IAnnualIncrementService;
+import com.nifs.backend.service.admin.IEmployeeMasterService;
+import com.nifs.backend.service.admin.IUserService;
+import com.nifs.backend.util.EmailService;
+import jakarta.mail.MessagingException;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +31,11 @@ public class AnnualIncrementService implements IAnnualIncrementService {
 
     final
     ModelMapper modelMapper;
+    @Autowired
+    private EmailService emailService;
+
+    @Autowired
+    private IEmployeeMasterService employeeMasterService;
 
     public AnnualIncrementService(AnnualIncrementRepository annualIncrementRepository, ModelMapper modelMapper) {
         this.annualIncrementRepository = annualIncrementRepository;
@@ -36,7 +45,7 @@ public class AnnualIncrementService implements IAnnualIncrementService {
 
 
     @Override
-    public AnnualIncrementDTO createNewAnnualIncrement(AnnualIncrementDTO data) {
+    public AnnualIncrementDTO createNewAnnualIncrement(AnnualIncrementDTO data) throws MessagingException {
         log.info("Data from the Client " + data.getDocumentNo());
 
         if(annualIncrementRepository.findByDocumentNoEquals(data.getDocumentNo())==null){
@@ -54,11 +63,16 @@ public class AnnualIncrementService implements IAnnualIncrementService {
                     .salaryScale(data.getSalaryScale())
                     .presentSalary(data.getPresentSalary())
                     .newSalary(data.getNewSalary())
-                    .createdBy(data.getId())
+                    .createdBy(data.getEpfNo())
                     .createdOn(new Date())
                     .build();
 
             annualIncrementRepository.save(annualIncrement);
+
+
+            String msgBody = emailService.HODRequestMessage("Annual Increment Request", data.getEpfNo(), data.getHod(), "annual-increment-request");
+
+            emailService.sendEmail("virangapasindu4@gmail.com", "New funding source added : ", msgBody);
 
             return modelMapper.map(annualIncrement,AnnualIncrementDTO.class);
 
@@ -93,6 +107,8 @@ public class AnnualIncrementService implements IAnnualIncrementService {
             resId.forEach(id->{
                 annualIncrementRepository.updateHodApproveAndModifiedFields(approval,user,new Date(),id);
             });
+            String dirEmail = employeeMasterService.getDirectorEmail();
+            String secEmail = employeeMasterService.getSecretaryEmail();
             return true;
         }catch (Exception e){
             log.info(e.toString());

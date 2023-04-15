@@ -394,4 +394,16 @@ public class EmployeeMasterService implements IEmployeeMasterService {
 
         return false;
     }
+
+    @Override
+    public String getDirectorEmail() {
+        EmployeeMaster director = empRepo.findByDesignationId_DesignationIdEquals("ED1001");
+        return director.getGsuitEmail();
+    }
+
+    @Override
+    public String getSecretaryEmail() {
+        EmployeeMaster secretary = empRepo.findByDesignationId_DesignationIdEquals("ED1002");
+        return secretary.getGsuitEmail();
+    }
 }

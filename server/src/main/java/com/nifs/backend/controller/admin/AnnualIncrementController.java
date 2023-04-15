@@ -5,6 +5,7 @@ import com.nifs.backend.constant.RequestStatus;
 import com.nifs.backend.dto.admin.AccomodationDTO;
 import com.nifs.backend.dto.admin.AnnualIncrementDTO;
 import com.nifs.backend.serviceImplementation.admin.AnnualIncrementService;
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -29,7 +30,7 @@ public class AnnualIncrementController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<?> createNewAccomodationRequest(@RequestBody AnnualIncrementDTO data){
+    public ResponseEntity<?> createNewAccomodationRequest(@RequestBody AnnualIncrementDTO data) throws MessagingException {
         return ResponseEntity.ok(annualIncrementService.createNewAnnualIncrement(data));
     }
     @GetMapping

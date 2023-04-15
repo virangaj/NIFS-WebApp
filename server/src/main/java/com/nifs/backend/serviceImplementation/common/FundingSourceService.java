@@ -30,8 +30,7 @@ public class FundingSourceService implements IFundingSourceService {
 
     @Autowired
     private LocationService locationService;
-    @Autowired
-    private EmailService emailService;
+
 
     //create a new funding source
     @Override
@@ -51,8 +50,6 @@ public class FundingSourceService implements IFundingSourceService {
             else {
                 fundingSources.setFundingId(NewIdGenerator.newIDGenerator(lastId));
             }
-
-            emailService.sendEmail("virangapasindu4@gmail.com", "New funding source added : " + fundingSources.getFundingId(), fundingSources.getDescription());
 
 
             fundingSourceRepository.save(fundingSources);

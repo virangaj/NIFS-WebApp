@@ -1,4 +1,4 @@
-package com.nifs.backend.service.transport;
+package com.nifs.backend.service.admin;
 
 import com.nifs.backend.constant.RequestStatus;
 import com.nifs.backend.dto.admin.AccomodationDTO;

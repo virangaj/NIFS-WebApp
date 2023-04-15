@@ -1,15 +1,12 @@
-package com.nifs.backend.serviceImplementation.transport;
+package com.nifs.backend.serviceImplementation.admin;
 
 import com.nifs.backend.constant.RequestStatus;
 import com.nifs.backend.dto.admin.AccomodationDTO;
-import com.nifs.backend.dto.transport.TravelRequestDTO;
 import com.nifs.backend.model.admin.Accomodation;
-import com.nifs.backend.model.transport.TravelRequest;
-import com.nifs.backend.repository.transport.AccomodationRepository;
-import com.nifs.backend.service.transport.IAccomodationService;
+import com.nifs.backend.repository.admin.AccomodationRepository;
+import com.nifs.backend.service.admin.IAccomodationService;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
