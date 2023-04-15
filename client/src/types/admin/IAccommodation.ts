@@ -1,33 +1,30 @@
 export default interface IAccommodation {
-	//gueset details
-	documentNo: string;
-	documentDate: string;
-	guestName: string;
-	address: string;
-	email: string;
-	designation: string;
-	nicNo: string;
-	nationality: string;
-	telephoneNo: string;
-	passportNo: string;
-	faxNo: string;
+  documentNo: string;
+  epfNo: number;
+  designationId: string;
+  divisionId: string;
+  hod: number;
 
-	//host details
-	hostEmployee: string;
-	project: '';
-	//reason for request accommodation
-	requestType: string;
-	officialProgram: string;
+  //gueset details
+  date: string;
+  guestName: string;
+  address: string;
+  email: string;
+  nicNo: string;
+  telephoneNo: string;
 
-	//accommodation
-	location: string;
-	noOfDays: number;
-	fromDate: string;
-	toDate: string;
-	roomRates: string;
-	roomType: string;
-	totalCharges: string;
+  //reason for request accommodation
+  requestType: string;
 
-	//payment
-	payee: string;
+  //accommodation
+  roomNumber: string;
+  noOfDays: number;
+  fromDate: string;
+  toDate: string;
+  roomRates: string;
+  roomType: string;
+  totalCharges: string;
+
+  //payment
+  payee: string;
 }

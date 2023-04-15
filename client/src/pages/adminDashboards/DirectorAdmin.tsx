@@ -16,6 +16,9 @@ import DirectorSRN from "./DirectorDashbaord/DirectorSRN";
 import DirectorGatePass from "./DirectorDashbaord/DirectorGatePass";
 import DirectorQuotationRequest from "./DirectorDashbaord/DirectorQuotationRequest";
 import DirectorQuotationSummaryRequest from "./DirectorDashbaord/DirectorQuotationSummaryRequest";
+import DirectorAccomodation from "./DirectorDashbaord/DirectorAccomodation";
+import DirectorInsuranceClaim from "./DirectorDashbaord/DirectorInsuranceClaim";
+import DirectorAnnualIncrementRequest from "./DirectorDashbaord/DirectorAnnualIncrementRequest";
 
 export function PageRoutes() {
   return (
@@ -28,6 +31,8 @@ export function PageRoutes() {
         path={RouteName.ContractExtension}
         element={<DirectorContractExtension />}
       />
+
+      {/* Library */}
       <Route
         path={RouteName.LibraryArticleRequest}
         element={<DirectorArticleRequest />}
@@ -36,7 +41,7 @@ export function PageRoutes() {
         path={RouteName.LibraryJournalRequest}
         element={<DirectorJournalRequest />}
       />
-
+      {/* Transport */}
       <Route
         path={RouteName.TransportTravelRequest}
         element={<DirectorTravelRequest />}
@@ -45,6 +50,8 @@ export function PageRoutes() {
         path={RouteName.TransportCost}
         element={<DirectorTransportCost />}
       />
+
+      {/* Procument */}
 
       <Route path={RouteName.Srn} element={<DirectorSRN />} />
       <Route path={RouteName.GatePass} element={<DirectorGatePass />} />
@@ -55,6 +62,23 @@ export function PageRoutes() {
       <Route
         path={RouteName.QuotationSummary}
         element={<DirectorQuotationSummaryRequest />}
+      />
+
+      {/* admin */}
+
+      <Route
+        path={RouteName.Accommodation}
+        element={<DirectorAccomodation />}
+      />
+
+      <Route
+        path={RouteName.InsuranceClaims}
+        element={<DirectorInsuranceClaim />}
+      />
+
+      <Route
+        path={RouteName.AnnualIncrementRequest}
+        element={<DirectorAnnualIncrementRequest />}
       />
 
       <Route path={RouteName.Projects} element={<Projects />} />

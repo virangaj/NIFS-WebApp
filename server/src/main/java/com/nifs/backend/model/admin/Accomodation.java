@@ -2,6 +2,7 @@ package com.nifs.backend.model.admin;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.nifs.backend.constant.RequestStatus;
+import com.nifs.backend.dto.BaseDTO;
 import com.nifs.backend.model.Base;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -13,15 +14,15 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Setter
 @Getter
+@Setter
 @SuperBuilder
 @Entity
-@Table(name = "insurance_claim")
-public class InsuranceClaim extends Base {
+@Table(name = "accomodation")
+public class Accomodation extends Base {
 
     private String documentNo;
-    private int epfNo;
+    private String epfNo;
     private String designationId;
     private String divisionId;
     private int hod;
@@ -31,25 +32,28 @@ public class InsuranceClaim extends Base {
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Column(name = "date")
     private String date;
-    private String remark;
-
+    private String guestName;
+    private String address;
+    private String email;
+    private String nicNo;
+    private String telephoneNo;
+    private String roomNumber;
+    private String noOfDays;
 
     @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(pattern = "dd/MM/yyyy")
     @DateTimeFormat(pattern = "dd/MM/yyyy")
-    @Column(name = "claim_paid_date")
-    private String claimPaidDate;
+    @Column(name = "start_date")
+    private String fromDate;
 
     @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(pattern = "dd/MM/yyyy")
     @DateTimeFormat(pattern = "dd/MM/yyyy")
-    @Column(name = "spectacle_claim_date")
-    private String spectacleClaimDate;
-    private float noOfClaims;
-    private float claimAmount;
-    private float totalBillAmount;
-    private float paidClaimAmount;
-    private float notPaidClaimAmount;
+    @Column(name = "end_date")
+    private String toDate;
+    private String roomRates;
+    private String roomType;
+    private String totalCharges;
 
     RequestStatus hodApproved;
     RequestStatus dirApproved;

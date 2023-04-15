@@ -4,10 +4,10 @@ import { RequestStatus } from "../../constant/requestStatus";
 
 axios.defaults.baseURL = process.env.REACT_APP_BACKEND_SERVER;
 
-const getAnnualIncrementRequests = async (token: any) => {
+const getAccomodationRequests = async (token: any) => {
   const response = await axios({
     method: "get",
-    url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/annual-increment-request`,
+    url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/accomodation`,
     headers: {
       "Content-Type": "application/json; charset=utf-8",
       Authorization: `Bearer ${token}`,
@@ -18,13 +18,13 @@ const getAnnualIncrementRequests = async (token: any) => {
 };
 
 //get all constrsac t accodung to admin
-const getDivisionAnnualIncrementRequests = async (
+const getDivisionAccomodationRequests = async (
   token: any,
   division: string
 ) => {
   const response = await axios({
     method: "get",
-    url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/annual-increment-request?division=${division}`,
+    url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/accomodation?division=${division}`,
     headers: {
       "Content-Type": "application/json; charset=utf-8",
       Authorization: `Bearer ${token}`,
@@ -34,15 +34,15 @@ const getDivisionAnnualIncrementRequests = async (
   return response;
 };
 
-const getAnnualIncrementRequest = (id: any) => {
-  return http.get<any>(`/admin/annual-increment-request/${id}`);
+const getAccomodationRequest = (id: any) => {
+  return http.get<any>(`/admin/accomodation/${id}`);
 };
 
-const saveAnnualIncrementRequest = async (data: any, token: string) => {
+const saveAccomodationRequest = async (data: any, token: string) => {
   console.log(token);
   const response = await axios({
     method: "post",
-    url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/annual-increment-request/add`,
+    url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/accomodation/add`,
     data: data,
     headers: {
       "Content-Type": "application/json; charset=utf-8",
@@ -60,7 +60,7 @@ const sendHodApproval = async (
 ) => {
   const response = await axios({
     method: "put",
-    url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/annual-increment-request/hod/status?approval=${approval}`,
+    url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/accomodation/hod/status?approval=${approval}`,
     data: id,
     headers: {
       "Content-Type": "application/json; charset=utf-8",
@@ -78,7 +78,7 @@ const sendDirectorApproval = async (
 ) => {
   const response = await axios({
     method: "put",
-    url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/annual-increment-request/director/status?approval=${approval}`,
+    url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/accomodation/director/status?approval=${approval}`,
     data: id,
     headers: {
       "Content-Type": "application/json; charset=utf-8",
@@ -88,13 +88,13 @@ const sendDirectorApproval = async (
 
   return response;
 };
-const AnnualIncrementService = {
-  getAnnualIncrementRequest,
-  getAnnualIncrementRequests,
-  getDivisionAnnualIncrementRequests,
-  saveAnnualIncrementRequest,
+const AccomodationService = {
+  getAccomodationRequest,
+  getAccomodationRequests,
+  getDivisionAccomodationRequests,
+  saveAccomodationRequest,
   sendDirectorApproval,
   sendHodApproval,
 };
 
-export default AnnualIncrementService;
+export default AccomodationService;
