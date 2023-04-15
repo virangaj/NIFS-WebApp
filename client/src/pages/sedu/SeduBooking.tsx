@@ -1,11 +1,13 @@
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
-
+import timeGridPlugin from '@fullcalendar/timegrid';
 import { useEffect, useState } from 'react';
 import EventRequestService from '../../services/sedu/EventRequestService';
 import { dateConveter } from '../../utils/generateId';
+import EventDetailsShow from './shared/EventDetailsShow';
 function SeduBooking() {
 	const [requests, setRequests] = useState<Array<any>>([]);
+	const [selected, setSelected] = useState();
 	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
@@ -39,30 +41,32 @@ function SeduBooking() {
 
 	const eventClicked = (info: any) => {
 		// bind with an arrow function
-		console.log(info.event.id);
+		setSelected(info.event.id);
 	};
 
 	console.log(requests);
-	const events = [
-		{ title: 'Event 1', date: '2023-04-01' },
-		{ title: 'Event 2', date: '2023-04-01' },
-		{ title: 'Event 2', date: '2023-04-05' },
-		{ title: 'Event 3', date: '2023-04-15' },
-	];
+
 	return (
 		<div className='!h-screen sub-body-content'>
 			<h1 className='page-title'>Booking</h1>
 			<hr className='horizontal-line' />
-			<div className='w-[50%]'>
-				<FullCalendar
-					plugins={[dayGridPlugin]}
-					initialView='dayGridMonth'
-					events={requests}
-					aspectRatio={1}
-					height={700}
-					eventClick={eventClicked}
-					// dateClick={handleDateClick}
-				/>
+			<div className='flex w-full'>
+				<div className='w-[50%]'>
+					<FullCalendar
+						plugins={[dayGridPlugin, timeGridPlugin]}
+						initialView='dayGridMonth'
+						events={requests}
+						aspectRatio={1}
+						height={700}
+						eventClick={eventClicked}
+						selectable={true}
+						navLinks={true}
+						weekNumbers={true}
+					/>
+				</div>
+				<div className='mt-20'>
+					{selected ? <EventDetailsShow selected={selected} /> : <></>}
+				</div>
 			</div>
 		</div>
 	);
