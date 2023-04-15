@@ -1,511 +1,499 @@
-import React, { useState, useEffect } from 'react';
-import { toast } from 'react-toastify';
-import Stack from '@mui/material/Stack';
-import { generateID } from '../../utils/generateId';
-import Ripple from '../../components/Ripple';
-import IContractExtension from '../../types/admin/IContractExtension';
-import CustomeDataPicker from '../../components/DataPicker';
-import IEmployeeData from '../../types/admin/IEmployeeData';
-import EmployeeService from '../../services/admin/EmployeeService';
-import IDesignationData from '../../types/admin/IDesignationData';
-import DesignationMasterService from '../../services/admin/DesignationMasterService';
-import IDivisionData from '../../types/admin/IDivisionData';
-import DivisionMasterService from '../../services/admin/DivisionMasterService';
-import IAccommodation from '../../types/admin/IAccommodation';
-import { Box } from '@mui/material';
+import React, { useState, useEffect } from "react";
+import { toast } from "react-toastify";
+import Stack from "@mui/material/Stack";
+import { generateID } from "../../utils/generateId";
+import Ripple from "../../components/Ripple";
+import IContractExtension from "../../types/admin/IContractExtension";
+import CustomeDataPicker from "../../components/DataPicker";
+import IEmployeeData from "../../types/admin/IEmployeeData";
+import EmployeeService from "../../services/admin/EmployeeService";
+import IDesignationData from "../../types/admin/IDesignationData";
+import DesignationMasterService from "../../services/admin/DesignationMasterService";
+import IDivisionData from "../../types/admin/IDivisionData";
+import DivisionMasterService from "../../services/admin/DivisionMasterService";
+import IAccommodation from "../../types/admin/IAccommodation";
+import { Box } from "@mui/material";
+import { useAppSelector } from "../../hooks/hooks";
+import AccomodationService from "../../services/admin/AccomodationService";
+import EmployeeSelector from "../../components/shared/EmployeeSelector";
+import DesignationSelector from "../../components/shared/DesignationSelector";
+import DivisionSelector from "../../components/shared/DivisionSelector";
 
 const initialState: IAccommodation = {
-	//gueset details
-	documentNo: '',
-	documentDate: '',
-	guestName: '',
-	address: '',
-	email: '',
-	designation: '',
-	nicNo: '',
-	nationality: '',
-	telephoneNo: '',
-	passportNo: '',
-	faxNo: '',
+  documentNo: "",
+  epfNo: 0,
+  designationId: "",
+  divisionId: "",
+  hod: 0,
 
-	//host details
-	hostEmployee: '',
-	project: '',
+  //gueset details
+  date: "",
+  guestName: "",
+  address: "",
+  email: "",
+  nicNo: "",
+  telephoneNo: "",
 
-	//reason for request accommodation
-	requestType: '',
-	officialProgram: '',
+  //reason for request accommodation
+  requestType: "",
 
-	//accommodation
-	location: '',
-	noOfDays: 0,
-	fromDate: '',
-	toDate: '',
-	roomRates: '',
-	roomType: '',
-	totalCharges: '',
+  //accommodation
+  roomNumber: "",
+  noOfDays: 0,
+  fromDate: "",
+  toDate: "",
+  roomRates: "",
+  roomType: "",
+  totalCharges: "",
 
-	//payment
-	payee: '',
+  //payment
+  payee: "",
 };
 
 function Accommodation() {
-	const [getDocumentNo, setDocumentNo] = useState<String | any>('');
-	const [empData, setEmpData] = useState<Array<IEmployeeData>>([]);
-	const [docDate, setDocDate] = React.useState<string | null>(null);
-	const [fromDate, setFromDate] = React.useState<string | null>(null);
-	const [toDate, setToDate] = React.useState<string | null>(null);
-	const [currentEmp, setCurrentEmp] = useState<IEmployeeData>();
-	const [empFoundError, setEmpFoundError] = useState<boolean>(false);
-	const [designationData, setDesignationData] = useState<IDesignationData>();
-	const [divisionData, setDivisionData] = useState<IDivisionData>();
-	const [values, setValues] = useState<IAccommodation>(initialState);
+  const [getDocumentNo, setDocumentNo] = useState<String | any>("");
+  const [empData, setEmpData] = useState<Array<IEmployeeData>>([]);
+  const [docDate, setDocDate] = React.useState<string | null>(null);
+  const [startDate, setStartDate] = React.useState<string | null>(null);
+  const [endDate, setEndDate] = React.useState<string | null>(null);
+  const [currentEmp, setCurrentEmp] = useState<IEmployeeData>();
+  const [empFoundError, setEmpFoundError] = useState<boolean>(false);
+  const [designationData, setDesignationData] = useState<IDesignationData>();
+  const [divisionData, setDivisionData] = useState<IDivisionData>();
+  const [values, setValues] = useState<IAccommodation>(initialState);
+  const [requestDate, setRequestDate] = React.useState<string | null>(null);
+  const [getDocNo, setDocNo] = useState<String | any>("");
+  const [hod, setHod] = useState<IEmployeeData | null>();
+  const [loading, setLoading] = useState(false);
 
-	useEffect(() => {
-		let employee = empData.find(
-			(emp: IEmployeeData) =>
-				emp.epfNo.toString() === values.hostEmployee.toString()
-		);
-		setCurrentEmp(employee);
-		if (employee) {
-			setEmpFoundError(false);
-		} else {
-			setEmpFoundError(true);
-		}
+  const { employees, employeesIsLoading, employeesIsSuccess } = useAppSelector(
+    (state) => state.employees
+  );
+  const { division, divisionIsLoading, divisionIsSuccess } = useAppSelector(
+    (state) => state.division
+  );
 
-		retriveEmployeeDetails(employee);
-	}, [values.hostEmployee]);
+  const { auth } = useAppSelector((state) => state.persistedReducer);
 
-	//get designation and division
-	const retriveEmployeeDetails = (emp: any) => {
-		//get designation
-		DesignationMasterService.getDesignation(emp?.designationId)
-			.then((res: any) => {
-				setDesignationData(res.data.data);
-			})
-			.catch((e: any) => {
-				console.log(e);
-			});
+  useEffect(() => {
+    setValues({
+      ...values,
+      date: requestDate ? requestDate : "",
+      toDate: endDate ? endDate : "",
+      fromDate: startDate ? startDate : "",
+    });
+  }, [requestDate, endDate, startDate]);
 
-		//get divions
+  useEffect(() => {
+    setValues({
+      ...values,
+      documentNo: getDocNo && getDocNo,
+    });
+    console.log(getDocNo);
+  }, [getDocNo]);
 
-		DivisionMasterService.getDivision(emp?.divisionId)
-			.then((res: any) => {
-				setDivisionData(res.data.data);
-			})
-			.catch((e: any) => {
-				console.log(e);
-			});
-	};
+  useEffect(() => {
+    const divisionData = division.find(
+      (d) => d.divisionId === values.divisionId
+    );
 
-	// generate document ID
-	const generateDocNo = () => {
-		setDocumentNo(generateID('AC'));
-		setValues(initialState);
-	};
+    if (divisionData) {
+      const employeeId = divisionData.hod;
+      const employee = employees.find((e) => e.epfNo === employeeId);
+      // console.log(employee);
+      if (employee) {
+        setHod(employee);
+        setValues({
+          ...values,
+          hod: employee.epfNo,
+        });
+      }
+    }
+  }, [values.divisionId]);
 
-	//reset form
-	const resetForm = () => {
-		setValues(initialState);
-		setDocumentNo('');
-	};
+  // generate Doc number ID
+  const generateDocNo = () => {
+    setDocNo(generateID("CC"));
+    setValues(initialState);
+  };
 
-	//onchange funtion
-	const onChange = (e: any) => {
-		setValues((preState) => ({
-			...preState,
-			[e.target.name]: e.target.value,
-		}));
-	};
+  //reset form
+  const resetForm = () => {
+    setValues(initialState);
+    setDocNo("");
+    setHod(null);
+  };
 
-	//onsubmit
-	const onSubmit = async (e: any) => {
-		e.preventDefault();
-		console.log(values);
-	};
+  //  onChange Function
+  const onChange = (e: any) => {
+    setValues((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
 
-	return (
-		<div className='sub-body-content xl:!w-[80%]'>
-			<h1 className='page-title'>Accommodation</h1>
-			<hr className='horizontal-line' />
-			<form onSubmit={onSubmit}>
-				<h1 className='sub-page-title'>Guest Details</h1>
-				<hr className='horizontal-line' />
+  //onsubmit
+  const onSubmit = async (e: any) => {
+    e.preventDefault();
+    console.log(values);
 
-				<div className='flex w-[100%]'>
-					{/* left section of the flex */}
-					<div className='flex-1 mr-4'>
-						<div className='grid grid-cols-1 md:grid-cols-2 items-center w-[97%] mx-auto'>
-							<Box className='flex items-center justify-between input-field'>
-								Document No - {getDocumentNo && getDocumentNo}
-								<button
-									type='button'
-									className='rounded-outline-success-btn'
-									onClick={generateDocNo}
-									style={{ marginLeft: '20px' }}
-								>
-									New
-								</button>
-							</Box>
-							<div className='mx-0 mb-4 lg:ml-10 md:my-0'>
-								<CustomeDataPicker
-									date={docDate}
-									setDate={setDocDate}
-									title='Request Date'
-								/>
-							</div>
-						</div>
+    setLoading(true);
+    setTimeout(() => {
+      const result = AccomodationService.saveAccomodationRequest(
+        values,
+        auth?.user?.token
+      )
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
 
-						{/* guest name  */}
-						<div>
-							<label className='input-label basis-1/2' htmlFor='employee'>
-								Guest Name
-							</label>
+      if (result !== null) {
+        toast.success("Accomodation Request Added Successfully");
+        resetForm();
+      } else {
+        toast.error("Request Cannot be Completed");
+      }
+      setLoading(false);
+    }, 1000);
+  };
 
-							<input
-								id='outlined-basic'
-								type='search'
-								className='mr-4 tailwind-text-box w-[100%]'
-								name='guestName'
-								onChange={onChange}
-								value={values.guestName}
-								required
-							/>
-						</div>
-						{/* address  */}
+  return (
+    <div className="sub-body-content xl:!w-[80%]">
+      <h1 className="page-title">Accommodation</h1>
+      <form onSubmit={onSubmit}>
+        <h1 className="sub-page-title">Guest Details</h1>
+        <hr className="horizontal-line" />
 
-						<div>
-							<label className='input-label basis-1/2' htmlFor='address'>
-								Address
-							</label>
+        <div className="flex w-[100%]">
+          {/* left section of the flex */}
+          <div className="flex-1 mr-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 items-center w-[97%] mx-auto">
+              <Box className="flex items-center justify-between input-field">
+                Document No - {getDocNo && getDocNo}
+                <button
+                  type="button"
+                  className="rounded-outline-success-btn"
+                  onClick={generateDocNo}
+                  style={{ marginLeft: "20px" }}
+                >
+                  New
+                </button>
+              </Box>
+            </div>
 
-							<input
-								id='outlined-basic'
-								type='search'
-								className='mr-4 tailwind-text-box w-[100%]'
-								name='address'
-								onChange={onChange}
-								value={values.address}
-								required
-							/>
-						</div>
-						{/* email */}
-						<div>
-							<label className='input-label basis-1/2' htmlFor='email'>
-								Email
-							</label>
+            <EmployeeSelector
+              onChange={onChange}
+              value={values.epfNo}
+              name="epfNo"
+            />
 
-							<input
-								id='outlined-basic'
-								type='email'
-								className='mr-4 tailwind-text-box w-[100%]'
-								name='email'
-								onChange={onChange}
-								value={values.email}
-								required
-							/>
-						</div>
-					</div>
+            {values.epfNo && empFoundError ? (
+              <p className="w-[97%] mx-auto error-text-message">
+                User Not Found!
+              </p>
+            ) : (
+              ""
+            )}
 
-					{/* right section of the flex */}
-					<div className='flex-1 ml-4 -mt-7'>
-						<div>
-							<label className='input-label basis-1/2' htmlFor='designation'>
-								Designation
-							</label>
+            <div className="w-[97%] mx-auto">
+              <DesignationSelector
+                onChange={onChange}
+                value={values.designationId}
+                name="designationId"
+              />
+            </div>
 
-							<input
-								id='outlined-basic'
-								type='search'
-								className='mr-4 tailwind-text-box w-[100%]'
-								name='designation'
-								onChange={onChange}
-								value={values.designation}
-								required
-							/>
-						</div>
+            <div className="w-[97%] mx-auto">
+              <DivisionSelector
+                onChange={onChange}
+                value={values.divisionId}
+                name="divisionId"
+              />
+            </div>
 
-						<div className='flex items-center justify-between'>
-							<div className='flex-1 mr-2'>
-								<label className='input-label basis-1/2' htmlFor='nicNo'>
-									NIC No
-								</label>
+            <div className="w-[97%] mx-auto">
+              <div className="grid items-center grid-cols-1 md:grid-cols-2">
+                <p className="normal-text">
+                  HOD :{" "}
+                  {values.divisionId && hod ? (
+                    <span className="font-bold">
+                      {hod.firstName + " " + hod.lastName}
+                    </span>
+                  ) : (
+                    <span className="italic-sm-text">
+                      Please select a Division
+                    </span>
+                  )}
+                </p>
+              </div>
+            </div>
 
-								<input
-									id='outlined-basic'
-									type='search'
-									className='mr-4 tailwind-text-box w-[100%]'
-									name='nicNo'
-									onChange={onChange}
-									value={values.nicNo}
-									required
-								/>
-							</div>
+            <div className="mx-0 mb-4 lg:ml-10 md:my-0">
+              <CustomeDataPicker
+                date={requestDate}
+                setDate={setRequestDate}
+                title="Request Date"
+              />
+            </div>
+          </div>
 
-							<div className='flex-1 ml-2'>
-								<label className='input-label basis-1/2' htmlFor='passportNo'>
-									Passport No
-								</label>
+          {/* right section of the flex */}
+          <div className="flex-1 ml-4 -mt-7">
+            {/* guest name  */}
+            <div>
+              <label className="input-label basis-1/2" htmlFor="employee">
+                Guest Name
+              </label>
 
-								<input
-									id='outlined-basic'
-									type='search'
-									className='mr-4 tailwind-text-box w-[100%]'
-									name='passportNo'
-									onChange={onChange}
-									value={values.passportNo}
-									required
-								/>
-							</div>
-						</div>
+              <input
+                id="outlined-basic"
+                type="search"
+                className="mr-4 tailwind-text-box w-[100%]"
+                name="guestName"
+                onChange={onChange}
+                value={values.guestName}
+                required
+              />
+            </div>
 
-						<div className='flex items-center justify-between'>
-							<div className='flex-1 mr-2'>
-								<label className='input-label basis-1/2' htmlFor='nationality'>
-									Nationality
-								</label>
+            {/* address  */}
+            <div>
+              <label className="input-label basis-1/2" htmlFor="address">
+                Address
+              </label>
 
-								<input
-									id='outlined-basic'
-									type='search'
-									className='mr-4 tailwind-text-box w-[100%]'
-									name='nationality'
-									onChange={onChange}
-									value={values.nationality}
-									required
-								/>
-							</div>
+              <input
+                id="outlined-basic"
+                type="search"
+                className="mr-4 tailwind-text-box w-[100%]"
+                name="address"
+                onChange={onChange}
+                value={values.address}
+                required
+              />
+            </div>
 
-							<div className='flex-1 ml-2'>
-								<label className='input-label basis-1/2' htmlFor='faxNo'>
-									Fax No
-								</label>
+            {/* email */}
+            <div>
+              <label className="input-label basis-1/2" htmlFor="email">
+                Email
+              </label>
 
-								<input
-									id='outlined-basic'
-									type='search'
-									className='mr-4 tailwind-text-box w-[100%]'
-									name='faxNo'
-									onChange={onChange}
-									value={values.faxNo}
-									required
-								/>
-							</div>
-						</div>
+              <input
+                id="outlined-basic"
+                type="email"
+                className="mr-4 tailwind-text-box w-[100%]"
+                name="email"
+                onChange={onChange}
+                value={values.email}
+                required
+              />
+            </div>
 
-						<div>
-							<label className='input-label basis-1/2' htmlFor='telephoneNo'>
-								Telephone No
-							</label>
+            <div className="flex items-center justify-between">
+              <div className="flex-1 mr-2">
+                <label className="input-label basis-1/2" htmlFor="nicNo">
+                  NIC No
+                </label>
 
-							<input
-								id='outlined-basic'
-								type='search'
-								className='mr-4 tailwind-text-box w-[100%]'
-								name='telephoneNo'
-								onChange={onChange}
-								value={values.telephoneNo}
-								required
-							/>
-						</div>
-					</div>
-				</div>
+                <input
+                  id="outlined-basic"
+                  type="search"
+                  className="mr-4 tailwind-text-box w-[100%]"
+                  name="nicNo"
+                  onChange={onChange}
+                  value={values.nicNo}
+                  required
+                />
+              </div>
+            </div>
 
-				<h1 className='sub-page-title'>Host</h1>
-				<hr className='horizontal-line' />
+            <div>
+              <label className="input-label basis-1/2" htmlFor="requestType">
+                Request Type
+              </label>
 
-				<div className='flex w-[100%]'>
-					{/* left section of the flex */}
-					<div className='flex-1 mr-4'>
-						<div>
-							<label className='input-label basis-1/2' htmlFor='hostEmployee'>
-								Host Employee
-							</label>
+              <input
+                id="outlined-basic"
+                type="search"
+                className="mr-4 tailwind-text-box w-[100%]"
+                name="requestType"
+                onChange={onChange}
+                value={values.requestType}
+                required
+              />
+            </div>
 
-							<input
-								id='outlined-basic'
-								type='search'
-								className='mr-4 tailwind-text-box w-[100%]'
-								name='hostEmployee'
-								onChange={onChange}
-								value={values.hostEmployee}
-								required
-							/>
-						</div>
-					</div>
+            <div>
+              <label className="input-label basis-1/2" htmlFor="telephoneNo">
+                Telephone No
+              </label>
 
-					{/* Right section of the flex */}
-					<div className='flex-1 ml-4'>
-						<div>
-							<label className='input-label basis-1/2' htmlFor='project'>
-								Project
-							</label>
+              <input
+                id="outlined-basic"
+                type="search"
+                className="mr-4 tailwind-text-box w-[100%]"
+                name="telephoneNo"
+                onChange={onChange}
+                value={values.telephoneNo}
+                required
+              />
+            </div>
+          </div>
+        </div>
 
-							<input
-								id='outlined-basic'
-								type='search'
-								className='mr-4 tailwind-text-box w-[100%]'
-								name='project'
-								onChange={onChange}
-								value={values.project}
-								required
-							/>
-						</div>
-					</div>
-				</div>
+        <h1 className="sub-page-title">Accommodation</h1>
+        <hr className="horizontal-line" />
 
-				<h1 className='sub-page-title'>Reason for Request Accommodation</h1>
-				<hr className='horizontal-line' />
+        <div className="flex w-[100%]">
+          {/* left section of the flex */}
+          <div className="flex-1 mr-4">
+            <label className="input-label basis-1/2">Duration</label>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="mx-0 mb-4 lg:ml-10 md:my-0">
+                <CustomeDataPicker
+                  date={startDate}
+                  setDate={setStartDate}
+                  title="From"
+                />
+              </div>
 
-				<div>
-					<label className='input-label basis-1/2' htmlFor='requestType'>
-						Request Type
-					</label>
+              <div className="mx-0 mb-4 lg:ml-10 md:my-0">
+                <CustomeDataPicker
+                  date={endDate}
+                  setDate={setEndDate}
+                  title="To"
+                />
+              </div>
+            </div>
 
-					<input
-						id='outlined-basic'
-						type='search'
-						className='mr-4 tailwind-text-box w-[100%]'
-						name='requestType'
-						onChange={onChange}
-						value={values.requestType}
-						required
-					/>
-				</div>
+            <div>
+              <label className="input-label basis-1/2" htmlFor="roomRates">
+                Room Rates
+              </label>
 
-				<div>
-					<label className='input-label basis-1/2' htmlFor='officialProgram'>
-						Official Program
-					</label>
+              <input
+                id="outlined-basic"
+                type="search"
+                className="mr-4 tailwind-text-box w-[100%]"
+                name="roomRates"
+                onChange={onChange}
+                value={values.roomRates}
+                required
+              />
+            </div>
 
-					<input
-						id='outlined-basic'
-						type='search'
-						className='mr-4 tailwind-text-box w-[100%]'
-						name='officialProgram'
-						onChange={onChange}
-						value={values.officialProgram}
-						required
-					/>
-				</div>
+            <div>
+              <label className="input-label basis-1/2" htmlFor="noOfDays">
+                No of Days
+              </label>
 
-				<h1 className='sub-page-title'>Accommodation</h1>
-				<hr className='horizontal-line' />
+              <input
+                id="outlined-basic"
+                type="search"
+                className="mr-4 tailwind-text-box w-[100%]"
+                name="noOfDays"
+                onChange={onChange}
+                value={values.noOfDays}
+                required
+              />
+            </div>
 
-				<div className='flex w-[100%]'>
-					{/* left section of the flex */}
-					<div className='flex-1 mr-4'>
-						<div>
-							<label className='input-label basis-1/2' htmlFor='location'>
-								Location
-							</label>
+            <div>
+              <label className="input-label basis-1/2" htmlFor="roomNumber">
+                Room Number
+              </label>
 
-							<input
-								id='outlined-basic'
-								type='search'
-								className='mr-4 tailwind-text-box w-[100%]'
-								name='location'
-								onChange={onChange}
-								value={values.location}
-								required
-							/>
-						</div>
+              <input
+                id="outlined-basic"
+                type="search"
+                className="mr-4 tailwind-text-box w-[100%]"
+                name="roomNumber"
+                onChange={onChange}
+                value={values.roomNumber}
+                required
+              />
+            </div>
+          </div>
+          {/* right section of the flex */}
+          <div className="flex-1 ml-4">
+            <div>
+              <label className="input-label basis-1/2" htmlFor="totalCharges">
+                Total Charges
+              </label>
 
-						<label className='input-label basis-1/2'>Duration</label>
-						<div className='grid grid-cols-2 gap-4'>
-							<div className='mx-0 mb-4 lg:ml-10 md:my-0'>
-								<CustomeDataPicker
-									date={fromDate}
-									setDate={setFromDate}
-									title='From'
-								/>
-							</div>
+              <input
+                id="outlined-basic"
+                type="search"
+                className="mr-4 tailwind-text-box w-[100%]"
+                name="totalCharges"
+                onChange={onChange}
+                value={values.totalCharges}
+                required
+              />
+            </div>
 
-							<div className='mx-0 mb-4 lg:ml-10 md:my-0'>
-								<CustomeDataPicker
-									date={toDate}
-									setDate={setToDate}
-									title='To'
-								/>
-							</div>
-						</div>
+            <div>
+              <label className="input-label basis-1/2" htmlFor="roomType">
+                Room Type
+              </label>
 
-						<div>
-							<label className='input-label basis-1/2' htmlFor='roomRates'>
-								Room Rates
-							</label>
+              <input
+                id="outlined-basic"
+                type="search"
+                className="mr-4 tailwind-text-box w-[100%]"
+                name="roomType"
+                onChange={onChange}
+                value={values.roomType}
+                required
+              />
+            </div>
 
-							<input
-								id='outlined-basic'
-								type='search'
-								className='mr-4 tailwind-text-box w-[100%]'
-								name='roomRates'
-								onChange={onChange}
-								value={values.roomRates}
-								required
-							/>
-						</div>
-					</div>
-					{/* right section of the flex */}
-					<div className='flex-1 ml-4'>
-						<div>
-							<label className='input-label basis-1/2' htmlFor='noOfDays'>
-								No of Days
-							</label>
+            <div>
+              <label className="input-label basis-1/2" htmlFor="payee">
+                Payee
+              </label>
 
-							<input
-								id='outlined-basic'
-								type='search'
-								className='mr-4 tailwind-text-box w-[100%]'
-								name='noOfDays'
-								onChange={onChange}
-								value={values.noOfDays}
-								required
-							/>
-						</div>
+              <input
+                id="outlined-basic"
+                type="search"
+                className="mr-4 tailwind-text-box w-[100%]"
+                name="payee"
+                onChange={onChange}
+                value={values.payee}
+                required
+              />
+            </div>
 
-						<div>
-							<label className='input-label basis-1/2' htmlFor='totalCharges'>
-								Total Charges
-							</label>
+            {/* have to implement some checkboxes */}
+          </div>
+        </div>
 
-							<input
-								id='outlined-basic'
-								type='search'
-								className='mr-4 tailwind-text-box w-[100%]'
-								name='totalCharges'
-								onChange={onChange}
-								value={values.totalCharges}
-								required
-							/>
-						</div>
-
-						{/* have to implement some checkboxes */}
-					</div>
-				</div>
-
-				<Stack
-					direction='row'
-					justifyContent='flex-end'
-					alignItems='flex-end'
-					spacing={2}
-					className='admin-form-buton-stack'
-				>
-					<button
-						className='action-com-model-error-btn'
-						type='reset'
-						color='error'
-						onClick={resetForm}
-					>
-						Reset
-					</button>
-					<button className='action-com-model-sucess-btn' type='submit'>
-						Submit
-					</button>
-				</Stack>
-			</form>
-		</div>
-	);
+        <Stack
+          direction="row"
+          justifyContent="flex-end"
+          alignItems="flex-end"
+          spacing={2}
+          className="admin-form-buton-stack"
+        >
+          <button
+            className="action-com-model-error-btn"
+            type="reset"
+            color="error"
+            onClick={resetForm}
+          >
+            Reset
+          </button>
+          <button className="action-com-model-sucess-btn" type="submit">
+            Submit
+          </button>
+        </Stack>
+      </form>
+    </div>
+  );
 }
 
 export default Accommodation;
