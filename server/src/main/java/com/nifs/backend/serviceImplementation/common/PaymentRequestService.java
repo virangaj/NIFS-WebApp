@@ -62,6 +62,7 @@ public class PaymentRequestService implements IPaymentRequestService {
                     .otherCharge(data.getOtherCharge())
                     .createdBy(data.getEpfNo())
                     .hodApproved(data.getHodApproved())
+                    .dirApproved(data.getDirApproved())
                     .createdOn(new Date())
                     .build();
 

@@ -66,6 +66,7 @@ public class AnnualIncrementService implements IAnnualIncrementService {
                     .createdBy(data.getEpfNo())
                     .createdOn(new Date())
                     .hodApproved(data.getHodApproved())
+                    .dirApproved(data.getDirApproved())
                     .build();
 
             annualIncrementRepository.save(annualIncrement);

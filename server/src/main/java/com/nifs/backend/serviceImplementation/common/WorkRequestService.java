@@ -57,6 +57,7 @@ public class WorkRequestService implements IWorkRequestService {
                     .createdBy(data.getEpfNo())
                     .createdOn(new Date())
                     .dirApproved(data.getDirApproved())
+                    .hodApproved(data.getHodApproved())
                     .build();
 
             WorkRequest created = workRequestRepository.save(workRequest);

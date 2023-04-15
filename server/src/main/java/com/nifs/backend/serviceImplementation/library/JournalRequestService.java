@@ -62,6 +62,7 @@ public class JournalRequestService implements IJournalRequestService {
                     .createdBy(data.getEpfNo())
                     .createdOn(new Date())
                     .hodApproved(data.getHodApproved())
+                    .dirApproved(data.getDirApproved())
                     .build();
 
             journalRequestRepository.save(journalRequest);

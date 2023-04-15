@@ -62,6 +62,7 @@ public class AccomodationService implements IAccomodationService {
                     .createdBy(Integer.valueOf(data.getEpfNo()))
                     .createdOn(new Date())
                     .hodApproved(data.getHodApproved())
+                    .dirApproved(data.getDirApproved())
                     .build();
 
             accomodationRepository.save(accomodation);
