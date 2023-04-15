@@ -1,12 +1,30 @@
 import axios from "axios";
 import http from "../../utils/http-common";
+import { RequestStatus } from "../../constant/requestStatus";
 
 axios.defaults.baseURL = process.env.REACT_APP_BACKEND_SERVER;
 
-const getAllWorkRequests = async (token: any) => {
+const getWorkRequests = async (token: any) => {
   const response = await axios({
     method: "get",
     url: `${process.env.REACT_APP_BACKEND_SERVER}/common/work-request`,
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  // alert("Favourite created --- "+ response);
+  return response;
+};
+
+//get all constrsac t accodung to admin
+const getDivisionWorkRequests = async (
+  token: any,
+  division: string
+) => {
+  const response = await axios({
+    method: "get",
+    url: `${process.env.REACT_APP_BACKEND_SERVER}/common/work-request?division=${division}`,
     headers: {
       "Content-Type": "application/json; charset=utf-8",
       Authorization: `Bearer ${token}`,
@@ -35,10 +53,14 @@ const saveWorkRequest = async (data: any, token: string) => {
   return response;
 };
 
-const sendHodApproval = async (id: any, token: string, approval: boolean) => {
+const sendHodApproval = async (
+  id: any,
+  token: string,
+  approval: RequestStatus
+) => {
   const response = await axios({
     method: "put",
-    url: `${process.env.REACT_APP_BACKEND_SERVER}/common/work-request/hod?approval=${approval}`,
+    url: `${process.env.REACT_APP_BACKEND_SERVER}/common/work-request/hod/status?approval=${approval}`,
     data: id,
     headers: {
       "Content-Type": "application/json; charset=utf-8",
@@ -52,11 +74,11 @@ const sendHodApproval = async (id: any, token: string, approval: boolean) => {
 const sendDirectorApproval = async (
   id: any,
   token: string,
-  approval: boolean
+  approval: RequestStatus
 ) => {
   const response = await axios({
     method: "put",
-    url: `${process.env.REACT_APP_BACKEND_SERVER}/common/work-request/director?approval=${approval}`,
+    url: `${process.env.REACT_APP_BACKEND_SERVER}/common/work-request/director/status?approval=${approval}`,
     data: id,
     headers: {
       "Content-Type": "application/json; charset=utf-8",
@@ -67,8 +89,9 @@ const sendDirectorApproval = async (
   return response;
 };
 const WorkRequestService = {
-  getAllWorkRequests,
   getWorkRequest,
+  getWorkRequests,
+  getDivisionWorkRequests,
   saveWorkRequest,
   sendDirectorApproval,
   sendHodApproval,
