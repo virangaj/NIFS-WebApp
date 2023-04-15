@@ -32,13 +32,6 @@ function EventDetailsShow({ selected }: any) {
 			<EventDetailText title={'Created By'} value={event?.createdBy} />
 			<EventDetailText title={'Created On'} value={event?.createdOn} />
 			<EventDetailText title={'Venue'} value={event?.venueId} />
-			{/* budget : 2000 createdBy : 391 createdOn : "2023-04-14T08:20:50.132+00:00"
-			deleted : false documentNo : "230414ER134954" endDate : "16/4/2023"
-			endTime : "01:11:00" eventType : "Moragahakanda project" fundingId : "MBU
-			(Prof. Gamini)" id : 0 locationId : "Kandy" modifiedBy : null modifiedOn :
-			"2023-04-14T08:20:50.132+00:00" noParticipants : 12 projectId : "Project
-			1" remark : "Moragahakanda project" startDate : "14/4/2023" startTime :
-			"01:10:00" venueId : "Main Hall" */}
 		</div>
 	);
 }
