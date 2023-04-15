@@ -71,7 +71,7 @@ public class AnnualIncrementService implements IAnnualIncrementService {
 
             String hodEmail = employeeMasterService.getGsuitEmailById(data.getHod());
 
-            String msgBody = emailService.HODRequestMessage("Annual Increment Request", data.getEpfNo(), data.getHod(), "annual-increment-request");
+            String msgBody = emailService.HODRequestMessage("Annual Increment Request", data.getEpfNo(), data.getDivisionId(), "annual-increment-request");
 
             //send email to hod
             emailService.sendEmail(hodEmail, "Annual Increment Request", msgBody);
@@ -132,9 +132,9 @@ public class AnnualIncrementService implements IAnnualIncrementService {
 
                 emailService.sendEmail(secEmail, "Annual Increment Request", msgBody);
 
-                emailService.sendBulkEmailToRequester(emailList,"Annual Increment Request", "APPROVED", user);
+                emailService.sendBulkEmailToRequesterAfterHOD(emailList,"Annual Increment Request", "APPROVED", user);
             }else{
-                emailService.sendBulkEmailToRequester(emailList,"Annual Increment Request", "NOT APPROVED", user);
+                emailService.sendBulkEmailToRequesterAfterHOD(emailList,"Annual Increment Request", "NOT APPROVED", user);
 
             }
 
@@ -151,10 +151,29 @@ public class AnnualIncrementService implements IAnnualIncrementService {
     @Override
     public Object putDirectorApproval(RequestStatus approval, List<String> resId, String user) {
         try {
+            List<Map<String ,String>> emailList = new ArrayList<>();
             log.info("Director Travel Request : requested");
             resId.forEach(id->{
                 annualIncrementRepository.updateDirApproveAndModifiedFields(approval,user,new Date(),id);
+
+                int epfNo = getUserIDByRequestId(id);
+                Map<String, String> map = new LinkedHashMap<String, String>();
+                map.put("email", employeeMasterService.getGsuitEmailById(epfNo));
+                map.put("id", id);
+
+                emailList.add(map);
             });
+
+            if(approval == RequestStatus.APPROVED){
+
+                emailService.sendBulkEmailToRequesterAfterHOD(emailList,"Annual Increment Request", "APPROVED", "Director/secretary " +user);
+            }else{
+                emailService.sendBulkEmailToRequesterAfterHOD(emailList,"Annual Increment Request", "NOT APPROVED","Director/secretary " + user);
+
+            }
+
+
+
             return true;
         }catch (Exception e){
             log.info(e.toString());

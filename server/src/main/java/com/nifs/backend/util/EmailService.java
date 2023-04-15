@@ -38,10 +38,10 @@ public class EmailService {
     }
 
     //hod get request message
-    public String HODRequestMessage(String type, int epf, int hod, String endLink){
+    public String HODRequestMessage(String type, int epf, String division, String endLink){
         return type + " By " + epf +" to be reviewed \n\n" +
                 "Please use the link below to address it \n"+
-                "http://localhost:3000/dashboard/"+hod+"/admin/"+endLink;
+                "http://localhost:3000/dashboard/"+division+"/admin/"+endLink;
     }
 
     //director get request message
@@ -58,7 +58,7 @@ public class EmailService {
 
     }
 
-    public void sendBulkEmailToRequester(List<Map<String ,String>> emailList, String type, String status, String handler){
+    public void sendBulkEmailToRequesterAfterHOD(List<Map<String ,String>> emailList, String type, String status, String handler){
         String msg = userResponseStatusMessage(type, status, handler);
 
         emailList.forEach(e->{
