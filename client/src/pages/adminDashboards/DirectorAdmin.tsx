@@ -19,10 +19,16 @@ import DirectorQuotationSummaryRequest from "./DirectorDashbaord/DirectorQuotati
 import DirectorAccomodation from "./DirectorDashbaord/DirectorAccomodation";
 import DirectorInsuranceClaim from "./DirectorDashbaord/DirectorInsuranceClaim";
 import DirectorAnnualIncrementRequest from "./DirectorDashbaord/DirectorAnnualIncrementRequest";
-
+import AdminRoutePage from './shared/AdminRoutePage';
 export function PageRoutes() {
   return (
     <Routes>
+    <Route
+    				path='/*'
+    				element={
+    					<AdminRoutePage Sidebardata={DirectorSideNavbar} Route='director' />
+    				}
+    			/>
       <Route
         path={RouteName.DirectorResignationReq}
         element={<DirectorResignationReq />}

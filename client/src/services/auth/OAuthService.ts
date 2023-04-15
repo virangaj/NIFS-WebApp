@@ -47,12 +47,26 @@ const changePassword = async (favJSON: any, token: string) => {
 };
 
 //login
-const forgetPassword = async (email: any) => {
+const requestForgetPassword = async (email: any) => {
 	// console.log(favJSON);
 	const response = await axios({
 		method: 'post',
 		url: `${process.env.REACT_APP_BACKEND_SERVER}/auth/forget-password`,
 		data: email,
+		headers: {
+			'Content-Type': 'application/json; charset=utf-8',
+		},
+	});
+	// alert("Favourite created --- "+ response);
+	return response;
+};
+
+const forgetPassword = async (data: any) => {
+	console.log(data);
+	const response = await axios({
+		method: 'post',
+		url: `${process.env.REACT_APP_BACKEND_SERVER}/auth/forget-password/${data?.id}`,
+		data: data?.password,
 		headers: {
 			'Content-Type': 'application/json; charset=utf-8',
 		},
@@ -70,6 +84,7 @@ const OAuthService = {
 	changePassword,
 	logout,
 	forgetPassword,
+	requestForgetPassword,
 };
 
 export default OAuthService;

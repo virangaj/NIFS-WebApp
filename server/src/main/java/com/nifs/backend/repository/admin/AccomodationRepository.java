@@ -1,4 +1,4 @@
-package com.nifs.backend.repository.transport;
+package com.nifs.backend.repository.admin;
 
 import com.nifs.backend.constant.RequestStatus;
 import com.nifs.backend.model.admin.Accomodation;
