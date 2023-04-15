@@ -11,6 +11,7 @@ import DesignationSelector from "../../components/shared/DesignationSelector";
 import DivisionSelector from "../../components/shared/DivisionSelector";
 import GatePassService from "../../services/procument/GatePassService";
 import { toast } from "react-toastify";
+import { RequestStatus } from "../../constant/requestStatus";
 
 const initialState: IGatePass = {
   //   generated
@@ -37,6 +38,9 @@ const initialState: IGatePass = {
   officerInChargeName: "",
   nameOfOfficerOutsideIncharge: "",
   resultOfVerificationBySecurityOfficer: "",
+
+  hodApproved: RequestStatus.PENDING,
+  dirApproved: RequestStatus.PENDING,
 };
 
 function GatePass() {
@@ -58,56 +62,18 @@ function GatePass() {
 
   useEffect(() => {
     setValues({
-      documentNo: values?.documentNo,
-      epfNo: values?.epfNo,
-      designationId: values?.designationId,
-      divisionId: values?.divisionId,
-      hod: values?.hod,
-      remark: values?.remark,
-      locationAfterRemoval: values?.locationAfterRemoval,
-      purposeOfRemoval: values?.purposeOfRemoval,
-      dateOfRemoval: removalDate ? removalDate : "",
+      ...values,
       expectedReturnDate: expectedDate ? expectedDate : "",
-
-      //   desciption of items to be removed
-      itemName: values?.itemName,
-      itemType: values?.itemType,
-      quantity: values?.quantity,
-      inventoryNumber: values?.inventoryNumber,
-      description: values?.description,
-      currentLocation: values?.currentLocation,
-      officerInChargeName: values?.officerInChargeName,
-      nameOfOfficerOutsideIncharge: values?.nameOfOfficerOutsideIncharge,
-      resultOfVerificationBySecurityOfficer:
-        values?.resultOfVerificationBySecurityOfficer,
+      dateOfRemoval: removalDate ? removalDate : "",
     });
   }, [expectedDate, removalDate]);
 
   useEffect(() => {
     setValues({
-      documentNo: values?.documentNo,
-      epfNo: values?.epfNo,
-      designationId: values?.designationId,
-      divisionId: values?.divisionId,
-      hod: values?.hod,
-      remark: values?.remark,
-      locationAfterRemoval: values?.locationAfterRemoval,
-      purposeOfRemoval: values?.purposeOfRemoval,
-      dateOfRemoval: values.dateOfRemoval,
-      expectedReturnDate: values.expectedReturnDate,
-
-      //   desciption of items to be removed
-      itemName: values?.itemName,
-      itemType: values?.itemType,
-      quantity: values?.quantity,
-      inventoryNumber: values?.inventoryNumber,
-      description: values?.description,
-      currentLocation: values?.currentLocation,
-      officerInChargeName: values?.officerInChargeName,
-      nameOfOfficerOutsideIncharge: values?.nameOfOfficerOutsideIncharge,
-      resultOfVerificationBySecurityOfficer:
-        values?.resultOfVerificationBySecurityOfficer,
+      ...values,
+      documentNo: getDocNo && getDocNo,
     });
+    console.log(getDocNo);
   }, [getDocNo]);
 
   useEffect(() => {

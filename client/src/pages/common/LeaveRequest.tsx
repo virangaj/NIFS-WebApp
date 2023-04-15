@@ -14,6 +14,7 @@ import { toast } from "react-toastify";
 import EmployeeSelector from "../../components/shared/EmployeeSelector";
 import DesignationSelector from "../../components/shared/DesignationSelector";
 import DivisionSelector from "../../components/shared/DivisionSelector";
+import { RequestStatus } from "../../constant/requestStatus";
 
 const initialState: ILeaveRequest = {
   // generated
@@ -31,6 +32,8 @@ const initialState: ILeaveRequest = {
   requestDateOptional: "",
   jobCategory: "",
   evidence: "",
+  hodApproved: RequestStatus.PENDING,
+  dirApproved: RequestStatus.PENDING,
 };
 
 function LeaveRequest() {
@@ -53,22 +56,9 @@ function LeaveRequest() {
 
   useEffect(() => {
     setValues({
-      requestDateOptional: requestDate ? requestDate : "",
-
-      // generated
-      documentNo: values?.documentNo,
-      epfNo: values?.epfNo,
-      hod: values?.hod,
-      designationId: values?.designationId,
-      divisionId: values?.divisionId,
-
-      leaveType: values?.leaveType,
+      ...values,
       startDate: startDate ? startDate : "",
       startTime: startTime ? startTime : "",
-      durationInDays: values?.durationInDays,
-
-      jobCategory: values?.jobCategory,
-      evidence: values?.evidence,
     });
   }, [requestDate, startDate, startTime]);
 

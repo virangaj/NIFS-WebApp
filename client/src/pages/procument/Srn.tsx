@@ -19,6 +19,7 @@ import DesignationSelector from "../../components/shared/DesignationSelector";
 import DivisionSelector from "../../components/shared/DivisionSelector";
 import SrnService from "../../services/procument/SrnService";
 import { toast } from "react-toastify";
+import { RequestStatus } from "../../constant/requestStatus";
 
 const initialState: Isrn = {
   documentNo: "",
@@ -36,6 +37,9 @@ const initialState: Isrn = {
   fundAllocationForTheProject: "",
   description: "",
   googleLink: "",
+
+  hodApproved: RequestStatus.PENDING,
+  dirApproved: RequestStatus.PENDING,
 };
 
 function Srn() {
@@ -61,21 +65,8 @@ function Srn() {
 
   useEffect(() => {
     setValues({
-      documentNo: values?.documentNo,
+      ...values,
       date: requestDate ? requestDate : "",
-      epfNo: values?.epfNo,
-      divisionId: values?.divisionId,
-      designationId: values?.designationId,
-      hod: values?.hod,
-      project: values?.project,
-      srnType: values?.srnType,
-      itemType: values?.itemType,
-      purchaseType: values?.purchaseType,
-      estimatedValue: values?.estimatedValue,
-      vote: values?.vote,
-      fundAllocationForTheProject: values?.fundAllocationForTheProject,
-      description: values?.description,
-      googleLink: values?.googleLink,
     });
   }, [requestDate]);
 

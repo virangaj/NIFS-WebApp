@@ -1,3 +1,5 @@
+import { RequestStatus } from "../../constant/requestStatus";
+
 export default interface IGatePass {
   //   auto generated
   epfNo: number;
@@ -24,4 +26,7 @@ export default interface IGatePass {
   officerInChargeName: string;
   nameOfOfficerOutsideIncharge: string;
   resultOfVerificationBySecurityOfficer: string;
+
+  hodApproved: RequestStatus;
+  dirApproved: RequestStatus;
 }

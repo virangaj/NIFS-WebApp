@@ -20,6 +20,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class MaintenanceRequest extends Base {
 
     private String documentNo;
+    
 
     @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(pattern = "dd/MM/yyyy")

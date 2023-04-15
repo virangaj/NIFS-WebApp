@@ -58,7 +58,8 @@ public class QuotationSummaryService implements IQuotationSummaryService {
                     .fund(data.getFund())
                     .project(data.getProject())
                     .remark(data.getRemark())
-                    .createdBy(data.getId())
+                    .createdBy(Integer.valueOf(data.getEpfNo()))
+                    .hodApproved(data.getHodApproved())
                     .createdOn(new Date())
                     .build();
 

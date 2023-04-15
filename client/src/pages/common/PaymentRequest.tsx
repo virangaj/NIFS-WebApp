@@ -11,6 +11,7 @@ import DesignationSelector from "../../components/shared/DesignationSelector";
 import DivisionSelector from "../../components/shared/DivisionSelector";
 import { Stack } from "@mui/material";
 import CustomeDataPicker from "../../components/DataPicker";
+import { RequestStatus } from "../../constant/requestStatus";
 
 const initialState: IPaymentRequest = {
   // generated
@@ -33,6 +34,9 @@ const initialState: IPaymentRequest = {
   handlingCharge: 0,
   insurance: 0,
   otherCharge: 0,
+
+  hodApproved: RequestStatus.PENDING,
+  dirApproved: RequestStatus.PENDING,
 };
 
 const PaymentRequest = () => {
@@ -53,26 +57,8 @@ const PaymentRequest = () => {
 
   useEffect(() => {
     setValues({
-      // generated
-      documentNo: values?.documentNo,
-      epfNo: values?.epfNo,
-      hod: values?.hod,
-      designationId: values?.designationId,
-      divisionId: values?.divisionId,
+      ...values,
       date: requestDate ? requestDate : "",
-
-      description: values?.description,
-      remark: values?.remark,
-      grossAmount: values?.grossAmount,
-      friegthCharge: values?.friegthCharge,
-      clearingCharge: values?.clearingCharge,
-      directorGeneralCharge: values?.directorGeneralCharge,
-      customCharge: values?.customCharge,
-      courierCharge: values?.courierCharge,
-      airLineCharge: values?.airLineCharge,
-      handlingCharge: values?.handlingCharge,
-      insurance: values?.insurance,
-      otherCharge: values?.otherCharge,
     });
   }, [requestDate]);
 

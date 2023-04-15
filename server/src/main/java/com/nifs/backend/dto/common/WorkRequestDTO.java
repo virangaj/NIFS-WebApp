@@ -1,5 +1,6 @@
 package com.nifs.backend.dto.common;
 
+import com.nifs.backend.constant.RequestStatus;
 import com.nifs.backend.dto.BaseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,5 +31,8 @@ public class WorkRequestDTO extends BaseDTO {
     private String supervisorEmail;
     private String workDescription;
     private String googleLinkWithWorkDescription;
+
+    RequestStatus hodApproved;
+    RequestStatus dirApproved;
 
 }

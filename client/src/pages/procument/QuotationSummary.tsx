@@ -19,6 +19,7 @@ import { toast } from "react-toastify";
 import EmployeeSelector from "../../components/shared/EmployeeSelector";
 import DesignationSelector from "../../components/shared/DesignationSelector";
 import DivisionSelector from "../../components/shared/DivisionSelector";
+import { RequestStatus } from "../../constant/requestStatus";
 
 const initialState: IQuotationSummary = {
   fundType: "",
@@ -37,6 +38,9 @@ const initialState: IQuotationSummary = {
   fund: "",
   project: "",
   remark: "",
+
+  hodApproved: RequestStatus.PENDING,
+  dirApproved: RequestStatus.PENDING,
 };
 
 function QuotationSummary() {
@@ -62,22 +66,8 @@ function QuotationSummary() {
 
   useEffect(() => {
     setValues({
+      ...values,
       date: requestDate ? requestDate : "",
-      fundType: values?.fundType,
-      documentNo: values?.documentNo,
-
-      //   auto generated
-      epfNo: values?.epfNo,
-      designationId: values?.designationId,
-      divisionId: values?.divisionId,
-      hod: values?.hod,
-      quotationRequestNo: values?.quotationRequestNo,
-      fileNo: values?.fileNo,
-      srnNo: values?.srnNo,
-      value: values?.value,
-      fund: values?.fund,
-      project: values?.project,
-      remark: values?.remark,
     });
   }, [requestDate]);
 

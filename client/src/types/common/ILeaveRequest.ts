@@ -1,3 +1,5 @@
+import { RequestStatus } from "../../constant/requestStatus";
+
 export default interface ILeaveRequest {
   // generated
   documentNo: string;
@@ -14,4 +16,7 @@ export default interface ILeaveRequest {
   requestDateOptional: string;
   jobCategory: string;
   evidence: string;
+
+  hodApproved: RequestStatus;
+  dirApproved: RequestStatus;
 }

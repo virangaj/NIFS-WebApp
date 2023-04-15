@@ -59,8 +59,9 @@ public class QuotationRequestService implements IQuotationRequestService {
                     .bidStartingDate(data.getBidStartingDate())
                     .bidClosingDate(data.getBidClosingDate())
                     .remark(data.getRemark())
-                    .createdBy(data.getId())
+                    .createdBy(Integer.valueOf(data.getEpfNo()))
                     .createdOn(new Date())
+                    .hodApproved(data.getHodApproved())
                     .build();
 
             quotationRequestRepository.save(quotationRequest);

@@ -18,6 +18,7 @@ import AccomodationService from "../../services/admin/AccomodationService";
 import EmployeeSelector from "../../components/shared/EmployeeSelector";
 import DesignationSelector from "../../components/shared/DesignationSelector";
 import DivisionSelector from "../../components/shared/DivisionSelector";
+import { RequestStatus } from "../../constant/requestStatus";
 
 const initialState: IAccommodation = {
   documentNo: "",
@@ -48,6 +49,9 @@ const initialState: IAccommodation = {
 
   //payment
   payee: "",
+
+  hodApproved: RequestStatus.PENDING,
+  dirApproved: RequestStatus.PENDING,
 };
 
 function Accommodation() {

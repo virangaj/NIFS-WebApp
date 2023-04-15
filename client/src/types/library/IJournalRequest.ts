@@ -1,3 +1,5 @@
+import { RequestStatus } from "../../constant/requestStatus";
+
 export default interface IJournalRequest {
   documentNo: string;
   epfNo: number;
@@ -15,4 +17,7 @@ export default interface IJournalRequest {
   type: string;
   methodOfPayment: string;
   remark: string;
+
+  hodApproved: RequestStatus;
+  dirApproved: RequestStatus;
 }

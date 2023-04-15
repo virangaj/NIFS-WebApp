@@ -10,6 +10,7 @@ import DivisionSelector from "../../components/shared/DivisionSelector";
 import CustomeDataPicker from "../../components/DataPicker";
 import TransportCostSerice from "../../services/transport/TransportCostService";
 import { toast } from "react-toastify";
+import { RequestStatus } from "../../constant/requestStatus";
 
 const initialState: ITransportCost = {
   documentNo: "",
@@ -30,6 +31,9 @@ const initialState: ITransportCost = {
   startReading: 0,
   endReading: 0,
   remark: "",
+
+  hodApproved: RequestStatus.PENDING,
+  dirApproved: RequestStatus.PENDING,
 };
 
 const TransportCost = () => {
