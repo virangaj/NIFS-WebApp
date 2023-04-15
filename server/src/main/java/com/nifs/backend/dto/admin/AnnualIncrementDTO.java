@@ -1,5 +1,6 @@
 package com.nifs.backend.dto.admin;
 
+import com.nifs.backend.constant.RequestStatus;
 import com.nifs.backend.dto.BaseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,4 +27,7 @@ public class AnnualIncrementDTO extends BaseDTO {
     private String salaryScale;
     private String presentSalary;
     private String newSalary;
+
+    RequestStatus hodApproved;
+    RequestStatus dirApproved;
 }

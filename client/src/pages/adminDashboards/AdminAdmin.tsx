@@ -13,6 +13,7 @@ import ContractextensionReq from "./AdminAdmin/ContractextensionReq";
 import FundingSource from "./sharedDashboards/FundingSource";
 import AccomodationReq from "./AdminAdmin/AccomodationReq";
 import InsuranceClaimReq from "./AdminAdmin/InsuranceClaimReq";
+import AnnualIncrementRequest from "./AdminAdmin/AnnualIncrementRequest";
 
 export function PageRoutes() {
   return (
@@ -32,6 +33,10 @@ export function PageRoutes() {
       />
       <Route path={RouteName.InsuranceClaims} element={<InsuranceClaimReq />} />
       <Route path={RouteName.Accommodation} element={<AccomodationReq />} />
+      <Route
+        path={RouteName.AnnualIncrementRequest}
+        element={<AnnualIncrementRequest />}
+      />
       <Route path={RouteName.FundingSource} element={<FundingSource />} />
     </Routes>
   );

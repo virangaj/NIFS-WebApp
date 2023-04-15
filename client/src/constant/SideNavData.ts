@@ -13,6 +13,7 @@ import { GiExitDoor, GiIndiaGate, GiNotebook } from "react-icons/gi";
 import {
   AiOutlineFundProjectionScreen,
   AiOutlineHome,
+  AiOutlineRise,
   AiOutlineSearch,
 } from "react-icons/ai";
 import { RiUserReceived2Line, RiUserStarLine } from "react-icons/ri";
@@ -80,6 +81,11 @@ export const AdministrationSidenav = [
         title: "Insurance Claim",
         link: RouteName.InsuranceClaims,
         icon: BsShieldCheck,
+      },
+      {
+        title: "Annual Increment Request",
+        link: RouteName.AnnualIncrementRequest,
+        icon: AiOutlineRise,
       },
     ],
   },
@@ -170,6 +176,11 @@ export const DirectorSideNavbar = [
         title: "Insurance Claim",
         link: RouteName.InsuranceClaims,
         icon: BsShieldCheck,
+      },
+      {
+        title: "Annual Increment Request",
+        link: RouteName.AnnualIncrementRequest,
+        icon: AiOutlineRise,
       },
     ],
   },
@@ -314,6 +325,11 @@ export const HODSideNavbar = [
         title: "Insurance",
         link: RouteName.InsuranceClaims,
         icon: BsShieldCheck,
+      },
+      {
+        title: "Annual Increment Request",
+        link: RouteName.AnnualIncrementRequest,
+        icon: AiOutlineRise,
       },
     ],
   },
