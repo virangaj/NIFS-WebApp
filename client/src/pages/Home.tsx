@@ -1,7 +1,6 @@
-import Pages from '../components/data/MainNavPages.json';
 import { Link } from 'react-router-dom';
 import HomeMainNavCard from '../components/HomeMainNavCard';
-
+import Pages from '../components/data/MainNavPages.json';
 import Circle from '../images/dots_circle_b.png';
 
 function Home() {
