@@ -156,7 +156,7 @@ function EmpCategory() {
 			{
 				field: 'otRate',
 				headerName: 'OT Rate',
-				width: 200,
+				width: 150,
 				editable: true,
 			},
 			{ field: 'locationId', headerName: 'Location', width: 200 },

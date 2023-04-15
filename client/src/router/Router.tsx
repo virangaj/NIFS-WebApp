@@ -30,7 +30,7 @@ import HodDashbaord from '../pages/adminDashboards/HodDashbaord';
 import TransportDashboard from '../pages/adminDashboards/TransportDashboard';
 import ProcumentDashboard from '../pages/adminDashboards/ProcumentDashboard';
 import { LibraryDashboard } from '../pages/adminDashboards/LibraryDashboard';
-import ForgetPassword from '../pages/ForgetPassword';
+import ForgetPassword from '../pages/login/ForgetPassword';
 
 const AppRouter = () => {
 	const { auth } = useAppSelector((state) => state.persistedReducer);
