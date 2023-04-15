@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
 import EventRequestService from '../../services/sedu/EventRequestService';
 import { dateConveter } from '../../utils/generateId';
 function SeduBooking() {
 	const [requests, setRequests] = useState<Array<any>>([]);
 	const [loading, setLoading] = useState(false);
-
+	const [value, onChange] = useState(new Date());
 	useEffect(() => {
 		retriveData();
 	}, []);
@@ -42,7 +44,7 @@ function SeduBooking() {
 		<div className='h-auto sub-body-content'>
 			<h1 className='page-title'>Booking</h1>
 			<hr className='horizontal-line' />
-			<div className='w-[60%]'></div>
+			<Calendar value={value} selectRange={false} />
 		</div>
 	);
 }
