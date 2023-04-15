@@ -11,10 +11,17 @@ import { AdministrationSidenav } from '../../constant/SideNavData';
 import AdminPages from '../../layout/AdminPages';
 import ContractextensionReq from './AdminAdmin/ContractextensionReq';
 import FundingSource from './sharedDashboards/FundingSource';
+import AdminRoutePage from './shared/AdminRoutePage';
 
 export function PageRoutes() {
 	return (
 		<Routes>
+			<Route
+				path='/*'
+				element={
+					<AdminRoutePage Sidebardata={AdministrationSidenav} Route='admin' />
+				}
+			/>
 			<Route path={RouteName.EmployeeType} element={<EmployeeType />} />
 			<Route path={RouteName.EmployeeCategory} element={<EmpCategory />} />
 			<Route path={RouteName.Employee} element={<Employees />} />
