@@ -8,7 +8,7 @@ function AdminRoutePage({ Sidebardata, Route }: any) {
 			{Sidebardata?.map((data: any, i: number) => (
 				<div key={i}>
 					<AdminRouteCard subpages={data?.subpages} Route={Route} />
-					<div className='mb-20 text-center text-white nav-title-section'>
+					<div className='!mb-20 text-center text-white nav-title-section'>
 						{data.title}
 					</div>
 				</div>

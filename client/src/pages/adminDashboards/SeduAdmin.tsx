@@ -10,10 +10,17 @@ import HODResignationReq from './hodDashboards/HODResignationReq';
 import HODContractextensionReq from './hodDashboards/HODContractextensionReq';
 import FundingSource from './sharedDashboards/FundingSource';
 import EventRequestAdmin from './SeduAdmin/EventRequestAdmin';
+import AdminRoutePage from './shared/AdminRoutePage';
 
 export function PageRoutes() {
 	return (
 		<Routes>
+			<Route
+				path='/*'
+				element={
+					<AdminRoutePage Sidebardata={SeduAdminSideNavbar} Route='sedu' />
+				}
+			/>
 			<Route path={RouteName.Facilities} element={<Facilities />} />
 			<Route path={RouteName.Charges} element={<Chargers />} />
 			<Route path={RouteName.VenueMaster} element={<VenuesAdmin />} />
