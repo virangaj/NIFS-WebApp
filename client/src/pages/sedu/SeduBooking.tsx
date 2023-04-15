@@ -1,5 +1,3 @@
-import FullCalendar from '@fullcalendar/react';
-import dayGridPlugin from '@fullcalendar/daygrid';
 import { useEffect, useState } from 'react';
 import EventRequestService from '../../services/sedu/EventRequestService';
 import { dateConveter } from '../../utils/generateId';
@@ -41,14 +39,10 @@ function SeduBooking() {
 		{ title: 'Event 3', date: '2023-04-15' },
 	];
 	return (
-		<div className='sub-body-content'>
+		<div className='h-auto sub-body-content'>
 			<h1 className='page-title'>Booking</h1>
 			<hr className='horizontal-line' />
-			<FullCalendar
-				plugins={[dayGridPlugin]}
-				initialView='dayGridMonth'
-				events={requests}
-			/>
+			<div className='w-[60%]'></div>
 		</div>
 	);
 }
