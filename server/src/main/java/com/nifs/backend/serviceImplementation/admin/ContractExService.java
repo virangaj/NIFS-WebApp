@@ -85,6 +85,10 @@ public class ContractExService implements IContractExService {
                 contractExRepository.updateHodApproveAndModifiedFields(approval, user, new Date(), id);
             });
             return true;
+
+            //HOD has approved your request
+            //HOD has rejected your request
+
         }catch (Exception e){
             log.info(e.toString());
             return false;

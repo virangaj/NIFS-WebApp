@@ -2,44 +2,44 @@
 	{
 		"id": 0,
 		"title": "Home",
-		"img": "https://icons8.com/icon/9J1KcyzZVytT/exterior",
+		"img": "https://img.icons8.com/fluency/48/null/exterior.png",
 		"link": "/"
 	},
 	{
 		"id": 1,
 		"title": "Common",
-		"img": "https://icons8.com/icon/qDNClnB7Z4Ky/people",
+		"img": "https://img.icons8.com/fluency/48/null/conference-call.png",
 		"link": "/common"
 	},
 
 	{
 		"id": 3,
 		"title": "Admin",
-		"img": "https://icons8.com/icon/psevkzUhHRTs/admin-settings-male",
+		"img": "https://img.icons8.com/fluency/48/null/admin-settings-male.png",
 		"link": "/admin"
 	},
 	{
 		"id": 4,
 		"title": "Library",
-		"img": "https://icons8.com/icon/7wXAYHZWBVM9/bookshop",
+		"img": "https://img.icons8.com/fluency/48/null/bookshop.png",
 		"link": "/library"
 	},
 	{
 		"id": 5,
 		"title": "Procument",
-		"img": "https://icons8.com/icon/ssAR7wQWk8Iz/bureau",
+		"img": "https://img.icons8.com/fluency/48/null/bureau.png",
 		"link": "/procument"
 	},
 	{
 		"id": 6,
 		"title": "SEDU",
-		"img": "https://icons8.com/icon/jO2iD4rsKuFf/performance",
+		"img": "https://img.icons8.com/fluency/48/null/performance.png",
 		"link": "/sedu"
 	},
 	{
 		"id": 7,
 		"title": "Transport",
-		"img": "https://icons8.com/icon/1qzlYQzEek19/public-transportation",
+		"img": "https://img.icons8.com/fluency/48/null/ground-transportation.png",
 		"link": "/transport"
 	}
 ]

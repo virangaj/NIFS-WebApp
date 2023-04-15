@@ -8,7 +8,6 @@ import OAuthService from '../../services/auth/OAuthService';
 import ErrorMessage from '../../components/shared/ErrorMessage';
 import { RequestStatus } from '../../constant/requestStatus';
 import { RouteName } from '../../constant/routeNames';
-import { da } from 'date-fns/locale';
 import { useAppSelector } from '../../hooks/hooks';
 import { useDispatch } from 'react-redux';
 import { changePassword } from '../../feature/auth/authSlice';
@@ -64,14 +63,14 @@ function ChangePassword() {
 		}
 	};
 	return (
-		<div className='w-[80%] md:w-[60%] lg:w-[40%] xl:w-[30%] h-auto p-6 my-10 bg-white mx-auto rounded-lg'>
-			<div className='w-full h-100'>
+		<div className='h-screen'>
+			<div className='w-[80%] md:w-[60%] lg:w-[40%] xl:w-[30%] h-auto p-6 my-20 bg-white mx-auto rounded-lg'>
 				<img src={Logo} alt='logo' className='login-logo' />
 				<p className='mt-2 text-sm text-center md:text-md text-sky-500'>
 					National Institute of Fundamental Studies
 				</p>
 
-				<h1 className='mt-12 text-xl font-bold leading-tight md:text-2xl'>
+				<h1 className='mt-12 text-xl font-bold leading-tight text-center md:text-2xl'>
 					Change your Password here.
 				</h1>
 
@@ -82,7 +81,7 @@ function ChangePassword() {
 							type='text'
 							{...register('epfNo')}
 							placeholder='Enter EPF Number'
-							className='tailwind-text-box w-[100%]'
+							className='tailwind-text-box'
 							required
 						/>
 					</div>
@@ -93,7 +92,7 @@ function ChangePassword() {
 							type='password'
 							{...register('oldPassword')}
 							placeholder='Enter Password'
-							className='tailwind-text-box w-[100%]'
+							className='tailwind-text-box'
 							required
 						/>
 					</div>
@@ -108,7 +107,7 @@ function ChangePassword() {
 								},
 							})}
 							placeholder='Enter Password'
-							className='tailwind-text-box w-[100%]'
+							className='tailwind-text-box'
 							required
 						/>
 						{errors.newPassword?.type === 'minLength' && (
@@ -124,16 +123,12 @@ function ChangePassword() {
 							type='password'
 							{...register('confirmPassword')}
 							placeholder='ReEnter Password'
-							className='tailwind-text-box w-[100%]'
+							className='tailwind-text-box'
 							required
 						/>
 						{confirmError && <ErrorMessage msg={confirmError} />}
 					</div>
-
-					<button
-						type='submit'
-						className='block w-full px-4 py-3 mt-6 font-semibold text-white bg-indigo-500 rounded-lg hover:bg-indigo-400 focus:bg-indigo-400'
-					>
+					<button className='w-full mt-5 btn btn-info rounded-xl' type='submit'>
 						Change Password
 					</button>
 				</form>

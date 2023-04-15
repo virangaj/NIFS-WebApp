@@ -28,4 +28,8 @@ public interface IEmployeeMasterService {
     EmployeeMasterDTO getEmployeeById(int id);
 
     boolean updateRole(int id, UserRole role);
+
+    String getDirectorEmail();
+
+    String getSecretaryEmail();
 }

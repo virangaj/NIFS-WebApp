@@ -32,7 +32,26 @@ public class EmailService {
 
         log.info("--------------Send email to {} || subject {} ||  body {}----------",toEmail, subject, text);
 
-
     }
 
+    //hod get request message
+    public String HODRequestMessage(String type, int epf, int hod, String endLink){
+        return type + " By " + epf +" to be reviewed \n\n" +
+                "Please use the link below to address it \n"+
+                "http://localhost:3000/dashboard/"+hod+"/admin/"+endLink;
+    }
+
+    //director get request message
+    public String DirectorRequestMessage(String type, int epf, String endLink){
+        return type + " By " + epf +" to be reviewed \n\n" +
+                "Please use the link below to address it \n"+
+                "http://localhost:3000/dashboard/director/admin/"+endLink;
+    }
+
+//    user get status about the request
+    public String userResponseStatusMessage(String type, String status, String handler){
+
+        return "Your" + type +" have been " +status + " by" + handler;
+
+    }
 }
