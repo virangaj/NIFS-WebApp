@@ -1,3 +1,5 @@
+import { RequestStatus } from "../../constant/requestStatus";
+
 export default interface IPaymentRequest {
   // generated
   documentNo: string;
@@ -19,4 +21,7 @@ export default interface IPaymentRequest {
   handlingCharge: number;
   insurance: number;
   otherCharge: number;
+
+  hodApproved: RequestStatus;
+  dirApproved: RequestStatus;
 }

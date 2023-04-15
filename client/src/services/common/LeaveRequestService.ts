@@ -1,5 +1,6 @@
 import axios from "axios";
 import http from "../../utils/http-common";
+import { RequestStatus } from "../../constant/requestStatus";
 
 axios.defaults.baseURL = process.env.REACT_APP_BACKEND_SERVER;
 
@@ -16,8 +17,22 @@ const getLeaveRequests = async (token: any) => {
   return response;
 };
 
+//get all constrsac t accodung to admin
+const getDivisionLeaveRequests = async (token: any, division: string) => {
+  const response = await axios({
+    method: "get",
+    url: `${process.env.REACT_APP_BACKEND_SERVER}/common/leave-request?division=${division}`,
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  // alert("Favourite created --- "+ response);
+  return response;
+};
+
 const getLeaveRequest = (id: any) => {
-  return http.get<any>(`/common/over-time/${id}`);
+  return http.get<any>(`/common/leave-request/${id}`);
 };
 
 const saveLeaveRequest = async (data: any, token: string) => {
@@ -35,10 +50,14 @@ const saveLeaveRequest = async (data: any, token: string) => {
   return response;
 };
 
-const sendHodApproval = async (id: any, token: string, approval: boolean) => {
+const sendHodApproval = async (
+  id: any,
+  token: string,
+  approval: RequestStatus
+) => {
   const response = await axios({
     method: "put",
-    url: `${process.env.REACT_APP_BACKEND_SERVER}/common/leave-request/hod?approval=${approval}`,
+    url: `${process.env.REACT_APP_BACKEND_SERVER}/common/leave-request/hod/status?approval=${approval}`,
     data: id,
     headers: {
       "Content-Type": "application/json; charset=utf-8",
@@ -52,11 +71,11 @@ const sendHodApproval = async (id: any, token: string, approval: boolean) => {
 const sendDirectorApproval = async (
   id: any,
   token: string,
-  approval: boolean
+  approval: RequestStatus
 ) => {
   const response = await axios({
     method: "put",
-    url: `${process.env.REACT_APP_BACKEND_SERVER}/common/leave-request/director?approval=${approval}`,
+    url: `${process.env.REACT_APP_BACKEND_SERVER}/common/leave-request/director/status?approval=${approval}`,
     data: id,
     headers: {
       "Content-Type": "application/json; charset=utf-8",
@@ -66,12 +85,13 @@ const sendDirectorApproval = async (
 
   return response;
 };
-const OverTimeService = {
+const LeaveRequestService = {
   getLeaveRequest,
   getLeaveRequests,
+  getDivisionLeaveRequests,
   saveLeaveRequest,
   sendDirectorApproval,
   sendHodApproval,
 };
 
-export default OverTimeService;
+export default LeaveRequestService;

@@ -1,3 +1,5 @@
+import { RequestStatus } from "../../constant/requestStatus";
+
 export default interface IArticleRequest {
   documentNo: string;
   epfNo: number;
@@ -12,4 +14,7 @@ export default interface IArticleRequest {
   pages: string;
   webLink: string;
   remark: string;
+
+  hodApproved: RequestStatus;
+  dirApproved: RequestStatus;
 }

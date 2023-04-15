@@ -1,5 +1,6 @@
 package com.nifs.backend.dto.common;
 
+import com.nifs.backend.constant.RequestStatus;
 import com.nifs.backend.dto.BaseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -34,4 +35,7 @@ public class PaymentRequestDTO extends BaseDTO {
     private int handlingCharge;
     private int insurance;
     private int otherCharge;
+
+    RequestStatus hodApproved;
+    RequestStatus dirApproved;
 }

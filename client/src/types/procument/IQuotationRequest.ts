@@ -1,3 +1,5 @@
+import { RequestStatus } from "../../constant/requestStatus";
+
 export default interface IQuotationRequest {
   epfNo: number;
   designationId: string;
@@ -16,4 +18,7 @@ export default interface IQuotationRequest {
   bidStartingDate: string;
   bidClosingDate: string;
   remark: string;
+
+  hodApproved: RequestStatus;
+  dirApproved: RequestStatus;
 }

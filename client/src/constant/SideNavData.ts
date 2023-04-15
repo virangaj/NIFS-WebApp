@@ -11,14 +11,20 @@ import {
 } from "react-icons/hi";
 import { GiExitDoor, GiIndiaGate, GiNotebook } from "react-icons/gi";
 import {
+  AiOutlineDollarCircle,
   AiOutlineFundProjectionScreen,
   AiOutlineHome,
   AiOutlineRise,
   AiOutlineSearch,
 } from "react-icons/ai";
-import { RiUserReceived2Line, RiUserStarLine } from "react-icons/ri";
-import { BsCalendar3Week, BsShieldCheck } from "react-icons/bs";
+import {
+  RiTimeLine,
+  RiUserReceived2Line,
+  RiUserStarLine,
+} from "react-icons/ri";
+import { BsCalendar3Week, BsHammer, BsShieldCheck } from "react-icons/bs";
 import { RouteName } from "./routeNames";
+import { FaWalking } from "react-icons/fa";
 
 // admin of admin division
 export const AdministrationSidenav = [
@@ -182,6 +188,29 @@ export const DirectorSideNavbar = [
         link: RouteName.AnnualIncrementRequest,
         icon: AiOutlineRise,
       },
+
+      // common
+
+      {
+        title: "Work Request",
+        link: RouteName.WorkRequest,
+        icon: BsHammer,
+      },
+      {
+        title: "OverTime Request",
+        link: RouteName.OverTime,
+        icon: RiTimeLine,
+      },
+      {
+        title: "Leave Request",
+        link: RouteName.LeaveRequest,
+        icon: FaWalking,
+      },
+      {
+        title: "Payment Request",
+        link: RouteName.PaymentRequest,
+        icon: AiOutlineDollarCircle,
+      },
     ],
   },
 ];
@@ -330,6 +359,29 @@ export const HODSideNavbar = [
         title: "Annual Increment Request",
         link: RouteName.AnnualIncrementRequest,
         icon: AiOutlineRise,
+      },
+
+      // common
+
+      {
+        title: "Work Request",
+        link: RouteName.WorkRequest,
+        icon: BsHammer,
+      },
+      {
+        title: "OverTime Request",
+        link: RouteName.OverTime,
+        icon: RiTimeLine,
+      },
+      {
+        title: "Leave Request",
+        link: RouteName.LeaveRequest,
+        icon: FaWalking,
+      },
+      {
+        title: "Payment Request",
+        link: RouteName.PaymentRequest,
+        icon: AiOutlineDollarCircle,
       },
     ],
   },

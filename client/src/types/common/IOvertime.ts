@@ -1,3 +1,5 @@
+import { RequestStatus } from "../../constant/requestStatus";
+
 export default interface IOvertime {
   documentNo: string;
   date: string;
@@ -12,4 +14,7 @@ export default interface IOvertime {
   nameOfWorkToBeDone: string;
   necessityToWorkOvertime: string;
   remark: string;
+
+  hodApproved: RequestStatus;
+  dirApproved: RequestStatus;
 }

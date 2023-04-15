@@ -1,6 +1,7 @@
 package com.nifs.backend.model.common;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.nifs.backend.constant.RequestStatus;
 import com.nifs.backend.model.Base;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -40,4 +41,7 @@ public class WorkRequest extends Base {
     private String supervisorEmail;
     private String workDescription;
     private String googleLinkWithWorkDescription;
+
+    RequestStatus hodApproved;
+    RequestStatus dirApproved;
 }

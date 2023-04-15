@@ -17,6 +17,7 @@ import { useAppSelector } from "../../hooks/hooks";
 import EmployeeSelector from "../../components/shared/EmployeeSelector";
 import DesignationSelector from "../../components/shared/DesignationSelector";
 import DivisionSelector from "../../components/shared/DivisionSelector";
+import { RequestStatus } from "../../constant/requestStatus";
 
 const initialState: IAnnualIncrement = {
   // generated
@@ -33,6 +34,8 @@ const initialState: IAnnualIncrement = {
   salaryScale: "",
   presentSalary: "",
   newSalary: "",
+  hodApproved: RequestStatus.PENDING,
+  dirApproved: RequestStatus.PENDING,
 };
 
 function AnnualIncrementRequest() {
@@ -59,18 +62,8 @@ function AnnualIncrementRequest() {
 
   useEffect(() => {
     setValues({
+      ...values,
       date: requestDate ? requestDate : "",
-      documentNo: values?.documentNo,
-      epfNo: values?.epfNo,
-      designationId: values?.designationId,
-      divisionId: values?.divisionId,
-      hod: values?.hod,
-      remark: values?.remark,
-
-      noOfLeaves: values?.noOfLeaves,
-      salaryScale: values?.salaryScale,
-      presentSalary: values?.presentSalary,
-      newSalary: values?.newSalary,
     });
   }, [requestDate]);
 

@@ -55,7 +55,8 @@ public class TravelRequestService implements ITravelRequestService {
                     .purpose(data.getPurpose())
                     .requestDate(data.getRequestDate())
                     .time(data.getTime())
-                    .createdBy(data.getId())
+                    .createdBy(Integer.valueOf(data.getEpfNo()))
+                    .hodApproved(data.getHodApproved())
                     .createdOn(new Date())
                     .build();
 

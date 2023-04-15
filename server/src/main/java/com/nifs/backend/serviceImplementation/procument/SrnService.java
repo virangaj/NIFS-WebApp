@@ -58,7 +58,8 @@ public class SrnService implements ISrnService {
                     .fundAllocationForTheProject(data.getFundAllocationForTheProject())
                     .description(data.getDescription())
                     .googleLink(data.getGoogleLink())
-                    .createdBy(data.getId())
+                    .createdBy(data.getEpfNo())
+                    .hodApproved(data.getHodApproved())
                     .createdOn(new Date())
                     .build();
 

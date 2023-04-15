@@ -63,7 +63,8 @@ public class GatePassService implements IGatePassService {
                     .officerInChargeName(data.getOfficerInChargeName())
                     .nameOfOfficerOutsideIncharge(data.getNameOfOfficerOutsideIncharge())
                     .resultOfVerificationBySecurityOfficer(data.getResultOfVerificationBySecurityOfficer())
-                    .createdBy(data.getId())
+                    .createdBy(Integer.valueOf(data.getEpfNo()))
+                    .hodApproved(data.getHodApproved())
                     .createdOn(new Date())
                     .build();
 
