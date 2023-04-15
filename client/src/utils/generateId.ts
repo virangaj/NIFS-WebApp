@@ -20,8 +20,7 @@ export function generateID(key: any) {
 }
 
 export function dateConveter(data: string) {
-	const dateString = '16/4/2023';
-	const parts = dateString.split('/');
+	const parts = data.split('/');
 	const year = parts[2];
 	const month = parseInt(parts[1]);
 	const day = parts[0];

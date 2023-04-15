@@ -1,28 +1,33 @@
+import FullCalendar from '@fullcalendar/react';
+import dayGridPlugin from '@fullcalendar/daygrid';
+
 import { useEffect, useState } from 'react';
-import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
 import EventRequestService from '../../services/sedu/EventRequestService';
 import { dateConveter } from '../../utils/generateId';
 function SeduBooking() {
 	const [requests, setRequests] = useState<Array<any>>([]);
 	const [loading, setLoading] = useState(false);
-	const [value, onChange] = useState(new Date());
+
 	useEffect(() => {
 		retriveData();
 	}, []);
+
 	const retriveData = () => {
 		setLoading(true);
 		setTimeout(() => {
 			setLoading(true);
 			EventRequestService.getAllEvents()
 				.then((res) => {
+					console.log(res);
 					res.data?.map((d: any) => {
 						let singleEvent = {
+							id: d.documentNo,
 							title: d.title,
-							date: dateConveter(d.startDate),
+							start: dateConveter(d.startDate),
+							end: dateConveter(d.endDate),
 						};
 						console.log(singleEvent);
-						requests.push(singleEvent);
+						setRequests((prevItems) => [...prevItems, singleEvent]);
 					});
 				})
 				.then((e) => {
@@ -32,7 +37,11 @@ function SeduBooking() {
 		}, 500);
 	};
 
-	const handleDateClick = () => {};
+	const eventClicked = (info: any) => {
+		// bind with an arrow function
+		console.log(info.event.id);
+	};
+
 	console.log(requests);
 	const events = [
 		{ title: 'Event 1', date: '2023-04-01' },
@@ -41,10 +50,20 @@ function SeduBooking() {
 		{ title: 'Event 3', date: '2023-04-15' },
 	];
 	return (
-		<div className='h-auto sub-body-content'>
+		<div className='!h-screen sub-body-content'>
 			<h1 className='page-title'>Booking</h1>
 			<hr className='horizontal-line' />
-			<Calendar value={value} selectRange={false} />
+			<div className='w-[50%]'>
+				<FullCalendar
+					plugins={[dayGridPlugin]}
+					initialView='dayGridMonth'
+					events={requests}
+					aspectRatio={1}
+					height={700}
+					eventClick={eventClicked}
+					// dateClick={handleDateClick}
+				/>
+			</div>
 		</div>
 	);
 }
