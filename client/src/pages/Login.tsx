@@ -52,29 +52,27 @@ export default function Login() {
 
 		setLoading(true);
 		setTimeout(async () => {
-			const result = await (await dispatch(login(data))).payload;
+			const result = await dispatch(login(data));
 			console.log(result);
+
 			// const result = await OAuthService.loginRequest(data);
-			if (result.status === RequestStatus.CHANGE_PASSWORD) {
+			if (result?.payload?.status === RequestStatus.CHANGE_PASSWORD) {
 				navigate(RouteName.ChangePassword);
-				toast.warning(result.message);
+				toast.warning(result?.payload?.message);
 				setLoading(false);
-				return;
 			}
-			if (result.status === RequestStatus.SUCCESS) {
+			if (result?.payload?.status === RequestStatus.SUCCESS) {
 				navigate(RouteName.Home);
-				toast.success(result.message);
+				toast.success(result?.payload?.message);
 				setLoading(false);
-				return;
 			}
-			if (result.status === RequestStatus.UNAUTHORIZED) {
-				toast.error(result.message);
+			if (result?.payload?.status === RequestStatus.UNAUTHORIZED) {
+				toast.error(result?.payload?.message);
 				setLoading(false);
-				return;
-			} else {
-				toast.error('Please Enter Valid Credentials');
+			}
+			if (result?.payload === undefined) {
+				toast.error('Please Enter valied Credentials!');
 				setLoading(false);
-				return;
 			}
 		}, 1000);
 
@@ -123,7 +121,7 @@ export default function Login() {
 
 									<div className='mt-2 text-right'>
 										<p
-											className='cursor-pointer text-sm font-semibold text-gray-700 hover:text-blue-700 focus:text-blue-700'
+											className='text-sm font-semibold text-gray-700 cursor-pointer hover:text-blue-700 focus:text-blue-700'
 											onClick={() => setPopUp((val) => !val)}
 										>
 											Forgot Password?

@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 public interface EmployeeMasterRepository extends JpaRepository<EmployeeMaster, Integer> {
+    EmployeeMaster findByEpfNoEquals(int epfNo);
     EmployeeMaster findByDesignationId_DesignationIdEquals(String designationId);
 
     @Transactional

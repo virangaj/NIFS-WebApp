@@ -58,6 +58,7 @@ public class InsuranceClaimService implements IInsuranceClaimService {
                     .notPaidClaimAmount(data.getNotPaidClaimAmount())
                     .createdBy(data.getEpfNo())
                     .createdOn(new Date())
+                    .dirApproved(data.getDirApproved())
                     .hodApproved(data.getHodApproved())
                     .dirApproved(data.getDirApproved())
                     .build();

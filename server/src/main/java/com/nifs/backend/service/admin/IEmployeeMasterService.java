@@ -32,4 +32,6 @@ public interface IEmployeeMasterService {
     String getDirectorEmail();
 
     String getSecretaryEmail();
+
+    String getGsuitEmailById(int hod);
 }

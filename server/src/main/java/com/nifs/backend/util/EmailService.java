@@ -10,6 +10,9 @@ import org.springframework.mail.javamail.MimeMailMessage;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Map;
+
 @Service
 @Log4j2
 public class EmailService {
@@ -35,15 +38,15 @@ public class EmailService {
     }
 
     //hod get request message
-    public String HODRequestMessage(String type, int epf, int hod, String endLink){
+    public String HODRequestMessage(String type, int epf, String division, String endLink){
         return type + " By " + epf +" to be reviewed \n\n" +
                 "Please use the link below to address it \n"+
-                "http://localhost:3000/dashboard/"+hod+"/admin/"+endLink;
+                "http://localhost:3000/dashboard/"+division+"/admin/"+endLink;
     }
 
     //director get request message
-    public String DirectorRequestMessage(String type, int epf, String endLink){
-        return type + " By " + epf +" to be reviewed \n\n" +
+    public String DirectorRequestMessage(String type, String endLink){
+        return  "New "+ type + " to be reviewed \n\n" +
                 "Please use the link below to address it \n"+
                 "http://localhost:3000/dashboard/director/admin/"+endLink;
     }
@@ -51,7 +54,19 @@ public class EmailService {
 //    user get status about the request
     public String userResponseStatusMessage(String type, String status, String handler){
 
-        return "Your" + type +" have been " +status + " by" + handler;
+        return "Your " + type +" have been " + status + " by " + handler;
 
+    }
+
+    public void sendBulkEmailToRequesterAfterHOD(List<Map<String ,String>> emailList, String type, String status, String handler){
+        String msg = userResponseStatusMessage(type, status, handler);
+
+        emailList.forEach(e->{
+            try {
+                sendEmail(e.get("email"), "Regarding "+ type +" id "+ e.get("id"), msg);
+            } catch (MessagingException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
     }
 }

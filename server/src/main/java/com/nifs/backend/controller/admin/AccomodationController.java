@@ -27,7 +27,8 @@ public class AccomodationController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<?> createNewAccomodationRequest(@RequestBody AccomodationDTO data){
+    public ResponseEntity<?> createNewAccomodationRequest(@RequestBody AccomodationDTO data,  @AuthenticationPrincipal UserDetails userDetails){
+        String user = userDetails.getUsername();
         return ResponseEntity.ok(accomodationService.createNewAccomodationRequest(data));
     }
     @GetMapping

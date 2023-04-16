@@ -13,7 +13,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("sedu/event-master")
+@RequestMapping("/sedu/event-master")
 @CrossOrigin
 public class EventRequestController {
 

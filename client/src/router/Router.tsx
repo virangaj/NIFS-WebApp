@@ -42,7 +42,7 @@ const AppRouter = () => {
 	}, [auth]);
 	return (
 		<BrowserRouter>
-			<img src={Circle} className='absolute -right-[250px] -top-28 !-z-10' />
+			{/* <img src={Circle} className='absolute -right-[250px] -top-28 !-z-10' /> */}
 			<Routes>
 				{/* login page */}
 				<Route path={RouteName.Login} element={<Login />} />

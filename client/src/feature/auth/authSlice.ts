@@ -19,6 +19,7 @@ const initialState: any = {
 	tokenExpireDate: null,
 	isAdmin: null,
 	division: null,
+	designation: null,
 	name: null,
 	epfNo: null,
 };
@@ -54,6 +55,7 @@ export const authSlice = createSlice({
 			state.tokenExpireDate = null;
 			state.isAdmin = null;
 			state.division = null;
+			state.designation = null;
 			state.name = null;
 			state.epfNo = null;
 		},
@@ -68,8 +70,9 @@ export const authSlice = createSlice({
 				state.name = null;
 				state.epfNo = null;
 			})
-			.addCase(changePassword.fulfilled, (state) => {
-				state.user = null;
+			.addCase(changePassword.fulfilled, (state, action) => {
+				state.user =
+					action.payload.status === RequestStatus.SUCCESS ? null : state.user;
 			})
 			.addCase(login.pending, (state) => {
 				state.isLoading = true;
@@ -92,6 +95,7 @@ export const authSlice = createSlice({
 
 				state.division = TokenService.getDivision(action.payload.token);
 				state.isAdmin = TokenService.isAdmin(action.payload.token);
+				state.designation = TokenService.getDesignation(action.payload.token);
 				state.name = action.payload.name;
 				state.epfNo = action.payload.user.epfNo;
 			})

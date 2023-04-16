@@ -13,8 +13,17 @@ const getVenue = (id: any) => {
 	return http.get<IVenueMaster>(`/sedu/venuemaster/${id}`);
 };
 
-const getNewVenueId = () => {
-	return http.get('/sedu/venuemaster/newid');
+const getNewVenueId = async (token: string) => {
+	const response = await axios({
+		method: 'get',
+		url: `${process.env.REACT_APP_BACKEND_SERVER}/sedu/venuemaster/newid`,
+		headers: {
+			'Content-Type': 'application/json; charset=utf-8',
+			Authorization: `Bearer ${token}`,
+		},
+	});
+	// alert("Favourite created --- "+ response);
+	return response;
 };
 
 const saveVenue = async (data: any, token: string) => {
