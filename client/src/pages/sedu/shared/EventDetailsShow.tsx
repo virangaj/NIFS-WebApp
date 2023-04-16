@@ -30,7 +30,10 @@ function EventDetailsShow({ selected }: any) {
 			<EventDetailText title={'Project'} value={event?.projectId} />
 			<EventDetailText title={'Budget'} value={event?.budget} />
 			<EventDetailText title={'Created By'} value={event?.createdBy} />
-			<EventDetailText title={'Created On'} value={event?.createdOn} />
+			<EventDetailText
+				title={'Created On'}
+				value={event?.createdOn.split('T')[0]}
+			/>
 			<EventDetailText title={'Venue'} value={event?.venueId} />
 		</div>
 	);
