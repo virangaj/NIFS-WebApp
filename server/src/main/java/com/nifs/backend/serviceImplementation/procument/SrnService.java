@@ -60,6 +60,7 @@ public class SrnService implements ISrnService {
                     .googleLink(data.getGoogleLink())
                     .createdBy(data.getEpfNo())
                     .hodApproved(data.getHodApproved())
+                    .dirApproved(data.getDirApproved())
                     .createdOn(new Date())
                     .build();
 

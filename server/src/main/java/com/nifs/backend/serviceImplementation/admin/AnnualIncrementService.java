@@ -65,6 +65,7 @@ public class AnnualIncrementService implements IAnnualIncrementService {
                     .createdOn(new Date())
                     .dirApproved(data.getDirApproved())
                     .hodApproved(data.getHodApproved())
+                    .dirApproved(data.getDirApproved())
                     .build();
 
             annualIncrementRepository.save(annualIncrement);

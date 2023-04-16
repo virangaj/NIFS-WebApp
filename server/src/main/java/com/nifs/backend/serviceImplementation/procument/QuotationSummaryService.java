@@ -60,6 +60,7 @@ public class QuotationSummaryService implements IQuotationSummaryService {
                     .remark(data.getRemark())
                     .createdBy(Integer.valueOf(data.getEpfNo()))
                     .hodApproved(data.getHodApproved())
+                    .dirApproved(data.getDirApproved())
                     .createdOn(new Date())
                     .build();
 

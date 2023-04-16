@@ -57,6 +57,7 @@ public class TravelRequestService implements ITravelRequestService {
                     .time(data.getTime())
                     .createdBy(Integer.valueOf(data.getEpfNo()))
                     .hodApproved(data.getHodApproved())
+                    .dirApproved(data.getDirApproved())
                     .createdOn(new Date())
                     .build();
 

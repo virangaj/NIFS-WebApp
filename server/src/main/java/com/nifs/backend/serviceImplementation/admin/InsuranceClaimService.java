@@ -60,6 +60,7 @@ public class InsuranceClaimService implements IInsuranceClaimService {
                     .createdOn(new Date())
                     .dirApproved(data.getDirApproved())
                     .hodApproved(data.getHodApproved())
+                    .dirApproved(data.getDirApproved())
                     .build();
 
             insuranceClaimRepository.save(insuranceClaim);
