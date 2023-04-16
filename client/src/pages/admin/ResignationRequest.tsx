@@ -6,7 +6,6 @@ import { useAppSelector } from '../../hooks/hooks';
 
 import { generateID } from '../../utils/generateId';
 import Ripple from '../../components/Ripple';
-import IContractExtension from '../../types/admin/IContractExtension';
 import CustomeDataPicker from '../../components/DataPicker';
 import IEmployeeData from '../../types/admin/IEmployeeData';
 import DivisionSelector from '../../components/shared/DivisionSelector';

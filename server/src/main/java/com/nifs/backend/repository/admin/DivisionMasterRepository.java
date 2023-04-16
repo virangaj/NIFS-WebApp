@@ -1,6 +1,7 @@
 package com.nifs.backend.repository.admin;
 
 import com.nifs.backend.model.admin.DivisionMaster;
+import com.nifs.backend.model.admin.EmployeeMaster;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -11,13 +12,15 @@ import java.util.Date;
 import java.util.List;
 
 public interface DivisionMasterRepository extends JpaRepository<DivisionMaster, String> {
+    DivisionMaster findByHod_EpfNoEquals(int epfNo);
+
     @Query("select d from DivisionMaster d where d.locationId.locationId = ?1 order by d.divisionId, d.name")
     List<DivisionMaster> findDivisionByLocationId(String locationId);
 
     @Transactional
     @Modifying
-    @Query("update DivisionMaster d set d.name = :name, d.updatedDate = :updatedDate where d.divisionId like :divisionId")
-    void updateDivisionMaster(@Param("name") String name, @Param("updatedDate") Date updatedDate,
+    @Query("update DivisionMaster d set d.name = :name, d.updatedDate = :updatedDate, d.hod = :hod where d.divisionId like :divisionId")
+    void updateDivisionMaster(@Param("name") String name, @Param("updatedDate") Date updatedDate, @Param("hod") EmployeeMaster hod,
                               @Param("divisionId") String divisionId);
 
 

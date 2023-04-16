@@ -192,7 +192,7 @@ function WorkRequest() {
 						</p>
 					</div>
 				</div>
-
+				<hr className='horizontal-line' />
 				<div className='mx-0 mb-4 lg:ml-4 md:my-0'>
 					<CustomeDataPicker
 						date={requestDate}
