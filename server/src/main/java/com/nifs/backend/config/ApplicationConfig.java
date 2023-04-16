@@ -2,6 +2,9 @@ package com.nifs.backend.config;
 
 
 import com.nifs.backend.repository.admin.UserRepository;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -14,12 +17,15 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-@Configuration
+
 @RequiredArgsConstructor
+@Configuration
 public class ApplicationConfig {
 
     @Autowired
     private final UserRepository userRepo;
+
+
 
 
     @Bean
