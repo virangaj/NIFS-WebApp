@@ -5,6 +5,7 @@ import com.nifs.backend.constant.RequestStatus;
 import com.nifs.backend.dto.procument.GatePassDTO;
 import com.nifs.backend.dto.procument.QuotationRequestDTO;
 import com.nifs.backend.serviceImplementation.procument.QuotationRequestService;
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -30,7 +31,7 @@ public class QuotationRequestController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<?> createNewQuotationRequest(@RequestBody QuotationRequestDTO data){
+    public ResponseEntity<?> createNewQuotationRequest(@RequestBody QuotationRequestDTO data) throws MessagingException {
         return ResponseEntity.ok(quotationRequestService.createNewQuotationRequest(data));
     }
 

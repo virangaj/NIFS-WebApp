@@ -2,18 +2,20 @@ package com.nifs.backend.serviceImplementation.transport;
 
 import com.nifs.backend.constant.RequestStatus;
 import com.nifs.backend.dto.transport.TravelRequestDTO;
+import com.nifs.backend.model.admin.AnnualIncrement;
 import com.nifs.backend.model.transport.TravelRequest;
 import com.nifs.backend.repository.transport.TravelRequestRepository;
+import com.nifs.backend.service.admin.IEmployeeMasterService;
 import com.nifs.backend.service.transport.ITravelRequestService;
+import com.nifs.backend.util.EmailService;
+import jakarta.mail.MessagingException;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,7 +27,11 @@ public class TravelRequestService implements ITravelRequestService {
     TravelRequestRepository travelRequestRepository;
 
     private final ModelMapper modelMapper;
+    @Autowired
+    private EmailService emailService;
 
+    @Autowired
+    private IEmployeeMasterService employeeMasterService;
     public TravelRequestService(TravelRequestRepository travelRequestRepository, ModelMapper modelMapper) {
         this.travelRequestRepository = travelRequestRepository;
         this.modelMapper = modelMapper;
@@ -33,7 +39,7 @@ public class TravelRequestService implements ITravelRequestService {
 
 
     @Override
-    public TravelRequestDTO createNewTravelRequest(TravelRequestDTO data) {
+    public TravelRequestDTO createNewTravelRequest(TravelRequestDTO data) throws MessagingException {
 
         log.info("Data from the Client " + data.getDocumentNo());
 
@@ -62,7 +68,12 @@ public class TravelRequestService implements ITravelRequestService {
                     .build();
 
             travelRequestRepository.save(travelRequest);
+            String hodEmail = employeeMasterService.getGsuitEmailById(data.getHod());
 
+            String msgBody = emailService.HODRequestMessage("New Travel Request", Integer.parseInt(data.getEpfNo()), data.getDivisionId(), "travel-request");
+
+            //send email to hod
+            emailService.sendEmail(hodEmail, "New Travel Request", msgBody);
             return modelMapper.map(travelRequest,TravelRequestDTO.class);
 
         }
@@ -70,17 +81,6 @@ public class TravelRequestService implements ITravelRequestService {
         return null;
     }
 
-
-//    @Override
-//    public TravelRequestDTO createNewTravelRequest(TravelRequestDTO data) {
-//        TravelRequest request = modelMapper.map(data,TravelRequest.class);
-//
-//        request.setCreatedOn(new Date());
-//        request.setCreatedBy(Integer.valueOf((data.getEpfNo())));
-//        TravelRequest travelRequest = travelRequestRepository.save(request);
-//
-//        return  modelMapper.map(travelRequest,TravelRequestDTO.class);
-//    }
 
     @Override
     public List<TravelRequestDTO> getAllTravelRequests(String division) {
@@ -108,9 +108,32 @@ public class TravelRequestService implements ITravelRequestService {
 
         try{
             log.info("Transport Travel Request : requested");
+            List<Map<String ,String>> emailList = new ArrayList<>();
             resId.forEach(id->{
                 travelRequestRepository.updateHodApproveAndModifiedFields(approval,user,new Date(),id);
+                int epfNo = getUserIDByRequestId(id);
+
+                Map<String, String> map = new LinkedHashMap<String, String>();
+                map.put("email", employeeMasterService.getGsuitEmailById(epfNo));
+                map.put("id", id);
+
+                emailList.add(map);
             });
+            //send email to director if approved
+            if(approval == RequestStatus.APPROVED){
+                String dirEmail = employeeMasterService.getDirectorEmail();
+                String secEmail = employeeMasterService.getSecretaryEmail();
+                String msgBody = emailService.DirectorRequestMessage("New Travel Request", "travel-request");
+
+                emailService.sendEmail(dirEmail, "New Travel Request", msgBody);
+
+                emailService.sendEmail(secEmail, "New Travel Request", msgBody);
+
+                emailService.sendBulkEmailToRequesterAfterHOD(emailList,"New Travel Request", "APPROVED", "HOD " + user);
+            }else{
+                emailService.sendBulkEmailToRequesterAfterHOD(emailList,"New Travel Request", "NOT APPROVED", "HOD " +user);
+
+            }
             return true;
         }catch (Exception e){
             log.info(e.toString());
@@ -119,14 +142,34 @@ public class TravelRequestService implements ITravelRequestService {
 
     }
 
+    private int getUserIDByRequestId(String id) {
+        TravelRequest request = travelRequestRepository.findByDocumentNoEquals(id);
+        return Integer.parseInt(request.getEpfNo());
+    }
+
     @Override
     public Object putDirectorApproval(RequestStatus approval, List<String> resId, String user) {
 
         try {
             log.info("Director Travel Request : requested");
+            List<Map<String ,String>> emailList = new ArrayList<>();
             resId.forEach(id->{
                 travelRequestRepository.updateDirApproveAndModifiedFields(approval,user,new Date(),id);
+
+                int epfNo = getUserIDByRequestId(id);
+                Map<String, String> map = new LinkedHashMap<String, String>();
+                map.put("email", employeeMasterService.getGsuitEmailById(epfNo));
+                map.put("id", id);
+
+                emailList.add(map);
             });
+            if(approval == RequestStatus.APPROVED){
+
+                emailService.sendBulkEmailToRequesterAfterHOD(emailList,"New Travel Request", "APPROVED", "Director/secretary " +user);
+            }else{
+                emailService.sendBulkEmailToRequesterAfterHOD(emailList,"New Travel Request", "NOT APPROVED","Director/secretary " + user);
+
+            }
             return true;
         }catch (Exception e){
             log.info(e.toString());

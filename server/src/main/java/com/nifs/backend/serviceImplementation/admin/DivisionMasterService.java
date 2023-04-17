@@ -9,6 +9,7 @@ import com.nifs.backend.dto.admin.DivisionMasterDTO;
 import com.nifs.backend.model.admin.DivisionMaster;
 import com.nifs.backend.repository.admin.DivisionMasterRepository;
 import com.nifs.backend.service.admin.IDivisionMasterService;
+import com.nifs.backend.service.admin.IEmployeeMasterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +28,7 @@ public class DivisionMasterService implements IDivisionMasterService {
 
     @Autowired
     private EmployeeMasterRepository empRepo;
+
     private final Common common = new Common();
 
     //    get all divisions
@@ -36,8 +38,13 @@ public class DivisionMasterService implements IDivisionMasterService {
             List<DivisionMaster> divData = divMasterRepo.findAll();
             List<DivisionMasterDTO> divDTO = new ArrayList<>();
             for (DivisionMaster d : divData) {
-                DivisionMasterDTO dto = new DivisionMasterDTO(d.getDivisionId(), d.getName(), d.getLocationId().getLocationName(), d.getHod().getEpfNo());
-                divDTO.add(dto);
+                if(d.getHod() == null){
+                    divDTO.add(DivisionMasterDTO.builder().divisionId(d.getDivisionId()).name(d.getName()).locationId(d.getLocationId().getLocationName()).build());
+                }else{
+//                    DivisionMasterDTO dto = new DivisionMasterDTO(d.getDivisionId(), d.getName(), d.getLocationId().getLocationName(), d.getHod().getEpfNo());
+                    divDTO.add(new DivisionMasterDTO(d.getDivisionId(), d.getName(), d.getLocationId().getLocationName(), d.getHod().getEpfNo()));
+                }
+
             }
             return divDTO;
         } catch (Exception e) {
@@ -54,11 +61,9 @@ public class DivisionMasterService implements IDivisionMasterService {
 
         if (divMasterRepo.returnDivision(d.getDivisionId()) == null) {
 
-            Date date = new Date();
+
             Locations l = locRepo.getLocation(d.getLocationId());
-            EmployeeMaster emp = empRepo.returnEmployeeById(d.getHod());
-            DivisionMaster dm = new DivisionMaster(d.getDivisionId(), d.getName(), date, l, emp);
-            divMasterRepo.save(dm);
+            divMasterRepo.save(DivisionMaster.builder().divisionId(d.getDivisionId()).name(d.getName()).createdDate(new Date()).locationId(l).build());
             return d;
         }
         else {
@@ -114,10 +119,33 @@ public class DivisionMasterService implements IDivisionMasterService {
     @Override
     public Boolean updateDivisionMaster(DivisionMasterDTO dmData, String dvId) {
         try {
-            if (divMasterRepo.returnDivision(dvId) != null) {
+            DivisionMaster division = divMasterRepo.returnDivision(dvId);
+            if (division != null) {
                 Date d = new Date();
-                divMasterRepo.updateDivisionMaster(dmData.getName(), d, dvId);
-                return true;
+
+                //check weahter hod is already  hod
+                DivisionMaster divisionMaster = divMasterRepo.findByHod_EpfNoEquals(dmData.getHod());
+
+                if(divisionMaster == null){
+
+                    empRepo.updateRoleAndDivisionIdByEpfNoEquals("USER", division, division.getHod().getEpfNo());
+                    // find the new hod by epf no
+                    EmployeeMaster emp = empRepo.findByEpfNoEquals(dmData.getHod());
+
+
+
+
+                    //make the employee admin and change the division
+                    empRepo.updateRoleAndDivisionIdByEpfNoEquals("ADMIN", division, dmData.getHod());
+
+                    //update the division
+                    divMasterRepo.updateDivisionMaster(dmData.getName(), d, emp, dvId);
+                    return true;
+                }else{
+                    return false;
+                }
+
+
             }
             else {
                 return false;

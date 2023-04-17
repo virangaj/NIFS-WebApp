@@ -35,13 +35,14 @@ function DivisionAction({ params, rowId, setRowId, setDeleteId }: any) {
 
 	const handleUpdate = async () => {
 		setLoading(true);
-		const { divisionId, name, locationId } = params.row;
+		const { divisionId, name, locationId, hod } = params.row;
 		setTimeout(async () => {
 			const data = {
 				data: {
 					divisionId,
 					name,
 					locationId,
+					hod,
 				},
 				token: auth?.user?.token,
 			};

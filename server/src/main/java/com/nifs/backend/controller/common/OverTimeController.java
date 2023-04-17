@@ -4,6 +4,7 @@ import com.nifs.backend.constant.RequestStatus;
 import com.nifs.backend.dto.admin.ContractExtensionDTO;
 import com.nifs.backend.dto.common.OvertimeDTO;
 import com.nifs.backend.serviceImplementation.common.OverTimeService;
+import jakarta.mail.MessagingException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,7 +25,7 @@ public class OverTimeController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<?> createNewOverTime(@RequestBody OvertimeDTO data) {
+    public ResponseEntity<?> createNewOverTime(@RequestBody OvertimeDTO data) throws MessagingException {
         return overTimeService.createNewOverTime(data);
     }
 

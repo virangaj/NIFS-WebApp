@@ -4,6 +4,7 @@ import com.nifs.backend.constant.RequestStatus;
 import com.nifs.backend.dto.admin.ContractExtensionDTO;
 import com.nifs.backend.dto.common.PaymentRequestDTO;
 import com.nifs.backend.serviceImplementation.common.PaymentRequestService;
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -24,7 +25,7 @@ public class PaymentRequestController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<?> createNewPaymentRequest(@RequestBody PaymentRequestDTO data) {
+    public ResponseEntity<?> createNewPaymentRequest(@RequestBody PaymentRequestDTO data) throws MessagingException {
         return paymentRequestService.createNewPaymentRequest(data);
     }
 

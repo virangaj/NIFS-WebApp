@@ -5,6 +5,7 @@ import com.nifs.backend.dto.admin.ContractExtensionDTO;
 import com.nifs.backend.dto.common.WorkRequestDTO;
 import com.nifs.backend.service.common.IWorkRequestService;
 import com.nifs.backend.serviceImplementation.common.WorkRequestService;
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -25,7 +26,7 @@ public class WorkRequestController {
 
 
     @PostMapping("/add")
-    public ResponseEntity<?> createNewWorkRequest(@RequestBody WorkRequestDTO data) {
+    public ResponseEntity<?> createNewWorkRequest(@RequestBody WorkRequestDTO data) throws MessagingException {
         return workRequestService.createNewWorkRequest(data);
     }
 

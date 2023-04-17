@@ -5,6 +5,7 @@ import com.nifs.backend.constant.RequestStatus;
 import com.nifs.backend.dto.procument.QuotationSummaryDTO;
 import com.nifs.backend.dto.procument.SrnDTO;
 import com.nifs.backend.serviceImplementation.procument.SrnService;
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -29,7 +30,7 @@ public class SrnController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<?> createNewSrn(@RequestBody SrnDTO data){
+    public ResponseEntity<?> createNewSrn(@RequestBody SrnDTO data) throws MessagingException {
         return ResponseEntity.ok(srnService.createNewSrn(data));
     }
 

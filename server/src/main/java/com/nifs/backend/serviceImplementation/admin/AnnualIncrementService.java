@@ -133,9 +133,9 @@ public class AnnualIncrementService implements IAnnualIncrementService {
 
                 emailService.sendEmail(secEmail, "Annual Increment Request", msgBody);
 
-                emailService.sendBulkEmailToRequesterAfterHOD(emailList,"Annual Increment Request", "APPROVED", user);
+                emailService.sendBulkEmailToRequesterAfterHOD(emailList,"Annual Increment Request", "APPROVED", "HOD " + user);
             }else{
-                emailService.sendBulkEmailToRequesterAfterHOD(emailList,"Annual Increment Request", "NOT APPROVED", user);
+                emailService.sendBulkEmailToRequesterAfterHOD(emailList,"Annual Increment Request", "NOT APPROVED", "HOD " +user);
 
             }
 

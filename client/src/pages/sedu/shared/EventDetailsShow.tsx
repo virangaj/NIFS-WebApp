@@ -1,15 +1,22 @@
 import { useEffect, useState } from 'react';
 import EventRequestService from '../../../services/sedu/EventRequestService';
 import EventDetailText from './EventDetailText';
+import Ripple from '../../../components/Ripple';
 
 function EventDetailsShow({ selected }: any) {
 	const [event, setEvent] = useState<any>({});
 
+	const [loading, setLoading] = useState(false);
+
 	useEffect(() => {
-		EventRequestService.getEventById(selected).then((res: any) => {
-			console.log(res);
-			setEvent(res.data.eventData);
-		});
+		setLoading(true);
+		setTimeout(() => {
+			EventRequestService.getEventById(selected).then((res: any) => {
+				console.log(res);
+				setEvent(res.data.eventData);
+				setLoading(false);
+			});
+		}, 1000);
 	}, [selected]);
 
 	return (
@@ -32,7 +39,7 @@ function EventDetailsShow({ selected }: any) {
 			<EventDetailText title={'Created By'} value={event?.createdBy} />
 			<EventDetailText
 				title={'Created On'}
-				value={event?.createdOn.split('T')[0]}
+				value={event?.createdOn?.split('T')[0]}
 			/>
 			<EventDetailText title={'Venue'} value={event?.venueId} />
 		</div>

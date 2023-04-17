@@ -3,6 +3,7 @@ package com.nifs.backend.service.procument;
 import com.nifs.backend.constant.RequestStatus;
 import com.nifs.backend.dto.procument.GatePassDTO;
 import com.nifs.backend.dto.procument.QuotationRequestDTO;
+import jakarta.mail.MessagingException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
 @Service
 public interface IQuotationRequestService {
 
-    QuotationRequestDTO createNewQuotationRequest(QuotationRequestDTO data);
+    QuotationRequestDTO createNewQuotationRequest(QuotationRequestDTO data) throws MessagingException;
 
     List<QuotationRequestDTO> getAllQuotationRequests(String division);
 

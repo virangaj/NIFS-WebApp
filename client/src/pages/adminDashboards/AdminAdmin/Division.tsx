@@ -18,6 +18,8 @@ import {
 	getAllDivisions,
 } from '../../../feature/admin/DivisionSlice';
 import { getAllLocations } from '../../../feature/admin/LocationSlice';
+import LocationSelector from '../../../components/shared/LocationSelector';
+import EmployeeSelector from '../../../components/shared/EmployeeSelector';
 function Division() {
 	const dispatch = useDispatch<any>();
 
@@ -39,7 +41,7 @@ function Division() {
 		divisionId: '',
 		name: '',
 		locationId: '',
-		hod: '',
+		hod: 0,
 	});
 	useEffect(() => {
 		const filteredData = division?.filter((emp) => emp.divisionId !== deleteId);
@@ -142,6 +144,12 @@ function Division() {
 			{
 				field: 'locationId',
 				headerName: 'Location',
+				width: 100,
+				editable: true,
+			},
+			{
+				field: 'hod',
+				headerName: 'HOD',
 				width: 200,
 				editable: true,
 			},
@@ -218,27 +226,11 @@ function Division() {
 								</button>
 							</div>
 							<div>
-								<label className='input-label' htmlFor='locationId'>
-									Location
-								</label>
-								<select
-									className='tailwind-text-box'
-									value={values.locationId}
-									id='location'
-									name='locationId'
+								<LocationSelector
 									onChange={onChange}
-								>
-									<option disabled value=''>
-										Select Location
-									</option>
-									{location?.map((l: ILocationData, i: number) => {
-										return (
-											<option key={i} value={l.locationId}>
-												{l.locationName}
-											</option>
-										);
-									})}
-								</select>
+									name='locationId'
+									value={values.locationId}
+								/>
 							</div>
 							<div>
 								<label className='input-label' htmlFor='typeName'>
@@ -253,6 +245,7 @@ function Division() {
 									value={values.name}
 								/>
 							</div>
+
 							<Stack
 								direction='row'
 								justifyContent='flex-end'
