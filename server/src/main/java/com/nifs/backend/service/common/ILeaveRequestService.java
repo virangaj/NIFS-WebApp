@@ -2,6 +2,7 @@ package com.nifs.backend.service.common;
 
 import com.nifs.backend.constant.RequestStatus;
 import com.nifs.backend.dto.common.LeaveRequestDTO;
+import jakarta.mail.MessagingException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +11,7 @@ import java.util.List;
 @Service
 public interface ILeaveRequestService {
 
-    ResponseEntity<?> createNewLeaveRequest(LeaveRequestDTO date);
+    ResponseEntity<?> createNewLeaveRequest(LeaveRequestDTO date) throws MessagingException;
 
     Object getAllLeaveRequests(String division);
 
