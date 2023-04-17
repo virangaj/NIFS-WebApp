@@ -1,5 +1,6 @@
 package com.nifs.backend.repository.admin;
 
+import com.nifs.backend.model.admin.DivisionMaster;
 import com.nifs.backend.model.admin.EmployeeMaster;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -9,6 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 public interface EmployeeMasterRepository extends JpaRepository<EmployeeMaster, Integer> {
+    @Transactional
+    @Modifying
+    @Query("update EmployeeMaster e set e.role = ?1, e.divisionId = ?2 where e.epfNo = ?3")
+    void updateRoleAndDivisionIdByEpfNoEquals(String role, DivisionMaster divisionId, int epfNo);
+    EmployeeMaster findByEpfNoEquals(int epfNo);
     EmployeeMaster findByDesignationId_DesignationIdEquals(String designationId);
 
     @Transactional

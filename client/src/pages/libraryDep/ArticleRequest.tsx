@@ -13,6 +13,7 @@ import EmployeeSelector from "../../components/shared/EmployeeSelector";
 import DesignationSelector from "../../components/shared/DesignationSelector";
 import DivisionSelector from "../../components/shared/DivisionSelector";
 import FileInput from "../../components/FileInput";
+import { RequestStatus } from "../../constant/requestStatus";
 
 const initialState: IArticleRequest = {
   documentNo: "",
@@ -28,6 +29,9 @@ const initialState: IArticleRequest = {
   pages: "",
   webLink: "",
   remark: "",
+
+  hodApproved: RequestStatus.PENDING,
+  dirApproved: RequestStatus.PENDING,
 };
 
 export default function ArticleRequest() {
@@ -50,19 +54,9 @@ export default function ArticleRequest() {
 
   useEffect(() => {
     setValues({
-      documentNo: values?.documentNo,
-      epfNo: values?.epfNo,
-      designationId: values?.designationId,
-      divisionId: values?.divisionId,
-      hod: values?.hod,
+      ...values,
       date: requestDate ? requestDate : "",
-      nameOfJournal: values?.nameOfJournal,
       publishYear: publishedYear ? publishedYear : "",
-      volume: values?.volume,
-      issue: values?.issue,
-      pages: values?.pages,
-      webLink: values?.webLink,
-      remark: values?.remark,
     });
   }, [requestDate, publishedYear]);
 

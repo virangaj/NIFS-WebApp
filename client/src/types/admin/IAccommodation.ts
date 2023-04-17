@@ -1,3 +1,5 @@
+import { RequestStatus } from "../../constant/requestStatus";
+
 export default interface IAccommodation {
   documentNo: string;
   epfNo: number;
@@ -27,4 +29,7 @@ export default interface IAccommodation {
 
   //payment
   payee: string;
+
+  hodApproved: RequestStatus;
+  dirApproved: RequestStatus;
 }

@@ -5,6 +5,7 @@ import com.nifs.backend.constant.RequestStatus;
 import com.nifs.backend.dto.library.ArticleRequestDTO;
 import com.nifs.backend.dto.procument.GatePassDTO;
 import com.nifs.backend.serviceImplementation.procument.GatePassService;
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -29,7 +30,7 @@ public class GatePassController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<?> createNewGatePassRequest(@RequestBody GatePassDTO data){
+    public ResponseEntity<?> createNewGatePassRequest(@RequestBody GatePassDTO data) throws MessagingException {
         return ResponseEntity.ok(gatePassService.createNewArticleRequest(data));
     }
 

@@ -1,3 +1,5 @@
+import { RequestStatus } from "../../constant/requestStatus";
+
 export default interface IQuotationSummary {
   fundType: string | number | readonly string[] | undefined;
   documentNo: string;
@@ -15,4 +17,7 @@ export default interface IQuotationSummary {
   fund: string;
   project: string;
   remark: string;
+
+  hodApproved: RequestStatus;
+  dirApproved: RequestStatus;
 }

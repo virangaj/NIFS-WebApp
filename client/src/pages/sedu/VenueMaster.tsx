@@ -74,8 +74,9 @@ function VenueMaster() {
 	// generate id on button click
 	const generateVenueID = () => {
 		resetForm();
-		VenueMasterService.getNewVenueId()
+		VenueMasterService.getNewVenueId(auth?.user.token)
 			.then((res: any) => {
+				console.log(res);
 				setV_Id(res.data);
 			})
 			.catch((e: any) => {

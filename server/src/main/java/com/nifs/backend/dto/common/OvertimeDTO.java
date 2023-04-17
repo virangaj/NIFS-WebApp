@@ -1,5 +1,6 @@
 package com.nifs.backend.dto.common;
 
+import com.nifs.backend.constant.RequestStatus;
 import com.nifs.backend.dto.BaseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,6 +29,9 @@ public class OvertimeDTO extends BaseDTO {
 
     private String necessityToWorkOvertime;
     private String remark;
+
+    RequestStatus hodApproved;
+    RequestStatus dirApproved;
 
 
 }

@@ -13,6 +13,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Table(name="division_master")
 public class DivisionMaster {
 
@@ -43,7 +44,7 @@ public class DivisionMaster {
     private List<EmployeeMaster> employee;
 
     @OneToOne
-    @JoinColumn(name = "hod", referencedColumnName = "epf_no")
+    @JoinColumn(name = "hod", referencedColumnName = "epf_no", nullable = true)
     private EmployeeMaster hod;
 
 

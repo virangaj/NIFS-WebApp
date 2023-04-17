@@ -1,3 +1,5 @@
+import { RequestStatus } from "../../constant/requestStatus";
+
 export default interface Isrn {
   documentNo: string;
   date: string;
@@ -14,4 +16,7 @@ export default interface Isrn {
   fundAllocationForTheProject: string;
   description: string;
   googleLink: string;
+
+  hodApproved: RequestStatus;
+  dirApproved: RequestStatus;
 }

@@ -12,6 +12,7 @@ import DivisionSelector from "../../components/shared/DivisionSelector";
 import { Stack } from "@mui/material";
 import TravelRequestService from "../../services/transport/TravelRequestService";
 import { toast } from "react-toastify";
+import { RequestStatus } from "../../constant/requestStatus";
 
 const initialState: ITravelRequest = {
   documentNo: "",
@@ -28,6 +29,9 @@ const initialState: ITravelRequest = {
   otherPassengers: "",
   modeOfTravel: "",
   vehicleType: "",
+
+  hodApproved: RequestStatus.PENDING,
+  dirApproved: RequestStatus.PENDING,
 };
 
 const TravelRequest = () => {

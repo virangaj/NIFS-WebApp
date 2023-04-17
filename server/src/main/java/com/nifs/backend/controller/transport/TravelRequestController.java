@@ -5,6 +5,7 @@ import com.nifs.backend.constant.RequestStatus;
 import com.nifs.backend.dto.transport.TravelRequestDTO;
 import com.nifs.backend.service.transport.ITravelRequestService;
 import com.nifs.backend.serviceImplementation.transport.TravelRequestService;
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -29,7 +30,7 @@ public class TravelRequestController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<?> createNewTravelRequest(@RequestBody TravelRequestDTO data){
+    public ResponseEntity<?> createNewTravelRequest(@RequestBody TravelRequestDTO data) throws MessagingException {
         return ResponseEntity.ok(travelRequestService.createNewTravelRequest(data));
     }
     @GetMapping

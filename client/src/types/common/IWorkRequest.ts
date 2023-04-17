@@ -1,3 +1,5 @@
+import { RequestStatus } from "../../constant/requestStatus";
+
 export default interface IWorkRequest {
   // generated
   documentNo: string;
@@ -14,4 +16,7 @@ export default interface IWorkRequest {
   supervisorEmail: string;
   workDescription: string;
   googleLinkWithWorkDescription: string;
+
+  hodApproved: RequestStatus;
+  dirApproved: RequestStatus;
 }

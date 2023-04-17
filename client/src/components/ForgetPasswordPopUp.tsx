@@ -21,7 +21,7 @@ function ForgetPasswordPopUp({ setPopUp }: any) {
 	const onSubmit = async (e: any) => {
 		e.preventDefault();
 		setLoading(true);
-		await OAuthService.forgetPassword(email.email).then((res) => {
+		await OAuthService.requestForgetPassword(email.email).then((res) => {
 			console.log(res);
 			if (res.data.status === RequestStatus.SUCCESS) {
 				toast.info(res.data.message);
@@ -47,8 +47,8 @@ function ForgetPasswordPopUp({ setPopUp }: any) {
 					<div className='p-2 rounded-box bg-sky-200 w-[50px] h-[50px] mx-auto'>
 						<img src='https://img.icons8.com/fluency/48/null/password--v2.png' />
 					</div>
-					<h1 className='page-title text-center'>Forget Password?</h1>
-					<p className='mb-6 text-sm text-gray-600 text-center'>
+					<h1 className='text-center page-title'>Forget Password?</h1>
+					<p className='mb-6 text-sm text-center text-gray-600'>
 						Enter email address associated
 						<br /> with your account
 					</p>

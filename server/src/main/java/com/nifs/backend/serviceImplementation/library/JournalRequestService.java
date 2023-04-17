@@ -59,8 +59,10 @@ public class JournalRequestService implements IJournalRequestService {
                     .type(data.getType())
                     .methodOfPayment(data.getMethodOfPayment())
                     .remark(data.getRemark())
-                    .createdBy(data.getId())
+                    .createdBy(data.getEpfNo())
                     .createdOn(new Date())
+                    .hodApproved(data.getHodApproved())
+                    .dirApproved(data.getDirApproved())
                     .build();
 
             journalRequestRepository.save(journalRequest);

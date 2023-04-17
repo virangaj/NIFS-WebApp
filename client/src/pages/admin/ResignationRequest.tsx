@@ -6,7 +6,6 @@ import { useAppSelector } from '../../hooks/hooks';
 
 import { generateID } from '../../utils/generateId';
 import Ripple from '../../components/Ripple';
-import IContractExtension from '../../types/admin/IContractExtension';
 import CustomeDataPicker from '../../components/DataPicker';
 import IEmployeeData from '../../types/admin/IEmployeeData';
 import DivisionSelector from '../../components/shared/DivisionSelector';
@@ -127,102 +126,112 @@ function ResignationRequest() {
 		<div className='sub-body-content xl:!w-[60%]'>
 			<h1 className='page-title'>Resignation Request</h1>
 			<hr className='horizontal-line' />
-			<form onSubmit={onSubmit}>
-				<div className='grid grid-cols-1 md:grid-cols-2 items-center w-[97%] mx-auto'>
-					<Box className='flex items-center justify-between input-field'>
-						Document No - {getDocNo && getDocNo}
-						<button
-							type='button'
-							className='rounded-outline-success-btn'
-							onClick={generateDocNo}
-							style={{ marginLeft: '20px' }}
-						>
-							New
-						</button>
-					</Box>
-					<div className='mx-0 mb-4 lg:ml-10 md:my-0'>
-						<CustomeDataPicker
-							date={requestDate}
-							setDate={setRequestDate}
-							title='Request Date'
+			{!loading ? (
+				<form onSubmit={onSubmit}>
+					<div className='grid grid-cols-1 md:grid-cols-2 items-center w-[97%] mx-auto'>
+						<Box className='flex items-center justify-between input-field'>
+							Document No - {getDocNo && getDocNo}
+							<button
+								type='button'
+								className='rounded-outline-success-btn'
+								onClick={generateDocNo}
+								style={{ marginLeft: '20px' }}
+							>
+								New
+							</button>
+						</Box>
+						<div className='mx-0 mb-4 lg:ml-10 md:my-0'>
+							<CustomeDataPicker
+								date={requestDate}
+								setDate={setRequestDate}
+								title='Request Date'
+							/>
+						</div>
+
+						<EmployeeSelector
+							onChange={onChange}
+							value={values.epfNo}
+							name='epfNo'
+						/>
+					</div>
+					{values.epfNo && empFoundError ? (
+						<p className='w-[97%] mx-auto error-text-message'>
+							User Not Found!
+						</p>
+					) : (
+						''
+					)}
+					<div className='w-[97%] mx-auto'>
+						<DesignationSelector
+							onChange={onChange}
+							value={values.designationId}
+							name='designationId'
+						/>
+					</div>
+					<div className='w-[97%] mx-auto'>
+						<DivisionSelector
+							onChange={onChange}
+							value={values.divisionId}
+							name='divisionId'
 						/>
 					</div>
 
-					<EmployeeSelector
-						onChange={onChange}
-						value={values.epfNo}
-						name='epfNo'
-					/>
-				</div>
-				{values.epfNo && empFoundError ? (
-					<p className='w-[97%] mx-auto error-text-message'>User Not Found!</p>
-				) : (
-					''
-				)}
-				<div className='w-[97%] mx-auto'>
-					<DesignationSelector
-						onChange={onChange}
-						value={values.designationId}
-						name='designationId'
-					/>
-				</div>
-				<div className='w-[97%] mx-auto'>
-					<DivisionSelector
-						onChange={onChange}
-						value={values.divisionId}
-						name='divisionId'
-					/>
-				</div>
-
-				<div className='w-[97%] mx-auto'>
-					<div className='grid items-center grid-cols-1 md:grid-cols-2'>
-						<p className='normal-text'>
-							HOD :{' '}
-							{values.divisionId && hod ? (
-								<span className='font-bold'>
-									{hod.firstName + ' ' + hod.lastName}
-								</span>
-							) : (
-								<span className='italic-sm-text'>Please select a Division</span>
-							)}
-						</p>
+					<div className='w-[97%] mx-auto'>
+						<div className='grid items-center grid-cols-1 md:grid-cols-2'>
+							<p className='normal-text'>
+								HOD :{' '}
+								{values.divisionId && hod ? (
+									<span className='font-bold'>
+										{hod.firstName + ' ' + hod.lastName}
+									</span>
+								) : (
+									<span className='italic-sm-text'>
+										Please select a Division
+									</span>
+								)}
+							</p>
+						</div>
 					</div>
-				</div>
 
-				<div className='w-[97%] mx-auto'>
-					<label className='input-label' htmlFor='remark'>
-						Remark
-					</label>
+					<div className='w-[97%] mx-auto'>
+						<label className='input-label' htmlFor='remark'>
+							Remark
+						</label>
 
-					<textarea
-						id='remark'
-						className='tailwind-text-box w-[100%] mr-4'
-						onChange={onChange}
-						name='remark'
-						value={values.remark}
-					></textarea>
-				</div>
+						<textarea
+							id='remark'
+							className='tailwind-text-box w-[100%] mr-4'
+							onChange={onChange}
+							name='remark'
+							value={values.remark}
+						></textarea>
+					</div>
 
-				<Stack
-					direction='row'
-					justifyContent='flex-end'
-					alignItems='flex-end'
-					spacing={2}
-					className='admin-form-buton-stack'
-				>
-					<button
-						className='action-com-model-error-btn'
-						type='reset'
-						color='error'
-						onClick={resetForm}
+					<Stack
+						direction='row'
+						justifyContent='flex-end'
+						alignItems='flex-end'
+						spacing={2}
+						className='admin-form-buton-stack'
 					>
-						Reset
-					</button>
-					<button className='action-com-model-sucess-btn' type='submit'>
-						Submit
-					</button>
-				</Stack>
-			</form>
+						<button
+							className='action-com-model-error-btn'
+							type='reset'
+							color='error'
+							onClick={resetForm}
+						>
+							Reset
+						</button>
+						<button className='action-com-model-sucess-btn' type='submit'>
+							Submit
+						</button>
+					</Stack>
+				</form>
+			) : (
+				<>
+					<Ripple />
+				</>
+			)}
 		</div>
 	);
 }

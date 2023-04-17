@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 public interface ResignationReqRepository extends JpaRepository<ResignationRequest, String> {
+    ResignationRequest findByDocumentNoEquals(String documentNo);
 
     List<ResignationRequest> findByDivisionIdOrderByCreatedOnDesc(String divisionId);
     List<ResignationRequest> findAllByOrderByCreatedOnDesc();

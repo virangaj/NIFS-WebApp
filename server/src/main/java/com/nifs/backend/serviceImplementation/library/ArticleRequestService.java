@@ -57,8 +57,10 @@ public class ArticleRequestService implements IArticleRequestService {
                     .pages(data.getPages())
                     .webLink(data.getWebLink())
                     .remark(data.getRemark())
-                    .createdBy(data.getId())
+                    .createdBy(data.getEpfNo())
                     .createdOn(new Date())
+                    .hodApproved(data.getHodApproved())
+                    .dirApproved(data.getDirApproved())
                     .build();
 
             articleRequestRepository.save(articleRequest);

@@ -1,6 +1,7 @@
 package com.nifs.backend.model.common;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.nifs.backend.constant.RequestStatus;
 import com.nifs.backend.model.Base;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -39,4 +40,7 @@ public class OverTime extends Base {
 
     private String necessityToWorkOvertime;
     private String remark;
+
+    RequestStatus hodApproved;
+    RequestStatus dirApproved;
 }

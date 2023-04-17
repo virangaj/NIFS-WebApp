@@ -7,11 +7,8 @@ import Ripple from '../../components/Ripple';
 import IContractExtension from '../../types/admin/IContractExtension';
 import CustomeDataPicker from '../../components/DataPicker';
 import IEmployeeData from '../../types/admin/IEmployeeData';
-import EmployeeService from '../../services/admin/EmployeeService';
 import IDesignationData from '../../types/admin/IDesignationData';
-import DesignationMasterService from '../../services/admin/DesignationMasterService';
 import IDivisionData from '../../types/admin/IDivisionData';
-import DivisionMasterService from '../../services/admin/DivisionMasterService';
 import ContractExtensionService from '../../services/admin/ContractExtensionService';
 import { useAppSelector } from '../../hooks/hooks';
 import EmployeeSelector from '../../components/shared/EmployeeSelector';
@@ -153,13 +150,19 @@ function ContractExtension() {
 								New
 							</button>
 						</Box>
+						<div className='mx-0 mb-4 lg:ml-10 md:my-0'>
+							<CustomeDataPicker
+								date={requestDate}
+								setDate={setRequestDate}
+								title='Request Date'
+							/>
+						</div>
+						<EmployeeSelector
+							onChange={onChange}
+							value={values.epfNo}
+							name='epfNo'
+						/>
 					</div>
-
-					<EmployeeSelector
-						onChange={onChange}
-						value={values.epfNo}
-						name='epfNo'
-					/>
 
 					{values.epfNo && empFoundError ? (
 						<p className='w-[97%] mx-auto error-text-message'>
@@ -200,14 +203,6 @@ function ContractExtension() {
 								)}
 							</p>
 						</div>
-					</div>
-
-					<div className='mx-0 mb-4 lg:ml-10 md:my-0'>
-						<CustomeDataPicker
-							date={requestDate}
-							setDate={setRequestDate}
-							title='Request Date'
-						/>
 					</div>
 
 					<div className='w-[97%] mx-auto'>

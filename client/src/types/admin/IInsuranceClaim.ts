@@ -1,3 +1,5 @@
+import { RequestStatus } from "../../constant/requestStatus";
+
 export default interface IInsuranceClaim {
   // generated
   documentNo: string;
@@ -15,4 +17,7 @@ export default interface IInsuranceClaim {
   claimPaidDate: string;
   spectacleClaimDate: string;
   remark: string;
+
+  hodApproved: RequestStatus;
+  dirApproved: RequestStatus;
 }

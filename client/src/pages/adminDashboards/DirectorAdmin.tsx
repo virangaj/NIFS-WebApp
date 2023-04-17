@@ -19,16 +19,20 @@ import DirectorQuotationSummaryRequest from "./DirectorDashbaord/DirectorQuotati
 import DirectorAccomodation from "./DirectorDashbaord/DirectorAccomodation";
 import DirectorInsuranceClaim from "./DirectorDashbaord/DirectorInsuranceClaim";
 import DirectorAnnualIncrementRequest from "./DirectorDashbaord/DirectorAnnualIncrementRequest";
-import AdminRoutePage from './shared/AdminRoutePage';
+import AdminRoutePage from "./shared/AdminRoutePage";
+import DirectorWorkRequest from "./DirectorDashbaord/DirectorWorkRequest";
+import DirectorLeaveRequest from "./DirectorDashbaord/DirectorLeaveRequest";
+import DirectorOverTime from "./DirectorDashbaord/DirectorOverTime";
+import DirectorPaymentRequest from "./DirectorDashbaord/DirectorPaymentRequest";
 export function PageRoutes() {
   return (
     <Routes>
-    <Route
-    				path='/*'
-    				element={
-    					<AdminRoutePage Sidebardata={DirectorSideNavbar} Route='director' />
-    				}
-    			/>
+      <Route
+        path="/*"
+        element={
+          <AdminRoutePage Sidebardata={DirectorSideNavbar} Route="director" />
+        }
+      />
       <Route
         path={RouteName.DirectorResignationReq}
         element={<DirectorResignationReq />}
@@ -85,6 +89,19 @@ export function PageRoutes() {
       <Route
         path={RouteName.AnnualIncrementRequest}
         element={<DirectorAnnualIncrementRequest />}
+      />
+
+      {/* Common */}
+
+      <Route path={RouteName.WorkRequest} element={<DirectorWorkRequest />} />
+
+      <Route path={RouteName.LeaveRequest} element={<DirectorLeaveRequest />} />
+
+      <Route path={RouteName.OverTime} element={<DirectorOverTime />} />
+
+      <Route
+        path={RouteName.PaymentRequest}
+        element={<DirectorPaymentRequest />}
       />
 
       <Route path={RouteName.Projects} element={<Projects />} />

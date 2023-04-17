@@ -1,3 +1,5 @@
+import { RequestStatus } from "../../constant/requestStatus";
+
 export default interface ITravelRequest {
   documentNo: string;
   epfNo: 0;
@@ -13,4 +15,7 @@ export default interface ITravelRequest {
   otherPassengers: string;
   modeOfTravel: string;
   vehicleType: string;
+
+  hodApproved: RequestStatus;
+  dirApproved: RequestStatus;
 }

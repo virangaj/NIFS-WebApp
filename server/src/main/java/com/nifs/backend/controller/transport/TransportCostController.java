@@ -5,6 +5,7 @@ import com.nifs.backend.constant.RequestStatus;
 import com.nifs.backend.dto.transport.TransportCostDTO;
 import com.nifs.backend.dto.transport.TravelRequestDTO;
 import com.nifs.backend.serviceImplementation.transport.TransportCostService;
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -29,7 +30,7 @@ public class TransportCostController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<?> createNewTransportCostRequest(@RequestBody TransportCostDTO data){
+    public ResponseEntity<?> createNewTransportCostRequest(@RequestBody TransportCostDTO data) throws MessagingException {
         return ResponseEntity.ok(transportCostService.createNewTransportCost(data));
     }
 
