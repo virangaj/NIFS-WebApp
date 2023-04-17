@@ -14,6 +14,7 @@ import DivisionSelector from '../../components/shared/DivisionSelector';
 import { toast } from 'react-toastify';
 import WorkRequestService from '../../services/common/WorkRequestService';
 import { RequestStatus } from '../../constant/requestStatus';
+import ProjectSelector from '../../components/shared/ProjectSelector';
 
 const initialState: IWorkRequest = {
 	// generated
@@ -205,28 +206,11 @@ function WorkRequest() {
 					{/* left section of the flex */}
 					<div className='flex-1 mr-4'>
 						<div className='mx-0 input-field lg:ml-4'>
-							<label className='input-label' htmlFor='project'>
-								Project
-							</label>
-							<select
-								className='tailwind-text-box w-[90%]'
-								value={values.project}
-								id='project'
+							<ProjectSelector
 								name='project'
+								value={values.project}
 								onChange={onChange}
-							>
-								<option value='' disabled>
-									Select a Project
-								</option>
-
-								{Projects
-									? Projects.map((p, index) => (
-											<option value={p.value} key={index}>
-												{p.value}
-											</option>
-									  ))
-									: ''}
-							</select>
+							/>
 						</div>
 
 						<div className='mx-0 input-field lg:ml-4'>
@@ -242,31 +226,6 @@ function WorkRequest() {
 							>
 								<option value='' disabled>
 									Select a workType
-								</option>
-
-								{Projects
-									? Projects.map((p, index) => (
-											<option value={p.value} key={index}>
-												{p.value}
-											</option>
-									  ))
-									: ''}
-							</select>
-						</div>
-
-						<div className='mx-0 input-field lg:ml-4'>
-							<label className='input-label' htmlFor='supervisorEmail'>
-								Supervisor Email:
-							</label>
-							<select
-								className='tailwind-text-box w-[90%]'
-								value={values.supervisorEmail}
-								id='supervisorEmail'
-								name='supervisorEmail'
-								onChange={onChange}
-							>
-								<option value='' disabled>
-									Select a Supervisor Email
 								</option>
 
 								{Projects
@@ -294,31 +253,6 @@ function WorkRequest() {
 							>
 								<option value='' disabled>
 									Select a Program
-								</option>
-
-								{Projects
-									? Projects.map((p, index) => (
-											<option value={p.value} key={index}>
-												{p.value}
-											</option>
-									  ))
-									: ''}
-							</select>
-						</div>
-
-						<div className='mx-0 input-field lg:ml-4'>
-							<label className='input-label' htmlFor='hodEmail'>
-								HOD Email:
-							</label>
-							<select
-								className='tailwind-text-box w-[90%]'
-								value={values.hodEmail}
-								id='hodEmail'
-								name='hodEmail'
-								onChange={onChange}
-							>
-								<option value='' disabled>
-									Select a HOD Email
 								</option>
 
 								{Projects

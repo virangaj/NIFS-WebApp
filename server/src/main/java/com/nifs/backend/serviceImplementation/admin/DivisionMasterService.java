@@ -164,8 +164,14 @@ public class DivisionMasterService implements IDivisionMasterService {
                 List<DivisionMaster> dm = divMasterRepo.findDivisionByLocationId(locID);
                 List<DivisionMasterDTO> dDTO = new ArrayList<DivisionMasterDTO>();
                 for (DivisionMaster d : dm) {
-                    DivisionMasterDTO dDTOSingle = new DivisionMasterDTO(d.getDivisionId(), d.getName(), d.getLocationId().getLocationId(), d.getHod().getEpfNo());
-                    dDTO.add(dDTOSingle);
+                    if(d.getHod() == null){
+                        dDTO.add(DivisionMasterDTO.builder().divisionId(d.getDivisionId()).name(d.getName()).locationId(d.getLocationId().getLocationName()).build());
+                    }else{
+//                    DivisionMasterDTO dto = new DivisionMasterDTO(d.getDivisionId(), d.getName(), d.getLocationId().getLocationName(), d.getHod().getEpfNo());
+                        dDTO.add(new DivisionMasterDTO(d.getDivisionId(), d.getName(), d.getLocationId().getLocationName(), d.getHod().getEpfNo()));
+                    }
+//                    DivisionMasterDTO dDTOSingle = new DivisionMasterDTO(d.getDivisionId(), d.getName(), d.getLocationId().getLocationId(), d.getHod().getEpfNo());
+//                    dDTO.add(dDTOSingle);
                 }
                 return dDTO;
             }
