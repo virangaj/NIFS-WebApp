@@ -2,6 +2,7 @@
 	{
 		"section": "Master",
 		"only_admin": true,
+		"division": "DI1004",
 		"routes": [
 			{
 				"title": "Vehicle Master",
@@ -31,13 +32,13 @@
 	},
 	{
 		"section": "Transaction",
-		"only_admin": true,
+		"only_admin": false,
 		"routes": [
 			{
 				"title": "Travel Request",
 				"link": "/transport/travel-request",
 				"img": "https://img.icons8.com/color/256/taxi.png",
-				"only_admin": true
+				"only_admin": false
 			},
 			{
 				"title": "Transport Cost",
@@ -50,6 +51,7 @@
 	{
 		"section": "Request",
 		"only_admin": true,
+		"division": "DI1004",
 		"routes": [
 			{
 				"title": "Replacement Request",

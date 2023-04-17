@@ -1,7 +1,8 @@
 [
 	{
 		"section": "Master",
-		"only_admin": false,
+		"only_admin": true,
+		"division": "DI1003",
 		"routes": [
 			{
 				"title": "Venue Master",
@@ -20,6 +21,7 @@
 	{
 		"section": "Transaction",
 		"only_admin": false,
+		"division": "DM1003",
 		"routes": [
 			{
 				"title": "Booking",
