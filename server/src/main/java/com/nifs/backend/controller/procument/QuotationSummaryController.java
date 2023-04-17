@@ -5,6 +5,7 @@ import com.nifs.backend.constant.RequestStatus;
 import com.nifs.backend.dto.procument.QuotationRequestDTO;
 import com.nifs.backend.dto.procument.QuotationSummaryDTO;
 import com.nifs.backend.serviceImplementation.procument.QuotationSummaryService;
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -30,7 +31,7 @@ public class QuotationSummaryController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<?> createNewQuotationSummary(@RequestBody QuotationSummaryDTO data){
+    public ResponseEntity<?> createNewQuotationSummary(@RequestBody QuotationSummaryDTO data) throws MessagingException {
         return ResponseEntity.ok(quotationSummaryService.createNewQuotationSummary(data));
     }
 
