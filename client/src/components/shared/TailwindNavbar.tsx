@@ -19,7 +19,6 @@ import Division from '../../pages/adminDashboards/AdminAdmin/Division';
 function TailwindNavbar() {
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
-	const [employee, setEmployee] = useState<any>({});
 	const { auth } = useAppSelector((state) => state.persistedReducer);
 
 	useEffect(() => {
