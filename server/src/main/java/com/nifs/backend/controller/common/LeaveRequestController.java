@@ -4,6 +4,7 @@ import com.nifs.backend.constant.RequestStatus;
 import com.nifs.backend.dto.admin.ContractExtensionDTO;
 import com.nifs.backend.dto.common.LeaveRequestDTO;
 import com.nifs.backend.serviceImplementation.common.LeaveRequestService;
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -24,7 +25,7 @@ public class LeaveRequestController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<?> createNewLeaveRequest(@RequestBody LeaveRequestDTO data) {
+    public ResponseEntity<?> createNewLeaveRequest(@RequestBody LeaveRequestDTO data) throws MessagingException {
         return leaveRequestService.createNewLeaveRequest(data);
     }
     @GetMapping
