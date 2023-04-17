@@ -3,6 +3,7 @@ package com.nifs.backend.service.transport;
 import com.nifs.backend.constant.RequestStatus;
 import com.nifs.backend.dto.admin.ResignationRequestDTO;
 import com.nifs.backend.dto.transport.TravelRequestDTO;
+import jakarta.mail.MessagingException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +14,7 @@ public interface ITravelRequestService {
 
 
 
-    TravelRequestDTO createNewTravelRequest(TravelRequestDTO data);
+    TravelRequestDTO createNewTravelRequest(TravelRequestDTO data) throws MessagingException;
 
     List<TravelRequestDTO> getAllTravelRequests(String division);
 
