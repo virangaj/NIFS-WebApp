@@ -8,12 +8,15 @@ import { BiCheck, BiSave, BiTrash } from 'react-icons/bi';
 import { toast } from 'react-toastify';
 import EmployeeService from '../../../../services/admin/EmployeeService';
 import { useAppSelector } from '../../../../hooks/hooks';
+import { useDispatch } from 'react-redux';
+import { deleteEmployee } from '../../../../feature/admin/EmployeeSlice';
+import { RequestStatus } from '../../../../constant/requestStatus';
 function EmployeeAction({ params, rowId, setRowId, setDeleteId }: any) {
 	const [loading, setLoading] = useState(false);
 	const [success, setSuccess] = useState(false);
 	const [deleteLoading, setDeleteLoadng] = useState(false);
 	const [deleteConfirm, setDeleteConfirm] = useState(false);
-
+	const dispatch = useDispatch<any>();
 	const { auth } = useAppSelector((state) => state.persistedReducer);
 	useEffect(() => {
 		if (rowId === params.id && success) {
@@ -23,59 +26,49 @@ function EmployeeAction({ params, rowId, setRowId, setDeleteId }: any) {
 
 	const handleUpdate = async () => {
 		setLoading(true);
-		// const {
-		// 	epfNo,
-		// 	initials,
-		// 	firstName,
-		// 	lastName,
-		// 	gender,
-		// 	dob,
-		// 	address,
-		// 	districtId,
-		// 	provinceId,
-		// 	contactNo,
-		// 	personalEmail,
-		// 	gsuitEmail,
-		// 	nicNo,
-		// 	nicIssuedDate,
-		// 	passportNo,
-		// 	passExpireDate,
-		// 	licenseNo,
-		// 	licenseIssuedDate,
-		// 	licenseExpireDate,
-		// 	contactPerson,
-		// 	cpRelationship,
-		// 	cpAddress,
-		// 	cpTelephone,
-		// 	cpStatus,
-		// 	cpCivilStatus,
-		// 	cpReligion,
-		// 	appointmentDate,
-		// 	contractStart,
-		// 	contractEnd,
-		// 	locationId,
-		// 	empTypeId,
-		// 	empCatId,
-		// 	designationId,
-		// 	divisionId,
-		// } = params.row;
+		const {
+			epfNo,
+			initials,
+			firstName,
+			lastName,
+			gender,
+			dob,
+			address,
+			districtId,
+			provinceId,
+			contactNo,
+			personalEmail,
+			gsuitEmail,
+			nicNo,
+			nicIssuedDate,
+			passportNo,
+			passExpireDate,
+			licenseNo,
+			licenseIssuedDate,
+			licenseExpireDate,
+			contactPerson,
+			cpRelationship,
+			cpAddress,
+			cpTelephone,
+			cpStatus,
+			cpCivilStatus,
+			cpReligion,
+			appointmentDate,
+			contractStart,
+			contractEnd,
+			locationId,
+			empTypeId,
+			empCatId,
+			designationId,
+			divisionId,
+		} = params.row;
 		setTimeout(async () => {
 			const result = true;
 			if (result) {
 				setSuccess(true);
 				setRowId(null);
 				toast.success(
-					`${params.row.epfNo} - ${params.row.firstName} ${params.row.lastName} Updated`,
-					{
-						position: 'top-right',
-						autoClose: 5000,
-						hideProgressBar: false,
-						closeOnClick: true,
-						pauseOnHover: true,
-						draggable: true,
-						progress: undefined,
-						theme: 'dark',
-					}
+					`${params.row.epfNo} - ${params.row.firstName} ${params.row.lastName} Updated`
 				);
 			}
 			console.log(params.row);
@@ -88,35 +81,22 @@ function EmployeeAction({ params, rowId, setRowId, setDeleteId }: any) {
 		setDeleteConfirm(false);
 		setTimeout(async () => {
 			const { epfNo, firstName, lastName } = params.row;
-			const result = await EmployeeService.hardDelete(
-				params.row.epfNo,
-				auth?.user?.token
-			);
-
+			// const result = await EmployeeService.deleteEmployee(
+			// 	params.row.epfNo,
+			// 	auth?.user?.token
+			// );
+			const data = {
+				id: params.row.epfNo,
+				token: auth?.user?.token,
+			};
+			const result = dispatch(deleteEmployee(data));
 			// console.log(params.row);
-			if (result.data.status === 1) {
-				toast.error(`${epfNo} - ${firstName} ${lastName} is deleted`, {
-					position: 'top-right',
-					autoClose: 5000,
-					hideProgressBar: false,
-					closeOnClick: true,
-					pauseOnHover: true,
-					draggable: true,
-					progress: undefined,
-					theme: 'dark',
-				});
+			if (result.status === RequestStatus.SUCCESS) {
+				console.log(`${epfNo} - ${firstName} ${lastName} is deleted`);
+				toast.error(`${epfNo} - ${firstName} ${lastName} is deleted`);
 				setDeleteId(epfNo);
 			} else {
-				toast.error(`${result.data.message}`, {
-					position: 'top-right',
-					autoClose: 5000,
-					hideProgressBar: false,
-					closeOnClick: true,
-					pauseOnHover: true,
-					draggable: true,
-					progress: undefined,
-					theme: 'dark',
-				});
+				toast.error(`${result?.message}`);
 			}
 
 			setDeleteLoadng(false);

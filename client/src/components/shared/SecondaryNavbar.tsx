@@ -4,19 +4,22 @@ import Box from '@mui/material/Box';
 import { Link, useLocation } from 'react-router-dom';
 import Employees from '../data/Employee.json';
 import './navbar.css';
+import { useAppSelector } from '../../hooks/hooks';
+import { UserStatus } from '../../constant/userStatus';
 
 function SecondaryNavbar(props: any) {
 	const location = useLocation();
 	const user = Employees[0];
 	// const isAdmin: Boolean = user.deparment.toUpperCase() === location.pathname.split('/')[1].toUpperCase() && user.admin === true;
 	const isAdmin: Boolean = true;
-
+	const { auth } = useAppSelector((state) => state.persistedReducer);
 	console.log(isAdmin);
 	const pages: any = props.pages;
 	return (
 		<Box className='secondary-navbar nav-flex-section'>
 			{pages.map((content: any, index: number) =>
-				isAdmin ? (
+				auth?.isAdmin === UserStatus.ADMIN &&
+				auth?.division === content.division ? (
 					<div className='nav-flex-inside' key={index}>
 						<div className='nav-flex-section'>
 							{content.routes.map((page: any, i: number) => (

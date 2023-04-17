@@ -1,6 +1,4 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import IDivisionData from '../../types/admin/IDivisionData';
-import DivisionMasterService from '../../services/admin/DivisionMasterService';
 import EmployeeService from '../../services/admin/EmployeeService';
 import IEmployeeData from '../../types/admin/IEmployeeData';
 
@@ -27,6 +25,15 @@ export const getAllEmployees = createAsyncThunk(
 	}
 );
 
+export const deleteEmployee = createAsyncThunk(
+	'employees/delete',
+	async ({ id, token }: any) => {
+		const response = await EmployeeService.deleteEmployee(id, token);
+		console.log(response);
+		return response.data;
+	}
+);
+
 export const EmployeeSlice = createSlice({
 	name: 'employees',
 	initialState,
@@ -44,6 +51,22 @@ export const EmployeeSlice = createSlice({
 				state.employees = action.payload;
 			})
 			.addCase(getAllEmployees.rejected, (state) => {
+				state.employeesIsLoading = false;
+				state.employeesIsSuccess = false;
+				state.employeesIsError = true;
+			})
+			.addCase(deleteEmployee.pending, (state) => {
+				state.employeesIsLoading = true;
+			})
+			.addCase(deleteEmployee.fulfilled, (state, action) => {
+				state.employeesIsLoading = false;
+				state.employeesIsSuccess = true;
+				state.employeesIsError = false;
+				state.employees = state?.employees?.filter(
+					(d) => d.epfNo !== action.payload.id
+				);
+			})
+			.addCase(deleteEmployee.rejected, (state) => {
 				state.employeesIsLoading = false;
 				state.employeesIsSuccess = false;
 				state.employeesIsError = true;

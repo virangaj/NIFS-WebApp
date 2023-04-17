@@ -173,7 +173,8 @@ public class EmployeeMasterController {
                 //return success response code
                 map.put("status", RequestStatus.SUCCESS);
                 map.put("code", 201);
-                map.put("message", "Employee Daa is successfully deleted!");
+                map.put("id", id);
+                map.put("message", "Employee Data is successfully deleted!");
                 return new ResponseEntity<>(map, HttpStatus.OK);
             }
             map.put("status", RequestStatus.ERROR);

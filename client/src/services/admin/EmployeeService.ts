@@ -44,11 +44,11 @@ const saveEmployee = async (favJSON: any, token: string) => {
 };
 
 //temporary delete user
-const hardDelete = async (id: any, token: string) => {
+const deleteEmployee = async (id: any, token: string) => {
 	console.log(id);
 	const response = await axios({
-		method: 'delete',
-		url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/employee/harddelete/${id}`,
+		method: 'patch',
+		url: `${process.env.REACT_APP_BACKEND_SERVER}/auth/employee/delete/${id}`,
 		headers: {
 			'Content-Type': 'application/json; charset=utf-8',
 			Authorization: `Bearer ${token}`,
@@ -64,7 +64,7 @@ const EmployeeService = {
 	saveEmployee,
 	getAllEmployeeDataWithoutDeleted,
 	getAllEmployeeDataCurrentlyNotWorking,
-	hardDelete,
+	deleteEmployee,
 };
 
 export default EmployeeService;
