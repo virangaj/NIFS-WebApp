@@ -38,8 +38,13 @@ public class DivisionMasterService implements IDivisionMasterService {
             List<DivisionMaster> divData = divMasterRepo.findAll();
             List<DivisionMasterDTO> divDTO = new ArrayList<>();
             for (DivisionMaster d : divData) {
-                DivisionMasterDTO dto = new DivisionMasterDTO(d.getDivisionId(), d.getName(), d.getLocationId().getLocationName(), d.getHod().getEpfNo());
-                divDTO.add(dto);
+                if(d.getHod() == null){
+                    divDTO.add(DivisionMasterDTO.builder().divisionId(d.getDivisionId()).name(d.getName()).locationId(d.getLocationId().getLocationName()).build());
+                }else{
+//                    DivisionMasterDTO dto = new DivisionMasterDTO(d.getDivisionId(), d.getName(), d.getLocationId().getLocationName(), d.getHod().getEpfNo());
+                    divDTO.add(new DivisionMasterDTO(d.getDivisionId(), d.getName(), d.getLocationId().getLocationName(), d.getHod().getEpfNo()));
+                }
+
             }
             return divDTO;
         } catch (Exception e) {
@@ -56,11 +61,9 @@ public class DivisionMasterService implements IDivisionMasterService {
 
         if (divMasterRepo.returnDivision(d.getDivisionId()) == null) {
 
-            Date date = new Date();
+
             Locations l = locRepo.getLocation(d.getLocationId());
-            EmployeeMaster emp = empRepo.returnEmployeeById(100);
-            DivisionMaster dm = new DivisionMaster(d.getDivisionId(), d.getName(), date, l, emp);
-            divMasterRepo.save(dm);
+            divMasterRepo.save(DivisionMaster.builder().divisionId(d.getDivisionId()).name(d.getName()).createdDate(new Date()).locationId(l).build());
             return d;
         }
         else {

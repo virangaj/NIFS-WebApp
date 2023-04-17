@@ -32,6 +32,7 @@ public class SecurityConfig {
                 .disable()
                 .authorizeHttpRequests()
                 .requestMatchers(
+                        "/test/**",
 //                        swagger
                         "/swagger-ui/**",
                         "/v3/api-docs/**",
