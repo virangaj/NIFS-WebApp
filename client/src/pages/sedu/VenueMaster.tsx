@@ -16,6 +16,9 @@ import '../pages.css';
 import LocationSelector from '../../components/shared/LocationSelector';
 import { useAppSelector } from '../../hooks/hooks';
 import { toast } from 'react-toastify';
+import { UserStatus } from '../../constant/userStatus';
+import { useNavigate } from 'react-router-dom';
+import { RouteName } from '../../constant/routeNames';
 
 const initialState: IVenueMaster = {
 	venueId: '',
@@ -41,8 +44,14 @@ function VenueMaster() {
 	const [v_id, setV_Id] = useState('');
 	const [success, setSuccess] = useState(false);
 	const [values, setValues] = useState<IVenueMaster>(initialState);
-
+	const navigate = useNavigate();
 	const { auth } = useAppSelector((state) => state.persistedReducer);
+
+	useEffect(() => {
+		if (auth?.isAdmin != UserStatus.ADMIN && auth?.division != 'DI1003') {
+			navigate(RouteName.ErrorPage);
+		}
+	}, []);
 
 	// onchange function
 	const onChange = (e: any) => {
