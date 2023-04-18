@@ -30,11 +30,7 @@ public class DivisionMasterController {
             List<DivisionMasterDTO> d =  divMasterService.getAll();
             if (!d.isEmpty()) {
 
-                //return success response code
-//                map.put("status", RequestStatus.SUCCESS);
-//                map.put("code", 200);
-//                map.put("count", d.size());
-//                map.put("data", d);
+
                 return ResponseEntity.ok(d);
             }
 
