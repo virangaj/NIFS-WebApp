@@ -12,6 +12,7 @@ import java.util.Date;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
+
     @Transactional
     @Modifying
     @Query("update User u set u.password = ?1 where u.email = ?2")

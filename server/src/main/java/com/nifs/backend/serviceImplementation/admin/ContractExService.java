@@ -57,7 +57,7 @@ public class ContractExService implements IContractExService {
            String msgBody = emailService.HODRequestMessage("Contract Extension", data.getEpfNo(), data.getDivisionId(), "contract-extension");
 
             //send email to hod
-            emailService.sendEmail(hodEmail, "Annual Increment Request", msgBody);
+            emailService.sendEmail(hodEmail, "Contract Extension Request", msgBody);
            return ResponseEntity.ok(created);
         }
 

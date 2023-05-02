@@ -51,13 +51,14 @@ function ChangePassword() {
 
 			setTimeout(async () => {
 				const result = await dispatch(changePassword(reqData));
-				if (result.data.status === RequestStatus.SUCCESS) {
+				if (result?.status === RequestStatus.SUCCESS) {
 					//redirect to login page
+					toast.success(result?.message);
 					localStorage.removeItem('persist:employee');
+
 					navigate(RouteName.Login);
-					toast.success(result.data.message);
 				} else {
-					toast.error(result.data.message);
+					toast.error(result.message);
 				}
 			}, 1000);
 		}

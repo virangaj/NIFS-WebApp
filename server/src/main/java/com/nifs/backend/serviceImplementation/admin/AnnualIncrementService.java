@@ -1,20 +1,16 @@
 package com.nifs.backend.serviceImplementation.admin;
 
 import com.nifs.backend.constant.RequestStatus;
-import com.nifs.backend.dto.admin.AccomodationDTO;
 import com.nifs.backend.dto.admin.AnnualIncrementDTO;
-import com.nifs.backend.model.admin.Accomodation;
 import com.nifs.backend.model.admin.AnnualIncrement;
 import com.nifs.backend.repository.admin.AnnualIncrementRepository;
 import com.nifs.backend.service.admin.IAnnualIncrementService;
 import com.nifs.backend.service.admin.IEmployeeMasterService;
-import com.nifs.backend.service.admin.IUserService;
 import com.nifs.backend.util.EmailService;
 import jakarta.mail.MessagingException;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -87,7 +83,7 @@ public class AnnualIncrementService implements IAnnualIncrementService {
     @Override
     public List<AnnualIncrementDTO> getAllAnnualIncrementRequests(String division) {
         try {
-            List<AnnualIncrement> annualIncrements = new ArrayList<>();
+            List<AnnualIncrement> annualIncrements;
 
             if (division == null){
                 annualIncrements = annualIncrementRepository.findAllByOrderByCreatedOnDesc();

@@ -1,15 +1,16 @@
 package com.nifs.backend.serviceImplementation.admin;
 
 import com.nifs.backend.common.Common;
-import com.nifs.backend.model.admin.EmployeeMaster;
-import com.nifs.backend.repository.admin.EmployeeMasterRepository;
-import com.nifs.backend.repository.admin.LocationRepository;
-import com.nifs.backend.model.admin.Locations;
+import com.nifs.backend.constant.UserRole;
 import com.nifs.backend.dto.admin.DivisionMasterDTO;
 import com.nifs.backend.model.admin.DivisionMaster;
+import com.nifs.backend.model.admin.EmployeeMaster;
+import com.nifs.backend.model.admin.Locations;
 import com.nifs.backend.repository.admin.DivisionMasterRepository;
+import com.nifs.backend.repository.admin.EmployeeMasterRepository;
+import com.nifs.backend.repository.admin.LocationRepository;
+import com.nifs.backend.repository.admin.UserRepository;
 import com.nifs.backend.service.admin.IDivisionMasterService;
-import com.nifs.backend.service.admin.IEmployeeMasterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +29,9 @@ public class DivisionMasterService implements IDivisionMasterService {
 
     @Autowired
     private EmployeeMasterRepository empRepo;
+
+    @Autowired
+    private UserRepository userRepo;
 
     private final Common common = new Common();
 
@@ -126,18 +130,18 @@ public class DivisionMasterService implements IDivisionMasterService {
                 //check weahter hod is already  hod
                 DivisionMaster divisionMaster = divMasterRepo.findByHod_EpfNoEquals(dmData.getHod());
 
-                if(divisionMaster == null){
-
+                if(divisionMaster == null) {
+                    // make hod as user
                     empRepo.updateRoleAndDivisionIdByEpfNoEquals("USER", division, division.getHod().getEpfNo());
+                    changeRole("USER", division.getHod().getEpfNo());
+
                     // find the new hod by epf no
                     EmployeeMaster emp = empRepo.findByEpfNoEquals(dmData.getHod());
 
 
-
-
                     //make the employee admin and change the division
                     empRepo.updateRoleAndDivisionIdByEpfNoEquals("ADMIN", division, dmData.getHod());
-
+                    changeRole("ADMIN", dmData.getHod());
                     //update the division
                     divMasterRepo.updateDivisionMaster(dmData.getName(), d, emp, dvId);
                     return true;
@@ -167,11 +171,9 @@ public class DivisionMasterService implements IDivisionMasterService {
                     if(d.getHod() == null){
                         dDTO.add(DivisionMasterDTO.builder().divisionId(d.getDivisionId()).name(d.getName()).locationId(d.getLocationId().getLocationName()).build());
                     }else{
-//                    DivisionMasterDTO dto = new DivisionMasterDTO(d.getDivisionId(), d.getName(), d.getLocationId().getLocationName(), d.getHod().getEpfNo());
                         dDTO.add(new DivisionMasterDTO(d.getDivisionId(), d.getName(), d.getLocationId().getLocationName(), d.getHod().getEpfNo()));
                     }
-//                    DivisionMasterDTO dDTOSingle = new DivisionMasterDTO(d.getDivisionId(), d.getName(), d.getLocationId().getLocationId(), d.getHod().getEpfNo());
-//                    dDTO.add(dDTOSingle);
+
                 }
                 return dDTO;
             }
@@ -197,5 +199,15 @@ public class DivisionMasterService implements IDivisionMasterService {
     @Override
     public DivisionMaster returnDivision(String id) {
         return divMasterRepo.returnDivision(id);
+    }
+
+    public void changeRole(String role, int epfNo) {
+        if (role.equals("USER")) {
+            userRepo.updateUserRole(UserRole.USER, epfNo);
+
+        }
+        else {
+            userRepo.updateUserRole(UserRole.ADMIN, epfNo);
+        }
     }
 }

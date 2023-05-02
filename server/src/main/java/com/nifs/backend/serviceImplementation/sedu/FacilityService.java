@@ -43,7 +43,7 @@ public class FacilityService implements IFacilityService {
     //get all facilities
     public List<FacilityDTO> getAll() {
         try {
-            List<Facility> facilityList = (List<Facility>) facRepo.findAll();
+            List<Facility> facilityList = facRepo.findAll();
 
             List<FacilityDTO> facilityDTOList = new ArrayList<>();
 
