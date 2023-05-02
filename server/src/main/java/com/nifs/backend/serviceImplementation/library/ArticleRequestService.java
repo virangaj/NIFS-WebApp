@@ -2,18 +2,13 @@ package com.nifs.backend.serviceImplementation.library;
 
 import com.nifs.backend.constant.RequestStatus;
 import com.nifs.backend.dto.library.ArticleRequestDTO;
-import com.nifs.backend.dto.transport.TravelRequestDTO;
 import com.nifs.backend.model.library.ArticleRequest;
-import com.nifs.backend.model.transport.TravelRequest;
 import com.nifs.backend.repository.library.ArticleRequestRepository;
 import com.nifs.backend.service.library.IArticleRequestService;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -76,7 +71,7 @@ public class ArticleRequestService implements IArticleRequestService {
     @Override
     public List<ArticleRequestDTO> getAllArticleRequests(String division) {
         try {
-            List<ArticleRequest> articleRequests = new ArrayList<>();
+            List<ArticleRequest> articleRequests;
 
             if (division == null){
                 articleRequests = articleRequestRepository.findAllByOrderByCreatedOnDesc();

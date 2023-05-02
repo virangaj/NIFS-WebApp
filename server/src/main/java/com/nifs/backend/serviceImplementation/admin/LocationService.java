@@ -27,9 +27,7 @@ public class LocationService implements ILocationService {
     public List<LocationDTO> returnAllLocations() {
         try {
             List<Locations> locData = locRepo.findAll();
-//            List<LocationDTO> dto = new ArrayList<>();
-//            for (Locations l : locData) {
-//
+
 //                LocationDTO single = new LocationDTO(l.getLocationId(), l.getLocationName(), l.getAddress(), l.getTelNo(), l.getFaxNo());
 //                dto.add(single);
 //            }
@@ -50,8 +48,7 @@ public class LocationService implements ILocationService {
         try {
             if (locRepo.findById(venLocData.getLocationId()).isEmpty()) {
                 Date d = new Date();
-                //venLocData.setDateCreated(d);
-//                Provider provider = modelMapper.map(providerdata, Provider.class);
+
                 Locations locData = modelMapper.map(venLocData, Locations.class);
                 locData.setDateCreated(d);
                 locRepo.save(locData);

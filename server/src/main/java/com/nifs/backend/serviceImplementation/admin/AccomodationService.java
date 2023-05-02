@@ -9,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -77,7 +76,7 @@ public class AccomodationService implements IAccomodationService {
     @Override
     public List<AccomodationDTO> getAllAccomodationRequests(String division) {
         try {
-            List<Accomodation> accomodations = new ArrayList<>();
+            List<Accomodation> accomodations;
 
             if (division == null){
                 accomodations = accomodationRepository.findAllByOrderByCreatedOnDesc();
