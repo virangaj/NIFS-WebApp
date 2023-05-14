@@ -2,7 +2,10 @@ package com.nifs.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Date;
 import java.util.List;
@@ -16,10 +19,6 @@ import java.util.List;
 @Table(name = "employee_category_master")
 public class EmployeeCategory {
 
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "id", nullable = false)
-//    private int id;
 
     @Id
     @Column(name = "employee_category_code", nullable = false, length = 10)

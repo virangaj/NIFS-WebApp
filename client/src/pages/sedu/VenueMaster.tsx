@@ -16,6 +16,12 @@ import LocationMasterService from '../../services/admin/LocationMasterService';
 import ILocationData from '../../types/ILocationData';
 
 import '../pages.css';
+import LocationSelector from '../../components/shared/LocationSelector';
+import { useAppSelector } from '../../hooks/hooks';
+import { toast } from 'react-toastify';
+import { UserStatus } from '../../constant/userStatus';
+import { useNavigate } from 'react-router-dom';
+import { RouteName } from '../../constant/routeNames';
 
 const initialState: IVenueMaster = {
 	venueId: '',
@@ -43,40 +49,28 @@ function VenueMaster() {
 
 
 	const [values, setValues] = useState<IVenueMaster>(initialState);
+	const navigate = useNavigate();
+	const { auth } = useAppSelector((state) => state.persistedReducer);
 
+	useEffect(() => {
+		if (auth?.isAdmin != UserStatus.ADMIN && auth?.division != 'DI1003') {
+			navigate(RouteName.ErrorPage);
+		}
+	}, []);
 
-  // onchange function
-  const onChange = (e: any) => {
-    setValues((preState) => ({
-      ...preState,
-      [e.target.name]: e.target.value,
-    }));
-  };
-  useEffect(() => {
-    // console.log(v_id)
-    setValues({
-      venueId: v_id,
-      venueName: values?.venueName,
-      type: values?.type,
-      availability: values?.availability,
-      location: values?.location,
-      remark: values?.remark,
-      capacity: values?.capacity,
-      dateCreated: "",
-    });
-    // console.log(values)
-  }, [v_id]);
-  // generate id on button click
-  const generateVenueID = () => {
-    // window.location.reload;
-    resetForm();
-    VenueMasterService.getNewVenueId()
-      .then((res: any) => {
-        setV_Id(res.data);
-      })
-      .catch((e: any) => {
-        console.log(e);
-      });
+	// onchange function
+	const onChange = (e: any) => {
+		setValues((preState) => ({
+			...preState,
+			[e.target.name]: e.target.value,
+		}));
+	};
+	useEffect(() => {
+		setValues({
+			...values,
+			venueId: v_id,
+		});
+	}, [v_id]);
 
     let id = generateID("VM");
     // setV_Id(id)

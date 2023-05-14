@@ -1,13 +1,13 @@
 package com.nifs.backend.serviceImplementation;
 
 import com.nifs.backend.constant.UserRole;
-import com.nifs.backend.dto.ChangePasswordDTO;
-import com.nifs.backend.dto.EmployeeMasterDTO;
-import com.nifs.backend.model.User;
-import com.nifs.backend.model.EmployeeMaster;
-import com.nifs.backend.repository.UserRepository;
-import com.nifs.backend.repository.EmployeeMasterRepository;
-import com.nifs.backend.service.IUserService;
+import com.nifs.backend.dto.admin.ChangePasswordDTO;
+import com.nifs.backend.dto.admin.EmployeeMasterDTO;
+import com.nifs.backend.model.admin.EmployeeMaster;
+import com.nifs.backend.model.admin.User;
+import com.nifs.backend.repository.admin.EmployeeMasterRepository;
+import com.nifs.backend.repository.admin.UserRepository;
+import com.nifs.backend.service.admin.IUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -75,10 +75,12 @@ public class UserService implements IUserService {
                 ));
         var user = userRepo.returnLoginDetails(id);
         System.out.println(user.toString());
-        if(user != null && data.getNewPassword().equals(data.getConfirmPassword())){
+        if (data.getNewPassword().equals(data.getConfirmPassword())) {
             System.out.println("inside the if condition");
-
-            userRepo.changePassword(passwordEncoder.encode( data.getNewPassword()), new Date(), id);
+            if (passwordEncoder.encode(data.getNewPassword()).equals(passwordEncoder.encode(String.valueOf(data.getEpfNo())))) {
+                return false;
+            }
+            userRepo.changePassword(passwordEncoder.encode(data.getNewPassword()), new Date(), id);
             return true;
         }
 

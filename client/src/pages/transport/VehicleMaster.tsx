@@ -1,36 +1,61 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Stack from "@mui/material/Stack";
 import CustomeDataPicker from "../../components/DataPicker";
-import ITravelMaster from "../../types/TravelMaster";
+import ITravelMaster from "../../types/transport/ITravelMaster";
 import "../pages.css";
+import TravelMasterService from "../../services/transport/TravelMasterService";
+import { toast } from "react-toastify";
+
+const initialState: ITravelMaster = {
+  registrationNo: "",
+  chassiNo: "",
+  engineNo: "",
+  category: "",
+  brand: "",
+  color: "",
+  date: "",
+  assign: "",
+  employee: "",
+  insuranceCompanyName: "",
+  insuranceExpiryDate: "",
+  licenseExpiryDate: "",
+  emissionTestDate: "",
+  availability: "",
+  remark: "",
+};
 
 function VehicleMaster() {
-  const [values, setValues] = useState<ITravelMaster>({
-    registrationNo: "",
-    chassiNo: "",
-    engineNo: "",
-    category: "",
-    brand: "",
-    color: "",
-    date: "",
-    assign: "",
-    employee: "",
-    insuranceCompanyName: "",
-    insuranceExpiryDate: "",
-    licenseExpiryDate: "",
-    emissionTestDate: "",
-    availability: "",
-    remark: "",
-  });
+  const [values, setValues] = useState<ITravelMaster>(initialState);
 
   const [date, setDate] = useState<string | null>(null);
-  const [insuraceExpiryDate, setInsuraceExpiryDate] = useState<string | null>(
+  const [insuranceExpiryDate, setInsuranceExpiryDate] = useState<string | null>(
     null
   );
   const [licenseExpiryDate, setLicenseExpiryDate] = useState<string | null>(
     null
   );
   const [emissionTestDate, setEmissionTestDate] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setValues({
+      registrationNo: values?.registrationNo,
+      chassiNo: values?.chassiNo,
+      engineNo: values?.engineNo,
+      category: values?.category,
+      brand: values?.brand,
+      color: values?.color,
+      date: date ? date : "",
+      assign: values?.assign,
+      employee: values?.employee,
+      insuranceCompanyName: values?.insuranceCompanyName,
+      insuranceExpiryDate: insuranceExpiryDate ? insuranceExpiryDate : "",
+      licenseExpiryDate: licenseExpiryDate ? licenseExpiryDate : "",
+      emissionTestDate: emissionTestDate ? emissionTestDate : "",
+      availability: values?.availability,
+      remark: values?.remark,
+    });
+  }, [date, insuranceExpiryDate, licenseExpiryDate, emissionTestDate]);
 
   const resetForm = () => {
     setValues({
@@ -61,7 +86,23 @@ function VehicleMaster() {
 
   const onSubmit = async (event: any) => {
     event.preventDefault();
-    console.log(values);
+    // console.log(values);
+
+    if (values.registrationNo !== "") {
+      setTimeout(async () => {
+        const result = await TravelMasterService.saveVehicle(values);
+
+        // console.log(result);
+
+        if (result?.data !== null) {
+          toast.success("Vehicle Details Successfully Added");
+          resetForm();
+        } else {
+          toast.error("Request cannot completed!");
+        }
+        setLoading(false);
+      }, 1000);
+    }
   };
 
   return (
@@ -243,9 +284,8 @@ function VehicleMaster() {
                 <option value="" disabled>
                   Select Pool:
                 </option>
-                <option value="Red">Red</option>
-                <option value="Black">Black</option>
-                <option value="Blue">Blue</option>
+                <option value="Red">local</option>
+                <option value="Black">foreign</option>
               </select>
             </div>
 
@@ -277,7 +317,7 @@ function VehicleMaster() {
                 value={values.insuranceCompanyName}
               >
                 <option value="" disabled>
-                  Select Pool
+                  Select Insurance Company
                 </option>
                 <option value="Ceylinco">Ceylinco</option>
                 <option value="AIA">AIA Insurance</option>
@@ -290,8 +330,8 @@ function VehicleMaster() {
                 Insurance Expiry Date:
               </label>
               <CustomeDataPicker
-                date={insuraceExpiryDate}
-                setDate={setInsuraceExpiryDate}
+                date={insuranceExpiryDate}
+                setDate={setInsuranceExpiryDate}
                 title="Date"
                 className="mx-0 lg:ml-10"
                 name="insuranceExpiedDate"

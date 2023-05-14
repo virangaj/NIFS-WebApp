@@ -1,7 +1,8 @@
 [
   {
     "section": "Master",
-    "only_admin": false,
+    "only_admin": true,
+    "division": "DI1003",
     "routes": [
       {
         "title": "Venue Master",
@@ -13,13 +14,14 @@
         "title": "Participant Master",
         "link": "/sedu/participant-master",
         "img": "https://img.icons8.com/fluency/50/000000/conference-foreground-selected.png",
-        "only_admin": false
+        "only_admin": true
       }
     ]
   },
   {
     "section": "Transaction",
     "only_admin": false,
+    "division": "DM1003",
     "routes": [
       {
         "title": "Booking",
@@ -32,48 +34,6 @@
         "link": "/sedu/event-request",
         "img": "https://img.icons8.com/fluency/50/000000/invite.png",
         "only_admin": false
-      },
-      {
-        "title": "Attendance Feedback",
-        "link": "/sedu/attendance-feedback",
-        "img": "https://img.icons8.com/fluency/50/000000/feedback-hub.png",
-        "only_admin": true
-      },
-      {
-        "title": " Update Event Material",
-        "link": "/sedu/update-material",
-        "img": "https://img.icons8.com/fluency/50/000000/available-updates.png",
-        "only_admin": true
-      },
-      {
-        "title": "Quick Response Code",
-        "link": "/sedu/quick-response",
-        "img": "https://img.icons8.com/fluency/50/000000/barcode-scanner.png",
-        "only_admin": true
-      },
-      {
-        "title": "Project Proposal",
-        "link": "/sedu/project-proposal",
-        "img": "https://img.icons8.com/fluency/50/000000/documents.png",
-        "only_admin": true
-      },
-      {
-        "title": "Material Search",
-        "link": "/sedu/material-search",
-        "img": "https://img.icons8.com/fluency/50/000000/search.png",
-        "only_admin": true
-      }
-    ]
-  },
-  {
-    "section": "Reports",
-    "only_admin": true,
-    "routes": [
-      {
-        "title": "SEDU Report Generator",
-        "link": "/sedu/report-generator",
-        "img": "https://img.icons8.com/cute-clipart/50/000000/load-from-file.png",
-        "only_admin": true
       }
     ]
   }

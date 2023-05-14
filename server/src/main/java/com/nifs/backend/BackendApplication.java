@@ -22,9 +22,5 @@ public class BackendApplication {
 		return new ModelMapper();
 	}
 
-//	@Bean
-//	public CorsFilter corsFilter() {
-//		return new CorsFilter();
-//	}
 
 }

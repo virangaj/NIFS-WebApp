@@ -1,14 +1,16 @@
 package com.nifs.backend.serviceImplementation;
 
 import com.nifs.backend.common.Common;
-import com.nifs.backend.model.EmployeeMaster;
-import com.nifs.backend.repository.EmployeeMasterRepository;
-import com.nifs.backend.repository.LocationRepository;
-import com.nifs.backend.model.Locations;
-import com.nifs.backend.dto.DivisionMasterDTO;
-import com.nifs.backend.model.DivisionMaster;
-import com.nifs.backend.repository.DivisionMasterRepository;
-import com.nifs.backend.service.IDivisionMasterService;
+import com.nifs.backend.constant.UserRole;
+import com.nifs.backend.dto.admin.DivisionMasterDTO;
+import com.nifs.backend.model.admin.DivisionMaster;
+import com.nifs.backend.model.admin.EmployeeMaster;
+import com.nifs.backend.model.admin.Locations;
+import com.nifs.backend.repository.admin.DivisionMasterRepository;
+import com.nifs.backend.repository.admin.EmployeeMasterRepository;
+import com.nifs.backend.repository.admin.LocationRepository;
+import com.nifs.backend.repository.admin.UserRepository;
+import com.nifs.backend.service.admin.IDivisionMasterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,17 +29,18 @@ public class DivisionMasterService implements IDivisionMasterService {
 
     @Autowired
     private EmployeeMasterRepository empRepo;
+
+    @Autowired
+    private UserRepository userRepo;
+
     private final Common common = new Common();
 
     //    get all divisions
     @Override
-    public List<DivisionMasterDTO> getAll() {
-        try {
             List<DivisionMaster> divData = divMasterRepo.findAll();
             List<DivisionMasterDTO> divDTO = new ArrayList<>();
             for (DivisionMaster d : divData) {
                 DivisionMasterDTO dto = new DivisionMasterDTO(d.getDivisionId(), d.getName(), d.getLocationId().getLocationName());
-                divDTO.add(dto);
             }
             return divDTO;
         } catch (Exception e) {
@@ -115,8 +118,30 @@ public class DivisionMasterService implements IDivisionMasterService {
         try {
             if (divMasterRepo.returnDivision(dvId) != null) {
                 Date d = new Date();
-                divMasterRepo.updateDivisionMaster(dmData.getName(), d, dvId);
-                return true;
+
+                //check weahter hod is already  hod
+                DivisionMaster divisionMaster = divMasterRepo.findByHod_EpfNoEquals(dmData.getHod());
+
+                if(divisionMaster == null) {
+                    // make hod as user
+                    empRepo.updateRoleAndDivisionIdByEpfNoEquals("USER", division, division.getHod().getEpfNo());
+                    changeRole("USER", division.getHod().getEpfNo());
+
+                    // find the new hod by epf no
+                    EmployeeMaster emp = empRepo.findByEpfNoEquals(dmData.getHod());
+
+
+                    //make the employee admin and change the division
+                    empRepo.updateRoleAndDivisionIdByEpfNoEquals("ADMIN", division, dmData.getHod());
+                    changeRole("ADMIN", dmData.getHod());
+                    //update the division
+                    divMasterRepo.updateDivisionMaster(dmData.getName(), d, emp, dvId);
+                    return true;
+                }else{
+                    return false;
+                }
+
+
             }
             else {
                 return false;
@@ -135,8 +160,12 @@ public class DivisionMasterService implements IDivisionMasterService {
                 List<DivisionMaster> dm = divMasterRepo.findDivisionByLocationId(locID);
                 List<DivisionMasterDTO> dDTO = new ArrayList<DivisionMasterDTO>();
                 for (DivisionMaster d : dm) {
-                    DivisionMasterDTO dDTOSingle = new DivisionMasterDTO(d.getDivisionId(), d.getName(), d.getLocationId().getLocationId());
-                    dDTO.add(dDTOSingle);
+                    if(d.getHod() == null){
+                        dDTO.add(DivisionMasterDTO.builder().divisionId(d.getDivisionId()).name(d.getName()).locationId(d.getLocationId().getLocationName()).build());
+                    }else{
+                        dDTO.add(new DivisionMasterDTO(d.getDivisionId(), d.getName(), d.getLocationId().getLocationName(), d.getHod().getEpfNo()));
+                    }
+
                 }
                 return dDTO;
             }
@@ -162,5 +191,15 @@ public class DivisionMasterService implements IDivisionMasterService {
     @Override
     public DivisionMaster returnDivision(String id) {
         return divMasterRepo.returnDivision(id);
+    }
+
+    public void changeRole(String role, int epfNo) {
+        if (role.equals("USER")) {
+            userRepo.updateUserRole(UserRole.USER, epfNo);
+
+        }
+        else {
+            userRepo.updateUserRole(UserRole.ADMIN, epfNo);
+        }
     }
 }

@@ -99,4 +99,67 @@ public class AuthenticationService {
                 .build();
 
     }
+
+    public ResponseEntity<?> forgetPassword(String email) throws MessagingException {
+        Map<String, Object> map = new LinkedHashMap<String, Object>();
+        var user = userRepo.findByEmployee_GsuitEmailEquals(email);
+        var id = user.getEmployee().getId();
+        if(id != null){
+
+
+            String msg = "Trouble signing in?\n" +
+                    "Resetting your password is easy.\n" +
+                    "\n" +
+                    "Just press the button below and follow the instructions. We’ll have you up and running in no time.\n" +
+                    "\n" +
+                    "Copy paste following link in your browser.\n" +
+                    "http://localhost:3000/forget-password/"+id+"\n" +
+                    "\n" +
+                    "If you did not make this request then please ignore this email.";
+
+            //send email
+            emailService.sendEmail(email, "Reset Password - NIFS", msg);
+
+
+            map.put("status", RequestStatus.SUCCESS);
+            map.put("code", 201);
+            map.put("message", "Password reset link has sent to your email!");
+        }else{
+            map.put("status", RequestStatus.ERROR);
+            map.put("code", 400);
+            map.put("message", "Please Enter valid email address");
+        }
+        return new ResponseEntity<>(map, HttpStatus.OK);
+    }
+
+    public ResponseEntity<?> resetPassword(String password, String id) {
+        Map<String, Object> map = new LinkedHashMap<String, Object>();
+
+        try {
+            String pwd = passwordEncoder.encode(password);
+
+
+            String email = userRepo.findEmailById(id);
+
+            userRepo.updatePasswordByEmailEquals(pwd, email);
+
+            String msg = "Password has been updated successfully\n" +
+                    "Please login with your new credentials\n";
+
+            emailService.sendEmail(email, "Reset Password - Successful", msg);
+
+            map.put("status", RequestStatus.SUCCESS);
+            map.put("code", 201);
+            map.put("message", "Password is updated!");
+
+
+        }catch(Exception e){
+            map.put("status", RequestStatus.ERROR);
+            map.put("code", 400);
+            map.put("message", "Request cannot be completed!");
+        }
+        return new ResponseEntity<>(map, HttpStatus.OK);
+    }
+
+
 }
