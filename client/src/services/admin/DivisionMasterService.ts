@@ -20,16 +20,13 @@ const getDivision = (id: any) => {
 	return http.get<any>(`/admin/division/get/${id}`);
 };
 
-const saveDivision = async (favJSON: any, token: string) => {
+const saveDivision = async (favJSON: any) => {
 	console.log(favJSON);
 	const response = await axios({
 		method: 'post',
 		url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/division/add`,
 		data: favJSON,
-		headers: {
-			'Content-Type': 'application/json; charset=utf-8',
-			Authorization: `Bearer ${token}`,
-		},
+		headers: { 'Content-Type': 'application/json; charset=utf-8' },
 	});
 	// alert("Favourite created --- "+ response);
 	return response;
@@ -45,30 +42,33 @@ const getDivisionByLocationId = (id: any) => {
 	return http.get<any>(`/admin/division/location/${id}`);
 };
 
-const editDivision = async (favJSON: any, token: string) => {
+const editDivision = async (favJSON: any) => {
 	console.log(favJSON);
 	const response = await axios({
 		method: 'patch',
 		url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/division/update/${favJSON.divisionId}`,
 		data: favJSON,
-		headers: {
-			'Content-Type': 'application/json; charset=utf-8',
-			Authorization: `Bearer ${token}`,
-		},
+		headers: { 'Content-Type': 'application/json; charset=utf-8' },
 	});
 
+	// const response = await axios.patch(
+	// 	process.env.REACT_APP_BACKEND_SERVER +
+	// 		'/admin/divisionmaster/' +
+	// 		favJSON.typeId,
+	// 	favJSON,
+	// 	config
+	// );
+
+	// alert("Favourite created --- "+ response);
 	return response;
 };
 
-const deleteDivision = async (id: string, token: string) => {
+const deleteDivision = async (id: string) => {
 	console.log(id);
 	const response = await axios({
 		method: 'delete',
 		url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/division/delete/${id}`,
-		headers: {
-			'Content-Type': 'application/json; charset=utf-8',
-			Authorization: `Bearer ${token}`,
-		},
+		headers: { 'Content-Type': 'application/json; charset=utf-8' },
 	});
 	// alert("Favourite created --- "+ response);
 	return response;

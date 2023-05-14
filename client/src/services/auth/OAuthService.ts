@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import http from '../../utils/http-common';
-import IParticipantMaster from '../../types/sedu/IParticipantMaster';
+import IParticipantMaster from '../../types/IParticipantMaster';
 
 axios.defaults.baseURL = process.env.REACT_APP_BACKEND_SERVER;
 
@@ -33,46 +33,41 @@ const loginRequest = async (favJSON: any) => {
 //change password
 const changePassword = async (favJSON: any, token: string) => {
 	console.log(token);
-	const response = await axios({
-		method: 'patch',
-		url: `${process.env.REACT_APP_BACKEND_SERVER}/user/change-password/${favJSON.epfNo}`,
-		data: favJSON,
+	// const response = await axios({
+	// 	method: 'patch',
+	// 	url: `${process.env.REACT_APP_BACKEND_SERVER}/user/change-password/${favJSON.epfNo}`,
+	// 	data: favJSON,
+	// 	headers: {
+	// 		'Content-Type': 'application/json; charset=utf-8',
+	// 		'Access-Control-Allow-Credentials': true,
+	// 		'Access-Control-Allow-Origin': '*',
+	// 		'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+	// 		'Access-Control-Allow-Headers': 'application/json',
+	// 		Authorization: `Bearer ${token}`,
+	// 	},
+	// });
+
+	const config = {
 		headers: {
+			'Access-Control-Allow-Credentials': true,
+			'Access-Control-Allow-Origin': '*',
+			'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+			'Access-Control-Allow-Headers': 'application/json',
 			Authorization: `Bearer ${token}`,
 		},
-	});
-
+	};
+	const response = await axios.patch(
+		`${process.env.REACT_APP_BACKEND_SERVER}/user/change-password/${favJSON.epfNo}`
+	);
 	// alert("Favourite created --- "+ response);
 	return response;
-};
 
-//login
-const requestForgetPassword = async (email: any) => {
-	// console.log(favJSON);
-	const response = await axios({
-		method: 'post',
-		url: `${process.env.REACT_APP_BACKEND_SERVER}/auth/forget-password`,
-		data: email,
-		headers: {
-			'Content-Type': 'application/json; charset=utf-8',
-		},
-	});
-	// alert("Favourite created --- "+ response);
-	return response;
-};
-
-const forgetPassword = async (data: any) => {
-	console.log(data);
-	const response = await axios({
-		method: 'post',
-		url: `${process.env.REACT_APP_BACKEND_SERVER}/auth/forget-password/${data?.id}`,
-		data: data?.password,
-		headers: {
-			'Content-Type': 'application/json; charset=utf-8',
-		},
-	});
-	// alert("Favourite created --- "+ response);
-	return response;
+	// const res = await axios.get(
+	// 	`${process.env.REACT_APP_BACKEND_SERVER}/user/test`,
+	// 	config
+	// );
+	// console.log(res);
+	// return res;
 };
 
 const logout = () => {
@@ -83,8 +78,6 @@ const OAuthService = {
 	loginRequest,
 	changePassword,
 	logout,
-	forgetPassword,
-	requestForgetPassword,
 };
 
 export default OAuthService;

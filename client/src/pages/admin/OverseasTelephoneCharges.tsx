@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import CustomeDataPicker from "../../components/DataPicker";
-import IOverseasTelephoneCharges from "../../types/admin/IOverseasTelephoneCharges";
+import IOverseasTelephoneCharges from "../../types/IOverseasTelephoneCharges";
 import { Box } from "@mui/material";
 import { generateID } from "../../utils/generateId";
 import Stack from "@mui/material/Stack";

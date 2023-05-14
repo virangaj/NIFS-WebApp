@@ -11,42 +11,42 @@ import AdministrativeReport from "./admin/AdministrativeReport";
 import Accommodation from "./admin/Accommodation";
 import OverseasTelephoneCharges from "./admin/OverseasTelephoneCharges";
 import InsuranceClaim from "./admin/InsuranceClaim";
-import ContentPage from "../layout/ContentPage";
-
-export function PageRoutes() {
-  return (
-    <Routes>
-      <Route
-        path={RouteName.AdministrativeReport}
-        element={<AdministrativeReport />}
-      />
-      <Route
-        path={RouteName.AnnualIncrementRequest}
-        element={<AnnualIncrementRequest />}
-      />
-      <Route
-        path={RouteName.ContractExtension}
-        element={<ContractExtension />}
-      />
-      <Route
-        path={RouteName.ResignationRequest}
-        element={<ResignationRequest />}
-      />
-      <Route
-        path={RouteName.OverseasTelCahrges}
-        element={<OverseasTelephoneCharges />}
-      />
-      <Route path={RouteName.InsuranceClaims} element={<InsuranceClaim />} />
-      <Route path={RouteName.Accommodation} element={<Accommodation />} />
-    </Routes>
-  );
-}
 
 function AdminMainPage() {
   return (
-    <>
-      <ContentPage Pages={Pages} Content={PageRoutes} />
-    </>
+    <div className="body-content min-h-[80vh]">
+      {/* <SeduSecondaryNavbar /> */}
+
+      <SecondaryNavbar pages={Pages} />
+      <div className="fixed w-[400px] top-[-100px] right-[-100px] -z-10">
+        <img src={Dots} alt="Dots" />
+      </div>
+
+      <Routes>
+        <Route
+          path={RouteName.AdministrativeReport}
+          element={<AdministrativeReport />}
+        />
+        <Route
+          path={RouteName.AnnualIncrementRequest}
+          element={<AnnualIncrementRequest />}
+        />
+        <Route
+          path={RouteName.ContractExtension}
+          element={<ContractExtension />}
+        />
+        <Route
+          path={RouteName.ResignationRequest}
+          element={<ResignationRequest />}
+        />
+        <Route
+          path={RouteName.OverseasTelCahrges}
+          element={<OverseasTelephoneCharges />}
+        />
+        <Route path={RouteName.InsuranceClaims} element={<InsuranceClaim />} />
+        <Route path={RouteName.Accommodation} element={<Accommodation />} />
+      </Routes>
+    </div>
   );
 }
 

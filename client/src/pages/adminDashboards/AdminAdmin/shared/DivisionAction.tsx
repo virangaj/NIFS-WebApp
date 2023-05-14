@@ -9,24 +9,12 @@ import { BiCheck, BiSave, BiTrash } from 'react-icons/bi';
 import { toast } from 'react-toastify';
 import DivisionMasterService from '../../../../services/admin/DivisionMasterService';
 import { RequestStatus } from '../../../../constant/requestStatus';
-import { useAppSelector } from '../../../../hooks/hooks';
-import { useDispatch } from 'react-redux';
-import {
-	deleteDivision,
-	editDivision,
-} from '../../../../feature/admin/DivisionSlice';
-import CircularLoading from '../../../../components/tableIcons/CircularLoading';
-import DeleteButton from '../../../../components/tableIcons/DeleteButton';
 
 function DivisionAction({ params, rowId, setRowId, setDeleteId }: any) {
-	const dispatch = useDispatch<any>();
 	const [loading, setLoading] = useState(false);
 	const [success, setSuccess] = useState(false);
 	const [deleteLoading, setDeleteLoadng] = useState(false);
 	const [deleteConfirm, setDeleteConfirm] = useState(false);
-
-	const { auth } = useAppSelector((state) => state.persistedReducer);
-
 	useEffect(() => {
 		if (rowId === params.id && success) {
 			setSuccess(false);
@@ -35,31 +23,41 @@ function DivisionAction({ params, rowId, setRowId, setDeleteId }: any) {
 
 	const handleUpdate = async () => {
 		setLoading(true);
-		const { divisionId, name, locationId, hod } = params.row;
+		const { divisionId, name, locationId } = params.row;
 		setTimeout(async () => {
-			const data = {
-				data: {
-					divisionId,
-					name,
-					locationId,
-					hod,
-				},
-				token: auth?.user?.token,
-			};
-
-			await dispatch(editDivision(data))
-				.then((res: any) => {
-					setSuccess(true);
-					setRowId(null);
-					toast.success(`Division updated to ${name}`);
-				})
-				.catch((e: any) => {
-					console.log(e);
-					setSuccess(false);
-					setRowId(null);
-					toast.error('Error Occured!');
+			const result = await DivisionMasterService.editDivision({
+				divisionId,
+				name,
+				locationId,
+			});
+			if (result.data.status === RequestStatus.SUCCESS) {
+				setSuccess(true);
+				setRowId(null);
+				toast.success(`Division updated to ${name}`, {
+					position: 'top-right',
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					theme: 'dark',
 				});
-
+			} else {
+				setSuccess(false);
+				setRowId(null);
+				toast.error(`${result.data.message}`, {
+					position: 'top-right',
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					theme: 'dark',
+				});
+			}
+			// console.log(typeId);
 			setLoading(false);
 		}, 1500);
 	};
@@ -69,32 +67,32 @@ function DivisionAction({ params, rowId, setRowId, setDeleteId }: any) {
 		setDeleteConfirm(false);
 		setTimeout(async () => {
 			const { divisionId, name } = params.row;
-			const data = {
-				id: divisionId,
-				token: auth?.user?.token,
-			};
-
-			await dispatch(deleteDivision(data))
-				.then((res: any) => {
-					toast.error(`${name} is deleted`);
-					setDeleteId(divisionId);
-				})
-				.catch((e: any) => {
-					console.log(e);
-					toast.error('Error Occured!');
+			const result = await DivisionMasterService.deleteDivision(divisionId);
+			// console.log('deleted ' + typeId);
+			if (result.data.status === RequestStatus.SUCCESS) {
+				toast.error(`${name} is deleted`, {
+					position: 'top-right',
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					theme: 'dark',
 				});
-
-			// const result = await DivisionMasterService.deleteDivision(
-			// 	divisionId,
-			// 	auth?.user?.token
-			// );
-
-			// if (result.data.status === RequestStatus.SUCCESS) {
-			// 	toast.error(`${name} is deleted`);
-			// 	setDeleteId(divisionId);
-			// } else {
-			// 	toast.error(`${result.data.message}`);
-			// }
+				setDeleteId(divisionId);
+			} else {
+				toast.error(`${result.data.message}`, {
+					position: 'top-right',
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					theme: 'dark',
+				});
+			}
 
 			setDeleteLoadng(false);
 		}, 1500);
@@ -137,7 +135,18 @@ function DivisionAction({ params, rowId, setRowId, setDeleteId }: any) {
 					</Fab>
 				)}
 
-				{loading && <CircularLoading color={green[500]} />}
+				{loading && (
+					<CircularProgress
+						size={52}
+						sx={{
+							color: green[500],
+							position: 'absolute',
+							top: -6,
+							left: -6,
+							zIndex: 1,
+						}}
+					/>
+				)}
 			</Box>
 
 			{/* delete */}
@@ -148,9 +157,34 @@ function DivisionAction({ params, rowId, setRowId, setDeleteId }: any) {
 					position: 'relative',
 				}}
 			>
-				<DeleteButton setDeleteConfirm={setDeleteConfirm} />
+				<Fab
+					color='warning'
+					sx={{
+						width: 40,
+						height: 40,
+						bgcolor: red[500],
+						'&:hover': { bgcolor: red[700] },
+					}}
+					className='cursor-pointer'
+					onClick={() => {
+						setDeleteConfirm((val) => !val);
+					}}
+				>
+					<BiTrash className='text-xl text-white row-commit-icon' />
+				</Fab>
 
-				{deleteLoading && <CircularLoading color={red[500]} />}
+				{deleteLoading && (
+					<CircularProgress
+						size={52}
+						sx={{
+							color: red[500],
+							position: 'absolute',
+							top: -6,
+							left: -6,
+							zIndex: 1,
+						}}
+					/>
+				)}
 			</Box>
 
 			<Modal

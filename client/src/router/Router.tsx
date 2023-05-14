@@ -20,189 +20,157 @@ import BackToTop from '.././components/shared/BackToTop';
 import AdminAdmin from '.././pages/adminDashboards/AdminAdmin';
 import ChangePassword from '.././pages/login/ChangePassword';
 import Login from '../pages/Login';
+import { Counter } from '../redux/Counter';
 import TailwindNavbar from '../components/shared/TailwindNavbar';
-import MainPages from '../layout/MainPages';
-import DirectorAdmin from '../pages/adminDashboards/DirectorAdmin';
-import SeduAdmin from '../pages/adminDashboards/SeduAdmin';
-import { useAppSelector } from '../hooks/hooks';
-import { useEffect, useState } from 'react';
-import HodDashbaord from '../pages/adminDashboards/HodDashbaord';
-import TransportDashboard from '../pages/adminDashboards/TransportDashboard';
-import ProcumentDashboard from '../pages/adminDashboards/ProcumentDashboard';
-import { LibraryDashboard } from '../pages/adminDashboards/LibraryDashboard';
-import ForgetPassword from '../pages/login/ForgetPassword';
-import Circle from '../images/dots_circle_b.png';
+
 const AppRouter = () => {
-	const { auth } = useAppSelector((state) => state.persistedReducer);
-	const [division, setDivision] = useState();
-	useEffect(() => {
-		if (auth !== null) {
-			setDivision(auth?.user?.user.division);
-		}
-	}, [auth]);
 	return (
 		<BrowserRouter>
-			{/* <img src={Circle} className='absolute -right-[250px] -top-28 !-z-10' /> */}
 			<Routes>
-				{/* login page */}
 				<Route path={RouteName.Login} element={<Login />} />
-				<Route path={RouteName.ForgetPassword} element={<ForgetPassword />} />
-
-				{/* change password */}
-
 				<Route path={RouteName.ChangePassword} element={<ChangePassword />} />
-
-				{/* Home page */}
 
 				<Route
 					path={RouteName.Home}
 					element={
 						<>
-							<MainPages Content={Home} />
+							<TailwindNavbar />
+							<BackToTop />
+							<Home />
+							{/* <Counter /> */}
+							<Footer />
 						</>
 					}
 				/>
-				{/* Common page */}
-
 				<Route
 					path={RouteName.Common}
 					element={
 						<>
-							<MainPages Content={CommonMainPage} />
+							<TailwindNavbar />
+							<BackToTop />
+							<CommonMainPage />
+							<Footer />
 						</>
 					}
 				/>
-				{/* admin page */}
-
+				<Route
+					path={RouteName.Account}
+					element={
+						<>
+							<TailwindNavbar />
+							<BackToTop />
+							<AccountMainPage />
+							<Footer />
+						</>
+					}
+				/>
 				<Route
 					path={RouteName.Admin}
 					element={
 						<>
-							<MainPages Content={AdminMainPage} />
+							<TailwindNavbar />
+							<BackToTop />
+							<AdminMainPage />
+							<Footer />
 						</>
 					}
 				/>
-				{/* Library page */}
-
 				<Route
 					path={RouteName.Library}
 					element={
 						<>
-							<MainPages Content={LibraryMainPage} />
+							<TailwindNavbar />
+							<BackToTop />
+							<LibraryMainPage />
+							<Footer />
 						</>
 					}
 				/>
-				{/* Procument page */}
-
 				<Route
 					path={RouteName.Procument}
 					element={
 						<>
-							<MainPages Content={ProcumentMainPage} />
+							<TailwindNavbar />
+							<BackToTop />
+							<ProcumentMainPage />
+							<Footer />
 						</>
 					}
 				/>
-				{/* Sedu  page */}
-
 				<Route
 					path={RouteName.Sedu}
 					element={
 						<>
-							<MainPages Content={SeduMainPage} />
+							<TailwindNavbar />
+							<BackToTop />
+							<SeduMainPage />
+							<Footer />
 						</>
 					}
 				/>
-
-				{/* Tranapost page */}
-
 				<Route
 					path={RouteName.Transport}
 					element={
 						<>
-							<MainPages Content={TransportMainPage} />
+							<TailwindNavbar />
+							<BackToTop />
+							<TransportMainPage />
+							<Footer />
 						</>
 					}
 				/>
-				{/* Error page */}
-
+				<Route
+					path={RouteName.UserPermission}
+					element={
+						<>
+							<TailwindNavbar />
+							<BackToTop />
+							<UserPermissionMainPage />
+							<Footer />
+						</>
+					}
+				/>
+				<Route
+					path={RouteName.Notification}
+					element={
+						<>
+							<TailwindNavbar />
+							<BackToTop />
+							<NotificationMainPage />
+							<Footer />
+						</>
+					}
+				/>
+				<Route
+					path={RouteName.Help}
+					element={
+						<>
+							<TailwindNavbar />
+							<BackToTop />
+							<HelpMainPage />
+							<Footer />
+						</>
+					}
+				/>
 				<Route
 					path={RouteName.ErrorPage}
 					element={
 						<>
-							<MainPages Content={ErrorPage} />
+							<TailwindNavbar />
+							<BackToTop />
+							<ErrorPage />
+							<Footer />
 						</>
 					}
 				/>
-
-				{/* Admin page of admin division*/}
-
 				<Route
 					path={RouteName.AdminAdmin}
 					element={
 						<>
-							<MainPages Content={AdminAdmin} />
-						</>
-					}
-				/>
-
-				{/* Admin page of director*/}
-
-				<Route
-					path={RouteName.Director}
-					element={
-						<>
-							<MainPages Content={DirectorAdmin} />
-						</>
-					}
-				/>
-
-				{/* Admin page of sedu division*/}
-
-				<Route
-					path={RouteName.SeduAdmin}
-					element={
-						<>
-							<MainPages Content={SeduAdmin} />
-						</>
-					}
-				/>
-
-				{/* Admin page of HOD*/}
-				<Route
-					path={RouteName.HODAdmin}
-					element={
-						<>
-							<MainPages Content={HodDashbaord} />
-						</>
-					}
-				/>
-
-				{/* Admin page of Transport*/}
-				<Route
-					path={RouteName.TransportAdmin}
-					element={
-						<>
-							<MainPages Content={TransportDashboard} />
-						</>
-					}
-				/>
-
-				{/* Admin page of Procument*/}
-				<Route
-					path={RouteName.ProcumentAdmin}
-					element={
-						<>
-							<MainPages Content={ProcumentDashboard} />
-						</>
-					}
-				/>
-
-				{/* Admin page of Library*/}
-				<Route
-					path={RouteName.LibraryAdmin}
-					element={
-						<>
-							<MainPages Content={LibraryDashboard} />
+							<TailwindNavbar />
+							<BackToTop />
+							<AdminAdmin />
+							<Footer />
 						</>
 					}
 				/>

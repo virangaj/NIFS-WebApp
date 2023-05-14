@@ -1,52 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Stack from "@mui/material/Stack";
 import CustomeDataPicker from "../../components/DataPicker";
-import IVehicleReplacement from "../../types/transport/IVehicleReplacement";
+import IVehicleReplacement from "../../types/VehicleReplacement";
 import "../pages.css";
-import VehicleReplacementService from "../../services/transport/VehicleReplacementService";
-import { toast } from "react-toastify";
-
-const initialState: IVehicleReplacement = {
-  documentNo: "",
-  invoiceNo: "",
-  itemName: "",
-  meterReading: "",
-  placeOfPurchase: "",
-  cost: "",
-  date: "",
-  invoiceDate: "",
-  vehicleNo: "",
-  category: "",
-  location: "",
-  manufacturer: "",
-  description: "",
-  remark: "",
-};
 
 export default function VehicleReplacement() {
-  const [values, setValues] = useState<IVehicleReplacement>(initialState);
-  const [date, setDate] = useState<string | null>(null);
-  const [invoiceDate, setInvoiceDate] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [values, setValues] = useState<IVehicleReplacement>({
+    documentNo: "",
+    invoiceNo: "",
+    itemName: "",
+    meterReading: "",
+    placeOfPurchase: "",
+    cost: "",
+    date: "",
+    invoiceDate: "",
+    vehicleNo: "",
+    category: "",
+    location: "",
+    manufacturer: "",
+    description: "",
+    remark: "",
+  });
 
-  useEffect(() => {
-    setValues({
-      documentNo: values?.documentNo,
-      invoiceNo: values?.invoiceNo,
-      itemName: values?.itemName,
-      meterReading: values?.meterReading,
-      placeOfPurchase: values?.placeOfPurchase,
-      cost: values?.cost,
-      date: date ? date : "",
-      invoiceDate: invoiceDate ? invoiceDate : "",
-      vehicleNo: values?.vehicleNo,
-      category: values?.category,
-      location: values?.location,
-      manufacturer: values?.manufacturer,
-      description: values?.description,
-      remark: values?.remark,
-    });
-  }, [date, invoiceDate]);
+  const [date, setDate] = useState<string | null>(null);
+
+  const [invoiceDate, setInvoiceDate] = useState<string | null>(null);
 
   const resetForm = () => {
     setValues({
@@ -70,29 +48,13 @@ export default function VehicleReplacement() {
   const onChange = (event: any) => {
     setValues((prevState) => ({
       ...prevState,
-      [event.target.name]: event.target.value,
+      [event.target.name]: [event.target.value],
     }));
   };
 
   const onSubmit = async (event: any) => {
     event.preventDefault();
     console.log(values);
-
-    if (values.documentNo !== "") {
-      setTimeout(async () => {
-        const result = await VehicleReplacementService.saveVehicleReplacement(
-          values
-        );
-
-        if (result?.data !== null) {
-          toast.success("Vehicle Replacement Details Added Successfully");
-          resetForm();
-        } else {
-          toast.error("Request Cannot be Complete");
-        }
-        setLoading(false);
-      }, 1000);
-    }
   };
 
   return (

@@ -18,9 +18,7 @@ const saveLocations = async (favJSON: any) => {
 		method: 'post',
 		url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/locations/add`,
 		data: favJSON,
-		headers: {
-			'Content-Type': 'application/json; charset=utf-8',
-		},
+		headers: { 'Content-Type': 'application/json; charset=utf-8' },
 	});
 	// alert("Favourite created --- "+ response);
 	return response;

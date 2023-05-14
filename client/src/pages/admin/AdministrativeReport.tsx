@@ -4,25 +4,23 @@ import { toast } from "react-toastify";
 import Stack from "@mui/material/Stack";
 import { generateID } from "../../utils/generateId";
 import Ripple from "../../components/Ripple";
-import IContractExtension from "../../types/admin/IContractExtension";
+import IContractExtension from "../../types/IContractExtension";
 import CustomeDataPicker from "../../components/DataPicker";
-import IEmployeeData from "../../types/admin/IEmployeeData";
+import IEmployeeData from "../../types/IEmployeeData";
 import EmployeeService from "../../services/admin/EmployeeService";
-import IDesignationData from "../../types/admin/IDesignationData";
+import IDesignationData from "../../types/IDesignationData";
 import DesignationMasterService from "../../services/admin/DesignationMasterService";
-import IDivisionData from "../../types/admin/IDivisionData";
+import IDivisionData from "../../types/IDivisionData";
 import DivisionMasterService from "../../services/admin/DivisionMasterService";
-import IAdministrativeReport from "../../types/admin/IAdministrativeReport";
 
-const initialState: IAdministrativeReport = {
+const initialState: IContractExtension = {
   documentNo: "",
   date: "",
-  employee: "",
-  designation: "",
-  attachment: "",
-  details: "",
-  division: "",
+  epfNo: 0,
+  designationId: "",
+  divisionId: "",
   hod: "",
+  remark: "",
 };
 
 function AdministrativeReport() {
@@ -34,18 +32,17 @@ function AdministrativeReport() {
   const [empFoundError, setEmpFoundError] = useState<boolean>(false);
   const [empData, setEmpData] = useState<Array<IEmployeeData>>([]);
   const [currentEmp, setCurrentEmp] = useState<IEmployeeData>();
-  const [values, setValues] = useState<IAdministrativeReport>(initialState);
+  const [values, setValues] = useState<IContractExtension>(initialState);
 
   useEffect(() => {
     setValues({
-      date: requestDate ? requestDate : "",
       documentNo: values?.documentNo,
-      employee: values?.employee,
-      designation: values?.designation,
-      attachment: values?.attachment,
-      details: values?.details,
-      division: values?.division,
+      date: requestDate ? requestDate : "",
+      epfNo: values?.epfNo,
+      designationId: values?.designationId,
+      divisionId: values?.divisionId,
       hod: values?.hod,
+      remark: values?.remark,
     });
   }, [requestDate]);
 
@@ -53,12 +50,11 @@ function AdministrativeReport() {
     setValues({
       documentNo: getDocNo && getDocNo,
       date: requestDate ? requestDate : "",
-      employee: values?.employee,
-      designation: values?.designation,
-      attachment: values?.attachment,
-      details: values?.details,
-      division: values?.division,
+      epfNo: values?.epfNo,
+      designationId: values?.designationId,
+      divisionId: values?.divisionId,
       hod: values?.hod,
+      remark: values?.remark,
     });
     console.log(getDocNo);
   }, [getDocNo]);
@@ -67,6 +63,28 @@ function AdministrativeReport() {
     retreiveEmployees();
     console.log(empData);
   }, []);
+
+  useEffect(() => {
+    let employee = empData.find(
+      (emp: IEmployeeData) => emp.epfNo.toString() === values.epfNo.toString()
+    );
+    setCurrentEmp(employee);
+    if (employee) {
+      setEmpFoundError(false);
+    } else {
+      setEmpFoundError(true);
+    }
+    setValues({
+      documentNo: getDocNo && getDocNo,
+      date: requestDate ? requestDate : "",
+      epfNo: values?.epfNo,
+      designationId: employee?.designationId,
+      divisionId: employee?.divisionId,
+      hod: values?.hod,
+      remark: values?.remark,
+    });
+    retriveEmployeeDetails(employee);
+  }, [values.epfNo]);
 
   //get designation and division
   const retriveEmployeeDetails = (emp: any) => {
@@ -152,12 +170,182 @@ function AdministrativeReport() {
             />
           </div>
 
-          <div className="flex items-center"></div>
+          <div className="flex items-center">
+            <div>
+              <label className="input-label" htmlFor="epfNo">
+                Employee EPF No
+              </label>
+
+              <input
+                id="epfNo"
+                type="text"
+                className="tailwind-text-box w-[40%] mr-4"
+                onChange={onChange}
+                name="epfNo"
+                value={values.epfNo}
+              />
+            </div>
+            <div>
+              <label className="input-label" htmlFor="epfNo">
+                Employee Name
+              </label>
+              <select
+                className="tailwind-text-box"
+                value={values.epfNo}
+                id="epfNo"
+                name="epfNo"
+                onChange={onChange}
+              >
+                <option disabled value={0}>
+                  Select Employee
+                </option>
+
+                {empData?.map((l: IEmployeeData, i: number) => {
+                  return (
+                    <option key={i} value={l.epfNo}>
+                      {l.firstName + " " + l.lastName}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+          </div>
+        </div>
+        {values.epfNo && empFoundError ? (
+          <p className="w-[97%] mx-auto error-text-message">User Not Found!</p>
+        ) : (
+          ""
+        )}
+
+        <div className="w-[97%] mx-auto">
+          <p className="normal-text">
+            Designation :{" "}
+            {values.epfNo && designationData ? (
+              <span className="font-bold">
+                {designationData.designationName}
+              </span>
+            ) : (
+              <span className="italic-sm-text">Please select an employee</span>
+            )}
+          </p>
+
+          <div className="grid items-center grid-cols-1 md:grid-cols-2">
+            <p className="normal-text">
+              Division :{" "}
+              {values.epfNo && divisionData ? (
+                <span className="font-bold">{divisionData.name}</span>
+              ) : (
+                <span className="italic-sm-text">
+                  Please select an employee
+                </span>
+              )}
+            </p>
+
+            <p className="normal-text">
+              HOD :{" "}
+              {values.epfNo && divisionData ? (
+                <span className="font-bold">{divisionData.name}</span>
+              ) : (
+                <span className="italic-sm-text">
+                  Please select an employee
+                </span>
+              )}
+            </p>
+          </div>
         </div>
 
+        <div className="w-[97%] mx-auto">
+          <label className="input-label" htmlFor="remark">
+            Remark
+          </label>
+
+          <textarea
+            id="remark"
+            className="tailwind-text-box w-[100%] mr-4"
+            onChange={onChange}
+            name="remark"
+            value={values.remark}
+          ></textarea>
+        </div>
         <h4 className="sub-page-title">Send To</h4>
         <hr className="horizontal-line" />
 
+        <div className="grid grid-cols-1 md:grid-cols-2 items-center w-[97%] mx-auto">
+          <div>
+            <div className="flex items-center">
+              <div>
+                <label className="input-label" htmlFor="epfNo">
+                  Employee EPF No
+                </label>
+
+                <input
+                  id="epfNo"
+                  type="text"
+                  className="tailwind-text-box w-[40%] mr-4"
+                  onChange={onChange}
+                  name="epfNo"
+                  value={values.epfNo}
+                />
+                {values.epfNo && empFoundError ? (
+                  <p className="w-[97%] mx-auto error-text-message">
+                    User Not Found!
+                  </p>
+                ) : (
+                  ""
+                )}
+              </div>
+              <div>
+                <label className="input-label" htmlFor="epfNo">
+                  Employee Name
+                </label>
+                <select
+                  className="tailwind-text-box"
+                  value={values.epfNo}
+                  id="epfNo"
+                  name="epfNo"
+                  onChange={onChange}
+                >
+                  <option disabled value={0}>
+                    Select Employee
+                  </option>
+
+                  {empData?.map((l: IEmployeeData, i: number) => {
+                    return (
+                      <option key={i} value={l.epfNo}>
+                        {l.firstName + " " + l.lastName}
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
+            </div>
+            <div className="w-[97%] mx-auto">
+              <p className="normal-text">
+                Designation :{" "}
+                {values.epfNo && designationData ? (
+                  <span className="font-bold">
+                    {designationData.designationName}
+                  </span>
+                ) : (
+                  <span className="italic-sm-text">
+                    Please select an employee
+                  </span>
+                )}
+              </p>
+
+              <p className="normal-text">
+                Division :{" "}
+                {values.epfNo && divisionData ? (
+                  <span className="font-bold">{divisionData.name}</span>
+                ) : (
+                  <span className="italic-sm-text">
+                    Please select an employee
+                  </span>
+                )}
+              </p>
+            </div>
+          </div>
+        </div>
         <Stack
           direction="row"
           justifyContent="flex-end"

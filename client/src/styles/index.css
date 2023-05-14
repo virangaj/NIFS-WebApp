@@ -15,7 +15,7 @@ body {
 
 :root {
 	--main-navbar-back: #030347;
-	--nav-title-section-back: rgba(36, 104, 206, 0.568);
+	--nav-title-section-back: rgba(47, 163, 72, 0.589);
 	--white: #fff;
 	--black: #000;
 	--gray: rgba(68, 68, 68, 0.432);
@@ -117,7 +117,7 @@ a {
 	}
 	/* ------------------------- alingments and positionings -------------------------*/
 	.admin-side-nav {
-		@apply fixed z-20 flex-shrink-0 block w-64 h-screen mb-10 overflow-y-auto bg-white rounded-tr-lg rounded-br-lg;
+		@apply z-20 flex-shrink-0 block w-64 mb-10 overflow-y-auto bg-white rounded-tr-lg rounded-br-lg;
 	}
 	.tailwind-text-box {
 		@apply block w-full px-4 py-2 my-2 text-gray-700 bg-white border border-gray-300 rounded-md focus:border-blue-500 focus:outline-none focus:shadow-sm
@@ -155,17 +155,14 @@ a {
 	}
 	/* --------------------------------------------------------- */
 	/*------------------------- text -------------------------*/
-	.nav-drop-link {
-		@apply pl-2 text-sm leading-loose tracking-wide rounded-md cursor-pointer hover:bg-gray-200 hover:text-blue-500;
-	}
 	.admin-sidebar-text {
 		@apply flex items-center text-gray-700 cursor-pointer hover:font-bold;
 	}
 	.admin-sidebar-text-active {
-		@apply font-bold text-blue-800 admin-sidebar-text;
+		@apply flex items-center font-bold text-blue-800 cursor-pointer;
 	}
 	.admin-sub-panel-body {
-		@apply w-[80%] mx-auto rounded-lg h-auto ml-72;
+		@apply w-[80%] mx-auto rounded-lg h-auto;
 	}
 	.admin-panel-flex {
 		@apply flex flex-col justify-between xl:flex-row;

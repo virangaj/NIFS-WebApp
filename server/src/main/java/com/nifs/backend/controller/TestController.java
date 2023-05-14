@@ -1,17 +1,14 @@
 package com.nifs.backend.controller;
 
-import com.nifs.backend.model.admin.Religions;
-import com.nifs.backend.service.admin.IOtherDataService;
+import com.nifs.backend.model.Religions;
+import com.nifs.backend.service.IOtherDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.util.HtmlUtils;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -21,18 +18,29 @@ import java.util.Map;
 @RequestMapping("/test")
 public class TestController {
 
-//    @Autowired
-//    SimpleMessaging
+    @Autowired
+    private IOtherDataService other;
 
     @GetMapping("/{id}")
     private ResponseEntity<?> returnResponse(@PathVariable int id) {
-        return ResponseEntity.ok("success");
+        try {
+            Map<String, Object> map = new LinkedHashMap<String, Object>();
+            List<Religions> r = other.returnAllReligions();
+            if (r.isEmpty()) {
+                map.put("status", 1);
+                map.put("data", r);
+                return new ResponseEntity<>(map, HttpStatus.OK);
+            }
 
-    }
-    @MessageMapping("/hello")
-    @SendTo("/topic/greetings")
-    public Greeting greeting(HelloMessage message) throws Exception {
-        Thread.sleep(1000); // simulated delay
-        return new Greeting("Hello, " + HtmlUtils.htmlEscape(message.getName()) + "!");
+            map.clear();
+            map.put("status", 0);
+            map.put("message", "Data is not found");
+            return new ResponseEntity<>(map, HttpStatus.NOT_FOUND);
+
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.OK).body(null);
+        }
+
     }
 }

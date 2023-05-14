@@ -20,16 +20,13 @@ const getEmpCat = (id: any) => {
 	return http.get<any>(`/admin/employeecategory/get/${id}`);
 };
 
-const saveEmpCat = async (data: any, token: string) => {
-	console.log(data);
+const saveEmpCat = async (favJSON: any) => {
+	console.log(favJSON);
 	const response = await axios({
 		method: 'post',
 		url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/employeecategory/add`,
-		data: data,
-		headers: {
-			'Content-Type': 'application/json; charset=utf-8',
-			Authorization: `Bearer ${token}`,
-		},
+		data: favJSON,
+		headers: { 'Content-Type': 'application/json; charset=utf-8' },
 	});
 	// alert("Favourite created --- "+ response);
 	return response;
@@ -45,30 +42,24 @@ const getEmpCatByLocationId = (id: any) => {
 	return http.get<any>(`/admin/employeecategory/location/${id}`);
 };
 
-const editEmpCat = async (data: any, token: string) => {
-	console.log(data);
+const editEmpCat = async (favJSON: any) => {
+	console.log(favJSON);
 	const response = await axios({
 		method: 'patch',
-		url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/employeecategory/update/${data.empCatId}`,
-		data: data,
-		headers: {
-			'Content-Type': 'application/json; charset=utf-8',
-			Authorization: `Bearer ${token}`,
-		},
+		url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/employeecategory/update/${favJSON.empCatId}`,
+		data: favJSON,
+		headers: { 'Content-Type': 'application/json; charset=utf-8' },
 	});
 
 	return response;
 };
 
-const deleteEmpCat = async (id: string, token: string) => {
+const deleteEmpCat = async (id: string) => {
 	console.log(id);
 	const response = await axios({
 		method: 'delete',
 		url: `${process.env.REACT_APP_BACKEND_SERVER}/admin/employeecategory/delete/${id}`,
-		headers: {
-			'Content-Type': 'application/json; charset=utf-8',
-			Authorization: `Bearer ${token}`,
-		},
+		headers: { 'Content-Type': 'application/json; charset=utf-8' },
 	});
 	// alert("Favourite created --- "+ response);
 	return response;

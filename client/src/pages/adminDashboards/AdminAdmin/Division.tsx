@@ -5,59 +5,38 @@ import Box from '@mui/material/Box';
 import Ripple from '../../../components/Ripple';
 import { HiX } from 'react-icons/hi';
 import { toast } from 'react-toastify';
-import { useDispatch } from 'react-redux';
+
 import ILocationData from '../../../types/ILocationData';
 import LocationMasterService from '../../../services/admin/LocationMasterService';
-import IDivisionData from '../../../types/admin/IDivisionData';
+import IDivisionData from '../../../types/IDivisionData';
 import DivisionMasterService from '../../../services/admin/DivisionMasterService';
 import DivisionAction from './shared/DivisionAction';
 import { RequestStatus } from '../../../constant/requestStatus';
-import { useAppSelector } from '../../../hooks/hooks';
-import {
-	createDivision,
-	getAllDivisions,
-} from '../../../feature/admin/DivisionSlice';
-import { getAllLocations } from '../../../feature/admin/LocationSlice';
-import LocationSelector from '../../../components/shared/LocationSelector';
-import EmployeeSelector from '../../../components/shared/EmployeeSelector';
 function Division() {
-	const dispatch = useDispatch<any>();
-
 	const [pageSize, setPageSize] = useState(10);
 	const [rowId, setRowId] = useState(0);
 	const [loading, setLoading] = useState(false);
 	const [deleteId, setDeleteId] = useState('');
 	const [divisionData, setDivisionData] = useState<Array<IDivisionData>>([]);
+	const [locationData, setLocationData] = useState<ILocationData[]>();
 	const [d_id, setD_Id] = useState('');
 
-	const { auth } = useAppSelector((state) => state.persistedReducer);
-	const { division, divisionIsLoading, divisionIsSuccess } = useAppSelector(
-		(state) => state.division
-	);
-	const { location, locationIsLoading, locationIsSuccess } = useAppSelector(
-		(state) => state.location
-	);
 	const [values, setValues] = useState<any>({
 		divisionId: '',
 		name: '',
 		locationId: '',
-		hod: 0,
 	});
 	useEffect(() => {
-		const filteredData = division?.filter((emp) => emp.divisionId !== deleteId);
+		const filteredData = divisionData?.filter(
+			(emp) => emp.divisionId !== deleteId
+		);
 		setDivisionData(filteredData);
 	}, [deleteId]);
 
 	useEffect(() => {
 		retreiveDivisions();
-		if (location.length === 0 || !locationIsSuccess) {
-			retreiveLocations();
-		}
+		retreiveLocations();
 	}, []);
-
-	useEffect(() => {
-		setDivisionData(division);
-	}, [division]);
 
 	useEffect(() => {
 		// console.log(v_id)
@@ -70,11 +49,29 @@ function Division() {
 	}, [d_id]);
 
 	const retreiveDivisions = () => {
-		dispatch(getAllDivisions());
+		DivisionMasterService.getAllDivisions()
+			.then((res: any) => {
+				if (res.data.status === RequestStatus.SUCCESS) {
+					setDivisionData(res.data.data);
+					// console.log(divisionData);
+				} else {
+					toast.error(`${res.data.message}`);
+				}
+			})
+			.catch((e: any) => {
+				console.log(e);
+			});
 	};
 
 	const retreiveLocations = () => {
-		dispatch(getAllLocations());
+		LocationMasterService.getAllLocations()
+			.then((res: any) => {
+				setLocationData(res.data);
+				// console.log(locationData);
+			})
+			.catch((e: any) => {
+				console.log(e);
+			});
 	};
 
 	const resetForm = () => {
@@ -106,29 +103,31 @@ function Division() {
 
 	const onSubmit = async (e: any) => {
 		e.preventDefault();
-		if (values.divisionId !== '' && values.name !== null) {
+
+		if (values.divisionId !== '') {
 			setLoading(true);
 			setTimeout(async () => {
-				const req = {
-					data: values,
-					token: auth?.user.token,
-				};
+				const result = await DivisionMasterService.saveDivision(values);
+				if (result.data.status === RequestStatus.SUCCESS) {
+					toast.success('New Division is added');
 
-				await dispatch(createDivision(req))
-					.then((res: any) => {
-						console.log(res);
-						toast.success('New Division is Created!');
-					})
-					.catch((e: any) => {
-						console.log(e);
-						toast.error('Error Occured!');
-					});
-
+					resetForm();
+				} else {
+					toast.error('Request cannot completed!');
+				}
 				setLoading(false);
 			}, 1000);
 		} else {
 			// alert('Please add a ID');
-			toast.error('Please fill up all the fields');
+			toast.error('Please add an ID', {
+				position: 'top-right',
+				autoClose: 5000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+			});
 		}
 	};
 
@@ -144,12 +143,6 @@ function Division() {
 			{
 				field: 'locationId',
 				headerName: 'Location',
-				width: 100,
-				editable: true,
-			},
-			{
-				field: 'hod',
-				headerName: 'HOD',
 				width: 200,
 				editable: true,
 			},
@@ -226,11 +219,27 @@ function Division() {
 								</button>
 							</div>
 							<div>
-								<LocationSelector
-									onChange={onChange}
-									name='locationId'
+								<label className='input-label' htmlFor='locationId'>
+									Location
+								</label>
+								<select
+									className='tailwind-text-box'
 									value={values.locationId}
-								/>
+									id='location'
+									name='locationId'
+									onChange={onChange}
+								>
+									<option disabled value=''>
+										Select Location
+									</option>
+									{locationData?.map((l: ILocationData, i: number) => {
+										return (
+											<option key={i} value={l.locationId}>
+												{l.locationName}
+											</option>
+										);
+									})}
+								</select>
 							</div>
 							<div>
 								<label className='input-label' htmlFor='typeName'>
@@ -245,7 +254,6 @@ function Division() {
 									value={values.name}
 								/>
 							</div>
-
 							<Stack
 								direction='row'
 								justifyContent='flex-end'

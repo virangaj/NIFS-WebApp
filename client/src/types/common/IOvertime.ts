@@ -1,20 +1,14 @@
-import { RequestStatus } from "../../constant/requestStatus";
-
 export default interface IOvertime {
   documentNo: string;
   date: string;
   //   auto generated
-  epfNo: number;
-  hod: number;
-  designationId: string;
-  divisionId: string;
+  epfNo: string;
+  designation: string;
+  division: string;
 
   noOfHoursRequested: string;
   noOfHoursOTDone: string;
   nameOfWorkToBeDone: string;
   necessityToWorkOvertime: string;
   remark: string;
-
-  hodApproved: RequestStatus;
-  dirApproved: RequestStatus;
 }

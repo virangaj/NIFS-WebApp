@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import http from '../../utils/http-common';
-import IVenueMaster from '../../types/sedu/IVenueMaster';
+import IVenueMaster from '../../types/IVenueMaster';
 
 axios.defaults.baseURL = process.env.REACT_APP_BACKEND_SERVER;
 
@@ -13,29 +13,17 @@ const getVenue = (id: any) => {
 	return http.get<IVenueMaster>(`/sedu/venuemaster/${id}`);
 };
 
-const getNewVenueId = async (token: string) => {
-	const response = await axios({
-		method: 'get',
-		url: `${process.env.REACT_APP_BACKEND_SERVER}/sedu/venuemaster/newid`,
-		headers: {
-			'Content-Type': 'application/json; charset=utf-8',
-			Authorization: `Bearer ${token}`,
-		},
-	});
-	// alert("Favourite created --- "+ response);
-	return response;
+const getNewVenueId = () => {
+	return http.get('/sedu/venuemaster/newid');
 };
 
-const saveVenue = async (data: any, token: string) => {
-	console.log(data);
+const saveVenue = async (favJSON: any) => {
+	console.log(favJSON);
 	const response = await axios({
 		method: 'post',
 		url: `${process.env.REACT_APP_BACKEND_SERVER}/sedu/venuemaster`,
-		data: data,
-		headers: {
-			'Content-Type': 'application/json; charset=utf-8',
-			Authorization: `Bearer ${token}`,
-		},
+		data: favJSON,
+		headers: { 'Content-Type': 'application/json; charset=utf-8' },
 	});
 	// alert("Favourite created --- "+ response);
 	return response;

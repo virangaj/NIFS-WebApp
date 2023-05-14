@@ -1,26 +1,18 @@
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
-import { useDispatch } from 'react-redux';
 import { useEffect, useMemo, useState } from 'react';
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
-import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 import Ripple from '../../../components/Ripple';
 import { HiX } from 'react-icons/hi';
 import { toast } from 'react-toastify';
-import IDesignationData from '../../../types/admin/IDesignationData';
+import IDesignationData from '../../../types/IDesignationData';
 import ILocationData from '../../../types/ILocationData';
 import LocationMasterService from '../../../services/admin/LocationMasterService';
 import DesignationMasterService from '../../../services/admin/DesignationMasterService';
 import DesignationAction from './shared/DesignationAction';
 import { RequestStatus } from '../../../constant/requestStatus';
-import {
-	createDesignation,
-	getAllDesignations,
-} from '../../../feature/admin/DesignationSlice';
-import { getAllLocations } from '../../../feature/admin/LocationSlice';
 
 function Designation() {
-	const dispatch = useDispatch<any>();
 	const [pageSize, setPageSize] = useState(10);
 	const [rowId, setRowId] = useState(0);
 	const [loading, setLoading] = useState(false);
@@ -28,24 +20,14 @@ function Designation() {
 	const [designationData, setDesignationData] = useState<
 		Array<IDesignationData>
 	>([]);
-
+	const [locationData, setLocationData] = useState<ILocationData[]>();
 	const [d_id, setD_Id] = useState('');
-
-	const { auth } = useAppSelector((state) => state.persistedReducer);
-	const { designation, designationIsLoading, designationIsSuccess } =
-		useAppSelector((state) => state.designation);
-
-	const { location, locationIsLoading, locationIsSuccess } = useAppSelector(
-		(state) => state.location
-	);
 
 	const [values, setValues] = useState<any>({
 		designationId: '',
 		designationName: '',
 		locationId: '',
 	});
-
-	//update on delete
 	useEffect(() => {
 		const filteredData = designationData?.filter(
 			(emp) => emp.designationId !== deleteId
@@ -54,14 +36,8 @@ function Designation() {
 	}, [deleteId]);
 
 	useEffect(() => {
-		setDesignationData(designation);
-	}, [designation]);
-
-	useEffect(() => {
 		retreiveDesignations();
-		if (location.length === 0 || !locationIsSuccess) {
-			retreiveLocations();
-		}
+		retreiveLocations();
 	}, []);
 
 	useEffect(() => {
@@ -75,11 +51,36 @@ function Designation() {
 	}, [d_id]);
 
 	const retreiveDesignations = () => {
-		dispatch(getAllDesignations());
+		DesignationMasterService.getAllDesignations()
+			.then((res: any) => {
+				if (res.data.status === RequestStatus.SUCCESS) {
+					setDesignationData(res.data.data);
+				} else {
+					toast.error(`${res.data.message}`, {
+						position: 'top-right',
+						autoClose: 5000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+					});
+				}
+			})
+			.catch((e: any) => {
+				console.log(e);
+			});
 	};
 
 	const retreiveLocations = () => {
-		dispatch(getAllLocations());
+		LocationMasterService.getAllLocations()
+			.then((res: any) => {
+				setLocationData(res.data);
+				// console.log(locationData);
+			})
+			.catch((e: any) => {
+				console.log(e);
+			});
 	};
 	const resetForm = () => {
 		setValues({
@@ -111,29 +112,22 @@ function Designation() {
 	const onSubmit = async (e: any) => {
 		e.preventDefault();
 
-		if (values.designationId !== '' && values.designationName !== null) {
+		if (values.id !== '') {
 			setLoading(true);
 			setTimeout(async () => {
-				const req = {
-					data: values,
-					token: auth?.user.token,
-				};
-
-				await dispatch(createDesignation(req))
-					.then((res: any) => {
-						console.log(res);
-						toast.success('New Designation is Created!');
-					})
-					.catch((e: any) => {
-						console.log(e);
-						toast.error('Error Occured!');
-					});
-
+				const result = await DesignationMasterService.saveDesignation(values);
+				// console.log(result)
+				if (result.data.status === RequestStatus.SUCCESS) {
+					toast.success('New Designation is added');
+					resetForm();
+				} else {
+					toast.error('Request cannot completed!');
+				}
 				setLoading(false);
 			}, 1000);
 		} else {
 			// alert('Please add a ID');
-			toast.error('Please fill up all the fields');
+			toast.error('Please add an ID');
 		}
 	};
 
@@ -238,7 +232,7 @@ function Designation() {
 									<option disabled value=''>
 										Select Location
 									</option>
-									{location?.map((l: ILocationData, i: number) => {
+									{locationData?.map((l: ILocationData, i: number) => {
 										return (
 											<option key={i} value={l.locationId}>
 												{l.locationName}

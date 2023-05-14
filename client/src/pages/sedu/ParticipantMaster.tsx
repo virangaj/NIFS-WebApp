@@ -3,117 +3,133 @@ import { useState, useEffect } from 'react';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
-import IVenueMaster from '../../types/sedu/IVenueMaster';
+import IVenueMaster from '../../types/IVenueMaster';
 import Autocomplete from '@mui/material/Autocomplete';
 
-import IParticipantMaster from '../../types/sedu/IParticipantMaster';
+import IParticipantMaster from '../../types/IParticipantMaster';
 import CustomeDataPicker from '../../components/DataPicker';
 import ParticipantMasterService from '../../services/sedu/ParticipantMasterService';
 import Ripple from '../../components/Ripple';
-import ImportFromXlsx from '../../components/ImportFromXlsx';
-import EventSelector from '../../components/shared/EventSelector';
-import { toast } from 'react-toastify';
-import { useAppSelector } from '../../hooks/hooks';
-import { generateID } from '../../utils/generateId';
-import { Link } from 'react-router-dom';
-import { RouteName } from '../../constant/routeNames';
 
 const initialState: IParticipantMaster = {
-	eventId: '',
-	participantId: '',
-	name: '',
+	pCode: '',
+	date: '',
+	pName: '',
 	nic: '',
 	gender: '',
 	address: '',
 	contactNo: '',
 	email: '',
-	institute: '',
+	instituteName: '',
 };
 
 function ParticipantMaster() {
 	const [participantCode, setParticipantsCode] = useState('');
-	const [loading, setLoading] = useState(false);
-	const [values, setValues] = useState<IParticipantMaster>(initialState);
-	const { auth } = useAppSelector((state) => state.persistedReducer);
+	const [date, setDate] = useState<string | null>(null);
 
-	const [p_id, setP_id] = useState<String | any>('');
+	const [loading, setLoading] = useState(false);
+
+	const [values, setValues] = useState<IParticipantMaster>(initialState);
+
 	const onChange = (e: any) => {
 		setValues((preState) => ({
 			...preState,
 			[e.target.name]: e.target.value,
 		}));
 	};
-	useEffect(() => {
-		generateEventId();
-		// console.log('trigger ' + p_id);
-		setValues({
-			...values,
-			participantId: p_id,
-		});
-	}, [values.name]);
 
-	const generateEventId = () => {
-		setP_id(generateID('PM'));
-	};
+	useEffect(() => {
+		setValues({
+			pCode: participantCode ? participantCode : '',
+			date: date ? date : '',
+			pName: values?.pName,
+			nic: values?.nic,
+			gender: values?.gender,
+			address: values?.address,
+			contactNo: values?.contactNo,
+			email: values?.email,
+			instituteName: values?.instituteName,
+		});
+	}, [participantCode, date]);
+
 	const resetForm = () => {
 		setValues(initialState);
 	};
-	const onSingleSubmit = async (e: any) => {
+	const onSubmit = async (e: any) => {
 		e.preventDefault();
-		setValues({
-			...values,
-			participantId: p_id,
-		});
 
-		setLoading(true);
-		await ParticipantMasterService.saveParticipant(values, auth?.user?.token)
-			.then((res) => {
-				if (res.data) {
-					toast.success('Participant Added!');
-					resetForm();
-				}
-			})
-			.catch((e: any) => {
-				toast.error('Requset cannot be Completed!');
-			});
-
+		try {
+			setLoading(true);
+			// const result = await ParticipantMasterService.saveParticipant(values);
+			alert('done');
+		} catch (e: any) {
+			setLoading(true);
+			alert(e);
+		}
 		setLoading(false);
 
 		console.log(values);
 	};
-
+	console.log(date);
+	const participants = [
+		{ label: 'The Shawshank Redemption', year: 1994 },
+		{ label: 'The Godfather', year: 1972 },
+		{ label: 'The Godfather: Part II', year: 1974 },
+		{ label: 'The Dark Knight', year: 2008 },
+		{ label: '12 Angry Men', year: 1957 },
+		{ label: "Schindler's List", year: 1993 },
+		{ label: 'Pulp Fiction', year: 1994 },
+	];
 	return (
 		<div className='sub-body-content lg:!w-[60%]'>
-			<div className='flex justify-between items-center'>
-				<h1 className='page-title'>Participant Master</h1>
-				<Link to={RouteName.ImportFromExcel}>
-					<button className='action-com-model-sucess-btn'>
-						Import from Excel
-					</button>
-				</Link>
-			</div>
+			<h1 className='page-title'>Participant Master</h1>
 			<hr className='horizontal-line' />
 
 			{!loading ? (
-				<form onSubmit={onSingleSubmit} className='w-[90%] mx-auto'>
-					<EventSelector
-						onChange={onChange}
-						name='eventId'
-						value={values.eventId}
-					/>
+				<form onSubmit={onSubmit} className='w-[90%] mx-auto'>
+					<div className='form-flex'>
+						<Box className='input-field lg:mr-10 mx-0 !lg:w-[60%] w-[100%]'>
+							<Autocomplete
+								disablePortal
+								id='combo-box-demo'
+								options={participants}
+								isOptionEqualToValue={(option: any) => option.label}
+								onChange={(event, value: any) => {
+									setParticipantsCode(value.label);
+								}}
+								renderInput={(params) => (
+									<TextField
+										{...params}
+										fullWidth
+										required
+										label='Participant Code'
+										name='participant'
+										value={participantCode}
+									/>
+								)}
+							/>
+						</Box>
+
+						<CustomeDataPicker
+							date={date}
+							setDate={setDate}
+							title='Date'
+							className='mx-0 lg:ml-10'
+						/>
+					</div>
 
 					<div className='mb-4'>
-						<label className='input-label' htmlFor='name'>
+						<label className='input-label' htmlFor='pName'>
 							Participant Name
 						</label>
 
 						<input
-							id='name'
+							id='pName'
 							type='text'
 							className='tailwind-text-box '
 							onChange={onChange}
-							name='name'
-							value={values.name}
+							name='pName'
+							value={values.pName}
 							required
 						/>
 					</div>
@@ -205,17 +221,17 @@ function ParticipantMaster() {
 					</div>
 
 					<div className='mb-4'>
-						<label className='input-label' htmlFor='institute'>
+						<label className='input-label' htmlFor='instituteName'>
 							Institute Name
 						</label>
 
 						<input
-							id='institute'
-							type='institute'
+							id='instituteName'
+							type='instituteName'
 							className='tailwind-text-box '
 							onChange={onChange}
-							name='institute'
-							value={values.institute}
+							name='instituteName'
+							value={values.instituteName}
 							required
 						/>
 					</div>

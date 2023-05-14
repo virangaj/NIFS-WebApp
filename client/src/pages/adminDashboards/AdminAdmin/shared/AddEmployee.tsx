@@ -5,11 +5,11 @@ import { toast } from 'react-toastify';
 
 import EmployeeCatService from '../../../../services/admin/EmployeeCatService';
 import LocationMasterService from '../../../../services/admin/LocationMasterService';
-import IDesignationData from '../../../../types/admin/IDesignationData';
-import IDivisionData from '../../../../types/admin/IDivisionData';
-import IEmpCatData from '../../../../types/admin/IEmpCatData';
-import IEmployeeData from '../../../../types/admin/IEmployeeData';
-import IEmpTypeData from '../../../../types/admin/IEmpTypeData';
+import IDesignationData from '../../../../types/IDesignationData';
+import IDivisionData from '../../../../types/IDivisionData';
+import IEmpCatData from '../../../../types/IEmpCatData';
+import IEmployeeData from '../../../../types/IEmployeeData';
+import IEmpTypeData from '../../../../types/IEmpTypeData';
 import ILocationData from '../../../../types/ILocationData';
 import EmployeeTypeService from '../../../../services/admin/EmployeeTypeService';
 import DivisionMasterService from '../../../../services/admin/DivisionMasterService';
@@ -19,9 +19,6 @@ import OtherDataServices from '../../../../services/admin/OtherDataServices';
 import EmployeeService from '../../../../services/admin/EmployeeService';
 import Ripple from '../../../../components/Ripple';
 import { RequestStatus } from '../../../../constant/requestStatus';
-import { useAppSelector } from '../../../../hooks/hooks';
-import { useDispatch } from 'react-redux';
-import { getAllLocations } from '../../../../feature/admin/LocationSlice';
 
 const initialState: IEmployeeData = {
 	epfNo: 0,
@@ -61,7 +58,6 @@ const initialState: IEmployeeData = {
 };
 
 function AddEmployee() {
-	const dispatch = useDispatch<any>();
 	const [locationData, setLocationData] = useState<ILocationData[]>();
 	const [employeeTypeData, setEmployeeTypeData] = useState<IEmpTypeData[]>();
 	const [employeeCatData, setEmployeeCatData] = useState<IEmpCatData[]>();
@@ -86,25 +82,46 @@ function AddEmployee() {
 	//main data model
 	const [empData, setEmpData] = useState<IEmployeeData>(initialState);
 
-	const { auth } = useAppSelector((state) => state.persistedReducer);
-	const { location, locationIsLoading, locationIsSuccess } = useAppSelector(
-		(state) => state.location
-	);
 	useEffect(() => {
 		retreivePageLoadData();
 	}, []);
 
 	useEffect(() => {
 		setEmpData({
-			...empData,
+			epfNo: empData?.epfNo,
+			initials: empData?.initials,
+			firstName: empData?.firstName,
+			lastName: empData?.lastName,
+			gender: empData?.gender,
 			dob: birthDate ? birthDate : '',
+			address: empData?.address,
+			districtId: empData?.districtId,
+			provinceId: empData?.provinceId,
+			contactNo: empData?.contactNo,
+			personalEmail: empData?.personalEmail,
+			gsuitEmail: empData?.gsuitEmail,
+			nicNo: empData?.nicNo,
 			nicIssuedDate: NICIDate ? NICIDate : '',
+			passportNo: empData?.passportNo,
 			passExpireDate: passExDate ? passExDate : '',
+			licenseNo: empData?.licenseNo,
 			licenseIssuedDate: licIssueDate ? licIssueDate : '',
 			licenseExpireDate: licExpireDate ? licExpireDate : '',
+			contactPerson: empData?.contactPerson,
+			cpRelationship: empData?.cpRelationship,
+			cpAddress: empData?.cpAddress,
+			cpTelephone: empData?.cpTelephone,
+			cpStatus: empData?.cpStatus,
+			cpCivilStatus: empData?.cpCivilStatus,
+			cpReligion: empData?.cpReligion,
 			appointmentDate: appDate ? appDate : '',
 			contractStart: conStartDate ? conStartDate : '',
 			contractEnd: conEndDate ? conEndDate : '',
+			locationId: empData?.locationId,
+			empTypeId: empData?.empTypeId,
+			empCatId: empData?.empCatId,
+			designationId: empData?.designationId,
+			divisionId: empData?.divisionId,
 		});
 	}, [
 		birthDate,
@@ -117,52 +134,57 @@ function AddEmployee() {
 		conStartDate,
 	]);
 
-  // get location data
-  const retreivePageLoadData = () => {
-    if (location.length === 0 || !locationIsSuccess) {
-      dispatch(getAllLocations());
-    }
+	// get location data
+	const retreivePageLoadData = () => {
+		LocationMasterService.getAllLocations()
+			.then((res: any) => {
+				setLocationData(res.data);
+				// console.log(locationData);
+			})
+			.catch((e: any) => {
+				console.log(e);
+			});
 
-    OtherDataServices.getAllProvinces()
-      .then((res: any) => {
-        setProvinces(res.data);
-        // console.log(provinces);
-      })
-      .catch((e: any) => {
-        console.log(e);
-      });
-    OtherDataServices.getAllReligions()
-      .then((res: any) => {
-        setReligions(res.data);
-        // console.log(provinces);
-      })
-      .catch((e: any) => {
-        console.log(e);
-      });
-  };
+		OtherDataServices.getAllProvinces()
+			.then((res: any) => {
+				setProvinces(res.data);
+				// console.log(provinces);
+			})
+			.catch((e: any) => {
+				console.log(e);
+			});
+		OtherDataServices.getAllReligions()
+			.then((res: any) => {
+				setReligions(res.data);
+				// console.log(provinces);
+			})
+			.catch((e: any) => {
+				console.log(e);
+			});
+	};
 
-  // get other data on location selected
-  useEffect(() => {
-    retreiveOtherEmployeeData(empData?.locationId);
-  }, [empData?.locationId]);
+	// get other data on location selected
+	useEffect(() => {
+		retreiveOtherEmployeeData(empData?.locationId);
+	}, [empData?.locationId]);
 
-  useEffect(() => {
-    retrieveDistricts(empData?.provinceId);
-    // console.log(empData?.province)
-  }, [empData?.provinceId]);
+	useEffect(() => {
+		retrieveDistricts(empData?.provinceId);
+		// console.log(empData?.province)
+	}, [empData?.provinceId]);
 
-  const retrieveDistricts = (id: number) => {
-    if (empData?.provinceId) {
-      OtherDataServices.getDistrictByProvinceId(id)
-        .then((res: any) => {
-          setDistricts(res.data);
-          // console.log(districts);
-        })
-        .catch((e: any) => {
-          console.log(e);
-        });
-    }
-  };
+	const retrieveDistricts = (id: number) => {
+		if (empData?.provinceId) {
+			OtherDataServices.getDistrictByProvinceId(id)
+				.then((res: any) => {
+					setDistricts(res.data);
+					// console.log(districts);
+				})
+				.catch((e: any) => {
+					console.log(e);
+				});
+		}
+	};
 
 	const retreiveOtherEmployeeData = (id: string) => {
 		if (empData?.locationId) {
@@ -245,10 +267,7 @@ function AddEmployee() {
 		if (empData.epfNo) {
 			setLoading(true);
 			setTimeout(async () => {
-				const result = await EmployeeService.saveEmployee(
-					empData,
-					auth?.user?.token
-				);
+				const result = await EmployeeService.saveEmployee(empData);
 				if (result.data.status === RequestStatus.SUCCESS) {
 					toast.success('New Employee is added');
 					// resetForm();
@@ -692,7 +711,7 @@ function AddEmployee() {
 										<option disabled value=''>
 											Select Location
 										</option>
-										{location?.map((l: ILocationData, i: number) => {
+										{locationData?.map((l: ILocationData, i: number) => {
 											return (
 												<option key={i} value={l.locationId}>
 													{l.locationName}

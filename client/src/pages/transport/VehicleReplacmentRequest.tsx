@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import CustomeDataPicker from "../../components/DataPicker";
-import IVehicleReplacementRequest from "../../types/transport/IVehicleReplacementRequest";
+import IVehicleReplacementRequest from "../../types/VehicleReplacementRequest";
 import Stack from "@mui/material/Stack";
 import "../pages.css";
-import ReplacementRequestService from "../../services/transport/ReplacementRequestService";
-import { toast } from "react-toastify";
 
 export default function VehicleReplacmentRequest() {
   const [values, setValues] = useState<IVehicleReplacementRequest>({
@@ -22,23 +20,6 @@ export default function VehicleReplacmentRequest() {
   });
 
   const [date, setDate] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    setValues({
-      DocumentNo: values?.DocumentNo,
-      vehicleNo: values?.vehicleNo,
-      driver: values?.driver,
-      category: values?.category,
-      amount: values?.amount,
-      brand: values?.brand,
-      attachment: values?.attachment,
-      date: date ? date : "",
-      startMeterReading: values?.startMeterReading,
-      endMeterReading: values?.endMeterReading,
-      remark: values?.remark,
-    });
-  }, [date]);
 
   const resetForm = () => {
     setValues({
@@ -66,22 +47,6 @@ export default function VehicleReplacmentRequest() {
   const onSubmit = async (event: any) => {
     event.preventDefault();
     console.log(values);
-
-    if (values.DocumentNo !== "") {
-      setTimeout(async () => {
-        const result = await ReplacementRequestService.saveReplacementRequest(
-          values
-        );
-
-        if (result?.data !== null) {
-          toast.success("Replacement Request Details added Successfully");
-          resetForm();
-        } else {
-          toast.error("Request Cannot Complete");
-        }
-        setLoading(false);
-      }, 1000);
-    }
   };
 
   return (

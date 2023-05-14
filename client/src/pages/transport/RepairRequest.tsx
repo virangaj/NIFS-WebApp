@@ -1,46 +1,28 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import CustomeDataPicker from "../../components/DataPicker";
-import IRepairRequest from "../../types/transport/IRepairRequest";
+import IRepairRequest from "../../types/RepairRequest";
 import Stack from "@mui/material/Stack";
 import "../pages.css";
-import RepairRequestService from "../../services/transport/RepairRequestService";
-import { toast } from "react-toastify";
-
-const initialState: IRepairRequest = {
-  documentNo: "",
-  employeeNo: "",
-  designation: "",
-  division: "",
-  vehicleNo: "",
-  date: "",
-  attachment: "",
-  remark: "",
-};
 
 export default function RepairRequest() {
-  const [values, setValues] = useState<IRepairRequest>(initialState);
+  const [values, setValues] = useState<IRepairRequest>({
+    documentNo: "",
+    employeeNo: "",
+    designatiom: "",
+    division: "",
+    vehicleNo: "",
+    date: "",
+    attachment: "",
+    remark: "",
+  });
 
   const [date, setDate] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    setValues({
-      documentNo: values?.documentNo,
-      employeeNo: values?.employeeNo,
-      designation: values?.designation,
-      division: values?.division,
-      vehicleNo: values?.vehicleNo,
-      date: date ? date : "",
-      attachment: values?.attachment,
-      remark: values?.remark,
-    });
-  }, [date]);
 
   const resetForm = () => {
     setValues({
       documentNo: "",
       employeeNo: "",
-      designation: "",
+      designatiom: "",
       division: "",
       vehicleNo: "",
       date: "",
@@ -59,20 +41,6 @@ export default function RepairRequest() {
   const onSubmit = async (event: any) => {
     event.preventDefault();
     console.log(values);
-
-    if (values.documentNo !== "") {
-      setTimeout(async () => {
-        const result = await RepairRequestService.saveRepairRequest(values);
-
-        if (result?.data !== null) {
-          toast.success("Repair Request Added Successfully");
-          resetForm();
-        } else {
-          toast.error("Request cannot be Completed");
-        }
-        setLoading(false);
-      }, 1000);
-    }
   };
 
   return (
@@ -116,7 +84,7 @@ export default function RepairRequest() {
             </div>
 
             <div className="flex">
-              <label className="input-label basis-1/2" htmlFor="designation">
+              <label className="input-label basis-1/2" htmlFor="designatiom">
                 Designation:
               </label>
 
@@ -124,9 +92,9 @@ export default function RepairRequest() {
                 id="outlined-basic"
                 type="search"
                 className="mr-4 tailwind-text-box w-[90%]"
-                name="designation"
+                name="designatiom"
                 onChange={onChange}
-                value={values.designation}
+                value={values.designatiom}
                 required
               />
             </div>

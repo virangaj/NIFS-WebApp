@@ -1,5 +1,6 @@
 package com.nifs.backend.config;
 
+import io.jsonwebtoken.Jwt;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -27,23 +28,18 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
 
-        http.cors().and()
+        http
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
                 .requestMatchers(
-                        "/test/**",
-//                        swagger
-                        "/swagger-ui/**",
-                        "/v3/api-docs/**",
-                        "/v3/**",
                         "/auth/**",
                         "/admin/otherdata/**",
                         "/sedu/charges",
 //                        designations
-//                        "/admin/designation",
+                        "/admin/designation",
                         "/admin/designation/newid",
-                        "/admin/designation/**",
+                        "/admin/designation/get/**",
                         "/admin/designation/location/**",
 //                        divisions
                         "/admin/division",
@@ -65,16 +61,8 @@ public class SecurityConfig {
                         "/admin/locations/get/**",
 //                        facility
                         "/sedu/facility",
-                        "/sedu/facility/newid",
-//                        contract extension
-                        "/admin/contractex",
-                        //project
-                        "/common/project",
-                        "/library/**",
-                        "/common/funding-source",
-                        "/sedu/event-master",
-                        "/sedu/event-master/{id}"
-                                             )
+                        "/sedu/facility/newid"
+                        )
                 .permitAll()
                 .anyRequest()
                 .authenticated()

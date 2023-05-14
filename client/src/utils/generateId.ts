@@ -1,4 +1,9 @@
 export function generateID(key: any) {
+	let x = Math.floor(Math.random() * 10000);
+	// let i = Math.floor(Math.random() * 25)
+	// let j = Math.floor(Math.random() * 25)
+	// let k = Math.floor(Math.random() * 25)
+	// var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	const today = new Date();
 
 	let d = today.getDate() < 10 ? '0' + today.getDate() : today.getDate();
@@ -17,12 +22,4 @@ export function generateID(key: any) {
 	let day = `${y.toString().substring(2, 4)}${mo}${d}`;
 
 	return day + key.toUpperCase() + time;
-}
-
-export function dateConveter(data: string) {
-	const parts = data.split('/');
-	const year = parts[2];
-	const month = parseInt(parts[1]);
-	const day = parts[0];
-	return `${year}-${month < 10 ? '0' + month : month}-${day}`;
 }

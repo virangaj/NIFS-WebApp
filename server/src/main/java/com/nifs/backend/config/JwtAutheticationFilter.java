@@ -1,6 +1,6 @@
 package com.nifs.backend.config;
 
-import com.nifs.backend.service.auth.IJwtTokenService;
+import com.nifs.backend.service.IJwtTokenService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -43,10 +43,10 @@ public class JwtAutheticationFilter extends OncePerRequestFilter {
         }
 
         //databaseToken extract from authHeader and its after 7t index onward
-        jwt = authHeader.substring(7);
+        databaseToken = authHeader.substring(7);
 
         //get jwt from the databaseToken
-//        jwt = tokenService.getToken(databaseToken);
+        jwt = tokenService.getToken(databaseToken);
 
         //extract user email from jwt
         epfNo = jwtService.extractUsername(jwt);

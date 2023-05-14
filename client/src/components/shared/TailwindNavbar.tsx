@@ -13,48 +13,30 @@ import Logo from '../../images/nifs_logo.png';
 import Pages from '../data/MainNavPages.json';
 
 import './navbar.css';
-import TokenService from '../../utils/DecodeToken';
-import Division from '../../pages/adminDashboards/AdminAdmin/Division';
 
 function TailwindNavbar() {
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 	const [employee, setEmployee] = useState<any>({});
-	const { auth } = useAppSelector((state) => state.persistedReducer);
-
-	useEffect(() => {
-		if (auth.user != null) {
-			const decode = TokenService.decodeToken(auth?.user?.token);
-			console.log(decode);
-		}
-	}, []);
-
+	const { user, isLoading, isError, isSuccess, tokenExpireDate } =
+		useAppSelector((state: any) => state.auth);
 	// navbar function and variables
 	const location: any = useLocation();
 	useEffect(() => {
-		if (auth?.user === null) {
+		if (user === null) {
 			navigate(RouteName.Login);
 		}
 
-		// if (
-		// 	auth?.user.tokenExpireDate &&
-		// 	new Date().getDate() > auth?.user.tokenExpireDate
-		// ) {
-		// 	dispatch(logout());
-		// 	dispatch(reset());
-		// 	toast.error('System timeout ERROR! Please login to the system..!');
-		// 	navigate(RouteName.Login);
-		// }
-		if (auth?.user?.status === RequestStatus.CHANGE_PASSWORD) {
+		if (tokenExpireDate && new Date().getDate() > tokenExpireDate) {
+			dispatch(logout());
+			dispatch(reset());
+			toast.error('System timeout ERROR! Please login to the system..!');
+			navigate(RouteName.Login);
+		}
+		if (user?.status === RequestStatus.CHANGE_PASSWORD) {
 			navigate(RouteName.ChangePassword);
 		}
-	}, [
-		auth?.user,
-		auth?.isLoading,
-		auth?.isError,
-		auth?.isSuccess,
-		// auth?.tokenExpireDate,
-	]);
+	}, [user, isLoading, isError, isSuccess, tokenExpireDate]);
 
 	const logoutFunc = () => {
 		dispatch(logout());
@@ -89,17 +71,22 @@ function TailwindNavbar() {
 					>
 						{Pages.map((page, index) =>
 							location.pathname.split('/')[1] === page.link.split('/')[1] ? (
-								<li
-									className='font-bold text-gray-800 rounded-md bg-sky-300'
-									key={index}
-								>
-									<Link to={page.link} style={{ textDecoration: 'none' }}>
+								<li className='font-bold text-gray-800 rounded-md bg-sky-300'>
+									<Link
+										to={page.link}
+										style={{ textDecoration: 'none' }}
+										key={index}
+									>
 										{page.title}
 									</Link>
 								</li>
 							) : (
-								<li key={index}>
-									<Link to={page.link} style={{ textDecoration: 'none' }}>
+								<li>
+									<Link
+										to={page.link}
+										style={{ textDecoration: 'none' }}
+										key={index}
+									>
 										{page.title}
 									</Link>
 								</li>
@@ -113,25 +100,33 @@ function TailwindNavbar() {
 			</div>
 			<div className='hidden navbar-center lg:flex'>
 				<ul className='px-1 menu menu-horizontal'>
-					{Pages.map((page, index) => (
-						<li
-							className={
-								location.pathname.split('/')[1] === page.link.split('/')[1]
-									? 'font-bold text-gray-800 rounded-md bg-sky-300'
-									: ''
-							}
-							key={index}
-						>
-							<Link to={page.link} style={{ textDecoration: 'none' }}>
-								{page.title}
-							</Link>
-						</li>
-					))}
+					{Pages.map((page, index) =>
+						location.pathname.split('/')[1] === page.link.split('/')[1] ? (
+							<li className='font-bold text-gray-800 rounded-md bg-sky-300'>
+								<Link
+									to={page.link}
+									style={{ textDecoration: 'none' }}
+									key={index}
+								>
+									{page.title}
+								</Link>
+							</li>
+						) : (
+							<li>
+								<Link
+									to={page.link}
+									style={{ textDecoration: 'none' }}
+									key={index}
+								>
+									{page.title}
+								</Link>
+							</li>
+						)
+					)}
 				</ul>
 			</div>
 			<div className='navbar-end'>
-				<p className='font-semibold'>{auth.name}</p>
-				{/* <div className='dropdown dropdown-end'>
+				<div className='dropdown dropdown-end'>
 					<label tabIndex={0} className='btn btn-ghost btn-circle'>
 						<div className='indicator'>
 							<HiOutlineBell className='w-6 h-6' />
@@ -151,7 +146,7 @@ function TailwindNavbar() {
 							</div>
 						</div>
 					</div>
-				</div> */}
+				</div>
 				<div className='dropdown dropdown-end'>
 					<label tabIndex={0} className='btn btn-ghost btn-circle avatar'>
 						<div className='avatar'>
@@ -164,69 +159,20 @@ function TailwindNavbar() {
 						tabIndex={0}
 						className='p-2 mt-3 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52'
 					>
-						<p className='nav-drop-link'>
-							{auth?.user &&
-								auth?.isAdmin === UserStatus.ADMIN &&
-								auth?.division === 'DI1001' && (
-									<Link to={RouteName.AdminAdmin}>Admin Dashboard</Link>
-								)}
-						</p>
-						<p className='nav-drop-link'>
-							{auth?.user && auth?.designation === 'ED1001' && (
-								<Link to={RouteName.Director}>Director</Link>
-							)}
-						</p>
-						<p className='nav-drop-link'>
-							{auth?.user &&
-								auth?.isAdmin === UserStatus.ADMIN &&
-								auth?.division === 'DI1003' && (
-									<Link to={RouteName.SeduAdmin}>Sedu Dashoard</Link>
-								)}
-						</p>
-						<p className='nav-drop-link'>
-							{auth?.user && auth?.isAdmin === UserStatus.ADMIN && (
-								<Link to={RouteName.HODAdmin.replace(':id', auth?.division)}>
-									HOD Dashoard
-								</Link>
-							)}
-						</p>
-						<p className='nav-drop-link'>
-							{auth?.user &&
-								auth?.isAdmin === UserStatus.ADMIN &&
-								auth?.division === 'DI1004' && (
-									<Link
-										to={RouteName.TransportAdmin.replace(':id', auth?.division)}
-									>
-										Transport Dashboard
-									</Link>
-								)}
-						</p>
-
-						<p className='nav-drop-link'>
-							{auth?.user &&
-								auth?.isAdmin === UserStatus.ADMIN &&
-								auth?.division === 'DI1006' && (
-									<Link to={RouteName.ProcumentAdmin}>Procument Dashboard</Link>
-								)}
-						</p>
-
-						<p className='nav-drop-link'>
-							{auth?.user &&
-							auth?.isAdmin === UserStatus.ADMIN &&
-							auth?.division === 'DI1005' ? (
-								<Link to={RouteName.LibraryAdmin}>Library Dashboard</Link>
+						<li>
+							{user && user.user.role === UserStatus.ADMIN ? (
+								<Link to={RouteName.AdminAdmin}>Dashboard</Link>
 							) : (
-								''
+								<></>
 							)}
-						</p>
-
-						<p className='nav-drop-link'>
-							{auth?.user ? (
+						</li>
+						<li>
+							{user ? (
 								<a onClick={logoutFunc}>Logout</a>
 							) : (
 								<Link to={RouteName.Login}>Login</Link>
 							)}
-						</p>
+						</li>
 					</ul>
 				</div>
 			</div>

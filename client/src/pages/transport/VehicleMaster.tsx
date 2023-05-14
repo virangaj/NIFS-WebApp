@@ -1,61 +1,36 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Stack from "@mui/material/Stack";
 import CustomeDataPicker from "../../components/DataPicker";
-import ITravelMaster from "../../types/transport/ITravelMaster";
+import ITravelMaster from "../../types/TravelMaster";
 import "../pages.css";
-import TravelMasterService from "../../services/transport/TravelMasterService";
-import { toast } from "react-toastify";
-
-const initialState: ITravelMaster = {
-  registrationNo: "",
-  chassiNo: "",
-  engineNo: "",
-  category: "",
-  brand: "",
-  color: "",
-  date: "",
-  assign: "",
-  employee: "",
-  insuranceCompanyName: "",
-  insuranceExpiryDate: "",
-  licenseExpiryDate: "",
-  emissionTestDate: "",
-  availability: "",
-  remark: "",
-};
 
 function VehicleMaster() {
-  const [values, setValues] = useState<ITravelMaster>(initialState);
+  const [values, setValues] = useState<ITravelMaster>({
+    registrationNo: "",
+    chassiNo: "",
+    engineNo: "",
+    category: "",
+    brand: "",
+    color: "",
+    date: "",
+    assign: "",
+    employee: "",
+    insuranceCompanyName: "",
+    insuranceExpiryDate: "",
+    licenseExpiryDate: "",
+    emissionTestDate: "",
+    availability: "",
+    remark: "",
+  });
 
   const [date, setDate] = useState<string | null>(null);
-  const [insuranceExpiryDate, setInsuranceExpiryDate] = useState<string | null>(
+  const [insuraceExpiryDate, setInsuraceExpiryDate] = useState<string | null>(
     null
   );
   const [licenseExpiryDate, setLicenseExpiryDate] = useState<string | null>(
     null
   );
   const [emissionTestDate, setEmissionTestDate] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    setValues({
-      registrationNo: values?.registrationNo,
-      chassiNo: values?.chassiNo,
-      engineNo: values?.engineNo,
-      category: values?.category,
-      brand: values?.brand,
-      color: values?.color,
-      date: date ? date : "",
-      assign: values?.assign,
-      employee: values?.employee,
-      insuranceCompanyName: values?.insuranceCompanyName,
-      insuranceExpiryDate: insuranceExpiryDate ? insuranceExpiryDate : "",
-      licenseExpiryDate: licenseExpiryDate ? licenseExpiryDate : "",
-      emissionTestDate: emissionTestDate ? emissionTestDate : "",
-      availability: values?.availability,
-      remark: values?.remark,
-    });
-  }, [date, insuranceExpiryDate, licenseExpiryDate, emissionTestDate]);
 
   const resetForm = () => {
     setValues({
@@ -86,23 +61,7 @@ function VehicleMaster() {
 
   const onSubmit = async (event: any) => {
     event.preventDefault();
-    // console.log(values);
-
-    if (values.registrationNo !== "") {
-      setTimeout(async () => {
-        const result = await TravelMasterService.saveVehicle(values);
-
-        // console.log(result);
-
-        if (result?.data !== null) {
-          toast.success("Vehicle Details Successfully Added");
-          resetForm();
-        } else {
-          toast.error("Request cannot completed!");
-        }
-        setLoading(false);
-      }, 1000);
-    }
+    console.log(values);
   };
 
   return (
@@ -331,8 +290,8 @@ function VehicleMaster() {
                 Insurance Expiry Date:
               </label>
               <CustomeDataPicker
-                date={insuranceExpiryDate}
-                setDate={setInsuranceExpiryDate}
+                date={insuraceExpiryDate}
+                setDate={setInsuraceExpiryDate}
                 title="Date"
                 className="mx-0 lg:ml-10"
                 name="insuranceExpiedDate"

@@ -7,26 +7,21 @@ import EmpTypeAction from './shared/EmpTypeAction';
 import Ripple from '../../../components/Ripple';
 import ILocationData from '../../../types/ILocationData';
 import LocationMasterService from '../../../services/admin/LocationMasterService';
+import ImportFromXlsx from './shared/ImportFromXlsx';
 import { HiX } from 'react-icons/hi';
 import { toast } from 'react-toastify';
 import { RequestStatus } from '../../../constant/requestStatus';
-import { useAppSelector } from '../../../hooks/hooks';
-import { useDispatch } from 'react-redux';
-import { getAllLocations } from '../../../feature/admin/LocationSlice';
 
 function EmployeeType() {
-	const dispatch = useDispatch<any>();
 	const [empTypes, setEmpType] = useState<Array<any>>([]);
 	const [pageSize, setPageSize] = useState(5);
 	const [rowId, setRowId] = useState(0);
 	const [loading, setLoading] = useState(false);
 	const [t_id, setT_Id] = useState('');
+	const [locationData, setLocationData] = useState<ILocationData[]>();
 
 	const [deleteId, setDeleteId] = useState('');
-	const { auth } = useAppSelector((state) => state.persistedReducer);
-	const { location, locationIsLoading, locationIsSuccess } = useAppSelector(
-		(state) => state.location
-	);
+
 	const [values, setValues] = useState<any>({
 		empTypeId: '',
 		typeName: '',
@@ -40,9 +35,7 @@ function EmployeeType() {
 
 	useEffect(() => {
 		retreiveEmpTypes();
-		if (location.length === 0 || !locationIsSuccess) {
-			retreiveLocations();
-		}
+		retreiveLocations();
 	}, []);
 
 	useEffect(() => {
@@ -76,7 +69,14 @@ function EmployeeType() {
 	};
 
 	const retreiveLocations = () => {
-		dispatch(getAllLocations());
+		LocationMasterService.getAllLocations()
+			.then((res: any) => {
+				setLocationData(res.data);
+				console.log(locationData);
+			})
+			.catch((e: any) => {
+				console.log(e);
+			});
 	};
 
 	const resetForm = () => {
@@ -115,10 +115,7 @@ function EmployeeType() {
 		if (values.empTypeId !== '') {
 			setLoading(true);
 			setTimeout(async () => {
-				const result = await EmployeeTypeService.saveEmpType(
-					values,
-					auth?.user?.token
-				);
+				const result = await EmployeeTypeService.saveEmpType(values);
 				if (result.data.status === RequestStatus.SUCCESS) {
 					toast.success('New Employee Type is added');
 
@@ -131,7 +128,15 @@ function EmployeeType() {
 			}, 1000);
 		} else {
 			// alert('Please add a ID');
-			toast.error('Please add an ID');
+			toast.error('Please add an ID', {
+				position: 'top-right',
+				autoClose: 5000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+			});
 		}
 	};
 
@@ -245,7 +250,7 @@ function EmployeeType() {
 									<option disabled value=''>
 										Select Location
 									</option>
-									{location?.map((l: ILocationData, i: number) => {
+									{locationData?.map((l: ILocationData, i: number) => {
 										return (
 											<option key={i} value={l.locationId}>
 												{l.locationName}
@@ -292,6 +297,8 @@ function EmployeeType() {
 					)}
 				</div>
 			</div>
+
+			<ImportFromXlsx />
 		</>
 	);
 }

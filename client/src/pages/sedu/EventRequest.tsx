@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 
 import Stack from '@mui/material/Stack';
+import IEventRequest from '../../types/IEventRequest';
 import { generateID } from '../../utils/generateId';
 import CustomeDataPicker from '../../components/DataPicker';
 
@@ -8,31 +9,26 @@ import CustomeTimePicker from '../../components/TimePicker';
 import FileInput from '../../components/FileInput';
 import EventRequestParticipants from './shared/EventRequestParticipants';
 
-import IEventRequest from '../../types/sedu/IEventRequest';
-import LocationSelector from '../../components/shared/LocationSelector';
-import ProjectSelector from '../../components/shared/ProjectSelector';
-import FundingSourceSelector from '../../components/shared/FundingSourceSelector';
-import VenueSelector from '../../components/shared/VenueSelector';
-import TextBoxLabel from '../../components/shared/TextBoxLabel';
-import EventRequestService from '../../services/sedu/EventRequestService';
-import { useAppSelector } from '../../hooks/hooks';
-import { toast } from 'react-toastify';
+import Projects from '../../components/data/Project.json';
 
 const initialState: IEventRequest = {
-	documentNo: '',
+	eventId: '',
 	eventType: '',
+	type: '',
 	title: '',
-	remark: '',
+	remarks: '',
 	startDate: '',
 	endDate: '',
 	startTime: '',
 	endTime: '',
 	noParticipants: 0,
 	budget: 0,
-	projectId: '',
-	locationId: '',
-	venueId: '',
-	fundingId: '',
+	project: '',
+	vote: '',
+	location: '',
+	venueName: '',
+	venueType: '',
+	fundType: '',
 };
 
 function EventRequest() {
@@ -41,7 +37,7 @@ function EventRequest() {
 
 	const [endDate, setEndDate] = useState<string | null>(null);
 	const [endTime, setEndTime] = useState<string | null>(null);
-	const [loading, setLoading] = useState(false);
+
 	const [getEventId, setEventId] = useState<String | any>('');
 
 	const [totalParticipants, setTotalParticipants] = useState([]);
@@ -49,15 +45,26 @@ function EventRequest() {
 	const [eventAttachment, setEventAttachment] = useState<File | any>();
 
 	const [values, setValues] = useState<IEventRequest>(initialState);
-	const { auth } = useAppSelector((state) => state.persistedReducer);
+
 	useEffect(() => {
 		setValues({
-			...values,
-			documentNo: getEventId,
+			eventId: getEventId,
+			eventType: values?.eventType,
+			type: values?.type,
+			title: values?.title,
+			remarks: values?.remarks,
 			startDate: startDate ? startDate : '',
 			endDate: endDate ? endDate : '',
 			startTime: startTime ? startTime : '',
 			endTime: endTime ? endTime : '',
+			noParticipants: values?.noParticipants,
+			budget: values?.budget,
+			project: values?.project,
+			vote: values?.vote,
+			location: values?.location,
+			venueName: values?.venueName,
+			venueType: values?.venueType,
+			fundType: values?.fundType,
 		});
 	}, [startDate, endDate, startTime, endTime, getEventId]);
 
@@ -79,39 +86,31 @@ function EventRequest() {
 		setEndDate('');
 		setEndTime('');
 		setEventId('');
-		setTotalParticipants([]);
 	};
-	console.log(totalParticipants);
 
 	const onSubmit = async (e: any) => {
 		e.preventDefault();
-
-		const data = {
-			eventData: values,
-			representativeList: totalParticipants,
-		};
-
-		setLoading(true);
-		try {
-			await EventRequestService.newEventRequest(data, auth?.user?.token).then(
-				(res) => {
-					if (res.data.code === 200) {
-						toast.success(res.data.message);
-						setLoading(false);
-						resetForm();
-					} else {
-						toast.error(res.data.message);
-						setLoading(false);
-					}
-				}
-			);
-		} catch (e: any) {
-			toast.error('Request cannot be completed');
-			setLoading(false);
-		}
-
+		setValues({
+			eventId: getEventId,
+			eventType: values?.eventType,
+			type: values?.type,
+			title: values?.title,
+			remarks: values?.remarks,
+			startDate: values?.startDate,
+			endDate: values?.endDate,
+			startTime: values?.startTime,
+			endTime: values?.endTime,
+			noParticipants: values?.noParticipants,
+			budget: values?.budget,
+			project: values?.project,
+			vote: values?.vote,
+			location: values?.location,
+			venueName: values?.venueName,
+			venueType: values?.venueType,
+			fundType: values?.fundType,
+		});
 		console.log(values);
-		console.log(totalParticipants);
+		console.log(getEventId);
 	};
 
 	return (
@@ -119,14 +118,14 @@ function EventRequest() {
 			<h1 className='page-title'>Event Request</h1>
 			<hr className='horizontal-line' />
 
-			<form onSubmit={onSubmit} className='px-10'>
+			<form onSubmit={onSubmit}>
 				<div className='items-center form-flex'>
 					<div className='form-left-section'></div>
 				</div>
 
 				{/* grid section */}
 
-				<div className='grid items-center grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-5'>
+				<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-center w-[97%] mx-auto'>
 					{/* event id */}
 
 					<div className='flex items-center justify-between input-field'>
@@ -157,7 +156,32 @@ function EventRequest() {
 							title='End Date'
 						/>
 					</div>
-					<div></div>
+					{/* event type */}
+					<div className='input-field'>
+						<label className='input-label' htmlFor='eventType'>
+							Event Type
+						</label>
+						<select
+							className='tailwind-text-box w-[90%]'
+							value={values.eventType}
+							id='outlined-basic'
+							name='eventType'
+							onChange={onChange}
+						>
+							<option value='' disabled>
+								Select a Event type
+							</option>
+
+							{Projects
+								? Projects.map((p, index) => (
+										<option value={p.value} key={index}>
+											{p.value}
+										</option>
+								  ))
+								: ''}
+						</select>
+					</div>
+
 					{/* start time */}
 					<div className='mx-0 mb-4 lg:ml-10 md:my-0'>
 						<CustomeTimePicker
@@ -175,11 +199,38 @@ function EventRequest() {
 							title='End Time'
 						/>
 					</div>
-				</div>
-				<div className='flex items-center mt-5'>
+
+					{/* type */}
+					<div className='input-field'>
+						<label className='input-label' htmlFor='type'>
+							Type
+						</label>
+						<select
+							className='tailwind-text-box w-[90%]'
+							value={values.type}
+							id='type'
+							name='type'
+							onChange={onChange}
+						>
+							<option value='' disabled>
+								Select a Type
+							</option>
+
+							{Projects
+								? Projects.map((p, index) => (
+										<option value={p.value} key={index}>
+											{p.value}
+										</option>
+								  ))
+								: ''}
+						</select>
+					</div>
+
 					{/* no of participants */}
-					<div className='mx-0 input-field'>
-						<TextBoxLabel name='No of Participants' />
+					<div className='mx-0 input-field lg:ml-10'>
+						<label className='input-label' htmlFor='noParticipants'>
+							No of Participants
+						</label>
 
 						<input
 							id='outlined-basic'
@@ -191,8 +242,11 @@ function EventRequest() {
 							required
 						/>
 					</div>
-					<div className='mx-0 input-field'>
-						<TextBoxLabel name='Budget' />
+					<div className='mx-0 input-field lg:ml-10'>
+						<label className='input-label' htmlFor='budget'>
+							Budget
+						</label>
+
 						<input
 							id='outlined-basic'
 							type='search'
@@ -200,19 +254,6 @@ function EventRequest() {
 							onChange={onChange}
 							name='budget'
 							value={values.budget}
-							required
-						/>
-					</div>
-					{/* event type */}
-					<div className='input-field'>
-						<TextBoxLabel name='Event Type' />
-						<input
-							id='outlined-basic'
-							type='search'
-							className='mr-4 tailwind-text-box w-[90%]'
-							onChange={onChange}
-							name='eventType'
-							value={values.eventType}
 							required
 						/>
 					</div>
@@ -227,7 +268,7 @@ function EventRequest() {
 					<input
 						id='outlined-basic'
 						type='search'
-						className='tailwind-text-box'
+						className='mr-4 tailwind-text-box w-[90%]'
 						onChange={onChange}
 						name='title'
 						value={values.title}
@@ -237,44 +278,179 @@ function EventRequest() {
 
 				{/*remarks  */}
 				<div className='mx-0 input-field lg:ml-10'>
-					<label className='input-label' htmlFor='remark'>
+					<label className='input-label' htmlFor='remarks'>
 						Remarks
 					</label>
 
 					<textarea
 						id='outlined-basic'
-						className='tailwind-text-box'
+						className='mr-4 tailwind-text-box w-[90%]'
 						onChange={onChange}
-						name='remark'
-						value={values.remark}
+						name='remarks'
+						value={values.remarks}
 						required
 					></textarea>
 				</div>
 
-				<div className='grid grid-cols-2 gap-5 '>
-					{/* Budget */}
-					<FundingSourceSelector
-						name='fundingId'
-						onChange={onChange}
-						value={values.fundingId}
-					/>{' '}
-					<ProjectSelector
-						name='projectId'
-						onChange={onChange}
-						value={values.projectId}
-					/>
-					{/* location */}
-					<LocationSelector
-						name='locationId'
-						onChange={onChange}
-						value={values.locationId}
-					/>
-					{/* Venue type */}
-					<VenueSelector
-						name='venueId'
-						onChange={onChange}
-						value={values.venueId}
-					/>
+				<div className='items-center form-flex'>
+					<div className='form-left-section'>
+						{/* project */}
+						<div className='mx-0 input-field lg:ml-4'>
+							<label className='input-label' htmlFor='project'>
+								Project
+							</label>
+							<select
+								className='tailwind-text-box w-[90%]'
+								value={values.project}
+								id='project'
+								name='project'
+								onChange={onChange}
+							>
+								<option value='' disabled>
+									Select a Project
+								</option>
+
+								{Projects
+									? Projects.map((p, index) => (
+											<option value={p.value} key={index}>
+												{p.value}
+											</option>
+									  ))
+									: ''}
+							</select>
+						</div>
+					</div>
+
+					<div className='form-right-section'>
+						{/* vote */}
+						<div className='mx-0 input-field lg:ml-4'>
+							<label className='input-label' htmlFor='vote'>
+								Vote
+							</label>
+							<select
+								className='tailwind-text-box w-[90%]'
+								value={values.vote}
+								id='vote'
+								name='vote'
+								onChange={onChange}
+							>
+								<option value='' disabled>
+									Select a Vote
+								</option>
+
+								{Projects
+									? Projects.map((p, index) => (
+											<option value={p.value} key={index}>
+												{p.value}
+											</option>
+									  ))
+									: ''}
+							</select>
+						</div>
+					</div>
+				</div>
+				<div className='items-center form-flex'>
+					<div className='form-left-section'>
+						{/* Budget */}
+						<div className='mx-0 input-field lg:ml-4'>
+							<label className='input-label' htmlFor='fundType'>
+								External /Fund Internal / Budget
+							</label>
+							<select
+								className='tailwind-text-box w-[90%]'
+								value={values.fundType}
+								id='fundType'
+								name='fundType'
+								onChange={onChange}
+							>
+								<option value='' disabled>
+									Select a Fund type
+								</option>
+
+								{Projects
+									? Projects.map((p, index) => (
+											<option value={p.value} key={index}>
+												{p.value}
+											</option>
+									  ))
+									: ''}
+							</select>
+						</div>
+					</div>
+					<div className='form-right-section'>
+						{/* location */}
+						<div className='mx-0 input-field lg:ml-4'>
+							<label className='input-label' htmlFor='location'>
+								Location
+							</label>
+							<select
+								className='tailwind-text-box w-[90%]'
+								value={values.location}
+								id='location'
+								name='location'
+								onChange={onChange}
+							>
+								<option value='' disabled>
+									Select a Loation
+								</option>
+
+								{Projects
+									? Projects.map((p, index) => (
+											<option value={p.value} key={index}>
+												{p.value}
+											</option>
+									  ))
+									: ''}
+							</select>
+						</div>
+					</div>
+				</div>
+				<div className='items-center form-flex'>
+					<div className='form-right-section'>
+						{/* venue name */}
+						<div className='mx-0 input-field lg:ml-4'>
+							<label className='input-label' htmlFor='venueName'>
+								Venue Name
+							</label>
+
+							<input
+								id='outlined-basic'
+								type='search'
+								className='mr-4 tailwind-text-box w-[90%]'
+								onChange={onChange}
+								name='venueName'
+								value={values.venueName}
+								required
+							/>
+						</div>
+					</div>
+					<div className='form-right-section'>
+						{/* Venue type */}
+						<div className='mx-0 input-field lg:ml-4'>
+							<label className='input-label' htmlFor='venueType'>
+								Venue Type
+							</label>
+							<select
+								className='tailwind-text-box w-[90%]'
+								value={values.venueType}
+								id='venueType'
+								name='venueType'
+								onChange={onChange}
+							>
+								<option value='' disabled>
+									Select a Venue type
+								</option>
+
+								{Projects
+									? Projects.map((p, index) => (
+											<option value={p.value} key={index}>
+												{p.value}
+											</option>
+									  ))
+									: ''}
+							</select>
+						</div>
+					</div>
 				</div>
 
 				<FileInput
